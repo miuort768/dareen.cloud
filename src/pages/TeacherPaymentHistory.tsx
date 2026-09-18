@@ -17,42 +17,33 @@ import {
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
-import { type TeacherInvoice, INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice'
-import { Skeleton, PageHeader, Table, EmptyState } from '../shared/components/ui'
+import {
+  type TeacherInvoice,
+  INVOICE_STATUS,
+  INVOICE_STATUS_META,
+  INVOICE_STATUS_ORDER,
+  normalizeInvoiceStatus,
+  type InvoiceStatus,
+} from '../types/invoice'
+import { Skeleton, PageHeader, Table, EmptyState, StatCard } from '../shared/components/ui'
 import type { Column } from '../shared/components/ui'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import { CURRENCY_SYMBOL } from '../config/constants'
 import { cn } from '../lib/utils'
 
-const statusConfig = (status: string) => {
-  switch (normalizeInvoiceStatus(status)) {
-    case INVOICE_STATUS.PAID:
-      return {
-        label: 'مدفوعة',
-        icon: CheckCircle,
-        cls: 'bg-success-soft text-success border-success-soft',
-      }
-    case INVOICE_STATUS.PROCESSING:
-      return {
-        label: 'قيد المعالجة',
-        icon: Clock,
-        cls: 'bg-warning-soft text-warning border-warning-soft',
-      }
-    case INVOICE_STATUS.REVIEWED:
-      return {
-        label: 'تمت المراجعة',
-        icon: FileCheck,
-        cls: 'bg-info-soft text-info border-info-soft',
-      }
-    default:
-      return {
-        label: 'غير مدفوعة',
-        icon: AlertTriangle,
-        cls: 'bg-error-soft text-error border-error-soft',
-      }
-  }
+const statusIcons: Record<InvoiceStatus, typeof CheckCircle> = {
+  paid: CheckCircle,
+  pending: Clock,
+  overdue: AlertTriangle,
+  reviewed: FileCheck,
+  partially_paid: CheckCircle,
+  unpaid: AlertTriangle,
 }
+
+const STATUS_OPTIONS: { value: string; label: string }[] = [
+  { value: 'all', label: 'جميع الحالات' },
+  ...INVOICE_STATUS_ORDER.map((s) => ({ value: s, label: INVOICE_STATUS_META[s].label })),
+]
 
 export const TeacherPaymentHistory = () => {
   const academyName = useAcademyName()
@@ -141,53 +132,89 @@ export const TeacherPaymentHistory = () => {
     return result
   }, [invoices])
 
-  const paidCount = useMemo(
-    () => invoices.filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID).length,
-    [invoices],
-  )
-  const pendingCount = useMemo(
-    () =>
-      invoices.filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PROCESSING).length,
-    [invoices],
-  )
-  const overdueCount = useMemo(
-    () =>
-      invoices.filter((i) => {
-        const s = normalizeInvoiceStatus(i.status)
-        return s !== INVOICE_STATUS.PAID && s !== INVOICE_STATUS.PROCESSING
-      }).length,
-    [invoices],
-  )
+  const { primaryCurrency, mixedCount, scopedInvoices } = useMemo(() => {
+    const byCur: Record<string, number> = {}
+    invoices.forEach((inv) => {
+      const c = inv.currency || 'EGP'
+      byCur[c] = (byCur[c] || 0) + (Number(inv.amount) || 0)
+    })
+    const entries = Object.entries(byCur).sort((a, b) => b[1] - a[1])
+    const target = entries[0]?.[0] || 'EGP'
+    const scoped = invoices.filter((inv) => (inv.currency || 'EGP') === target)
+    return {
+      primaryCurrency: target,
+      mixedCount: invoices.length - scoped.length,
+      scopedInvoices: scoped,
+    }
+  }, [invoices])
+
+  const scopedStats = useMemo(() => {
+    const result = {
+      total: 0,
+      paid: 0,
+      processing: 0,
+      unpaid: 0,
+      paidCount: 0,
+      processingCount: 0,
+      unpaidCount: 0,
+    }
+    scopedInvoices.forEach((inv) => {
+      result.total += inv.amount
+      const s = normalizeInvoiceStatus(inv.status)
+      if (s === INVOICE_STATUS.PAID) {
+        result.paid += inv.amount
+        result.paidCount += 1
+      } else if (s === INVOICE_STATUS.PROCESSING) {
+        result.processing += inv.amount
+        result.processingCount += 1
+      } else {
+        result.unpaid += inv.amount
+        result.unpaidCount += 1
+      }
+    })
+    return result
+  }, [scopedInvoices])
 
   const kpiCards = useMemo(
     () => [
       {
-        label: 'إجمالي الفواتير',
-        value: invoices.length,
+        key: 'total' as const,
+        title: 'الإجمالي',
+        value: scopedStats.total.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${scopedInvoices.length} فاتورة`,
         icon: DollarSign,
-        iconBg: 'bg-primary-soft text-primary',
+        variant: 'soft-primary' as const,
       },
       {
-        label: 'مدفوعة',
-        value: paidCount,
+        key: 'paid' as const,
+        title: 'مدفوعة',
+        value: scopedStats.paid.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${scopedStats.paidCount} فاتورة`,
         icon: CheckCircle,
-        iconBg: 'bg-success-soft text-success-strong',
+        variant: 'soft-success' as const,
       },
       {
-        label: 'قيد المعالجة',
-        value: pendingCount,
+        key: 'processing' as const,
+        title: 'قيد المعالجة',
+        value: scopedStats.processing.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${scopedStats.processingCount} فاتورة`,
         icon: Clock,
-        iconBg: 'bg-warning-soft text-warning-strong',
+        variant: 'soft-warning' as const,
       },
       {
-        label: 'غير مدفوعة',
-        value: overdueCount,
+        key: 'unpaid' as const,
+        title: 'غير مدفوعة',
+        value: scopedStats.unpaid.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${scopedStats.unpaidCount} فاتورة`,
         icon: AlertTriangle,
-        iconBg: 'bg-error-soft text-error',
-        accent: 'bg-error',
+        variant: 'soft-error' as const,
       },
     ],
-    [invoices.length, paidCount, pendingCount, overdueCount],
+    [scopedStats, scopedInvoices.length, primaryCurrency],
   )
 
   const periodOptions = useMemo(
@@ -217,7 +244,8 @@ export const TeacherPaymentHistory = () => {
         mobileLabel: 'المبلغ',
         render: (inv) => (
           <span className="font-mono text-xs font-bold tabular-nums text-main">
-            {inv.amount.toFixed(3)} <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
+            {inv.amount.toLocaleString()}{' '}
+            <span className="text-[9px] text-muted">{inv.currency || primaryCurrency}</span>
           </span>
         ),
       },
@@ -245,20 +273,25 @@ export const TeacherPaymentHistory = () => {
         align: 'center',
         mobileLabel: 'الحالة',
         render: (inv) => {
-          const status = statusConfig(inv.status)
-          const StatusIcon = status.icon
+          const norm = normalizeInvoiceStatus(inv.status)
+          const meta = INVOICE_STATUS_META[norm]
+          const StatusIcon = statusIcons[norm]
           return (
             <span
-              className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[10px] font-bold ${status.cls}`}
+              className={cn(
+                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold',
+                meta.bgCls,
+                meta.textCls,
+              )}
             >
               <StatusIcon size={10} />
-              {status.label}
+              {meta.label}
             </span>
           )
         },
       },
     ],
-    [],
+    [primaryCurrency],
   )
 
   const emptyMessage =
@@ -327,17 +360,17 @@ export const TeacherPaymentHistory = () => {
             meta={
               <>
                 <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
-                  الإجمالي: {stats.total.toFixed(3)} {CURRENCY_SYMBOL}
+                  الإجمالي: {stats.total.toLocaleString()} {primaryCurrency}
                 </span>
                 <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
-                  مدفوعة: {paidCount}
+                  مدفوعة: {scopedStats.paidCount}
                 </span>
               </>
             }
           />
         </motion.div>
 
-        {/* KPI cards */}
+        {/* KPI cards — colored StatCard strip */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -345,34 +378,34 @@ export const TeacherPaymentHistory = () => {
           data-kpi
         >
           <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-            {kpiCards.map((kpi, i) => {
-              const Icon = kpi.icon
-              return (
-                <motion.div
-                  key={kpi.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + i * 0.06 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <div
-                      className={cn(
-                        'flex h-10 w-10 items-center justify-center rounded-lg',
-                        kpi.iconBg,
-                      )}
-                    >
-                      <Icon size={16} />
-                    </div>
-                  </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
-                </motion.div>
-              )
-            })}
+            {kpiCards.map((card, i) => (
+              <motion.div
+                key={card.key}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.12 + i * 0.06 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+              >
+                <StatCard
+                  title={card.title}
+                  value={card.value}
+                  unit={card.unit}
+                  badge={card.badge}
+                  icon={card.icon}
+                  variant={card.variant}
+                  watermark
+                />
+              </motion.div>
+            ))}
           </div>
         </motion.div>
+
+        {mixedCount > 0 && (
+          <p className="mb-4 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning-strong">
+            <AlertTriangle size={13} className="shrink-0" />
+            {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
+          </p>
+        )}
 
         {/* Toolbar — search + filters + print in one organized card */}
         <motion.div
@@ -404,11 +437,11 @@ export const TeacherPaymentHistory = () => {
                   aria-label="تصفية حسب الحالة"
                   className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
                 >
-                  <option value="all">جميع الحالات</option>
-                  <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
-                  <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
-                  <option value={INVOICE_STATUS.REVIEWED}>تمت المراجعة</option>
-                  <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
+                  {STATUS_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="relative">
@@ -450,8 +483,9 @@ export const TeacherPaymentHistory = () => {
               getId={(inv) => inv.id}
               emptyMessage={emptyMessage}
               mobileCard={(inv) => {
-                const status = statusConfig(inv.status)
-                const StatusIcon = status.icon
+                const norm = normalizeInvoiceStatus(inv.status)
+                const meta = INVOICE_STATUS_META[norm]
+                const StatusIcon = statusIcons[norm]
                 return (
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-3">
@@ -471,13 +505,20 @@ export const TeacherPaymentHistory = () => {
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1.5">
                       <span className="font-mono text-sm font-black tabular-nums text-main">
-                        {inv.amount.toFixed(3)}
+                        {inv.amount.toLocaleString()}{' '}
+                        <span className="text-[10px] text-muted">
+                          {inv.currency || primaryCurrency}
+                        </span>
                       </span>
                       <span
-                        className={`inline-flex items-center gap-1 rounded-lg border px-2 py-0.5 text-[10px] font-bold ${status.cls}`}
+                        className={cn(
+                          'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold',
+                          meta.bgCls,
+                          meta.textCls,
+                        )}
                       >
                         <StatusIcon size={10} />
-                        {status.label}
+                        {meta.label}
                       </span>
                     </div>
                   </div>

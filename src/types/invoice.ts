@@ -22,6 +22,40 @@ export const INVOICE_STATUS_LABEL: Record<InvoiceStatus, string> = {
   partially_paid: 'مدفوعة جزئيًا',
 }
 
+/** أولوية عرض الحالات في أقراص/قوائم التصفية (الكل أولًا ثم هذه القائمة) */
+export const INVOICE_STATUS_ORDER: InvoiceStatus[] = [
+  'paid',
+  'pending',
+  'reviewed',
+  'overdue',
+  'partially_paid',
+  'unpaid',
+]
+
+/** وصف موحد لكل حالة: التسمية + ألوان الشرائح (بنية واحدة لكل الصفحات) */
+export interface InvoiceStatusChip {
+  label: string
+  bgCls: string
+  textCls: string
+}
+
+export const INVOICE_STATUS_META: Record<InvoiceStatus, InvoiceStatusChip> = {
+  paid: { label: INVOICE_STATUS_LABEL.paid, bgCls: 'bg-success-soft', textCls: 'text-success' },
+  pending: {
+    label: INVOICE_STATUS_LABEL.pending,
+    bgCls: 'bg-warning-soft',
+    textCls: 'text-warning',
+  },
+  reviewed: { label: INVOICE_STATUS_LABEL.reviewed, bgCls: 'bg-info-soft', textCls: 'text-info' },
+  overdue: { label: INVOICE_STATUS_LABEL.overdue, bgCls: 'bg-error-soft', textCls: 'text-error' },
+  partially_paid: {
+    label: INVOICE_STATUS_LABEL.partially_paid,
+    bgCls: 'bg-primary-soft',
+    textCls: 'text-primary',
+  },
+  unpaid: { label: INVOICE_STATUS_LABEL.unpaid, bgCls: 'bg-error-soft', textCls: 'text-error' },
+}
+
 export const normalizeInvoiceStatus = (raw?: string | null): InvoiceStatus => {
   const v = (raw || '').trim().toLowerCase()
   if (v === 'paid' || v === 'مدفوعة' || v === 'تم الدفع') return 'paid'

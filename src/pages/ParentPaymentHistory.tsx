@@ -11,14 +11,22 @@ import {
   Users,
   Eye,
 } from 'lucide-react'
+import { format } from 'date-fns'
+import { ar } from 'date-fns/locale'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
-import { useShowNotification, useIsLoading } from '../context/AppContext'
-import { Skeleton, PageHeader, Table } from '../shared/components/ui'
+import { useShowNotification, useIsLoading, useAcademyName } from '../context/AppContext'
+import { Skeleton, PageHeader, Table, StatCard } from '../shared/components/ui'
 import type { Column } from '../shared/components/ui'
 import { cn } from '../lib/utils'
 import { CURRENCY_SYMBOL } from '../config/constants'
-import { INVOICE_STATUS, normalizeInvoiceStatus, type InvoiceStatus } from '../types/invoice'
+import {
+  INVOICE_STATUS,
+  INVOICE_STATUS_META,
+  INVOICE_STATUS_ORDER,
+  normalizeInvoiceStatus,
+  type InvoiceStatus,
+} from '../types/invoice'
 import type { Student } from '../types'
 
 interface StudentInvoiceData {
@@ -34,36 +42,43 @@ interface StudentInvoiceData {
   notes?: string
 }
 
-const statusConfig: Record<
-  InvoiceStatus,
-  {
-    label: string
-    icon: typeof CheckCircle
-    textCls: string
-    bgCls: string
-  }
-> = {
-  paid: { label: 'مدفوعة', icon: CheckCircle, textCls: 'text-success', bgCls: 'bg-success-soft' },
-  pending: { label: 'معلقة', icon: Clock, textCls: 'text-warning', bgCls: 'bg-warning-soft' },
-  overdue: { label: 'متأخرة', icon: AlertCircle, textCls: 'text-error', bgCls: 'bg-error-soft' },
-  reviewed: { label: 'تمت المراجعة', icon: Eye, textCls: 'text-info', bgCls: 'bg-info-soft' },
-  partially_paid: {
-    label: 'مدفوعة جزئياً',
-    icon: CheckCircle,
-    textCls: 'text-primary',
-    bgCls: 'bg-primary-soft',
-  },
-  unpaid: { label: 'غير مدفوعة', icon: AlertCircle, textCls: 'text-error', bgCls: 'bg-error-soft' },
+const statusIcons: Record<InvoiceStatus, typeof CheckCircle> = {
+  paid: CheckCircle,
+  pending: Clock,
+  overdue: AlertCircle,
+  reviewed: Eye,
+  partially_paid: CheckCircle,
+  unpaid: AlertCircle,
 }
 
-type FilterStatus = 'all' | 'paid' | 'pending' | 'overdue'
+type FilterStatus = 'all' | InvoiceStatus
 
-const STATUS_PILLS: { key: FilterStatus; label: string }[] = [
-  { key: 'all', label: 'الكل' },
-  { key: 'paid', label: 'مدفوعة' },
-  { key: 'pending', label: 'معلقة' },
-  { key: 'overdue', label: 'متأخرة' },
-]
+const periodOptions = [
+  { value: 'all', label: 'جميع الفترات' },
+  { value: 'month', label: 'هذا الشهر' },
+  { value: 'quarter', label: 'هذا الربع' },
+  { value: 'year', label: 'هذه السنة' },
+] as const
+
+type Period = (typeof periodOptions)[number]['value']
+
+const formatDate = (raw?: string | null): string => {
+  if (!raw) return '—'
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return raw
+  return format(d, 'd MMM yyyy', { locale: ar })
+}
+
+const STATUS_PILL_LABEL: Record<FilterStatus, string> = {
+  all: 'الكل',
+  ...INVOICE_STATUS_ORDER.reduce(
+    (acc, s) => {
+      acc[s] = INVOICE_STATUS_META[s].label
+      return acc
+    },
+    {} as Record<InvoiceStatus, string>,
+  ),
+}
 
 const HeroSkeleton = () => (
   <div className="mx-auto max-w-page px-2.5 pt-4 sm:px-4">
@@ -89,9 +104,10 @@ const ListSkeleton = () => (
 )
 
 export const ParentPaymentHistory = () => {
+  const academyName = useAcademyName()
   useEffect(() => {
-    document.title = 'سجل الدفعات | ولي الأمر'
-  }, [])
+    document.title = `سجل الدفعات | ${academyName}`
+  }, [academyName])
   const navigate = useNavigate()
   const showNotification = useShowNotification()
   const authLoading = useIsLoading()
@@ -101,6 +117,7 @@ export const ParentPaymentHistory = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all')
   const [filterChild, setFilterChild] = useState<string>('all')
+  const [period, setPeriod] = useState<Period>('all')
 
   useEffect(() => {
     let cancelled = false
@@ -141,9 +158,23 @@ export const ParentPaymentHistory = () => {
         const matchesStatus =
           filterStatus === 'all' || normalizeInvoiceStatus(inv.status) === filterStatus
         const matchesChild = filterChild === 'all' || inv.studentId === filterChild
-        return matchesSearch && matchesStatus && matchesChild
+        const matchesPeriod =
+          period === 'all' ||
+          (() => {
+            const d = new Date(inv.date)
+            const now = new Date()
+            if (isNaN(d.getTime())) return true
+            if (period === 'year') return d.getFullYear() === now.getFullYear()
+            if (period === 'quarter')
+              return (
+                d.getFullYear() === now.getFullYear() &&
+                Math.floor(d.getMonth() / 3) === Math.floor(now.getMonth() / 3)
+              )
+            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()
+          })()
+        return matchesSearch && matchesStatus && matchesChild && matchesPeriod
       }),
-    [invoices, searchTerm, filterStatus, filterChild],
+    [invoices, searchTerm, filterStatus, filterChild, period],
   )
 
   // Family-scope currency policy: totals sum the DOMINANT currency only.
@@ -176,6 +207,7 @@ export const ParentPaymentHistory = () => {
       overdue: scopedInvoices
         .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.OVERDUE)
         .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
+      totalCount: scopedInvoices.length,
       paidCount: scopedInvoices.filter(
         (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID,
       ).length,
@@ -187,6 +219,44 @@ export const ParentPaymentHistory = () => {
       ).length,
     }),
     [scopedInvoices],
+  )
+
+  const kpiCards = useMemo(
+    () => [
+      {
+        title: 'الإجمالي',
+        value: stats.total.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${stats.totalCount} فاتورة`,
+        icon: Wallet,
+        variant: 'soft-primary' as const,
+      },
+      {
+        title: 'مدفوعة',
+        value: stats.paid.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${stats.paidCount} فاتورة`,
+        icon: CheckCircle,
+        variant: 'soft-success' as const,
+      },
+      {
+        title: 'معلقة',
+        value: stats.pending.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${stats.pendingCount} فاتورة`,
+        icon: Clock,
+        variant: 'soft-warning' as const,
+      },
+      {
+        title: 'متأخرة',
+        value: stats.overdue.toLocaleString(),
+        unit: primaryCurrency,
+        badge: `${stats.overdueCount} فاتورة`,
+        icon: AlertCircle,
+        variant: 'soft-error' as const,
+      },
+    ],
+    [stats, primaryCurrency],
   )
 
   const isEmpty = invoices.length === 0
@@ -228,7 +298,7 @@ export const ParentPaymentHistory = () => {
         header: 'التاريخ',
         align: 'center',
         hideOnMobile: true,
-        render: (inv) => <span className="text-[11px] text-muted">{inv.date}</span>,
+        render: (inv) => <span className="text-[11px] text-muted">{formatDate(inv.date)}</span>,
       },
       {
         key: 'status',
@@ -236,18 +306,19 @@ export const ParentPaymentHistory = () => {
         align: 'center',
         mobileLabel: 'الحالة',
         render: (inv) => {
-          const status = statusConfig[normalizeInvoiceStatus(inv.status)]
-          const StatusIcon = status.icon
+          const norm = normalizeInvoiceStatus(inv.status)
+          const meta = INVOICE_STATUS_META[norm]
+          const StatusIcon = statusIcons[norm]
           return (
             <span
               className={cn(
                 'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold',
-                status.bgCls,
-                status.textCls,
+                meta.bgCls,
+                meta.textCls,
               )}
             >
               <StatusIcon size={10} />
-              {status.label}
+              {meta.label}
             </span>
           )
         },
@@ -266,7 +337,7 @@ export const ParentPaymentHistory = () => {
                 : 'text-muted',
             )}
           >
-            {inv.dueDate}
+            {formatDate(inv.dueDate)}
           </span>
         ),
       },
@@ -287,33 +358,6 @@ export const ParentPaymentHistory = () => {
       </div>
     )
   }
-
-  const statusCells = [
-    {
-      title: 'مدفوعة',
-      value: stats.paid,
-      count: stats.paidCount,
-      icon: CheckCircle,
-      cellBg: 'bg-success-soft',
-      text: 'text-success',
-    },
-    {
-      title: 'معلقة',
-      value: stats.pending,
-      count: stats.pendingCount,
-      icon: Clock,
-      cellBg: 'bg-warning-soft',
-      text: 'text-warning',
-    },
-    {
-      title: 'متأخرة',
-      value: stats.overdue,
-      count: stats.overdueCount,
-      icon: AlertCircle,
-      cellBg: 'bg-error-soft',
-      text: 'text-error',
-    },
-  ]
 
   return (
     <div
@@ -336,43 +380,35 @@ export const ParentPaymentHistory = () => {
                 <ArrowLeft size={15} />
               </button>
             }
-            meta={
-              <span className="inline-flex items-center rounded-lg border border-primary-soft bg-primary-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-primary">
-                الإجمالي: {stats.total.toLocaleString()} {primaryCurrency}
-              </span>
-            }
           />
         </motion.div>
 
-        {/* Status breakdown — inline chips */}
+        {/* KPI cards — colored StatCard strip */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="grid grid-cols-3 gap-2"
         >
-          {statusCells.map((cell) => {
-            const Icon = cell.icon
-            return (
-              <div
-                key={cell.title}
-                className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center"
+          <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+            {kpiCards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + i * 0.04 }}
               >
-                <p
-                  className={cn(
-                    'flex items-center justify-center gap-1 text-base font-black tabular-nums leading-none',
-                    cell.text,
-                  )}
-                >
-                  <Icon size={12} />
-                  {cell.value.toLocaleString()}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">
-                  {cell.title} · {cell.count}
-                </p>
-              </div>
-            )
-          })}
+                <StatCard
+                  title={card.title}
+                  value={card.value}
+                  unit={card.unit}
+                  badge={card.badge}
+                  icon={card.icon}
+                  variant={card.variant}
+                  watermark
+                />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {mixedCount > 0 && (
@@ -389,27 +425,30 @@ export const ParentPaymentHistory = () => {
           transition={{ delay: 0.1 }}
           className="space-y-2.5"
         >
-          <div className="flex flex-wrap gap-1.5">
-            {STATUS_PILLS.map((pill) => {
-              const active = filterStatus === pill.key
-              return (
+          <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-0.5">
+            {([['all', STATUS_PILL_LABEL.all]] as [FilterStatus, string][])
+              .concat(
+                INVOICE_STATUS_ORDER.map(
+                  (s) => [s, STATUS_PILL_LABEL[s]] as [FilterStatus, string],
+                ),
+              )
+              .map(([key, label]) => (
                 <button
-                  key={pill.key}
-                  onClick={() => setFilterStatus(pill.key)}
+                  key={key}
+                  onClick={() => setFilterStatus(key)}
                   className={cn(
-                    'rounded-xl px-3.5 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
-                    active
+                    'shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                    filterStatus === key
                       ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
                   )}
                 >
-                  {pill.label}
+                  {label}
                 </button>
-              )
-            })}
+              ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {children.length > 1 && (
               <div className="no-scrollbar flex shrink-0 gap-1.5 overflow-x-auto">
                 <button
@@ -439,7 +478,19 @@ export const ParentPaymentHistory = () => {
                 ))}
               </div>
             )}
-            <div className="relative flex-1">
+            <select
+              value={period}
+              onChange={(e) => setPeriod(e.target.value as Period)}
+              aria-label="تصفية حسب الفترة"
+              className="h-10 shrink-0 cursor-pointer appearance-none rounded-xl border border-border bg-card px-3 text-[11px] font-bold text-main outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+            >
+              {periodOptions.map((p) => (
+                <option key={p.value} value={p.value}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+            <div className="relative min-w-[160px] flex-1">
               <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={13} />
               <input
                 aria-label="بحث"
@@ -465,9 +516,10 @@ export const ParentPaymentHistory = () => {
             getId={(inv) => inv.id}
             emptyMessage={noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
             mobileCard={(inv) => {
-              const status = statusConfig[normalizeInvoiceStatus(inv.status)]
-              const StatusIcon = status.icon
-              const overdue = normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.OVERDUE
+              const norm = normalizeInvoiceStatus(inv.status)
+              const meta = INVOICE_STATUS_META[norm]
+              const StatusIcon = statusIcons[norm]
+              const overdue = norm === INVOICE_STATUS.OVERDUE
               return (
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
@@ -483,7 +535,7 @@ export const ParentPaymentHistory = () => {
                           overdue ? 'text-error' : 'text-muted',
                         )}
                       >
-                        الاستحقاق: {inv.dueDate}
+                        الاستحقاق: {formatDate(inv.dueDate)}
                       </p>
                     </div>
                   </div>
@@ -495,12 +547,12 @@ export const ParentPaymentHistory = () => {
                     <span
                       className={cn(
                         'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold',
-                        status.bgCls,
-                        status.textCls,
+                        meta.bgCls,
+                        meta.textCls,
                       )}
                     >
                       <StatusIcon size={10} />
-                      {status.label}
+                      {meta.label}
                     </span>
                   </div>
                 </div>
