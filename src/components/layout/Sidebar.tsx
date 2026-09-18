@@ -39,7 +39,7 @@ import {
   useAcademicYear,
 } from '../../context/AppContext'
 import { useUnreadStore } from '../../store/unreadStore'
-import { ActiveSessionBanner } from '../ui/ActiveSessionBanner'
+import { SessionCallAlert } from '../ui/SessionCallAlert'
 import { SidebarDesktop } from './SidebarDesktop'
 import { MobileQuickAccess } from './MobileQuickAccess'
 
@@ -353,7 +353,7 @@ export const Sidebar = memo(
           onCloseMenu={() => setMobileMenuOpen(false)}
           onLogout={handleLogout}
         />
-        <ActiveSessionBanner />
+        <SessionCallAlert />
       </>
     )
   },
