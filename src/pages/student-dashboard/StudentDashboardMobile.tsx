@@ -115,23 +115,24 @@ export const StudentDashboardMobile = ({
         )}
 
         <motion.div {...fadeUp(0.25)}>
-          <PointsFeed pointLogs={pointLogs} recentSessions={recentSessions} />
-        </motion.div>
-
-        <motion.div {...fadeUp(0.3)}>
           <InvoicesStrip />
         </motion.div>
 
-        <motion.div {...fadeUp(0.35)}>
+        <motion.div {...fadeUp(0.3)}>
           <AnnouncementsBanner
             href="/announcements"
             label="الإعلانات"
             description="اطلع على آخر التنبيهات والإعلانات العامة"
+            variant="classic"
           />
         </motion.div>
 
-        <motion.div {...fadeUp(0.4)}>
+        <motion.div {...fadeUp(0.35)}>
           <StudentSupportStrip />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.45)}>
+          <PointsFeed pointLogs={pointLogs} recentSessions={recentSessions} />
         </motion.div>
       </div>
     </div>

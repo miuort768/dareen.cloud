@@ -105,7 +105,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
               <li key={item.id}>
                 <div
                   className={cn(
-                    'h-full rounded-2xl border border-s-4 border-border bg-card p-3 shadow-elevation-1 transition-all duration-slow',
+                    'h-full rounded-none border border-s-4 border-border bg-card p-3 shadow-elevation-1 transition-all duration-slow',
                     meta.bar,
                     item.status === 'cancelled' && 'opacity-70',
                     item.status === 'live' && 'bg-error-soft',
@@ -128,11 +128,11 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                         {item.teacher ? ` · ${item.teacher}` : ''}
                       </p>
                     </div>
-                    <div className="flex shrink-0 flex-col items-center">
-                      <span className="font-dash text-lg font-black tabular-nums leading-none text-main">
+                    <div className="inline-flex shrink-0 flex-col items-center justify-center rounded-lg border border-border bg-surface px-2.5 py-1.5 text-center">
+                      <span className="font-dash text-base font-black tabular-nums leading-none text-main">
                         {item.hour}
                       </span>
-                      <span className="text-[10px] font-bold text-muted">
+                      <span className="mt-0.5 text-[9px] font-bold text-muted">
                         {periodLabel(item.period)}
                       </span>
                     </div>

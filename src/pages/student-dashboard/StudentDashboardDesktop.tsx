@@ -114,6 +114,7 @@ export const StudentDashboardDesktop = ({
                 href="/announcements"
                 label="الإعلانات"
                 description="اطلع على آخر التنبيهات والإعلانات العامة"
+                variant="classic"
               />
             </motion.div>
 

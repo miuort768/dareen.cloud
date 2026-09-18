@@ -25,9 +25,11 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
 
   return (
     <section aria-label="المواد الدراسية" className="space-y-3">
-      <div className="flex items-center justify-between px-1">
-        <h3 className="text-sm font-black text-main">موادي الدراسية</h3>
-        <span className="text-[11px] font-bold text-muted">
+      <div className="flex items-center gap-2 px-1">
+        <h3 className="rounded-lg bg-primary px-3 py-1.5 text-xs font-black text-on-primary shadow-elevation-1">
+          موادي الدراسية
+        </h3>
+        <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
           {subjects.length} {subjects.length === 1 ? 'مادة' : 'مواد'}
         </span>
       </div>

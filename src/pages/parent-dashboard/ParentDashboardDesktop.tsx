@@ -119,6 +119,7 @@ export const ParentDashboardDesktop = ({
                 href="/parent-announcements"
                 label="إعلانات الأكاديمية"
                 description="آخر الإعلانات والتنبيهات الموجهة لأولياء الأمور"
+                variant="classic"
               />
             </motion.div>
           </div>
