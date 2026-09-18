@@ -233,7 +233,7 @@ export const MobileAttendance = () => {
         />
 
         {/* التبويبات اللاصقة */}
-        <div className="bg-background/95 sticky top-0 z-30 px-4 pb-2 pt-3 backdrop-blur-sm">
+        <div className="bg-background/95 sticky top-0 z-30 pb-2 pt-3 backdrop-blur-sm">
           <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
             {tabs.map((tab) => (
               <motion.button
@@ -258,7 +258,7 @@ export const MobileAttendance = () => {
           </div>
         </div>
 
-        <div className="space-y-3 px-4 pt-1">
+        <div className="space-y-3 pt-1">
           <AnimatePresence mode="wait">
             {activeSection === 'record' && (
               <motion.div

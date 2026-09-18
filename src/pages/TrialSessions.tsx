@@ -109,7 +109,7 @@ const statusFilterItems = [
 
 const TrialSessionsSkeleton = () => (
   <div className="min-h-full bg-background pb-4 md:pb-8" dir="rtl">
-    <div className="mx-auto max-w-page px-3">
+    <div className="mx-auto max-w-page">
       {/* Header skeleton */}
       <div className="pb-2 pt-4">
         <div className="flex items-center justify-between">
@@ -482,7 +482,7 @@ export const TrialSessions = () => {
   if (isTrialsError) {
     return (
       <div className="min-h-full bg-background pb-4 md:pb-8" dir="rtl">
-        <div className="mx-auto max-w-page px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
+        <div className="mx-auto max-w-page pt-6 sm:px-4 md:px-6 md:pt-10">
           <ErrorBanner />
         </div>
       </div>
@@ -497,7 +497,7 @@ export const TrialSessions = () => {
       className="min-h-full bg-background pb-4 md:pb-8"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
+      <div className="relative z-10 mx-auto max-w-page sm:px-4 md:px-6">
         {/* ===== HEADER ===== */}
         <motion.div variants={itemVariants} className="mb-5">
           <div className="rounded-card border border-border bg-card p-4 shadow-card md:p-5">

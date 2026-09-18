@@ -481,7 +481,7 @@ export const Leads = () => {
   if (isLeadsError) {
     return (
       <div className="min-h-full bg-background" dir="rtl">
-        <div className="relative mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
+        <div className="relative mx-auto max-w-page sm:px-4 md:px-6">
           <ErrorBanner className="mt-6 md:mt-10" />
         </div>
       </div>
@@ -546,7 +546,7 @@ export const Leads = () => {
       className="min-h-full bg-background"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
+      <div className="relative z-10 mx-auto max-w-page sm:px-4 md:px-6">
         {/* ===== HEADER ===== */}
         {/* Mobile: unified page header + prioritized actions */}
         <div className="pt-3 md:hidden">

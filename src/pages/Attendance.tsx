@@ -225,7 +225,7 @@ export const Attendance = () => {
 
       {/* Desktop view */}
       <div className="hidden md:block">
-        <div className="space-y-4 px-2">
+        <div className="space-y-4">
           {/* Hero — internally divided: identity | stats */}
           <GradientHeroCard
             icon={UserCheck}

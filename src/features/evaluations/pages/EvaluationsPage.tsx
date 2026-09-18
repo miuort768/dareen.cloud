@@ -247,7 +247,7 @@ export const Evaluations = () => {
         <div className="absolute -top-28 start-[15%] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute -top-16 end-[5%] h-56 w-56 rounded-full bg-primary/5 blur-3xl" />
       </div>
-      <div className="relative z-10 mx-auto max-w-page space-y-4 px-2.5 pt-3 sm:px-4 md:space-y-5 md:px-6 md:pt-5">
+      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 sm:px-4 md:space-y-5 md:px-6 md:pt-5">
         <EvaluationsHeader
           stats={stats}
           showAddButton={currentUser?.role !== 'parent'}

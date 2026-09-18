@@ -211,7 +211,7 @@ export const AdminBlogCustomers = () => {
       className="from-success-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page px-2">
+      <div className="mx-auto max-w-page">
         {/* Header — unified PageHeader pattern */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
           <PageHeader

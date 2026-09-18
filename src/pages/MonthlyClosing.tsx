@@ -330,7 +330,7 @@ export const MonthlyClosing = () => {
       className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page px-2">
+      <div className="mx-auto max-w-page">
         {/* Hero — internally divided: identity | stats | toolbar */}
         <motion.div
           initial={{ opacity: 0 }}

@@ -312,11 +312,11 @@ export const Forum = () => {
       dir="rtl"
     >
       {/* هيرو عريض — خارج العمود */}
-      <div className="px-3 pt-3 md:px-4 md:pt-4">
+      <div className="pt-3 md:px-4 md:pt-4">
         <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[700px] space-y-4 px-2.5 pt-4 sm:px-4 md:space-y-5 md:pt-6">
+      <div className="relative z-10 mx-auto max-w-[700px] space-y-4 pt-4 sm:px-4 md:space-y-5 md:pt-6">
         {/* بطاقات KPI */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

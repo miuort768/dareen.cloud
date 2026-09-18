@@ -561,7 +561,7 @@ export const Advertisers = () => {
       className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page space-y-4 px-2.5 pb-36 pt-3 sm:px-4 md:space-y-6 md:px-6 md:pb-8 md:pt-8">
+      <div className="mx-auto max-w-page space-y-4 pb-36 pt-3 sm:px-4 md:space-y-6 md:px-6 md:pb-8 md:pt-8">
         {/* Header */}
         <PageHeader
           title="المعلنون"
