@@ -247,7 +247,7 @@ export const NotificationDropdown = ({
                 <button
                   onClick={markAllAsRead}
                   disabled={markReadMutation.isPending}
-                  className="flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-micro font-bold text-primary outline-none transition-colors hover:bg-primary-soft focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:text-xs"
+                  className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-primary bg-primary-soft px-3 py-1.5 text-micro font-bold leading-none text-primary outline-none transition-colors hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:px-3.5 sm:text-xs"
                 >
                   <CheckCheck size={12} />
                   تحديد الكل
@@ -257,7 +257,7 @@ export const NotificationDropdown = ({
                 <button
                   onClick={clearAll}
                   disabled={clearAllMutation.isPending}
-                  className="flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-micro font-bold text-error outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:text-xs"
+                  className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-error bg-error-soft px-3 py-1.5 text-micro font-bold leading-none text-error outline-none transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:px-3.5 sm:text-xs"
                 >
                   <Trash2 size={12} />
                   حذف الكل
