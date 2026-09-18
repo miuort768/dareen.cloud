@@ -27,7 +27,7 @@ export const AppointmentFilters = ({
   todayName,
   dayCounts,
 }: AppointmentFiltersProps) => (
-  <div className="space-y-2 px-4 pb-2">
+  <div className="space-y-2 pb-2">
     {/* البحث */}
     <div className="relative">
       <Search size={13} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" />
@@ -60,7 +60,7 @@ export const AppointmentFilters = ({
 
     {/* شرائح المعلمات */}
     {uniqueTeachers.length > 1 && (
-      <div className="no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4">
+      <div className="no-scrollbar -mx-2 flex gap-1.5 overflow-x-auto px-2">
         {[
           { label: 'كل المعلمات', value: 'all' } as const,
           ...uniqueTeachers.map((t) => ({ label: t, value: t })),

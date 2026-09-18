@@ -132,7 +132,7 @@ export const MobileAppointments = () => {
       </div>
 
       {/* التبويبات اللاصقة */}
-      <div className="bg-background/95 sticky top-0 z-30 mt-3 px-4 pb-2 pt-2 backdrop-blur-sm">
+      <div className="bg-background/95 sticky top-0 z-30 mt-3 pb-2 pt-2 backdrop-blur-sm">
         <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
           {tabs.map((tab) => (
             <motion.button
@@ -181,7 +181,7 @@ export const MobileAppointments = () => {
       />
 
       {/* المحتوى */}
-      <div className="px-4 pb-6">
+      <div className="pb-6">
         {loading && allAppointments.length === 0 ? (
           <MobileSkeleton rows={6} />
         ) : isError ? (

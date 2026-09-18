@@ -44,7 +44,7 @@ export const AppointmentsHero = ({
   ]
 
   return (
-    <motion.div {...fadeUpStatic} className="px-4 pt-3">
+    <motion.div {...fadeUpStatic} className="pt-3">
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
         <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
           <svg width="100%" height="100%">
