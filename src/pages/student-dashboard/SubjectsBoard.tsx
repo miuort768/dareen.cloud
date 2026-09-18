@@ -120,7 +120,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               )}
 
               <span className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-primary px-4 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal group-hover:bg-primary-hover">
-                عرض المادة
+                عرض الجدول الدراسي
                 <ArrowLeft
                   size={13}
                   className="transition-transform duration-normal group-hover:-translate-x-0.5"
