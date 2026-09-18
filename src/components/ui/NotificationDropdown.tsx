@@ -5,7 +5,16 @@ import {
   useCurrentUser,
   useShowNotification,
 } from '../../context/AppContext'
-import { Bell, CheckCircle2, AlertCircle, Calendar, Trash2, Smartphone } from 'lucide-react'
+import {
+  Bell,
+  CheckCheck,
+  CheckCircle2,
+  AlertCircle,
+  AlertTriangle,
+  Calendar,
+  Trash2,
+  Smartphone,
+} from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { api } from '../../lib/api'
@@ -14,7 +23,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface Notification {
   id: string
-  type: 'success' | 'warning' | 'info'
+  type: 'success' | 'warning' | 'info' | 'live'
   title: string
   message: string
   time: string
@@ -22,6 +31,8 @@ interface Notification {
   conversationId?: string
   link?: string
 }
+
+const pushCapable = typeof Notification !== 'undefined'
 
 export const NotificationDropdown = ({
   showLabel = false,
@@ -89,6 +100,16 @@ export const NotificationDropdown = ({
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
 
+  const markAllReadMutation = useMutation({
+    mutationFn: () =>
+      Promise.allSettled(
+        notifications
+          .filter((n) => !n.read)
+          .map((n) => api.put(`/notifications/${n.id}`, { read: true })),
+      ),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
+  })
+
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.delete(`/notifications/${id}`),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
@@ -104,10 +125,8 @@ export const NotificationDropdown = ({
   }
 
   const markAllAsRead = () => {
-    if (!Array.isArray(notifications)) return
-    for (const n of notifications.filter((n) => !n.read)) {
-      markAsReadMutation.mutate(n.id)
-    }
+    if (unreadCount === 0 || markAllReadMutation.isPending) return
+    markAllReadMutation.mutate()
   }
 
   const deleteNotification = (id: string) => {
@@ -122,18 +141,34 @@ export const NotificationDropdown = ({
     switch (type) {
       case 'live':
         return (
-          <div className="flex h-8 w-8 animate-pulse items-center justify-center rounded-lg border border-success bg-success-light dark:border-success dark:bg-success-soft">
-            <Smartphone className="text-success" size={16} />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
+            <Smartphone size={14} />
           </div>
         )
       case 'success':
-        return <CheckCircle2 className="text-success" size={18} />
+        return (
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-success-soft text-success">
+            <CheckCircle2 size={16} />
+          </div>
+        )
       case 'warning':
-        return <AlertCircle className="text-warning" size={18} />
+        return (
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-warning-soft text-warning">
+            <AlertTriangle size={16} />
+          </div>
+        )
       case 'info':
-        return <Calendar className="text-info" size={18} />
+        return (
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-info-soft text-info">
+            <Calendar size={16} />
+          </div>
+        )
       default:
-        return <Bell className="text-muted" size={18} />
+        return (
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-muted">
+            <Bell size={16} />
+          </div>
+        )
     }
   }
 
@@ -143,7 +178,9 @@ export const NotificationDropdown = ({
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'relative flex h-8 w-8 items-center justify-center gap-1.5 rounded-full px-2.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus md:w-auto',
-          'text-muted hover:bg-accent-soft hover:text-main',
+          unreadCount > 0
+            ? 'text-primary hover:bg-accent-soft hover:text-primary'
+            : 'text-muted hover:bg-accent-soft hover:text-main',
         )}
         aria-label="إظهار الإشعارات"
         aria-expanded={isOpen}
@@ -151,7 +188,6 @@ export const NotificationDropdown = ({
       >
         <Bell
           size={16}
-          className={cn(unreadCount > 0 ? 'animate-pulse' : '')}
           style={unreadCount > 0 ? { filter: 'var(--drop-shadow-bell)' } : undefined}
         />
         {showLabel && <span className="hidden text-xs font-medium sm:inline">الإشعارات</span>}
@@ -170,42 +206,47 @@ export const NotificationDropdown = ({
             tray
               ? // Fixed tray — viewport anchored, immune to ancestor clipping (chat sidebar)
                 'fixed inset-x-2 bottom-4 top-[calc(66px+var(--safe-area-top))] flex w-auto flex-col rounded-2xl border border-border bg-card shadow-elevation-3 md:inset-x-auto md:bottom-auto md:end-4 md:h-fit md:w-[400px]'
-              : 'fixed inset-x-2 top-[70px] w-auto rounded-none border-2 border-border bg-card shadow-[var(--shadow-panel)] md:absolute md:inset-auto md:end-0 md:top-full md:mt-3 md:w-[400px]',
+              : 'fixed inset-x-2 top-[70px] w-auto rounded-2xl border border-border bg-card shadow-elevation-3 md:absolute md:inset-auto md:end-0 md:top-full md:mt-3 md:w-[400px]',
           )}
         >
           {!tray && (
-            <div className="absolute -top-[10px] end-4 hidden h-4 w-4 rotate-45 border-e-2 border-t-2 border-border bg-card md:end-8 md:block" />
+            <div className="absolute -top-[9px] end-4 hidden h-3.5 w-3.5 rotate-45 border-e border-t border-border bg-card md:end-8 md:block" />
           )}
 
           {/* Header */}
-
-          <div className="flex items-center justify-between border-b-2 border-border bg-surface p-4">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-none bg-primary text-on-primary shadow-[2px_2px_0_black]">
+          <div className="flex items-center justify-between gap-2 border-b border-border bg-surface p-4">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-on-primary">
                 <Bell size={16} />
               </div>
-              <h3 className="text-xs font-medium uppercase tracking-widest text-main">الإشعارات</h3>
-              {unreadCount > 0 && (
-                <span className="bg-error px-2 py-0.5 text-micro font-medium text-on-error shadow-[1px_1px_0_black]">
-                  {unreadCount} مـهـم
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-black text-main">الإشعارات</h3>
+                {unreadCount > 0 && (
+                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error px-1.5 text-micro font-black leading-none text-on-error">
+                    {unreadCount}
+                  </span>
+                )}
+              </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
               {unreadCount > 0 && (
                 <button
                   onClick={markAllAsRead}
-                  className="whitespace-nowrap text-micro font-medium text-primary outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus sm:text-xs"
+                  disabled={markAllReadMutation.isPending}
+                  className="flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-micro font-bold text-primary outline-none transition-colors hover:bg-primary-soft focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:text-xs"
                 >
+                  <CheckCheck size={12} />
                   تحديد الكل
                 </button>
               )}
               {Array.isArray(notifications) && notifications.length > 0 && (
                 <button
                   onClick={clearAll}
-                  className="whitespace-nowrap text-micro font-medium text-error outline-none hover:text-error focus-visible:ring-2 focus-visible:ring-focus sm:text-xs"
+                  disabled={clearAllMutation.isPending}
+                  className="flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-micro font-bold text-error outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:text-xs"
                 >
+                  <Trash2 size={12} />
                   حذف الكل
                 </button>
               )}
@@ -213,14 +254,14 @@ export const NotificationDropdown = ({
           </div>
 
           {/* Push Notification Activation Prompt */}
-          {Notification.permission !== 'granted' && (
-            <div className="flex items-center justify-between gap-3 border-b border-primary bg-primary-soft p-3 dark:border-primary/30">
-              <div className="flex items-center gap-2">
-                <div className="rounded-lg bg-primary p-1.5 text-on-primary">
+          {pushCapable && Notification.permission === 'default' && notificationsEnabled && (
+            <div className="flex items-center justify-between gap-3 border-b border-border bg-primary-soft p-3">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-on-primary">
                   <Smartphone size={14} />
                 </div>
-                <p className="text-micro font-normal text-primary sm:text-xs">
-                  هل تريد ميزة الإشعارات الفورية؟
+                <p className="text-micro font-bold text-primary sm:text-xs">
+                  هل تريد تفعيل الإشعارات الفورية؟
                 </p>
               </div>
               <button
@@ -232,7 +273,7 @@ export const NotificationDropdown = ({
                     showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success')
                   }
                 }}
-                className="rounded-lg bg-primary px-3 py-1.5 text-micro font-medium text-on-primary shadow-soft outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                className="rounded-full bg-primary px-3 py-1.5 text-micro font-bold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
               >
                 تفعيل الآن
               </button>
@@ -247,18 +288,23 @@ export const NotificationDropdown = ({
             )}
           >
             {!notificationsEnabled ? (
-              <div className="p-12 text-center">
-                <AlertCircle size={48} className="mx-auto mb-3 text-warning opacity-50" />
-                <p className="mb-1 text-sm font-normal text-main">الإشعارات معطلة</p>
-                <p className="text-xs text-muted">يمكنك تفعيلها من صفحة الإعدادات</p>
+              <div className="flex flex-col items-center gap-3 py-10 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-warning-soft text-warning">
+                  <AlertCircle size={26} />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-main">الإشعارات معطلة</p>
+                  <p className="mt-1 text-xs text-muted">يمكنك تفعيلها من صفحة الإعدادات</p>
+                </div>
               </div>
             ) : Array.isArray(notifications) && notifications.length > 0 ? (
               notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`cursor-pointer border-b border-border p-4 transition-none hover:bg-surface dark:hover:bg-card ${
-                    !notification.read ? 'bg-info-light dark:bg-info-soft' : ''
-                  }`}
+                  className={cn(
+                    'cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-surface',
+                    !notification.read ? 'bg-info-light dark:bg-info-soft' : '',
+                  )}
                   onClick={() => {
                     markAsRead(notification.id)
                     if (notification.link) {
@@ -270,22 +316,27 @@ export const NotificationDropdown = ({
                     }
                   }}
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="mt-0.5 flex-shrink-0">{getIcon(notification.type)}</div>
+                  <div className="flex items-start gap-3 p-3.5 sm:p-4">
+                    {getIcon(notification.type)}
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-2">
-                        <h4 className="text-xs font-normal text-main sm:text-sm">
+                        <h4
+                          className={cn(
+                            'text-sm leading-snug',
+                            !notification.read ? 'font-bold text-main' : 'font-medium text-main',
+                          )}
+                        >
                           {notification.title}
                         </h4>
                         {!notification.read && (
-                          <div className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-info"></div>
+                          <span className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-info" />
                         )}
                       </div>
-                      <p className="mt-1 line-clamp-2 text-micro text-muted sm:text-xs">
+                      <p className="mt-0.5 line-clamp-2 text-micro text-muted sm:text-xs">
                         {notification.message}
                       </p>
                       <div className="mt-2 flex items-center justify-between">
-                        <span className="text-micro text-muted sm:text-xs">
+                        <span className="text-[10px] text-muted sm:text-micro">
                           {formatDistanceToNow(new Date(notification.time), {
                             addSuffix: true,
                             locale: ar,
@@ -296,10 +347,10 @@ export const NotificationDropdown = ({
                             e.stopPropagation()
                             deleteNotification(notification.id)
                           }}
-                          className="rounded-full p-1 text-muted outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
-                          aria-label="حذف"
+                          className="flex h-7 w-7 items-center justify-center rounded-lg text-muted outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                          aria-label="حذف الإشعار"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={13} />
                         </button>
                       </div>
                     </div>
@@ -307,9 +358,14 @@ export const NotificationDropdown = ({
                 </div>
               ))
             ) : (
-              <div className="p-12 text-center">
-                <Bell size={48} className="mx-auto mb-3 text-dim dark:text-main" />
-                <p className="text-sm text-muted">لا توجد إشعارات</p>
+              <div className="flex flex-col items-center gap-3 py-10 text-center">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface text-muted">
+                  <Bell size={26} />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-main">لا توجد إشعارات</p>
+                  <p className="mt-1 text-xs text-muted">ستظهر هنا كل الإشعارات الجديدة</p>
+                </div>
               </div>
             )}
           </div>
