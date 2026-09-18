@@ -31,6 +31,7 @@ interface TileSpec {
   value: number
   caption: string
   bar?: number
+  hideMobile?: boolean
 }
 
 /** شريط نبض الأسبوع — صناديق مشبعة بألوان الحالة مع رقائق زجاجية وأرقام كبرى */
@@ -50,6 +51,7 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
       label: 'حصص ملغاة',
       value: stats.cancelled,
       caption: 'من إجمالي تسجيلات أبنائك',
+      hideMobile: true,
     },
     {
       key: 'info',
@@ -57,6 +59,7 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
       label: 'حصص اليوم',
       value: stats.todayCount,
       caption: 'في جدول اليوم',
+      hideMobile: true,
     },
     {
       key: 'primary',
@@ -78,6 +81,7 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
             className={cn(
               'relative overflow-hidden rounded-2xl p-3.5 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 sm:p-4',
               CARD_FILL[tile.key],
+              tile.hideMobile && 'hidden sm:block',
             )}
           >
             <div className="flex items-start justify-between gap-2">

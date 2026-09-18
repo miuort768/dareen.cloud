@@ -18,7 +18,6 @@ interface ShellProps extends ParentDashboardProps {
 }
 
 export const ParentDashboardDesktop = ({
-  currentUser,
   adminPhone,
   children: kids,
   allPointLogs,
@@ -38,10 +37,9 @@ export const ParentDashboardDesktop = ({
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-slow" dir="rtl">
-      <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-5 sm:px-4 md:px-6">
+      <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-2 sm:px-4 md:px-6 md:pt-4">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
-            name={currentUser?.name || currentUser?.username || 'شريك النجاح'}
             childCount={kids.length}
             subjectCount={subjectCount}
             todayCount={weekly.todayCount}

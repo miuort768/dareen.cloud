@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ExternalLink, X, BellRing } from 'lucide-react'
+import { ExternalLink, Radio, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCurrentUser } from '../../context/AppContext'
 import { socketService } from '../../lib/socket'
@@ -78,69 +78,71 @@ export const SessionCallAlert = () => {
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
-          className="fixed bottom-16 end-4 start-4 z-[1000] md:bottom-8 md:end-auto md:start-8 md:w-[400px]"
+          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom))] end-4 start-4 z-[1000] md:bottom-8 md:end-auto md:start-8 md:w-[420px]"
         >
-          <div className="overflow-hidden border-4 border-border bg-card p-1 shadow-soft">
-            <div className="flex items-center justify-between border-b-2 border-border bg-primary p-3">
-              <div className="flex items-center gap-2 text-on-primary">
-                <BellRing size={20} className="animate-bounce" />
-                <span className="text-sm font-medium italic">تنبيه حصة مباشرة!</span>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3">
+            <div className="relative flex items-center justify-between gap-3 bg-gradient-to-r from-primary via-primary-deep to-primary-hover px-4 py-3">
+              <div className="flex min-w-0 items-center gap-2.5 text-on-primary">
+                <Radio size={20} className="shrink-0 animate-pulse" />
+                <span className="truncate text-sm font-black">تنبيه حصة مباشرة</span>
               </div>
               <button
                 onClick={() => setShow(false)}
-                className="text-on-primary outline-none transition-transform hover:rotate-90 focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-primary outline-none transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white/50"
                 aria-label="إغلاق"
               >
-                <X size={20} />
+                <X size={16} />
               </button>
             </div>
 
-            <div className="p-5">
-              <div className="mb-4 text-start">
-                <h4 className="mb-1 text-base font-medium text-main">
-                  المعلمة {callData.teacherName} بانتظارك!
-                </h4>
-                <p className="mb-1 text-micro font-normal uppercase tracking-tighter text-muted">
+            <div className="p-4 sm:p-5">
+              <h4 className="text-base font-black leading-snug text-main">
+                المعلمة {callData.teacherName} بانتظارك!
+              </h4>
+
+              <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-black text-primary">
                   الحصة: {callData.subject}
-                </p>
-                <p className="text-micro font-bold text-primary">
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-bold text-muted">
                   عبر {PROVIDER_NAMES[callData.meetingProvider] || callData.meetingProvider}
-                </p>
-                {linkUpdated && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1 text-micro font-bold text-success"
-                  >
-                    تم تحديث الرابط!
-                  </motion.p>
-                )}
+                </span>
               </div>
 
-              <div className="flex gap-2">
+              {linkUpdated && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-2 text-micro font-black text-success"
+                >
+                  تم تحديث الرابط!
+                </motion.p>
+              )}
+
+              <div className="mt-4 grid grid-cols-2 gap-3">
                 <a
                   href={callData.meetingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-1 items-center justify-center gap-2 border-2 border-border bg-primary px-4 py-2 text-xs font-medium text-on-primary shadow-[4px_4px_0px_0px_black] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   انضم للحصة <ExternalLink size={14} />
                 </a>
                 <button
                   onClick={() => setShow(false)}
-                  className="border-2 border-border px-4 py-2 text-xs font-normal outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-border bg-card px-4 text-xs font-bold text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   لاحقاً
                 </button>
               </div>
             </div>
 
-            <div className="h-1 w-full overflow-hidden bg-background">
+            <div className="h-1 w-full overflow-hidden rounded-full bg-border">
               <motion.div
                 initial={{ width: '100%' }}
                 animate={{ width: '0%' }}
                 transition={{ duration: 60, ease: 'linear' }}
-                className="h-full bg-primary"
+                className="h-full rounded-full bg-primary"
               />
             </div>
           </div>

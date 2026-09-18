@@ -20,7 +20,6 @@ interface ShellProps extends ParentDashboardProps {
 }
 
 export const ParentDashboardMobile = ({
-  currentUser,
   adminPhone,
   children: kids,
   allPointLogs,
@@ -67,10 +66,9 @@ export const ParentDashboardMobile = ({
         </div>
       </motion.div>
 
-      <div className="mx-auto max-w-page space-y-4 pb-6 pt-4 sm:px-4">
+      <div className="mx-auto max-w-page space-y-4 pb-6 pt-2 sm:px-4">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
-            name={currentUser?.name || currentUser?.username || 'شريك النجاح'}
             childCount={kids.length}
             subjectCount={subjectCount}
             todayCount={weekly.todayCount}

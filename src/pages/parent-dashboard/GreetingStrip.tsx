@@ -5,7 +5,6 @@ import { BookOpen, ClipboardList, UserRound, Users } from 'lucide-react'
 import { CountUp } from '../../shared/components/CountUp'
 
 export interface GreetingStripProps {
-  name: string
   childCount: number
   subjectCount: number
   todayCount: number
@@ -20,15 +19,13 @@ const getGreeting = (): string => {
   return 'مساء الخير'
 }
 
-/** هيرو ترحيبي ناعم لهوية ولي الأمر البرتقالية — تاريخ + ترحيب + حلقة الحضور + رقائق البيانات */
+/** هيرو ترحيبي ناعم لهوية شريك النجاح البرتقالية — تاريخ + ترحيب + حلقة الحضور + رقائق البيانات */
 export const GreetingStrip = ({
-  name,
   childCount,
   subjectCount,
   todayCount,
   attendanceRate,
 }: GreetingStripProps) => {
-  const firstName = (name || 'شريك النجاح').split(' ')[0] || 'شريك النجاح'
   const today = format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })
   const RING_SIZE = 56
   const RING_RADIUS = 24
@@ -63,7 +60,7 @@ export const GreetingStrip = ({
             </p>
 
             <h1 className="mt-3 text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
-              {getGreeting()}، {firstName}
+              {getGreeting()}، شريك النجاح
             </h1>
 
             <p className="mt-1 text-[11px] font-bold text-muted xl:text-xs">
@@ -111,13 +108,15 @@ export const GreetingStrip = ({
               <span className="absolute flex items-baseline gap-0.5">
                 <CountUp
                   value={attendanceRate}
-                  format={(n) => `${n}`}
-                  className="text-sm font-black tabular-nums text-primary lg:text-xl"
+                  format={(n) => `${Math.round(n)}`}
+                  className="font-dash text-base font-black tabular-nums leading-none text-primary lg:text-xl lg:leading-none"
                 />
-                <span className="text-[9px] font-black text-primary">%</span>
+                <span className="text-[11px] font-black leading-none text-primary lg:text-xs">
+                  %
+                </span>
               </span>
             </div>
-            <span className="hidden whitespace-nowrap text-[10px] font-bold text-muted lg:inline-block">
+            <span className="whitespace-nowrap text-[10px] font-bold text-muted">
               الحضور الإجمالي
             </span>
           </div>
