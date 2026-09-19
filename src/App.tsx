@@ -97,9 +97,6 @@ const TermsOfWork = lazy(() =>
   import('./pages/public/TermsOfWork').then((m) => ({ default: m.TermsOfWork })),
 )
 const AdminBlog = lazy(() => import('./pages/AdminBlog').then((m) => ({ default: m.AdminBlog })))
-const RolesPage = lazy(() =>
-  import('./features/roles/pages/RolesPage').then((m) => ({ default: m.RolesPage })),
-)
 import ScrollToTop from './components/ScrollToTop'
 const MaintenanceScreen = lazy(() =>
   import('./components/MaintenanceScreen').then((m) => ({ default: m.MaintenanceScreen })),
@@ -610,15 +607,6 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route
-                  path="roles"
-                  element={
-                    <ProtectedRoute permission="admin">
-                      <RolesPage />
-                    </ProtectedRoute>
-                  }
-                />
-
                 <Route
                   path="student-profile"
                   element={

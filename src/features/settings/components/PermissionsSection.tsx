@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Shield, ExternalLink, Users, KeyRound, Check, Lock } from 'lucide-react'
+import { KeyRound, Check } from 'lucide-react'
 import { SectionCard, SectionTitle, FieldLabel, PrimaryBtn } from './SettingsUI'
 import { rolesService, type Permission } from '../../roles/services/rolesService'
 import { useCurrentUser } from '../../../context/AppContext'
@@ -17,7 +16,6 @@ const GROUP_LABELS: Record<string, string> = {
 }
 
 export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) => void }) => {
-  const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const [roleName, setRoleName] = useState('')
   const [selectedPerms, setSelectedPerms] = useState<string[]>([])
@@ -84,39 +82,6 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
 
   return (
     <div className="space-y-5">
-      <SectionCard>
-        <SectionTitle icon={Shield} label="الصلاحيات والأدوار" sub="إدارة صلاحيات المستخدمين" />
-
-        <div className="mb-5 flex items-center justify-between rounded-xl border border-primary/10 bg-primary-soft p-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-              <ExternalLink size={16} className="text-primary" />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-primary">إدارة الأدوار المتقدمة</p>
-              <p className="text-[11px] text-primary/70">
-                صفحة منفصلة لإدارة الأدوار والصلاحيات بشكل متكامل
-              </p>
-            </div>
-          </div>
-          {canOpenRoles ? (
-            <button
-              onClick={() => navigate('/roles')}
-              className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
-            >
-              <Users size={14} /> فتح
-            </button>
-          ) : (
-            <span
-              className="flex items-center gap-1.5 rounded-xl bg-hover px-4 py-2.5 text-xs font-bold text-muted"
-              title="يتطلب صلاحية المدير"
-            >
-              <Lock size={14} /> يتطلب صلاحية المدير
-            </span>
-          )}
-        </div>
-      </SectionCard>
-
       <SectionCard>
         <SectionTitle icon={KeyRound} label="إنشاء دور مخصص" sub="تحديد صلاحيات مخصصة لدور جديد" />
 
