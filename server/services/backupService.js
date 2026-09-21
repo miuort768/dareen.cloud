@@ -38,10 +38,4 @@ async function getBackupHistory(page = 1, limit = 20) {
     return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
-let backupTimer = null;
-
-function stopAutoBackup() {
-    if (backupTimer) { clearInterval(backupTimer); backupTimer = null; }
-}
-
-module.exports = { createBackup, collectBackupData, getBackupHistory, stopAutoBackup };
+module.exports = { createBackup, collectBackupData, getBackupHistory };

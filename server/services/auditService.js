@@ -8,23 +8,8 @@ function getAuditMode() {
   return (process.env.AUDIT_MODE || 'direct').toLowerCase();
 }
 
-function isQueueMode() {
-  return getAuditMode() === 'queue';
-}
-
-let fallbackWrites = 0;
-
-function getFallbackWrites() {
-  return fallbackWrites;
-}
-
 function generateEventId() {
   return crypto.randomUUID();
-}
-
-async function writeToQueue(entry) {
-  const { enqueue } = require('../queue/auditQueue');
-  return enqueue(entry);
 }
 
 async function writeDirect(entry) {
@@ -115,16 +100,6 @@ async function createAuditEntry({
     details: details ? (typeof details === 'string' ? details : JSON.stringify(details)) : null,
   };
 
-  if (isQueueMode() && !isCriticalAction(action)) {
-    try {
-      await writeToQueue(entry);
-      return;
-    } catch (queueErr) {
-      fallbackWrites++;
-      logger.warn('Audit queue fallback to direct write', { action, error: queueErr.message });
-    }
-  }
-
   try {
     await writeDirect(entry);
   } catch (err) {
@@ -197,8 +172,6 @@ module.exports = {
   sanitizeMetadata,
   isCriticalAction,
   getAuditMode,
-  isQueueMode,
-  getFallbackWrites,
   ACTION_TYPES: AUDIT_ACTIONS,
   AUDIT_ACTIONS,
   AUDIT_STATUS,

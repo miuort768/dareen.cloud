@@ -24,6 +24,7 @@ const CACHE_KEYS = {
     studentById: (id) => `invoices:student:id:${id}`,
     stats: () => 'invoices:stats',
   },
+  exchangeRates: 'rates:exchange',
 };
 
 module.exports = { CACHE_KEYS };

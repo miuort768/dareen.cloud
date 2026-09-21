@@ -176,18 +176,6 @@ const createTrialSessionSchema = z.object({
 
 const updateTrialSessionSchema = createTrialSessionSchema.partial();
 
-// --- Teacher Availability Schemas ---
-const createAvailabilitySchema = z.object({
-    teacherId: z.string().min(1, "Teacher ID is required"),
-    teacherName: z.string().min(1, "Teacher name is required"),
-    slots: z.array(z.object({
-        dayOfWeek: z.number().int().min(0).max(6),
-        startTime: z.string().regex(/^\d{2}:\d{2}$/, "Time must be HH:MM"),
-        endTime: z.string().regex(/^\d{2}:\d{2}$/, "Time must be HH:MM"),
-        isAvailable: z.number().int().min(0).max(1).optional().default(1)
-    })).min(1, "At least one slot is required")
-});
-
 // --- Task Schemas ---
 const createTaskSchema = z.object({
     id: z.string().optional(),
@@ -296,7 +284,6 @@ module.exports = {
     updateEvaluationSchema,
     createTrialSessionSchema,
     updateTrialSessionSchema,
-    createAvailabilitySchema,
     createTaskSchema,
     updateTaskSchema,
     createStudentInvoiceSchema,

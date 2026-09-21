@@ -8,7 +8,6 @@ const cacheService = require('../../services/cacheService');
 const { prisma } = require('../../utils/prisma');
 const { audit } = require('../../services/auditService');
 const { createBackup, getBackupHistory } = require('../../services/backupService');
-const { getMetrics } = require('../../middleware/monitoring');
 const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount, verifyAccountPassword } = require('../../services/authAccounts');
 
 // `dismissedNotifications` uses notifications.is_dismissed; reset helper.
@@ -816,29 +815,6 @@ router.delete('/whatsapp-templates/:id', async (req, res) => {
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
-    }
-});
-
-// Monitoring
-router.get('/monitoring', async (req, res) => {
-    try {
-        const metrics = getMetrics();
-        const dbHealth = await prisma.$queryRaw`SELECT 1 as ok`.catch(() => null);
-        const [userCount, sessionCount, backupCount] = await Promise.all([
-            prisma.user.count(),
-            prisma.session.count(),
-            prisma.backup.count(),
-        ]);
-        res.json({
-            ...metrics,
-            database: dbHealth ? 'connected' : 'disconnected',
-            counts: { users: userCount, sessions: sessionCount, backups: backupCount },
-            timestamp: new Date().toISOString(),
-            node: process.version,
-            platform: process.platform,
-        });
-    } catch (err) {
-        ResponseHandler.serverError(res, err, 'Monitoring error');
     }
 });
 

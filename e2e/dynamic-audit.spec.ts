@@ -47,7 +47,6 @@ const ROUTES: Record<string, string[]> = {
     '/forum',
     '/admin-jobs',
     '/admin-contacts',
-    '/monitoring',
     '/admin/blog',
     '/admin/blog-customers',
     '/student-profile',

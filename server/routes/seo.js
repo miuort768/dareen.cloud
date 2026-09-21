@@ -148,8 +148,6 @@ Disallow: /students
 Disallow: /evaluations
 Disallow: /parents
 Disallow: /monthly-closing
-Disallow: /roles
-Disallow: /monitoring
 Disallow: /admin-jobs
 Disallow: /admin-contacts
 Disallow: /admin/blog

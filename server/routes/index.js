@@ -14,17 +14,10 @@ const strictLimiter = createRateLimiter({
     max: 20,
     message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
 });
-const moderateLimiter = createRateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: 'محاولات كثيرة. حاول بعد 15 دقيقة.',
-});
-
 router.use('/auth/login', strictLimiter);
 router.use('/auth/register', strictLimiter);
 router.use('/auth/forgot-password', strictLimiter);
 router.use('/auth/reset-password', strictLimiter);
-router.use('/public-chat', moderateLimiter);
 
 // Verify only validates an existing token (no session created) — generous cap
 const verifyLimiter = createRateLimiter({
@@ -40,13 +33,6 @@ router.use('/auth', authRouter);
 
 const blogRouter = require('./communication/blog');
 router.use('/blog', blogRouter);
-
-const uploadRouter = require('./core/upload');
-router.use('/upload', uploadRouter);
-
-router.get('/docs', (req, res) => {
-    res.json(require('../utils/apiDocs'));
-});
 
 router.get('/system/public-settings', async (req, res) => {
     try {
@@ -73,9 +59,6 @@ router.get('/system/public-settings', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
-const publicChatRouter = require('./communication/publicChat');
-router.use('/public-chat', publicChatRouter);
 
 const jobsRouter = require('./communication/jobs');
 router.use('/jobs', jobsRouter);
@@ -143,9 +126,6 @@ router.use('/leads', leadsRouter);
 const trialSessionsRouter = require('./education/trial_sessions');
 router.use('/trial-sessions', trialSessionsRouter);
 
-const teacherAvailabilityRouter = require('./education/teacher_availability');
-router.use('/teacher-availability', teacherAvailabilityRouter);
-
 const { searchRouter } = require('./core/search');
 router.use('/search', searchRouter);
 
@@ -173,9 +153,6 @@ router.use('/roles', isAdmin, rolesRouter);
 
 const auditRouter = require('./admin/audit');
 router.use('/audit', isAdmin, auditRouter);
-
-const { monitoringRouter } = require('./admin/monitoring');
-router.use('/monitoring', isAdmin, monitoringRouter);
 
 // ── Special routes with URL rewriting ──
 const { selfInvoiceRouter } = require('./finance/selfInvoices');

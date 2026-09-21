@@ -412,10 +412,6 @@ async function startServer() {
                         const { shutdownWorkers } = require('./services/queue/workers');
                         await shutdownWorkers();
                     } catch { /* ignore */ }
-                    try {
-                        const { stopAutoBackup } = require('./services/backupService');
-                        stopAutoBackup();
-                    } catch { /* ignore */ }
                     await logger.close();
                     await prisma.$disconnect();
                     clearTimeout(forceExit);

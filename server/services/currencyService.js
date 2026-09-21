@@ -1,6 +1,6 @@
 const { prisma } = require('../utils/prisma');
 const cache = require('./cacheService');
-const { CACHE_KEYS } = require('../cache/cacheKeys');
+const { CACHE_KEYS } = require('../constants/cacheKeys');
 const logger = require('../utils/logger');
 const { localYmd } = require('../utils/validators');
 

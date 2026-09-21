@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@libsql/client": "^0.17.4",
     "@prisma/adapter-libsql": "^7.8.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
@@ -30,7 +29,6 @@
     "helmet": "^8.1.0",
     "ioredis": "^5.11.1",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.1.1",
     "pdfkit": "^0.19.1",
     "pg": "^8.22.0",
     "prerender-node": "^3.5.0",
