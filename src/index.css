@@ -44,16 +44,9 @@ html, body {
     --color-warning:   251 191 36;  /* amber-400   */
     --color-gold:      212 175 55;  /* gold         */
 
-    --text-main:   15 23 42;
-    --text-muted:  71 85 105;
-    --text-dim:   148 163 184;
-
-    --bg-surface:  243 244 246;
-    --bg-card:     255 255 255;
-    --bg-hover:    241 245 249;
+    /* text/bg/border-accent tokens owned by src/styles/tokens/colors.css (HEX) */
 
     --border-main:   226 232 240;
-    --border-accent:  15  23  42;
 
     --shadow-premium: 0 0 20px rgb(236 72 153 / 0.12);
     --glass-bg:    rgb(255 255 255 / 0.72);
@@ -71,16 +64,9 @@ html, body {
     --color-warning:   251 191 36;
     --color-gold:      212 175 55;
 
-    --bg-surface:  2 6 23;
-    --bg-card:    15 23 42;
-    --bg-hover:   30 41 59;
-
-    --text-main:  248 250 252;
-    --text-muted: 148 163 184;
-    --text-dim:    71  85 105;
+    /* text/bg/border-accent tokens owned by src/styles/tokens/colors.css (HEX) */
 
     --border-main:    30 41 59;
-    --border-accent:  51 65 85;
 
     --shadow-premium: 0 0 20px rgb(251 113 133 / 0.12);
     --glass-bg:    rgb(15 23 42 / 0.65);
@@ -111,7 +97,7 @@ html, body {
   body {
     position: relative;
     background: linear-gradient(135deg, #dbe2ee 0%, #e0e6ef 50%, #d7dfeb 100%);
-    color: rgb(var(--text-main));
+color: var(--text-main);
     width: 100vw;
     max-width: 100%;
     margin: 0;
@@ -139,7 +125,7 @@ html, body {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(var(--text-dim), 0.2);
+    background: color-mix(in srgb, var(--text-dim) 20%, transparent);
     border-radius: 10px;
     transition: all 0.3s ease;
   }
@@ -169,11 +155,11 @@ html, body {
   /* ── Typography Hierarchy ── */
   /* أوزان 800 كحد أقصى — الخطوط العربية المحملة (Tajawal/Noto Kufi) لا تملك 900
      والوزن المصطنع يشوه الحروف. line-height أرحب لتناسب الصاعد/النازل العربي. */
-  h1 { @apply font-extrabold font-heading; color: rgb(var(--text-main)); line-height: 1.35; }  /* 800 */
-  h2 { @apply font-bold font-heading;      color: rgb(var(--text-main)); line-height: 1.35; }  /* 700 */
-  h3 { @apply font-bold font-sans;         color: rgb(var(--text-main)); line-height: 1.45; }
-  h4 { @apply font-medium font-sans;       color: rgb(var(--text-muted)); line-height: 1.45; }
-  h5, h6 { @apply font-normal font-sans;   color: rgb(var(--text-muted)); line-height: 1.5; }
+  h1 { @apply font-extrabold font-heading; color: var(--text-main); line-height: 1.35; }  /* 800 */
+  h2 { @apply font-bold font-heading;      color: var(--text-main); line-height: 1.35; }  /* 700 */
+  h3 { @apply font-bold font-sans;         color: var(--text-main); line-height: 1.45; }
+  h4 { @apply font-medium font-sans;       color: var(--text-muted); line-height: 1.45; }
+  h5, h6 { @apply font-normal font-sans;   color: var(--text-muted); line-height: 1.5; }
 
   /* العربية حروفها متصلة — أي تباعد أحرف (خاصة السالب) يفكك الوصل ويشوه الكلام.
      يُصفَّر داخل سياق RTL فقط، فتبقى النصوص اللاتينية بلا تأثير. */
@@ -192,31 +178,31 @@ html, body {
   /* Dark mode gradient handled above */
 
   .dark .bg-white {
-    background-color: rgb(var(--bg-card)) !important;
+    background-color: var(--bg-card) !important;
   }
 
   .dark .bg-gray-50, .dark .bg-slate-50, .dark .bg-gray-100\/50, .dark .bg-slate-100\/50, .dark .bg-gray-50\/50, .dark .bg-slate-50\/50 {
-    background-color: rgb(var(--bg-surface)) !important;
+    background-color: var(--bg-surface) !important;
   }
 
   /* Specific light hex codes found in some components */
   .dark .bg-\[\#FDFCF8\], .dark .bg-\[\#fafafa\], .dark .bg-\[\#fdfdfd\], .dark .bg-\[\#f9f9f9\] {
-    background-color: rgb(var(--bg-surface)) !important;
+    background-color: var(--bg-surface) !important;
   }
 
   .dark .bg-gray-100, .dark .bg-slate-100, .dark .bg-gray-200, .dark .bg-slate-200, .dark .bg-gray-200\/50, .dark .bg-slate-200\/50 {
-    background-color: rgb(var(--bg-hover)) !important;
+    background-color: var(--bg-hover) !important;
   }
 
   /* Handle all dark text scales for extreme visibility in dark mode */
   .dark .text-gray-950, .dark .text-slate-950, .dark .text-gray-900, .dark .text-slate-900, 
   .dark .text-gray-800, .dark .text-slate-800, .dark .text-gray-700, .dark .text-slate-700,
   .dark .text-gray-600, .dark .text-slate-600, .dark .text-black {
-    color: rgb(var(--text-main)) !important;
+    color: var(--text-main) !important;
   }
 
   .dark .text-gray-500, .dark .text-slate-500, .dark .text-gray-400, .dark .text-slate-400 {
-    color: rgb(var(--text-muted)) !important;
+    color: var(--text-muted) !important;
   }
 
   /* Force brightness on SVG icons in dark mode */
@@ -234,7 +220,7 @@ html, body {
   }
 
   .dark .bg-red-900, .dark .bg-primary-900, .dark .bg-rose-900 {
-    background-color: rgb(var(--bg-hover)) !important;
+    background-color: var(--bg-hover) !important;
   }
 
   /* Force white text on primary backgrounds in dark mode */
@@ -254,7 +240,7 @@ html, body {
   }
 
   .dark .border-gray-300, .dark .border-slate-300, .dark .border-gray-400 {
-    border-color: rgb(var(--border-accent)) !important;
+    border-color: var(--border-accent) !important;
   }
 
   .dark .shadow-sm, .dark .shadow, .dark .shadow-md, .dark .shadow-lg {
@@ -268,13 +254,13 @@ html, body {
 
   /* Inputs & Selects in Dark Mode */
   .dark input, .dark select, .dark textarea {
-    background-color: rgb(var(--bg-surface) / 0.8) !important;
-    border-color: rgb(var(--border-accent)) !important;
-    color: rgb(var(--text-main)) !important;
+    background-color: color-mix(in srgb, var(--bg-surface) 80%, transparent) !important;
+    border-color: var(--border-accent) !important;
+    color: var(--text-main) !important;
   }
 
   .dark input::placeholder, .dark textarea::placeholder {
-    color: rgb(var(--text-dim)) !important;
+    color: var(--text-dim) !important;
   }
 
   .dark input:focus, .dark select:focus, .dark textarea:focus {
@@ -284,7 +270,7 @@ html, body {
 
   /* Tables in Dark Mode */
   .dark table thead tr {
-    background-color: rgb(var(--bg-hover) / 0.8) !important;
+    background-color: color-mix(in srgb, var(--bg-hover) 80%, transparent) !important;
   }
 
   .dark table tbody tr {
@@ -293,7 +279,7 @@ html, body {
   }
 
   .dark table tbody tr:hover {
-    background-color: rgb(var(--bg-hover) / 0.5) !important;
+    background-color: color-mix(in srgb, var(--bg-hover) 50%, transparent) !important;
   }
 }
 
