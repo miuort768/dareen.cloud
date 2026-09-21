@@ -36,6 +36,7 @@ interface Student {
 }
 interface Enrollment {
   teacher: string | TeacherRef
+  teacherFallback?: string
   subject: string
   curr: string
   schedule: ScheduleSlot[]

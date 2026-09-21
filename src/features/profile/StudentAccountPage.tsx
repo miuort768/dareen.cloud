@@ -27,6 +27,7 @@ import {
   StatusBadge,
   useSupportWhatsappNumber,
   TONE_ORDER,
+  TILE_TONE,
 } from './shared'
 import { ProgressBar } from '../../shared/components/ui'
 import { STUDENT_RANKS, getRankByPoints, RANK_ICON_MAP } from '../../shared/utils/ranks'
@@ -215,7 +216,7 @@ export const StudentAccountPage = () => {
                       const used = en.sessionsUsed || 0
                       const total = en.sessionsTotal || 1
                       const pct = Math.min(100, Math.round((used / total) * 100))
-                      const tone = TONE_ORDER[i % TONE_ORDER.length]
+                      const tone = TONE_ORDER[i % TONE_ORDER.length] ?? 'primary'
                       return (
                         <div
                           key={`${en.subject}-${i}`}
@@ -226,14 +227,7 @@ export const StudentAccountPage = () => {
                               <div
                                 className={
                                   'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1 ' +
-                                  {
-                                    primary: 'bg-jade-soft text-jade ring-jade-soft',
-                                    success:
-                                      'bg-success-soft text-success-strong ring-success-soft',
-                                    warning:
-                                      'bg-warning-soft text-warning-strong ring-warning-soft',
-                                    info: 'bg-info-soft text-info-strong ring-info-soft',
-                                  }[tone]
+                                  TILE_TONE[tone]
                                 }
                               >
                                 <BookOpen size={14} />

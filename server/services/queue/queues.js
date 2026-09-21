@@ -9,12 +9,6 @@ const QUEUE_NAMES = {
     FAILED_IMAGES: 'failed-images',
 };
 
-const PRIORITY = {
-    HIGH: 1,
-    NORMAL: 2,
-    LOW: 3,
-};
-
 let queues = {};
 
 function initializeQueues() {
@@ -72,4 +66,4 @@ function getQueues() {
     return queues;
 }
 
-module.exports = { initializeQueues, getQueues, QUEUE_NAMES, PRIORITY };
+module.exports = { initializeQueues, getQueues, QUEUE_NAMES };

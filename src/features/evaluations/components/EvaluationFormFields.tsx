@@ -129,30 +129,28 @@ export const EvaluationFormFields = ({
     </div>
 
     {/* Footer */}
-    {(onCancel || onSubmit) && (
-      <div className="flex gap-3 pt-2">
-        {onCancel && (
-          <button
-            type="button"
-            onClick={onCancel}
-            className="flex-1 rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
-          >
-            إلغاء
-          </button>
-        )}
+    <div className="flex gap-3 pt-2">
+      {onCancel && (
         <button
-          type="submit"
-          disabled={isSubmitting}
-          className={cn(
-            'flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
-            onCancel
-              ? 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary/90'
-              : 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary/90',
-          )}
+          type="button"
+          onClick={onCancel}
+          className="flex-1 rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
-          <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : submitLabel}
+          إلغاء
         </button>
-      </div>
-    )}
+      )}
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={cn(
+          'flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
+          onCancel
+            ? 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary/90'
+            : 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary/90',
+        )}
+      >
+        <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : submitLabel}
+      </button>
+    </div>
   </form>
 )

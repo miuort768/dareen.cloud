@@ -9,11 +9,11 @@ import { CURRENCY_SYMBOL } from '../config/constants'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import {
   type TeacherInvoice,
-  type Teacher,
   type TeacherInvoiceFormData,
   INVOICE_STATUS,
   normalizeInvoiceStatus,
 } from '../types/invoice'
+import type { Teacher } from '../types'
 import { PageLoader } from '../components/ui/PageLoader'
 import { InvoiceStats } from './teacher-invoices/components/InvoiceStats'
 import { InvoiceForm } from './teacher-invoices/components/InvoiceForm'

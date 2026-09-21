@@ -32,14 +32,6 @@ module.exports.getMetrics = () => ({
     pid: process.pid
 });
 
-module.exports.resetMetrics = () => {
-    metrics.total = 0;
-    metrics.byMethod = {};
-    metrics.byPath = {};
-    metrics.slow = [];
-    metrics.errors = 0;
-};
-
 module.exports.adminNotifyOnError = (limitPerMinute = 10) => {
     let counter = 0;
     let lastReset = Date.now();

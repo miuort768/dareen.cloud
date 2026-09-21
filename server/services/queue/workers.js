@@ -105,10 +105,6 @@ function initializeWorkers() {
     return workers;
 }
 
-function getWorkers() {
-    return workers;
-}
-
 async function shutdownWorkers() {
     for (const w of workers) {
         await w.close();
@@ -116,4 +112,4 @@ async function shutdownWorkers() {
     workers = [];
 }
 
-module.exports = { initializeWorkers, getWorkers, shutdownWorkers };
+module.exports = { initializeWorkers, shutdownWorkers };

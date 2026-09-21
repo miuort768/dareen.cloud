@@ -2,7 +2,16 @@ import React from 'react'
 import { cn } from '../../../lib/utils'
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'premium' | 'glow'
+  variant?:
+    | 'default'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'info'
+    | 'premium'
+    | 'glow'
+    | 'outline'
+    | 'destructive'
   size?: 'sm' | 'md'
 }
 
@@ -15,6 +24,8 @@ const variants = {
   premium:
     'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent shadow-elevation-1',
   glow: 'bg-primary/10 text-primary border-primary/20 shadow-elevation-1 shadow-primary/10',
+  outline: 'bg-transparent text-muted border-border',
+  destructive: 'bg-error text-on-error border-error',
 }
 
 const sizes = {

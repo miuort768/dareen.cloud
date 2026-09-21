@@ -28,6 +28,7 @@ import {
   useSupportWhatsappNumber,
   TONE_ORDER,
 } from './shared'
+import type { Tone } from './shared'
 import { ProgressBar } from '../../shared/components/ui'
 
 interface ChildEnrollment {
@@ -63,13 +64,13 @@ const childProgress = (child: Child): number => {
   return Math.round((used / total) * 100)
 }
 
-const TONE_BG = {
+const TONE_BG: Record<Tone, string> = {
   primary: 'bg-jade-soft text-jade ring-jade-soft',
   success: 'bg-success-soft text-success-strong ring-success-soft',
   warning: 'bg-warning-soft text-warning-strong ring-warning-soft',
   info: 'bg-info-soft text-info-strong ring-info-soft',
   error: 'bg-error-soft text-error-strong ring-error-soft',
-} as const
+}
 
 export const ParentAccountPage = () => {
   const currentUser = useCurrentUser()
@@ -194,7 +195,7 @@ export const ParentAccountPage = () => {
             {children.length > 0 ? (
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {children.map((child, idx) => {
-                  const tone = TONE_ORDER[idx % TONE_ORDER.length]
+                  const tone = TONE_ORDER[idx % TONE_ORDER.length] ?? 'primary'
                   const pct = childProgress(child)
                   return (
                     <motion.button

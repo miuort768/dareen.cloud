@@ -68,8 +68,8 @@ export const useDialogFocus = (
         container.focus()
         return
       }
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
+      const first = focusable[0]!
+      const last = focusable[focusable.length - 1]!
       const active = container.contains(document.activeElement) ? document.activeElement : null
       if (e.shiftKey && (active === first || !active)) {
         e.preventDefault()

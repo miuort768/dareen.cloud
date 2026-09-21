@@ -1,11 +1,10 @@
-import React from 'react'
-import { TrendingUp, TrendingDown } from 'lucide-react'
+import { TrendingUp, TrendingDown, type LucideIcon } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
 export interface StatCardProps {
   title: string
   value: string | number
-  icon?: React.ComponentType<{ size?: number; className?: string }>
+  icon?: LucideIcon
   variant?:
     | 'default'
     | 'primary'

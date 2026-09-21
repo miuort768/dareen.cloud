@@ -30,7 +30,7 @@ type Tone = 'primary' | 'success' | 'warning' | 'info' | 'error'
 export type { Tone }
 
 /** الهوية الأساسية لصفحات الحسابات = زمردي jade؛ بقية الألوان دلالية للمحتوى */
-const TILE_TONE: Record<Tone, string> = {
+export const TILE_TONE: Record<Tone, string> = {
   primary: 'bg-jade-soft text-jade ring-jade-soft',
   success: 'bg-success-soft text-success-strong ring-success-soft',
   warning: 'bg-warning-soft text-warning-strong ring-warning-soft',

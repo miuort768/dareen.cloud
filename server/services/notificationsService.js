@@ -77,26 +77,4 @@ async function sendNotification({ userId, title, body, data, priority }) {
     return null;
 }
 
-async function sendBulkNotification({ userIds, title, body, data, priority }) {
-    const queue = getQueue();
-    if (queue) {
-        try {
-            const jobs = await Promise.all(
-                userIds.map((userId) =>
-                    queue.add(
-                        'notification:' + (data?.type || 'push'),
-                        { type: data?.type || 'push', userId, title, body: body || '', data: data || {} },
-                        { priority: priority || 2 }
-                    )
-                )
-            );
-            return jobs;
-        } catch (err) {
-            logger.warn('Bulk queue add failed, falling back to direct push: ' + (err.message || err));
-        }
-    }
-    await Promise.all(userIds.map((userId) => sendDirectPush(userId, title, body, data)));
-    return [];
-}
-
-module.exports = { sendNotification, sendBulkNotification, setQueueEnabled };
+module.exports = { sendNotification, setQueueEnabled };

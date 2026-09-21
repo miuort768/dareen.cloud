@@ -1,25 +1,10 @@
-import type { ComponentType } from 'react'
-import { Users, GraduationCap, BookOpen, Award, Globe } from 'lucide-react'
+import { Users, GraduationCap, BookOpen, Award, Globe, type LucideIcon } from 'lucide-react'
 import { useAnimatedNumber } from '../../../shared/hooks/useAnimatedNumber'
 import { StatCard } from '../../../shared/components/ui'
 import type { StatCardProps } from '../../../shared/components/ui'
 
-type IconComponent = NonNullable<StatCardProps['icon']>
-
-const adaptIcon =
-  (Source: ComponentType<{ size?: number | string; className?: string }>): IconComponent =>
-  ({ size = 24, className }) => <Source size={size} className={className} />
-
-const icons = {
-  users: adaptIcon(Users),
-  graduates: adaptIcon(GraduationCap),
-  lessons: adaptIcon(BookOpen),
-  years: adaptIcon(Award),
-  countries: adaptIcon(Globe),
-}
-
 interface StatData {
-  icon: IconComponent
+  icon: LucideIcon
   target: number
   suffix: string
   label: string
@@ -42,12 +27,12 @@ const AnimatedStatCard = ({ icon, target, suffix, label, variant, duration }: St
 
 export const StatsCounter = () => {
   const stats: StatData[] = [
-    { icon: icons.users, target: 5000, suffix: '+', label: 'طالب مسجل', variant: 'default' },
-    { icon: icons.graduates, target: 200, suffix: '+', label: 'معلم معتمد', variant: 'default' },
-    { icon: icons.lessons, target: 10000, suffix: '+', label: 'حصة تعليمية', variant: 'default' },
-    { icon: icons.years, target: 5, suffix: '+', label: 'سنوات من التميز', variant: 'default' },
+    { icon: Users, target: 5000, suffix: '+', label: 'طالب مسجل', variant: 'default' },
+    { icon: GraduationCap, target: 200, suffix: '+', label: 'معلم معتمد', variant: 'default' },
+    { icon: BookOpen, target: 10000, suffix: '+', label: 'حصة تعليمية', variant: 'default' },
+    { icon: Award, target: 5, suffix: '+', label: 'سنوات من التميز', variant: 'default' },
     {
-      icon: icons.countries,
+      icon: Globe,
       target: 7,
       suffix: '',
       label: 'نخدم في 7 دول',

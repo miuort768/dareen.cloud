@@ -47,6 +47,7 @@ export const BlogFormEducationalSection = ({
 
   const handleCurriculumChange = (nextCurriculum: string) => {
     onSetCurrentPost((prev) => {
+      if (!prev) return prev
       const validLevels = nextCurriculum
         ? (gradesMap[nextCurriculum] || allLevelIds.map((id) => ({ id }))).map((l) => l.id)
         : allLevelIds
@@ -71,6 +72,7 @@ export const BlogFormEducationalSection = ({
 
   const handleLevelChange = (nextLevel: string) => {
     onSetCurrentPost((prev) => {
+      if (!prev) return prev
       const validGrades =
         prev.curriculum && nextLevel ? classroomsMap[prev.curriculum]?.[nextLevel] : undefined
       const nextGrade = !validGrades || validGrades.includes(prev.grade || '') ? prev.grade : ''
@@ -85,6 +87,7 @@ export const BlogFormEducationalSection = ({
 
   const handleGradeChange = (nextGrade: string) => {
     onSetCurrentPost((prev) => {
+      if (!prev) return prev
       // اشتقاق المرحلة تلقائيًا من الصف داخل المنهج المختار
       let nextLevel = prev.level || ''
       if (nextGrade && prev.curriculum) {

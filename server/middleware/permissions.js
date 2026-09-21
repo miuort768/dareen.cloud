@@ -26,14 +26,4 @@ const hasPermission = (...perms) => {
 
 const isAdmin = hasRole('admin');
 
-const isTeacherOrAdmin = (req, res, next) => {
-    if (!req.user) {
-        return ResponseHandler.unauthorized(res, 'يجب تسجيل الدخول أولاً');
-    }
-    if (req.user.role === 'admin' || req.user.role === 'teacher') {
-        return next();
-    }
-    return ResponseHandler.forbidden(res, 'هذه الميزة متاحة للمعلمين فقط');
-};
-
-module.exports = { hasRole, hasPermission, isAdmin, isTeacherOrAdmin };
+module.exports = { hasRole, hasPermission, isAdmin };

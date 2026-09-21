@@ -1,11 +1,15 @@
 import { Image } from '../../shared/components/ui'
 import { useSettingsStore } from '../../store/settingsStore'
-import { parseLibraryAdsRoot, normalizeAdUrl, type PlatformOffer } from './adConfig'
+import { parseLibraryAdsRoot, normalizeAdUrl } from './adConfig'
+import type { PlatformOffer as PlatformOfferModel } from './adConfig'
 import { useDeviceWidth } from '../../shared/hooks/useDeviceWidth'
 import { cn } from '../../lib/utils'
 
 /** يختار رابط العرض المناسب للجهاز الحالي مع fallback (تابلت ← كمبيوتر، هاتف ← هاتف ثم كمبيوتر) */
-const pickOfferLink = (offer: PlatformOffer, device: 'mobile' | 'tablet' | 'desktop'): string => {
+const pickOfferLink = (
+  offer: PlatformOfferModel,
+  device: 'mobile' | 'tablet' | 'desktop',
+): string => {
   if (device === 'mobile') return normalizeAdUrl(offer.linkMobile || offer.linkDesktop)
   if (device === 'tablet') return normalizeAdUrl(offer.linkTablet || offer.linkDesktop)
   return normalizeAdUrl(offer.linkDesktop)

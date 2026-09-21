@@ -9,6 +9,7 @@ import { MaintenanceModal } from '../components/MaintenanceModal'
 import { PasswordConfirmModal } from '../components/PasswordConfirmModal'
 import { SuccessToast } from '../components/SuccessToast'
 import { TABS, SettingsTabContent } from './settings-page'
+import type { TabId } from './settings-page'
 import { useSettingsHandlers } from '../hooks/useSettingsHandlers'
 import { useAcademyName } from '../../../context/AppContext'
 
@@ -81,7 +82,7 @@ export const Settings = () => {
           <select
             id="settings-tab-select"
             value={h.activeTab}
-            onChange={(e) => h.setActiveTab(e.target.value)}
+            onChange={(e) => h.setActiveTab(e.target.value as TabId)}
             className="h-11 w-full appearance-none rounded-xl border border-border bg-card px-4 text-sm font-bold text-main shadow-elevation-1 outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/10 dark:[color-scheme:dark]"
           >
             {tabGroups.map((group) => (

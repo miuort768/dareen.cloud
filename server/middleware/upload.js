@@ -2,7 +2,6 @@ const fs = require('fs');
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 
 // Magic-byte signatures — multipart mimetype is attacker-controlled and
 // trivially spoofed; the file header is the reliable identity check.
@@ -57,11 +56,4 @@ const validateImageUpload = (req, res, next) => {
     next();
 };
 
-const validateImageUrl = (url) => {
-    if (!url) return true;
-    const ext = url.split('?')[0].toLowerCase();
-    const fileExt = ext.slice(ext.lastIndexOf('.'));
-    return ALLOWED_EXTENSIONS.includes(fileExt) || url.startsWith('data:image/');
-};
-
-module.exports = { validateImageUpload, validateImageUrl, MAX_FILE_SIZE, ALLOWED_MIME_TYPES };
+module.exports = { validateImageUpload, MAX_FILE_SIZE, ALLOWED_MIME_TYPES };

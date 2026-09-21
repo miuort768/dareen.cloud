@@ -93,23 +93,4 @@ function stats() {
     };
 }
 
-/**
- * Express middleware factory: invalidates cache keys after a successful response.
- * Usage: router.post('/blog', cacheInvalidator('blog:'), handler);
- */
-function invalidateOnSuccess(...patterns) {
-    return function invalidateMiddleware(req, res, next) {
-        const originalJson = res.json.bind(res);
-        res.json = function (body) {
-            if (res.statusCode >= 200 && res.statusCode < 300) {
-                for (const pattern of patterns) {
-                    delPattern(pattern);
-                }
-            }
-            return originalJson(body);
-        };
-        next();
-    };
-}
-
-module.exports = { get, set, del, delPattern, wrap, stats, invalidateOnSuccess };
+module.exports = { get, set, del, delPattern, wrap, stats };

@@ -285,7 +285,7 @@ export const NotificationDropdown = ({
               </div>
             ) : groups.length > 0 ? (
               groups.map((group) => {
-                const n = group.items[0]
+                const n = group.items[0]!
                 const count = group.items.length
                 const isUnread = group.items.some((item) => !item.read)
                 const groupIds = group.items.map((item) => item.id)
