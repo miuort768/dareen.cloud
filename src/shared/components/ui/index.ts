@@ -10,7 +10,6 @@ export {
   SkeletonTable,
 } from './Skeleton'
 export { Badge } from './Badge'
-export { Alert } from './Alert'
 export { Tabs } from './Tabs'
 export { Breadcrumb } from './Breadcrumb'
 export type { BreadcrumbItem } from './Breadcrumb'

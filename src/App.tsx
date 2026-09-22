@@ -366,7 +366,6 @@ function App() {
               <Route path="/books" element={<Blog />} />
               <Route path="/books/:slug" element={<BlogPost />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/login-q8" element={<Login />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />

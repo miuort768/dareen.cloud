@@ -1,30 +1,5 @@
 :root {
-  /* ── shadcn/ui CSS Variables ── */
-  --background: #e2e8f0;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #6366f1;
-  --primary-foreground: #ffffff;
-  --secondary: #e6ebf3;
-  --secondary-foreground: #475569;
-  --muted: #e6ebf3;
-  --muted-foreground: #94a3b8;
-  --accent: #D4AF37;
-  --accent-foreground: #0f172a;
-  --destructive: #e11d48;
-  --destructive-foreground: #ffffff;
-  --success: #10b981;
-  --success-foreground: #ffffff;
-  --warning: #f59e0b;
-  --warning-foreground: #ffffff;
-  --info: #0ea5e9;
-  --info-foreground: #ffffff;
-  --border: #d8dfeb;
-  --input: #d8dfeb;
-  --ring: #6366f1;
+  /* ── shadcn/ui CSS Variables (live subset) ── */
   --radius: 0.75rem;
   --sidebar-background: #eef1f7;
   --sidebar-foreground: #0f172a;
@@ -116,31 +91,6 @@
 
 .dark {
   /* ── Gold/Black Dark Mode ── */
-  --background: #0a0a0c;
-  --foreground: #f8fafc;
-  --card: #0d0d0f;
-  --card-foreground: #f8fafc;
-  --popover: #0d0d0f;
-  --popover-foreground: #f8fafc;
-  --primary: #D4AF37;
-  --primary-foreground: #000000;
-  --secondary: #1a1a1e;
-  --secondary-foreground: #a1a1aa;
-  --muted: #1a1a1e;
-  --muted-foreground: #71717a;
-  --accent: #D4AF37;
-  --accent-foreground: #f8fafc;
-  --destructive: #e11d48;
-  --destructive-foreground: #ffffff;
-  --success: #059669;
-  --success-foreground: #ffffff;
-  --warning: #d97706;
-  --warning-foreground: #ffffff;
-  --info: #0284c7;
-  --info-foreground: #ffffff;
-  --border: #27272a;
-  --input: #27272a;
-  --ring: #D4AF37;
   --sidebar-background: #0a0a0c;
   --sidebar-foreground: #f8fafc;
   --sidebar-primary: #D4AF37;
