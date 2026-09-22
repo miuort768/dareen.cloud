@@ -21,6 +21,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { cn } from '../../../lib/utils'
+import { SectionCard as BaseSectionCard } from '../../../shared/components/SectionCard'
 
 interface AttendanceReportProps {
   monthlySessionsData: { month: string; completed: number; cancelled: number; total: number }[]
@@ -39,7 +40,7 @@ const SectionCard = ({
 }: {
   children: React.ReactNode
   className?: string
-}) => <div className={cn('rounded-card border border-border bg-card', className)}>{children}</div>
+}) => <BaseSectionCard className={className}>{children}</BaseSectionCard>
 
 const SectionHeader = ({
   icon: Icon,

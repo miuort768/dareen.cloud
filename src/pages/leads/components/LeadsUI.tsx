@@ -289,23 +289,6 @@ export const getLeadAge = (createdAt: string) => {
 
 export { ActionButton as ActionBtn }
 
-export const SectionCard = ({
-  children,
-  className = '',
-}: {
-  children: React.ReactNode
-  className?: string
-}) => (
-  <div
-    className={cn(
-      'rounded-2xl border border-border bg-card shadow-elevation-1 dark:shadow-none',
-      className,
-    )}
-  >
-    {children}
-  </div>
-)
-
 export const PrimaryBtn = ({
   onClick,
   children,

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { RefreshCw, type LucideIcon } from 'lucide-react'
+import { SectionCard as BaseSectionCard } from '../../../shared/components/SectionCard'
 
 export const SectionCard = ({
   children,
@@ -9,14 +10,15 @@ export const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div
-    className={cn(
-      'rounded-2xl border border-divider bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2',
-      className,
-    )}
+  <BaseSectionCard
+    border="divider"
+    shadow="elevation-1"
+    hover
+    transition="all"
+    className={className}
   >
     {children}
-  </div>
+  </BaseSectionCard>
 )
 
 export const SectionTitle = ({

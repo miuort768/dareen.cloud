@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '../../../lib/utils'
+import { SectionCard as BaseSectionCard } from '../../../shared/components/SectionCard'
 
 export const SectionCard = ({
   children,
@@ -11,9 +12,9 @@ export const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={cn('rounded-2xl border border-divider bg-card shadow-elevation-1', className)}>
+  <BaseSectionCard border="divider" shadow="elevation-1" className={className}>
     {children}
-  </div>
+  </BaseSectionCard>
 )
 
 export const SectionTitle = ({

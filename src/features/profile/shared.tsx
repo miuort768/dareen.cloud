@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../lib/utils'
 import { Skeleton } from '../../shared/components/ui'
+import { SectionCard as BaseSectionCard } from '../../shared/components/SectionCard'
 import { confirm } from '../../lib/confirmDialog'
 import { useSettingsStore } from '../../store/settingsStore'
 
@@ -217,38 +218,34 @@ export const SectionCard = ({
   delay = 0,
   tone = 'primary',
 }: SectionCardProps) => (
-  <motion.section
-    initial={{ opacity: 0, y: 14 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 0.35 }}
-    className={cn(
-      'rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:bg-card md:p-5',
-      className,
-    )}
-  >
-    <div className="mb-4 flex items-start justify-between gap-3">
-      <div className="flex items-center gap-2.5">
-        {Icon && (
-          <div
-            className={cn(
-              'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ring-1',
-              TILE_TONE[tone],
-            )}
-          >
-            <Icon size={16} />
-          </div>
-        )}
-        <div>
-          <h2 className="text-sm font-black leading-tight text-main">{title}</h2>
-          {description && (
-            <p className={cn('mt-0.5 text-micro text-muted', descClassName)}>{description}</p>
+  <BaseSectionCard
+    animated
+    entrance="soft"
+    delay={delay}
+    padding="sm"
+    shadow="soft"
+    transition="colors"
+    slow
+    className={cn('dark:border-white/[0.06] dark:bg-card', className)}
+    title={title}
+    icon={
+      Icon ? (
+        <div
+          className={cn(
+            'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ring-1',
+            TILE_TONE[tone],
           )}
+        >
+          <Icon size={16} />
         </div>
-      </div>
-      {action}
-    </div>
+      ) : undefined
+    }
+    description={description}
+    descClassName={descClassName}
+    action={action}
+  >
     {children}
-  </motion.section>
+  </BaseSectionCard>
 )
 
 /* ---------- صف معلومة — قائمة تعريفات هادئة ---------- */

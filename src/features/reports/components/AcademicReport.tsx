@@ -12,7 +12,7 @@ import {
   Cell,
   LabelList,
 } from 'recharts'
-import { cn } from '../../../lib/utils'
+import { SectionCard as BaseSectionCard } from '../../../shared/components/SectionCard'
 import { CHART_COLORS } from '../types'
 import { ReportStudentTable } from './ReportStudentTable'
 
@@ -43,9 +43,9 @@ const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={cn('overflow-hidden rounded-card border border-border bg-card', className)}>
+  <BaseSectionCard overflowHidden className={className}>
     {children}
-  </div>
+  </BaseSectionCard>
 )
 
 const SectionHeader = ({

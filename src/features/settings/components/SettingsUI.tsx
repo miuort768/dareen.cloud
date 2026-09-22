@@ -2,6 +2,7 @@
 import type { LucideIcon } from 'lucide-react'
 import { RefreshCw } from 'lucide-react'
 import { cn } from '../../../lib/utils'
+import { SectionCard as BaseSectionCard } from '../../../shared/components/SectionCard'
 
 export const ALLOWED_CURRENCIES = [{ code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م' }]
 
@@ -60,15 +61,17 @@ export const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div
-    className={cn(
-      'rounded-2xl border border-divider bg-card p-5 md:p-6',
-      'shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2',
-      className,
-    )}
+  <BaseSectionCard
+    border="divider"
+    padding="md"
+    shadow="elevation-1"
+    hover
+    transition="all"
+    slow
+    className={className}
   >
     {children}
-  </div>
+  </BaseSectionCard>
 )
 
 export const SectionTitle = ({

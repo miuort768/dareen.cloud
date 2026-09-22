@@ -24,25 +24,17 @@ export const DAYS_OF_WEEK = [
   'الجمعة',
 ]
 
+import { enrollmentTeacherNameOf } from '../../shared/utils/enrollments'
+
 /** استخراج اسم المعلمة بأمان سواء كان teacher نصًا أو كائنًا أو null — مع fallback لعمود teacherFallback
  * (الاسم النصي المخزَّن في column "teacher") لأن /students و /student-portal/me يردّان الاشتراكات خام
- * (العلاقة teacher غير مُضمَّنة) بينما /parents/my-children يعيد كتابة teacher إلى نص. */
+ * (العلاقة teacher غير مُضمَّنة) بينما /parents/my-children يعيد كتابة teacher إلى نص.
+ * — مفوَّضة إلى الدالة المشتركة enrollmentTeacherNameOf (مصدر واحد للطلب). */
 export const appointmentTeacherNameOf = (enrollment: {
   teacher?: unknown
   teacherId?: string | number
   teacherFallback?: unknown
-}): string => {
-  if (typeof enrollment.teacher === 'string') return enrollment.teacher.trim()
-  if (
-    enrollment.teacher &&
-    typeof enrollment.teacher === 'object' &&
-    'name' in (enrollment.teacher as Record<string, unknown>)
-  ) {
-    return String((enrollment.teacher as { name?: unknown }).name ?? '').trim()
-  }
-  if (typeof enrollment.teacherFallback === 'string') return enrollment.teacherFallback.trim()
-  return ''
-}
+}): string => enrollmentTeacherNameOf(enrollment)
 
 /**
  * مفتاح معرّف ثابت للمعلمة في معرّف الحدث — يعتمد على teacherId (الثابت عبر كل

@@ -5,14 +5,23 @@
 
 /** استخراج اسم المعلمة من أي شكل تسلسلي للاشتراك:
  * teacher نص → teacher كائن (name) → عمود teacherFallback → حقل teacherName.
- * (العلاقة قد تُكتب teacher نصًا في /parents و /student-portal/me بعد إعادة كتابة الخادم). */
+ * (العلاقة قد تُكتب teacher نصًا في /parents و /student-portal/me بعد إعادة كتابة الخادم،
+ * وتُكتب كائنًا في المسارات التي تُضمِّن العلاقة — signature متسامحة أعلاه تقبل كل الأشكال). */
 export const enrollmentTeacherNameOf = (en: {
-  teacher?: string | { id: string; name: string; subject?: string } | null
-  teacherFallback?: string
+  teacher?: unknown
+  teacherFallback?: unknown
   teacherName?: string
 }): string => {
   if (typeof en.teacher === 'string') return en.teacher.trim()
-  if (en.teacher && typeof en.teacher === 'object') return (en.teacher.name ?? '').trim()
+  if (
+    en.teacher &&
+    typeof en.teacher === 'object' &&
+    'name' in (en.teacher as Record<string, unknown>) &&
+    typeof (en.teacher as { name?: unknown }).name === 'string' &&
+    String((en.teacher as { name?: unknown }).name).trim()
+  ) {
+    return String((en.teacher as { name?: unknown }).name).trim()
+  }
   if (typeof en.teacherFallback === 'string' && en.teacherFallback.trim()) {
     return en.teacherFallback.trim()
   }

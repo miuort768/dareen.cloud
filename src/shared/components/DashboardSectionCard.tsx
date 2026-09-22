@@ -1,7 +1,5 @@
 import React from 'react'
-import { motion } from 'framer-motion'
-import { fadeUp } from '../animations/fadeUp'
-import { cn } from '../../lib/utils'
+import { SectionCard } from './SectionCard'
 
 export interface DashboardSectionCardProps {
   children: React.ReactNode
@@ -17,6 +15,7 @@ export interface DashboardSectionCardProps {
 /**
  * بطاقة قسم موحدة للوحات — قسم هادلة بحدود وظل ناعم مع حركة دخول fadeUp.
  * تجمع نمط Surface (بطاقة + عنوان/لون) ونمط Desktop (حركة دخول متدرجة).
+ * رفيع فوق SectionCard المشتركة للتوحيد (نهاية توحيد الـ 8 تعريفات).
  */
 export const DashboardSectionCard: React.FC<DashboardSectionCardProps> = ({
   children,
@@ -26,22 +25,20 @@ export const DashboardSectionCard: React.FC<DashboardSectionCardProps> = ({
   delay = 0,
   className,
 }) => (
-  <motion.section
-    {...fadeUp(delay)}
+  <SectionCard
+    animated
+    delay={delay}
     id={id}
-    className={cn(
-      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow',
-      className,
-    )}
+    padding="base"
+    shadow="elevation-1"
+    transition="colors"
+    slow
+    title={title}
+    titleTone={tone}
+    className={className}
   >
-    {title && (
-      <div className="mb-3 flex items-center gap-2">
-        <span className={cn('h-1.5 w-1.5 rounded-full', tone)} aria-hidden="true" />
-        <h2 className="text-sm font-black text-main">{title}</h2>
-      </div>
-    )}
     {children}
-  </motion.section>
+  </SectionCard>
 )
 
 DashboardSectionCard.displayName = 'DashboardSectionCard'
