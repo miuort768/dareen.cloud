@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const { prisma } = require('../../utils/prisma');
 const { authMiddleware, checkRole } = require('../../middleware/auth');

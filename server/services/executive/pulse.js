@@ -1,4 +1,4 @@
-﻿const { localYmd } = require('../../utils/validators');
+const { localYmd } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 const logger = require('../../utils/logger');
 const { getStats } = require('./stats');

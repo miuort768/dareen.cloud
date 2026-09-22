@@ -1,4 +1,4 @@
-﻿const { localYmd, timeToMinutes } = require('../../utils/validators');
+const { localYmd, timeToMinutes } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 
 async function getStats() {
