@@ -16,6 +16,7 @@ import {
   to24Minutes,
 } from '../features/attendance/utils/slotUtils'
 import { ARABIC_DAYS } from '../shared/constants/days'
+import { enrollmentTeacherNameOf, sessionOutcome } from '../shared/utils/enrollments'
 import type {
   ChildStats,
   ChildNextSession,
@@ -25,19 +26,7 @@ import type {
   ActiveTimerSession,
 } from './parent-dashboard/types'
 
-const teacherLabel = (en: Enrollment): string =>
-  typeof en.teacher === 'string' ? en.teacher : en.teacher?.name || en.teacherName || ''
-
-const COMPLETED_STATUSES = ['completed', 'مكتملة', 'تم الإنجاز', 'تمت']
-const CANCELLED_STATUSES = ['cancelled', 'ملغاة', 'ملغي', 'ملغى']
-
-/** يوحّد حالات الجلسة (بالإنجليزية أو العربية القديمة) إلى مفتاح واجهة واحد */
-const sessionOutcome = (status?: string | null): 'done' | 'cancelled' | null => {
-  const s = (status || '').trim().toLowerCase()
-  if (COMPLETED_STATUSES.includes(s)) return 'done'
-  if (CANCELLED_STATUSES.includes(s)) return 'cancelled'
-  return null
-}
+const teacherLabel = (en: Enrollment): string => enrollmentTeacherNameOf(en)
 
 /** Next upcoming slot for a child: today's remaining slots first, then the week ahead. */
 const findNextSession = (child: Student): ChildNextSession | null => {

@@ -1,4 +1,4 @@
-﻿import { formatLocalDate } from './utils'
+import { formatLocalDate } from './utils'
 import { API_BASE_URL } from '../config/api'
 
 function getAuthToken(): string | null {

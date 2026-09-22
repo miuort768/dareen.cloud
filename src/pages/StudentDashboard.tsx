@@ -24,20 +24,13 @@ import { StudentDashboardDesktop } from './student-dashboard/StudentDashboardDes
 import { StudentDashboardMobile } from './student-dashboard/StudentDashboardMobile'
 import type { StudentActiveSession } from './student-dashboard/LiveSessionBanner'
 import { format } from 'date-fns'
+import { enrollmentTeacherNameOf, sessionOutcome } from '../shared/utils/enrollments'
 
-const teacherLabel = (en: { teacher?: string; teacherName?: string }): string =>
-  en.teacherName || en.teacher || ''
-
-const COMPLETED_STATUSES = ['completed', 'مكتملة', 'تم الإنجاز', 'تمت']
-const CANCELLED_STATUSES = ['cancelled', 'ملغاة', 'ملغي', 'ملغى']
-
-/** يوحّد حالات الجلسة (بالإنجليزية أو العربية القديمة) إلى مفتاح واجهة واحد */
-const sessionOutcome = (status?: string | null): 'done' | 'cancelled' | null => {
-  const s = (status || '').trim().toLowerCase()
-  if (COMPLETED_STATUSES.includes(s)) return 'done'
-  if (CANCELLED_STATUSES.includes(s)) return 'cancelled'
-  return null
-}
+const teacherLabel = (en: {
+  teacher?: string | { id: string; name: string } | null
+  teacherName?: string
+  teacherId?: string
+}): string => enrollmentTeacherNameOf(en)
 
 /** يطابق الجلسة بالاشتراك عبر teacherId أولاً (الأدق) ثم بالاسم كخطة بديلة */
 const teacherMatches = (

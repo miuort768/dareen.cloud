@@ -4,6 +4,7 @@ import { reportsService } from '../services/reportsService'
 import { safeArray } from '../../../lib/api'
 import type { ReportData, ReportType } from '../types'
 import type { Student, Session, StudentInvoice } from '../../../types'
+import { getCurrencySymbol } from '../../../config/constants'
 
 const EMPTY_DATA: ReportData = { students: [], sessions: [], invoices: [] }
 
@@ -254,7 +255,7 @@ export const useReports = () => {
       netProfit: financeStats?.netProfit ?? totalRevenue - totalExpenses,
       monthNetProfit: financeStats?.monthProfit ?? monthRevenue - monthExpenses,
       profitMargin: financeStats?.profitMargin ?? '0',
-      reportCurrency: financeStats?.reportCurrency ?? 'EGP',
+      reportCurrency: getCurrencySymbol(financeStats?.reportCurrency ?? 'EGP'),
       revenueGrowth,
       monthlySessionsData,
       subjectPieData,

@@ -76,7 +76,7 @@ export const FinanceCharts = ({
       className="grid grid-cols-1 gap-4 lg:grid-cols-5"
       dir="rtl"
     >
-      {/* Area chart â€” spans 3 cols */}
+      {/* Area chart — spans 3 cols */}
       <div className="rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1 lg:col-span-3">
         <div className="mb-3 flex items-center justify-between">
           <div>
@@ -204,7 +204,7 @@ export const FinanceCharts = ({
         </div>
       </div>
 
-      {/* Donut chart â€” spans 2 cols */}
+      {/* Donut chart — spans 2 cols */}
       <div className="rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1 lg:col-span-2">
         <h3 className="mb-3 text-xs font-bold text-main">تصنيف المصروفات</h3>
         <div className="flex h-[calc(100%-2rem)] flex-col items-center justify-center">

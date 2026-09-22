@@ -1,4 +1,4 @@
-﻿import { formatLocalDate } from '../../../lib/utils'
+import { formatLocalDate } from '../../../lib/utils'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   useAcademyName,

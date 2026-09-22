@@ -1,4 +1,4 @@
-﻿export interface Teacher {
+export interface Teacher {
   id: string
   name: string
   phone1: string

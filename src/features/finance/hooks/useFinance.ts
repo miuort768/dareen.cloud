@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { financeService } from '../services/financeService'
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types'
 import { CHART_COLORS } from '../types'
