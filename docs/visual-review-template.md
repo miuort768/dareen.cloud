@@ -119,7 +119,7 @@
 | Radius: إبقاء الحالية + إضافة radius-card | 10 steps الآن — token رسمي للبطاقات | ✅ أضيف إلى design-tokens |
 | Typography: إضافة fontWeights | لإكمال نظام Typography | ✅ أضيف إلى design-tokens.ts |
 | Dark Mode Primary Contrast | 4.47:1 — Known Issue يُراجع في Sprint 3 | ⏳ Known Issue |
-| `rounded-card` غير معرّف | أضيف كـ Token رسمي (0.75rem) | ✅ تم |
+| `rounded-card` غير معرّف | أضيف كـ Token رسمي (1rem) | ✅ تم |
 | `bg-error-dark` غير موجود | أضيف كـ `bg-error-hover` في palette/semantic/tailwind | ✅ تم |
 | Focus Ring مفقود | أضيف `ring-focus` Token + focus rings على كل الأزرار | ✅ تم |
 | Active states ناقصة | أضيفت لـ Secondary/Outline/Ghost/Destructive | ✅ تم |
