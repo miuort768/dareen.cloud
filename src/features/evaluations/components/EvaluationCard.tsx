@@ -49,6 +49,7 @@ export const EvaluationCard = ({
     : null
   const totalStudentXP = studentEvals.reduce((s, ev) => s + (ev.points || 0), 0)
   const avgRating = averageRatingOf(studentEvals)
+  const ratingOf100 = avgRating ? Math.round((avgRating / 5) * 100) : 0
   const totalEnrollments = (student.enrollments || []).length
   const totalSessions = (student.enrollments || []).reduce((s, en) => s + en.sessionsTotal, 0)
   const usedSessions = (student.enrollments || []).reduce((s, en) => s + en.sessionsUsed, 0)
@@ -148,10 +149,26 @@ export const EvaluationCard = ({
             </div>
 
             <div className="grid grid-cols-3 gap-1.5">
-              {statCells.map((cell) => (
+              {statCells.map((cell, i) => (
                 <div key={cell.label} className={cn('rounded-xl p-2 text-center', cell.bg)}>
                   <p className="text-[10px] font-bold text-muted">{cell.label}</p>
-                  <p className={cn('text-xs font-black tabular-nums', cell.text)}>{cell.value}</p>
+                  <p
+                    className={cn(
+                      'tabular-nums',
+                      i === 0 ? 'font-dash text-lg font-black md:text-xl' : 'text-xs font-black',
+                      cell.text,
+                    )}
+                  >
+                    {cell.value}
+                  </p>
+                  {i === 0 && ratingOf100 > 0 && (
+                    <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-primary-soft dark:bg-primary/10">
+                      <div
+                        className="h-full rounded-full bg-primary transition-all duration-slow"
+                        style={{ width: `${ratingOf100}%` }}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
