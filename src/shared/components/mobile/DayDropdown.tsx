@@ -42,7 +42,7 @@ export const DayDropdown = ({
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="flex h-11 w-full cursor-pointer items-center gap-2 rounded-2xl border border-border bg-card px-3.5 text-start outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+        className="flex h-11 w-full cursor-pointer items-center gap-2 rounded-2xl border border-border bg-card px-3.5 text-start shadow-button outline-none transition-all duration-normal ease-out hover:border-primary hover:shadow-button-hover focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed active:duration-fast"
       >
         <CalendarDays size={14} className="shrink-0 text-primary" />
         <span className="flex-1 truncate text-xs font-bold text-main">{selectedLabel}</span>

@@ -13,7 +13,7 @@ import { useTaskMutations } from '../features/tasks/hooks/useTaskMutations'
 import { MobileTasks } from '../features/tasks/components/MobileTasks'
 import { TasksHeader } from '../features/tasks/components/TasksHeader'
 import type { StatusFilter } from '../features/tasks/components/TasksHeader'
-import { ErrorState } from '../shared/components/ui'
+import { ErrorState, FAB_SURFACE } from '../shared/components/ui'
 import { TaskCard, EmptyTaskState } from './TaskCard'
 import { TaskFormModal } from './TaskFormModal'
 
@@ -219,7 +219,7 @@ export const Tasks = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="إنشاء مهمة جديدة"
-          className="fixed bottom-6 end-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-4 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className={cn(FAB_SURFACE, 'fixed bottom-6 end-6 z-50 h-14 w-14 rounded-2xl')}
         >
           <Plus size={24} />
         </motion.button>

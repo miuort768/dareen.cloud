@@ -320,7 +320,7 @@ export const LiveSessions = () => {
 
                   <button
                     onClick={() => copyLink(session.meetingUrl || '', session.id)}
-                    className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted outline-none transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/15 dark:hover:bg-primary/10"
+                    className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-primary-soft hover:text-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-primary/15 dark:hover:bg-primary/10"
                     title="نسخ الرابط"
                     aria-label="نسخ رابط الحصة"
                   >
@@ -334,7 +334,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => openEditDialog(session)}
-                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted outline-none transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/15 dark:hover:bg-primary/10"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-primary-soft hover:text-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-primary/15 dark:hover:bg-primary/10"
                       title="تعديل الرابط"
                       aria-label="تعديل رابط الحصة"
                     >
@@ -345,7 +345,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => endSession(session.id)}
-                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-error outline-none transition-all hover:border-error-soft hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus dark:border-error-soft"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-error shadow-button outline-none transition-all duration-normal ease-out hover:border-error-soft hover:bg-error-soft hover:text-error hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-error-soft"
                       title="إنهاء الحصة"
                       aria-label="إنهاء الحصة"
                     >

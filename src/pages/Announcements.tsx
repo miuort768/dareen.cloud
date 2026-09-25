@@ -2,7 +2,13 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Megaphone, Plus, Bell, Calendar, EyeOff, Trash2, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { EmptyState, SkeletonCard, PageHeader, ErrorState } from '../shared/components/ui'
+import {
+  EmptyState,
+  SkeletonCard,
+  PageHeader,
+  ErrorState,
+  FAB_SURFACE,
+} from '../shared/components/ui'
 import { api, safeArray } from '../lib/api'
 import { useShowNotification, useAcademyName, useCurrentUser } from '../context/AppContext'
 import { confirm } from '../lib/confirmDialog'
@@ -332,7 +338,7 @@ export const Announcements = () => {
                   }}
                   disabled={'disabled' in action ? action.disabled : false}
                   aria-label={action.label}
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-elevation-2 transition-colors hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-button transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                 >
                   <action.icon size={18} />
                 </button>
@@ -346,8 +352,11 @@ export const Announcements = () => {
           aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات الإعلانات'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-            fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary',
+            FAB_SURFACE,
+            'h-14 w-14 rounded-2xl',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <Plus

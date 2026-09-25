@@ -15,6 +15,8 @@ import {
   CreditCard,
 } from 'lucide-react'
 import { getCurrencySymbol, CURRENCY_SYMBOL } from '../../../config/constants'
+import { cn } from '../../../lib/utils'
+import { FAB_SURFACE } from '../../../shared/components/ui'
 
 interface Transaction {
   id: string | number
@@ -134,7 +136,7 @@ const TransactionRow = ({
                   e.stopPropagation()
                   onPreviewInvoice(t.invoiceNumber!)
                 }}
-                className="rounded-xl p-1.5 text-muted outline-none transition-colors hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                className="rounded-xl p-1.5 text-muted outline-none transition-all duration-normal ease-out hover:bg-primary-soft hover:text-primary hover:shadow-button focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                 title="عرض الفاتورة"
               >
                 <Eye size={15} />
@@ -242,7 +244,7 @@ export const TransactionsLog = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onAddTransaction}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className={cn(FAB_SURFACE, 'gap-1.5 rounded-xl px-3 py-2 text-xs font-bold')}
           >
             <Plus size={14} /> إضافة معاملة
           </button>
@@ -331,7 +333,7 @@ export const TransactionsLog = ({
         <div className="px-4 pb-4 pt-0">
           <button
             onClick={() => setPage((p) => p + 1)}
-            className="w-full rounded-xl border border-primary/20 bg-primary-soft py-2.5 text-xs font-bold text-primary outline-none transition-all hover:bg-primary/15 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+            className="flex w-full items-center justify-center rounded-xl border border-primary/20 bg-primary-soft py-2.5 text-xs font-bold text-primary shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/40 hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] active:shadow-button-pressed"
           >
             عرض المزيد ({filtered.length - page * PER_PAGE} متبقي)
           </button>

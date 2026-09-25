@@ -177,7 +177,7 @@ export const AdminAttendanceView = ({
                             aria-expanded={
                               expandedHistory === `${student.studentId}-${student.subject}`
                             }
-                            className="flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                            className="flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-micro font-bold text-primary shadow-button transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                           >
                             <History size={10} /> السجل
                           </button>

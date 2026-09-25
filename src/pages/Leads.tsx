@@ -22,7 +22,7 @@ import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
 import type { Lead, LeadStatus, LeadPriority } from '../features/crm/types'
 import { ErrorBanner } from '../shared/components/ui/ErrorState'
-import { PageHeader } from '../shared/components/ui'
+import { PageHeader, FAB_SURFACE } from '../shared/components/ui'
 import { statusColors } from './leads/components/LeadsUI'
 import { LeadTable } from './leads/components/LeadTable'
 import { LeadCards } from './leads/components/LeadCards'
@@ -775,7 +775,10 @@ export const Leads = () => {
         {/* FAB */}
         <motion.button
           onClick={() => setIsAddModalOpen(true)}
-          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-6 z-50 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:bottom-8 md:end-8 md:h-14 md:w-14"
+          className={cn(
+            FAB_SURFACE,
+            'fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-6 z-50 h-12 w-12 rounded-2xl md:bottom-8 md:end-8 md:h-14 md:w-14',
+          )}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة عميل"

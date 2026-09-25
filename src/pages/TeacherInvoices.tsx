@@ -15,6 +15,7 @@ import {
 } from '../types/invoice'
 import type { Teacher } from '../types'
 import { PageLoader } from '../components/ui/PageLoader'
+import { FAB_SURFACE } from '../shared/components/ui'
 import { InvoiceStats } from './teacher-invoices/components/InvoiceStats'
 import { InvoiceForm } from './teacher-invoices/components/InvoiceForm'
 import { InvoiceTable } from './teacher-invoices/components/InvoiceTable'
@@ -541,7 +542,7 @@ export const TeacherInvoices = () => {
                       action.onClick()
                       setFabOpen(false)
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
+                    className={cn(FAB_SURFACE, 'h-10 w-10 rounded-full')}
                   >
                     <action.icon size={18} />
                   </button>
@@ -553,8 +554,11 @@ export const TeacherInvoices = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-elevation-4 transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            FAB_SURFACE,
+            'h-12 w-12 rounded-full',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <GraduationCap size={22} />

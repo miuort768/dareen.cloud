@@ -22,7 +22,7 @@ import {
   normalizeInvoiceStatus,
   type InvoiceStatus,
 } from '../types/invoice'
-import { Skeleton, Table, EmptyState, StatCard } from '../shared/components/ui'
+import { Skeleton, Table, EmptyState, StatCard, FAB_SURFACE } from '../shared/components/ui'
 import { GradientHeroCard } from '../shared/components/GradientHeroCard'
 import type { Column } from '../shared/components/ui'
 import { format } from 'date-fns'
@@ -535,7 +535,7 @@ export const TeacherPaymentHistory = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
+                  className={cn(FAB_SURFACE, 'h-10 w-10 rounded-xl')}
                 >
                   <action.icon size={18} />
                 </button>
@@ -549,8 +549,11 @@ export const TeacherPaymentHistory = () => {
           aria-label={fabOpen ? 'إغلاق' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-2xl text-on-primary shadow-elevation-4 transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            FAB_SURFACE,
+            'h-12 w-12 rounded-2xl',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <Wallet size={22} />

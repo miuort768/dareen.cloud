@@ -251,7 +251,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.max(1, (page || 1) - 1))}
             disabled={page === 1 || page === undefined}
-            className="rounded-card p-2.5 text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
+            className="rounded-card p-2.5 text-muted shadow-button outline-none transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed disabled:pointer-events-none disabled:opacity-30 disabled:shadow-none md:p-1.5"
             aria-label="الصفحة السابقة"
           >
             <ChevronRight size={16} />
@@ -276,7 +276,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.min(totalPages, (page || 1) + 1))}
             disabled={page === totalPages}
-            className="rounded-card p-2.5 text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
+            className="rounded-card p-2.5 text-muted shadow-button outline-none transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed disabled:pointer-events-none disabled:opacity-30 disabled:shadow-none md:p-1.5"
             aria-label="الصفحة التالية"
           >
             <ChevronLeft size={16} />

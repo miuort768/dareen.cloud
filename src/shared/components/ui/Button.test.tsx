@@ -63,12 +63,17 @@ describe('Button', () => {
 
   it('applies outline variant', () => {
     render(<Button variant="outline">حدود</Button>)
-    expect(screen.getByRole('button').className).toContain('border-2')
+    expect(screen.getByRole('button').className).toContain('border-primary/40')
   })
 
   it('applies ghost variant', () => {
     render(<Button variant="ghost">شبح</Button>)
     expect(screen.getByRole('button').className).toContain('bg-transparent')
+  })
+
+  it('applies warning variant', () => {
+    render(<Button variant="warning">تحذير</Button>)
+    expect(screen.getByRole('button').className).toContain('bg-warning')
   })
 
   it('applies success variant', () => {
@@ -126,5 +131,25 @@ describe('Button', () => {
     render(<Button>تركيز</Button>)
     expect(screen.getByRole('button').className).toContain('focus-visible:ring-2')
     expect(screen.getByRole('button').className).toContain('focus-visible:ring-focus')
+  })
+
+  it('rides the button elevation recipe', () => {
+    render(<Button>ارتفاع</Button>)
+    const btn = screen.getByRole('button').className
+    expect(btn).toContain('shadow-button')
+    expect(btn).toContain('hover:shadow-button-hover')
+    expect(btn).toContain('active:shadow-button-pressed')
+    expect(btn).toContain('active:scale-[0.985]')
+  })
+
+  it('flattens disabled buttons without hover-feel', () => {
+    render(<Button disabled>معطل</Button>)
+    expect(screen.getByRole('button').className).toContain('disabled:shadow-none')
+  })
+
+  it('carries an inner hairline on filled primary', () => {
+    render(<Button>أساسي</Button>)
+    expect(screen.getByRole('button').className).toContain('ring-1')
+    expect(screen.getByRole('button').className).toContain('ring-inset')
   })
 })

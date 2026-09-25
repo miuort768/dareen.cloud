@@ -1,7 +1,7 @@
 import { memo, useMemo } from 'react'
 import { Edit, Trash, Bell, GraduationCap, Star, AlertTriangle } from 'lucide-react'
 import { cn } from '../../../lib/utils'
-import { Table, ProgressBar } from '../../../shared/components/ui'
+import { Table, ProgressBar, FAB_SURFACE } from '../../../shared/components/ui'
 import type { Column } from '../../../shared/components/ui'
 import type { Student } from '../types'
 
@@ -217,7 +217,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className={cn(FAB_SURFACE, 'min-h-9 min-w-9 rounded-xl text-[10px]')}
                   aria-label="تعديل"
                 >
                   <Edit size={13} />
@@ -229,7 +229,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onNotify(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all hover:bg-warning-soft hover:text-warning focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all duration-normal ease-out hover:bg-warning-soft hover:text-warning hover:shadow-button focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                   aria-label="إشعار"
                 >
                   <Bell size={13} />
@@ -241,7 +241,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onDelete(student.id)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all duration-normal ease-out hover:bg-error-soft hover:text-error hover:shadow-button focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                   aria-label="حذف"
                 >
                   <Trash size={13} />
@@ -316,7 +316,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary text-on-primary outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className={cn(FAB_SURFACE, 'min-h-9 min-w-9 rounded-xl')}
                   aria-label="تعديل"
                 >
                   <Edit size={13} />
@@ -328,7 +328,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onNotify(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none hover:bg-warning-soft hover:text-warning focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all duration-normal ease-out hover:bg-warning-soft hover:text-warning hover:shadow-button focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                   aria-label="إشعار"
                 >
                   <Bell size={13} />
@@ -340,7 +340,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onDelete(student.id)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all duration-normal ease-out hover:bg-error-soft hover:text-error hover:shadow-button focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                   aria-label="حذف"
                 >
                   <Trash size={13} />

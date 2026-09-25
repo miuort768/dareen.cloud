@@ -162,12 +162,13 @@ export const PrimaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 bg-gradient-to-br from-primary to-primary-active',
-      'hover:from-primary-hover hover:to-primary',
-      'rounded-xl px-6 py-3 text-xs font-bold text-on-primary',
-      'outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
-      'shadow-elevation-1 shadow-primary/20 hover:shadow-elevation-2',
-      'disabled:cursor-not-allowed disabled:opacity-50',
+      'flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
+      'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
+      'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
+      'px-6 py-3 text-xs font-bold',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
+      'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',
       className,
     )}
   >
@@ -187,10 +188,11 @@ export const SecondaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 border border-divider bg-card',
-      'text-muted hover:border-border hover:bg-surface hover:text-main',
-      'rounded-xl px-5 py-2.5 text-xs font-bold',
-      'outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-border bg-card text-muted shadow-button',
+      'hover:border-border-strong hover:bg-surface hover:text-main hover:shadow-button-hover',
+      'px-5 py-2.5 text-xs font-bold',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       className,
     )}
   >
@@ -210,10 +212,11 @@ export const DangerBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 bg-gradient-to-br from-error-soft to-transparent',
-      'border-2 border-error-soft hover:border-error hover:from-error hover:to-error-dark',
-      'rounded-xl px-5 py-2.5 text-xs font-bold text-error hover:text-on-error',
-      'shadow-elevation-1 outline-none transition-all duration-normal hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-error-soft bg-error-soft text-error shadow-none',
+      'hover:border-error hover:bg-error hover:text-on-error hover:shadow-button',
+      'px-5 py-2.5 text-xs font-bold',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:bg-error-active active:text-on-error active:shadow-button-pressed active:duration-fast',
       className,
     )}
   >

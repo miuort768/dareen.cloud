@@ -98,7 +98,7 @@ export const StudentAttendanceCard = ({
           }}
           aria-label={`سجل حضور ${student.name}`}
           aria-expanded={historyOpen}
-          className="flex items-center justify-center gap-1 rounded-2xl bg-primary-soft px-3 py-2.5 text-micro font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="flex items-center justify-center gap-1 rounded-2xl bg-primary-soft px-3 py-2.5 text-micro font-bold text-primary shadow-button transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
         >
           <History size={12} strokeWidth={1.5} /> السجل
         </motion.button>
@@ -133,7 +133,7 @@ export const StudentAttendanceCard = ({
                   setMenuOpen(false)
                   onReschedule()
                 }}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary-soft py-2.5 text-micro font-bold text-primary transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary-soft py-2.5 text-micro font-bold text-primary shadow-button transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
               >
                 <CalendarClock size={13} /> طلب تأجيل الحصة
               </motion.button>
@@ -145,7 +145,7 @@ export const StudentAttendanceCard = ({
                     setMenuOpen(false)
                     onDeleteSlot(todaySlotIndex)
                   }}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-error-soft py-2.5 text-micro font-bold text-error transition-colors hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-error-soft py-2.5 text-micro font-bold text-error shadow-button transition-all duration-normal ease-out hover:bg-error hover:text-on-error hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                 >
                   <Trash2 size={13} /> حذف موعد اليوم
                 </motion.button>

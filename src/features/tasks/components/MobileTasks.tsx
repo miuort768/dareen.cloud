@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 import { api, safeArray } from '../../../lib/api'
 import { MobilePage, usePullToRefresh, BottomSheet } from '../../../shared/components/mobile'
-import { SkeletonCard, EmptyState } from '../../../shared/components/ui'
+import { SkeletonCard, EmptyState, FAB_SURFACE } from '../../../shared/components/ui'
 import { cn } from '../../../lib/utils'
 import { triggerHaptic } from '../../../lib/haptics'
 import { confirm } from '../../../lib/confirmDialog'
@@ -325,7 +325,7 @@ export const MobileTasks = () => {
           setSheetOpen(true)
         }}
         aria-label="إضافة مهمة جديدة"
-        className="fixed bottom-24 end-4 z-40 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:hidden"
+        className={cn(FAB_SURFACE, 'fixed bottom-24 end-4 z-40 h-14 w-14 rounded-2xl md:hidden')}
       >
         <Plus size={24} strokeWidth={2} />
       </motion.button>

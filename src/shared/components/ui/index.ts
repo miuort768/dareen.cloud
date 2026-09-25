@@ -1,5 +1,11 @@
 // UI Kit barrel export – import everything from 'src/shared/components/ui'
 export { Button } from './Button'
+export { IconButton } from './IconButton'
+export type { IconButtonProps } from './IconButton'
+export { Fab } from './button-styles'
+export type { FabProps } from './button-styles'
+export { FAB_SURFACE, softActionBase, softActionTone, softActionClasses } from './button-tokens'
+export type { SoftTone } from './button-tokens'
 export { Input } from './Input'
 export {
   Skeleton,

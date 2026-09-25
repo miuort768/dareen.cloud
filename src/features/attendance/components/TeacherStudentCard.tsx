@@ -13,7 +13,7 @@ import { cn } from '../../../lib/utils'
 import { api } from '../../../lib/api'
 import type { Student, Enrollment, ScheduleSlot } from '../types'
 
-import { ProgressBar } from '../../../shared/components/ui'
+import { ProgressBar, FAB_SURFACE } from '../../../shared/components/ui'
 import { StudentCardTimer } from './StudentCardTimer'
 import { StudentScheduleEditor } from './StudentScheduleEditor'
 import { StartLiveSessionDialog } from '../../dashboard/components/StartLiveSessionDialog'
@@ -254,7 +254,10 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         {/* Live Session Quick Start */}
         <button
           onClick={() => setShowLiveDialog(true)}
-          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-micro font-bold uppercase tracking-widest text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className={cn(
+            FAB_SURFACE,
+            'group w-full gap-2 rounded-2xl py-3 text-micro font-bold uppercase tracking-widest',
+          )}
         >
           <Radio size={14} className="animate-pulse" />
           <span>بدء الحصة مع {student.name.split(' ')[0]}</span>
@@ -304,13 +307,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                   student.curriculum,
                 )
               }
-              className="w-full rounded-2xl bg-error px-1 py-2 text-micro font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="w-full rounded-2xl bg-error px-1 py-2 text-micro font-bold text-on-error shadow-button ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:bg-error-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
             >
               السجل
             </button>
             <button
               onClick={() => onLogAttendance(student, en)}
-              className="w-full rounded-2xl bg-success px-2 py-2 text-micro font-bold text-on-success shadow-elevation-1 transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="w-full rounded-2xl bg-success px-2 py-2 text-micro font-bold text-on-success shadow-button ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:bg-success-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
             >
               تسجيل
             </button>

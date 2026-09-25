@@ -16,7 +16,7 @@ import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { GradientHeroCard } from '../shared/components/GradientHeroCard'
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal'
-import { SkeletonCard } from '../shared/components/ui'
+import { SkeletonCard, FAB_SURFACE } from '../shared/components/ui'
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats'
 import { AttendanceHeader } from '../features/attendance/components/AttendanceHeader'
 import { AttendanceFilters } from '../features/attendance/components/AttendanceFilters'
@@ -539,7 +539,7 @@ export const Attendance = () => {
                         setFabOpen(false)
                       }}
                       aria-label={action.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                      className={cn(FAB_SURFACE, 'h-10 w-10 rounded-full')}
                     >
                       <action.icon size={18} />
                     </button>
@@ -553,8 +553,11 @@ export const Attendance = () => {
               aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
               aria-expanded={fabOpen}
               className={cn(
-                'flex h-12 w-12 items-center justify-center rounded-full shadow-elevation-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary text-on-primary',
+                FAB_SURFACE,
+                'h-12 w-12 rounded-full',
+                fabOpen
+                  ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+                  : '',
               )}
             >
               <Plus size={24} />

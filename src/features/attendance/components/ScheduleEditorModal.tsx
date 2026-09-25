@@ -155,7 +155,7 @@ export const ScheduleEditorModal = ({
                         onClick={() => handleDelete(i)}
                         disabled={isBusy}
                         aria-label={`حذف الموعد ${i + 1}`}
-                        className="flex h-8 w-8 items-center justify-center rounded-2xl bg-error-soft text-error transition-colors hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                        className="flex h-8 w-8 items-center justify-center rounded-2xl border border-error-soft bg-error-soft text-error shadow-button transition-all duration-normal ease-out hover:border-error hover:bg-error hover:text-on-error hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed disabled:opacity-50"
                       >
                         <Trash2 size={14} />
                       </button>

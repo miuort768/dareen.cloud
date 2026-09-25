@@ -22,7 +22,7 @@ import { api, safeGet } from '../lib/api'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice'
 import { CURRENCY_SYMBOL } from '@/config/constants'
 import { PageLoader } from '../components/ui/PageLoader'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, FAB_SURFACE } from '../shared/components/ui'
 
 import { KpiCard } from './monthly-closing/components/ClosingUI'
 import { SalarySlipModal } from './monthly-closing/components/SalarySlipModal'
@@ -555,7 +555,7 @@ export const MonthlyClosing = () => {
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
+                  className={cn(FAB_SURFACE, 'h-10 w-10 rounded-full')}
                 >
                   <item.icon size={18} />
                 </button>
@@ -567,8 +567,11 @@ export const MonthlyClosing = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-elevation-4 transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            FAB_SURFACE,
+            'h-12 w-12 rounded-full',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <CalendarCheck size={22} />

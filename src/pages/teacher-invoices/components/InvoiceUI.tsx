@@ -65,7 +65,13 @@ export const PrimaryBtn = ({
     disabled={disabled || loading}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
+      'flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
+      'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
+      'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
+      'px-5 py-2.5 text-xs font-bold',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
+      'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none disabled:active:scale-100',
       className,
     )}
   >
@@ -88,7 +94,10 @@ export const SecondaryBtn = ({
     title={title}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-4 py-2.5 text-xs font-bold text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-xs font-bold text-muted shadow-button',
+      'hover:border-border-strong hover:bg-surface hover:text-main hover:shadow-button-hover',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       className,
     )}
   >
@@ -111,7 +120,10 @@ export const DangerBtn = ({
     title={title}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border-2 border-error-soft bg-error-soft px-4 py-2.5 text-xs font-bold text-error outline-none transition-all hover:bg-error hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-error-soft bg-error-soft px-4 py-2.5 text-xs font-bold text-error shadow-none',
+      'hover:border-error hover:bg-error hover:text-on-error hover:shadow-button',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:bg-error-active active:text-on-error active:shadow-button-pressed active:duration-fast',
       className,
     )}
   >

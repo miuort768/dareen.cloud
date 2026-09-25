@@ -80,10 +80,10 @@ const FALLBACK_STYLE: CountryStyle = {
 const getCountryStyle = (country: string) => COUNTRY_STYLES[country] || FALLBACK_STYLE
 
 const CONTACT_LINK_CLASS =
-  'inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success transition-colors hover:bg-success-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95'
+  'inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success shadow-button transition-all duration-normal ease-out hover:bg-success hover:text-on-success hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed'
 
 const FILTER_CHIP_CLASS =
-  'flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:h-9'
+  'flex h-10 items-center justify-center whitespace-nowrap rounded-xl px-3.5 text-xs font-semibold transition-all duration-normal ease-out shadow-button hover:shadow-button-hover active:scale-[0.985] active:shadow-button-pressed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:h-9'
 
 export const AdminBlogCustomers = () => {
   const academyName = useAcademyName()
@@ -286,7 +286,7 @@ export const AdminBlogCustomers = () => {
                 className={cn(
                   FILTER_CHIP_CLASS,
                   countryFilter === ''
-                    ? 'bg-primary text-on-primary shadow-elevation-1'
+                    ? 'border border-primary/60 bg-primary text-on-primary ring-1 ring-inset ring-white/10'
                     : 'border border-border bg-card text-muted hover:bg-hover',
                 )}
               >
@@ -301,7 +301,7 @@ export const AdminBlogCustomers = () => {
                   className={cn(
                     FILTER_CHIP_CLASS,
                     countryFilter === c
-                      ? 'bg-primary text-on-primary shadow-elevation-1'
+                      ? 'border border-primary/60 bg-primary text-on-primary ring-1 ring-inset ring-white/10'
                       : 'border border-border bg-card text-muted hover:bg-hover',
                   )}
                 >

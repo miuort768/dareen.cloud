@@ -58,7 +58,7 @@ const formatPhone = (phone: string) => {
 }
 
 const actionBtnBase =
-  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-extrabold transition-all active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-focus'
+  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-extrabold transition-all duration-normal ease-out shadow-button hover:shadow-button-hover active:scale-95 active:shadow-button-pressed outline-none focus-visible:ring-2 focus-visible:ring-focus'
 
 export const TrialSessionCard = ({
   session: t,
@@ -225,7 +225,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onWhatsApp(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
+              className={cn(
+                actionBtnBase,
+                'bg-success-soft text-success hover:bg-success hover:text-on-success',
+              )}
               aria-label="واتساب"
             >
               <MessageSquare size={13} /> واتساب
@@ -237,7 +240,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onCall(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
+              className={cn(
+                actionBtnBase,
+                'bg-info-soft text-info hover:bg-info hover:text-on-info',
+              )}
               aria-label="اتصال"
             >
               <Phone size={13} /> اتصال
@@ -248,7 +254,10 @@ export const TrialSessionCard = ({
               e.stopPropagation()
               onEdit(t)
             }}
-            className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
+            className={cn(
+              actionBtnBase,
+              'bg-primary-soft text-primary hover:bg-primary hover:text-on-primary',
+            )}
             aria-label="تعديل"
           >
             <Pencil size={13} /> تعديل
@@ -300,7 +309,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onCall(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
+              className={cn(
+                actionBtnBase,
+                'bg-info-soft text-info hover:bg-info hover:text-on-info',
+              )}
               aria-label="اتصال"
             >
               <Phone size={13} /> اتصال
@@ -312,7 +324,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onWhatsApp(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
+              className={cn(
+                actionBtnBase,
+                'bg-success-soft text-success hover:bg-success hover:text-on-success',
+              )}
               aria-label="واتساب"
             >
               <MessageSquare size={13} /> واتساب
@@ -323,7 +338,10 @@ export const TrialSessionCard = ({
               e.stopPropagation()
               onEdit(t)
             }}
-            className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
+            className={cn(
+              actionBtnBase,
+              'bg-primary-soft text-primary hover:bg-primary hover:text-on-primary',
+            )}
             aria-label="تعديل"
           >
             <Pencil size={13} /> تعديل

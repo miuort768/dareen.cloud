@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
+
+import { FAB_SURFACE } from '../shared/components/ui'
 import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
 import { useSearchParams } from 'react-router-dom'
 import { api, safeArray } from '../lib/api'
@@ -489,7 +491,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-12 w-12 items-center justify-center rounded-card border border-divider bg-primary text-on-primary shadow-elevation-2 outline-none transition-[background-color,box-shadow,transform] duration-fast hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className={cn(FAB_SURFACE, 'h-12 w-12 rounded-card')}
                 >
                   <action.icon size={20} />
                 </button>
@@ -502,8 +504,11 @@ export const Forum = () => {
           whileTap={{ scale: 0.95 }}
           aria-label="إضافة منشور جديد أو فرز المنشورات"
           className={cn(
-            'flex h-14 w-14 items-center justify-center rounded-card border border-divider text-on-primary shadow-elevation-3 transition-[background-color,box-shadow,transform] duration-fast',
-            fabOpen ? 'rotate-45 bg-error hover:bg-error' : 'bg-primary hover:bg-primary-hover',
+            FAB_SURFACE,
+            'h-14 w-14 rounded-card',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <Plus size={26} />

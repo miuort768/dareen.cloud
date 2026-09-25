@@ -32,6 +32,8 @@ import { useUIStore } from '../store/uiStore'
 import { useAcademyName } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui/Skeleton'
 
+import { FAB_SURFACE } from '../shared/components/ui'
+
 export interface TrialSession {
   id: string
   studentName: string
@@ -937,7 +939,10 @@ export const TrialSessions = () => {
             resetForm()
             setShowModal(true)
           }}
-          className="fixed bottom-8 end-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:flex"
+          className={cn(
+            FAB_SURFACE,
+            'fixed bottom-8 end-8 z-40 hidden h-14 w-14 rounded-2xl md:flex',
+          )}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"

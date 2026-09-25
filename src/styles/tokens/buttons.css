@@ -1,0 +1,10 @@
+/* ── Buttons: Single-source elevation recipe ──
+   Resting = barely-there depth · Hover = gentle lift · Pressed = sunk + inset.
+   Used by the shared Button, ActionButton, and every harmonized button chip.
+*/
+
+:root {
+  --shadow-button: 0 1px 1px rgb(0 0 0 / 0.04), 0 1px 2px rgb(0 0 0 / 0.03);
+  --shadow-button-hover: 0 6px 16px -6px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-button-pressed: 0 0 0 rgb(0 0 0 / 0), inset 0 1px 2px rgb(0 0 0 / 0.06);
+}

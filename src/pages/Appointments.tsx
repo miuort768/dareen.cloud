@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useAcademyName } from '../context/AppContext'
 import { PageLoader } from '../components/ui/PageLoader'
+import { FAB_SURFACE } from '../shared/components/ui'
 import { MobileAppointments } from '../features/appointments/components/MobileAppointments'
 import { DAYS_OF_WEEK, appointmentTimeSort } from '../features/appointments/types'
 import type { AppointmentEvent } from '../features/appointments/types'
@@ -269,7 +270,7 @@ export const Appointments = () => {
                     setFabOpen(false)
                   }}
                   aria-label={action.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className={cn(FAB_SURFACE, 'h-10 w-10 rounded-2xl')}
                 >
                   <action.icon size={18} />
                 </button>
@@ -283,8 +284,11 @@ export const Appointments = () => {
           aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-2xl text-on-primary shadow-elevation-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-            fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary',
+            FAB_SURFACE,
+            'h-12 w-12 rounded-2xl',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <Plus size={24} />

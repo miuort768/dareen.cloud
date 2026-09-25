@@ -37,7 +37,7 @@ export const MobilePageHeader = ({
         <button
           onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
           aria-label="رجوع"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main shadow-button outline-none transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed active:duration-fast"
         >
           <ChevronRight size={20} />
         </button>

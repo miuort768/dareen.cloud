@@ -52,7 +52,13 @@ export const PrimaryBtn = ({
     disabled={disabled}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50',
+      'flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
+      'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
+      'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
+      'px-4 py-2 text-xs font-bold',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
+      'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',
       className,
     )}
   >
@@ -72,7 +78,10 @@ export const SecondaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-3 py-2 text-xs font-bold text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-xs font-bold text-muted shadow-button',
+      'hover:border-border-strong hover:bg-surface hover:text-main hover:shadow-button-hover',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       className,
     )}
   >

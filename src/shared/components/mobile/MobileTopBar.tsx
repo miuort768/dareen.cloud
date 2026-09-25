@@ -47,7 +47,7 @@ export const MobileTopBar = ({
             <button
               onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
               aria-label="رجوع"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main shadow-button outline-none transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed active:duration-fast"
             >
               <ChevronRight size={18} />
             </button>
@@ -74,7 +74,7 @@ export const MobileTopBar = ({
           <button
             onClick={() => navigate('/parent-announcements')}
             aria-label="الإعلانات"
-            className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted shadow-button outline-none transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed active:duration-fast"
           >
             <Bell size={16} strokeWidth={1.5} />
             {totalUnreadCount > 0 && (

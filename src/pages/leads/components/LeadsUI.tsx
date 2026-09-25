@@ -307,7 +307,13 @@ export const PrimaryBtn = ({
     disabled={disabled}
     onClick={onClick}
     className={cn(
-      'inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 shadow-primary/10 outline-none transition-all duration-normal hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
+      'inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
+      'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
+      'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
+      'px-4 py-2.5 text-xs font-bold',
+      'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
+      'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
+      'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',
       className,
     )}
   >

@@ -11,7 +11,7 @@ import {
   Receipt,
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
-import { Skeleton } from '../../../shared/components/ui'
+import { Skeleton, FAB_SURFACE } from '../../../shared/components/ui'
 import { TransactionsLog } from '../components/TransactionsLog'
 import { FinanceCharts } from '../components/FinanceCharts'
 import { FinanceStats } from '../components/FinanceStats'
@@ -264,7 +264,7 @@ export const Finance = () => {
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className={cn(FAB_SURFACE, 'h-11 w-11 rounded-2xl')}
                 >
                   <item.icon size={18} />
                 </button>
@@ -276,8 +276,11 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-4 transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            FAB_SURFACE,
+            'h-14 w-14 rounded-2xl',
+            fabOpen
+              ? 'rotate-45 border-error bg-error text-on-error hover:border-error-hover hover:bg-error-hover'
+              : '',
           )}
         >
           <Plus size={24} />

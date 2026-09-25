@@ -90,7 +90,7 @@ export const BottomSheet = ({
                 aria-label="إغلاق"
                 data-slot="bst-close"
                 className={cn(
-                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted shadow-button outline-none transition-all duration-normal ease-out hover:bg-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
                   closeClassName,
                 )}
               >

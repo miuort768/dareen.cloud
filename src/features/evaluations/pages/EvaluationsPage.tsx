@@ -11,7 +11,7 @@ import { EvaluationFormModal } from '../components/EvaluationFormModal'
 import type { Student, Evaluation } from '../../../types'
 import { cn } from '../../../lib/utils'
 import { ratingValueOf } from '../types/constants'
-import { ErrorState, EmptyState } from '../../../shared/components/ui'
+import { ErrorState, EmptyState, FAB_SURFACE } from '../../../shared/components/ui'
 
 export const Evaluations = () => {
   useEffect(() => {
@@ -347,7 +347,7 @@ export const Evaluations = () => {
                     setFabOpen(false)
                   }}
                   aria-label={action.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary/90 hover:shadow-elevation-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className={cn(FAB_SURFACE, 'h-10 w-10 rounded-xl')}
                 >
                   <action.icon size={18} />
                 </button>
@@ -361,10 +361,11 @@ export const Evaluations = () => {
           aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl shadow-elevation-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            FAB_SURFACE,
+            'h-12 w-12 rounded-xl',
             fabOpen
-              ? 'rotate-45 border border-border bg-card text-main'
-              : 'bg-primary text-on-primary',
+              ? 'rotate-45 border border-border bg-card text-main shadow-button hover:border-border hover:bg-hover hover:text-main hover:shadow-button'
+              : '',
           )}
         >
           <Plus size={24} />

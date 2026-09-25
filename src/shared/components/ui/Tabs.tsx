@@ -34,10 +34,11 @@ const variantStyles = {
     container: 'flex gap-1.5 p-1',
     tab: (isActive: boolean) =>
       cn(
-        'px-4 py-2 text-sm font-semibold rounded-lg transition-colors duration-normal',
+        'px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-normal ease-out',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
+        'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
         isActive
-          ? 'bg-primary text-on-primary shadow-elevation-1'
+          ? 'bg-primary text-on-primary border border-primary/60 ring-1 ring-inset ring-white/10 shadow-button'
           : 'text-muted hover:text-main hover:bg-hover',
       ),
   },
@@ -45,11 +46,12 @@ const variantStyles = {
     container: 'flex gap-2',
     tab: (isActive: boolean) =>
       cn(
-        'px-4 py-2 text-sm font-semibold rounded-card border transition-colors duration-normal',
+        'px-4 py-2 text-sm font-semibold rounded-card border transition-all duration-normal ease-out',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
+        'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
         isActive
-          ? 'bg-card text-main border-primary shadow-elevation-1'
-          : 'bg-surface text-muted border-border hover:text-main hover:border-strong',
+          ? 'bg-card text-main border-primary shadow-button'
+          : 'bg-surface text-muted border-border shadow-button hover:bg-card hover:text-main hover:border-strong hover:shadow-button-hover',
       ),
   },
 }

@@ -15,6 +15,15 @@ describe('cn — tailwind-merge shadow group guard', () => {
     expect(cn('shadow-elevation-1 shadow-primary/10')).toBe('shadow-elevation-1 shadow-primary/10')
   })
 
+  it('keeps the button shadow recipe alongside colors and picks the last scale', () => {
+    expect(cn('shadow-button shadow-primary/10')).toBe('shadow-button shadow-primary/10')
+    expect(cn('shadow-button hover:shadow-button-hover')).toBe(
+      'shadow-button hover:shadow-button-hover',
+    )
+    expect(cn('shadow-button shadow-button-hover')).toBe('shadow-button-hover')
+    expect(cn('shadow-button-hover shadow-button-pressed')).toBe('shadow-button-pressed')
+  })
+
   it('drops the earlier shadow scale when a later same-group scale wins', () => {
     expect(cn('shadow-soft shadow-2xl')).toBe('shadow-2xl')
     expect(cn('shadow-elevation-1 shadow-elevation-2')).toBe('shadow-elevation-2')

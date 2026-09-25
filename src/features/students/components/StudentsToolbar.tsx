@@ -59,7 +59,7 @@ export const StudentsToolbar = ({
   const [importing, setImporting] = useState(false)
 
   const btnClass =
-    'h-9 px-3 flex items-center gap-1.5 text-xs font-bold rounded-xl focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] transition-colors'
+    'h-9 px-3 flex items-center gap-1.5 text-xs font-bold rounded-xl shadow-button hover:shadow-button-hover transition-all duration-normal ease-out active:scale-[0.985] active:shadow-button-pressed active:duration-fast focus-visible:ring-2 focus-visible:ring-focus'
 
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

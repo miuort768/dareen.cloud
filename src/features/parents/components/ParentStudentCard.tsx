@@ -2,7 +2,7 @@ import { User, BookOpen, TrendingUp, CheckCircle2, Star, Trophy, Calendar } from
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { GamificationCard } from '../../students/components/GamificationCard'
-import { ProgressBar } from '../../../shared/components/ui'
+import { ProgressBar, FAB_SURFACE } from '../../../shared/components/ui'
 import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
 
 interface ParentEnrollment {
@@ -184,14 +184,17 @@ export const ParentStudentCard = ({
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => onViewDates(student)}
-            className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-micro font-medium text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
+            className={cn(
+              FAB_SURFACE,
+              'gap-1.5 rounded-xl py-2.5 text-micro font-medium md:gap-2 md:text-micro',
+            )}
           >
             <Calendar size={13} className="md:size-3.5" />
             حصص الطالب
           </button>
           <button
             onClick={() => onViewAttendance(student)}
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface py-2.5 text-micro font-medium text-main outline-none transition-all hover:border-primary/30 hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface py-2.5 text-micro font-medium text-main shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-surface hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] active:shadow-button-pressed md:gap-2 md:text-micro"
           >
             <TrendingUp size={13} className="md:size-3.5" />
             نسبة الحضور
@@ -233,7 +236,7 @@ export const ParentStudentCard = ({
               />
               <button
                 onClick={onCloseAchievements}
-                className="mt-2 w-full rounded-xl bg-error py-2 text-micro font-medium text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="mt-2 flex w-full items-center justify-center rounded-xl border border-error bg-error py-2 text-micro font-medium text-on-error shadow-button outline-none ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:border-error-hover hover:bg-error-hover hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
               >
                 إغلاق السجل
               </button>
