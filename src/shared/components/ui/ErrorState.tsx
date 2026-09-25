@@ -31,7 +31,7 @@ export const ErrorState = ({
   >
     <div
       className={cn(
-        'mb-3 flex items-center justify-center rounded-card border border-error-soft bg-error-soft',
+        'mb-3 flex items-center justify-center rounded-full border border-error-soft bg-error-soft shadow-soft',
         compact ? 'h-10 w-10' : 'h-12 w-12 md:h-14 md:w-14',
       )}
     >

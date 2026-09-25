@@ -10,15 +10,11 @@ export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButton
 }
 
 const colorMap = {
-  success:
-    'bg-success-soft text-success hover:bg-success hover:text-on-success hover:border-success border-success-soft dark:bg-success-soft dark:text-success dark:hover:bg-success dark:hover:text-on-success dark:hover:border-success dark:border-success-soft',
-  error:
-    'bg-error-soft text-error hover:bg-error hover:text-on-error hover:border-error border-error-soft dark:bg-error-soft dark:text-error dark:hover:bg-error dark:hover:text-on-error dark:hover:border-error dark:border-error-soft',
-  info: 'bg-info-soft text-info hover:bg-info hover:text-on-info hover:border-info border-info-soft dark:bg-info-soft dark:text-info dark:hover:bg-info dark:hover:text-on-info dark:hover:border-info dark:border-info-soft',
-  warning:
-    'bg-warning-soft text-warning hover:bg-warning hover:text-on-warning hover:border-warning border-warning-soft dark:bg-warning-soft dark:text-warning dark:hover:bg-warning dark:hover:text-on-warning dark:hover:border-warning dark:border-warning-soft',
-  primary:
-    'bg-primary/10 text-primary hover:bg-primary/20 border-primary/20 dark:bg-primary/15 dark:text-primary dark:border-primary/15',
+  success: 'bg-transparent text-success hover:bg-success-soft border-transparent',
+  error: 'bg-transparent text-error hover:bg-error-soft border-transparent',
+  info: 'bg-transparent text-info hover:bg-info-soft border-transparent',
+  warning: 'bg-transparent text-warning hover:bg-warning-soft border-transparent',
+  primary: 'bg-transparent text-primary hover:bg-primary-soft border-transparent',
 }
 
 export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(
@@ -43,13 +39,12 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
         aria-label={tooltip || label}
         className={cn(
           'inline-flex items-center justify-center',
-          'h-10 w-10 rounded-xl border md:h-8 md:w-8',
+          'h-10 w-10 rounded-xl md:h-8 md:w-8',
           'text-[10px] font-bold',
           'transition-all duration-normal ease-out active:duration-fast',
-          'shadow-button',
-          'active:scale-95 active:shadow-button-pressed',
+          'active:scale-95',
           'focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
-          'disabled:pointer-events-none disabled:opacity-40 disabled:shadow-none',
+          'disabled:pointer-events-none disabled:opacity-40',
           colorMap[color],
           className,
         )}

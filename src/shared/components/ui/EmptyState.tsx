@@ -30,7 +30,7 @@ export const EmptyState = ({
   >
     <div
       className={cn(
-        'mb-4 flex items-center justify-center rounded-card border border-border bg-hover',
+        'mb-4 flex items-center justify-center rounded-full border border-border bg-surface shadow-soft',
         compact ? 'h-12 w-12' : 'h-14 w-14 md:h-16 md:w-16',
       )}
     >

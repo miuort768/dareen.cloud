@@ -20,38 +20,38 @@ export interface TabsProps {
 
 const variantStyles = {
   underline: {
-    container: 'flex gap-0 border-b border-border',
+    container: 'flex gap-4 border-b border-border',
     tab: (isActive: boolean) =>
       cn(
-        'px-4 py-2.5 text-sm font-semibold border-b-2 transition-colors duration-normal -mb-px',
+        'px-2 py-3 text-sm font-semibold border-b-2 transition-colors duration-normal -mb-px',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-inset',
         isActive
           ? 'text-primary border-primary'
-          : 'text-muted border-transparent hover:text-main hover:border-strong',
+          : 'text-muted border-transparent hover:text-main hover:border-border',
       ),
   },
   pills: {
-    container: 'flex gap-1.5 p-1',
+    container: 'flex gap-1 p-1 bg-surface rounded-xl',
     tab: (isActive: boolean) =>
       cn(
         'px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-normal ease-out',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
-        'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
+        'active:scale-[0.985] active:duration-fast',
         isActive
-          ? 'bg-primary text-on-primary border border-primary/60 ring-1 ring-inset ring-white/10 shadow-button'
-          : 'text-muted hover:text-main hover:bg-hover',
+          ? 'bg-card text-main shadow-soft border border-border'
+          : 'text-muted hover:text-main',
       ),
   },
   buttons: {
     container: 'flex gap-2',
     tab: (isActive: boolean) =>
       cn(
-        'px-4 py-2 text-sm font-semibold rounded-card border transition-all duration-normal ease-out',
+        'px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-normal ease-out',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
-        'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
+        'active:scale-[0.985] active:duration-fast',
         isActive
-          ? 'bg-card text-main border-primary shadow-button'
-          : 'bg-surface text-muted border-border shadow-button hover:bg-card hover:text-main hover:border-strong hover:shadow-button-hover',
+          ? 'bg-primary-soft text-primary-active'
+          : 'bg-transparent text-muted hover:bg-hover hover:text-main',
       ),
   },
 }
@@ -85,12 +85,8 @@ export const Tabs: React.FC<TabsProps> = ({
         {tab.badge !== undefined && (
           <span
             className={cn(
-              'min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-micro font-bold',
-              isActive
-                ? variant === 'pills'
-                  ? 'bg-white/20 text-on-primary'
-                  : 'bg-primary text-on-primary'
-                : 'bg-surface text-muted',
+              'ms-1 min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-[10px] font-bold',
+              isActive ? 'bg-primary/10 text-primary-active' : 'bg-border text-muted',
             )}
           >
             {tab.badge}

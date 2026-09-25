@@ -155,34 +155,44 @@ export const StatCard = ({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl p-4 shadow-elevation-1 transition-colors duration-slow hover:-translate-y-0.5 hover:shadow-elevation-2',
+        'group relative overflow-hidden rounded-2xl border p-5 shadow-soft transition-all duration-slow hover:-translate-y-1 hover:shadow-elevation-1',
         s.card,
         className,
       )}
     >
       {watermark && Icon && (
         <Icon
-          size={72}
-          strokeWidth={1}
-          className={cn('pointer-events-none absolute -bottom-3 -end-3', wmColor)}
+          size={84}
+          strokeWidth={0.75}
+          className={cn(
+            'pointer-events-none absolute -bottom-4 -end-4 transition-transform duration-slow group-hover:scale-110',
+            wmColor,
+          )}
           aria-hidden="true"
         />
       )}
       {loading ? (
-        <div className="animate-pulse space-y-3">
-          <div className={cn('h-10 w-10 rounded-xl', s.skeleton)} />
-          <div className="space-y-2">
-            <div className={cn('h-3 w-20 rounded', s.skeleton)} />
-            <div className={cn('h-7 w-28 rounded', s.skeleton)} />
-          </div>
+        <div className="relative z-10 flex animate-pulse flex-col gap-3">
+          <div className={cn('h-10 w-24 rounded-lg', s.skeleton)} />
+          <div className={cn('h-4 w-32 rounded', s.skeleton)} />
+          <div className={cn('h-4 w-20 rounded', s.skeleton)} />
         </div>
       ) : (
-        <>
-          <div className="flex items-start justify-between gap-2">
-            {Icon && (
+        <div className="relative z-10 flex flex-col">
+          <div className="mb-3 flex items-start justify-between">
+            <p
+              className={cn(
+                'text-3xl font-black tabular-nums leading-none tracking-tight',
+                s.value,
+              )}
+            >
+              {value ?? '—'}
+              {unit && <span className={cn('ms-1 text-sm font-bold', s.title)}>{unit}</span>}
+            </p>
+            {Icon && !watermark && (
               <div
                 className={cn(
-                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-full',
                   s.icon,
                 )}
               >
@@ -190,43 +200,50 @@ export const StatCard = ({
               </div>
             )}
             {badge && (
-              <span className={cn('shrink-0 rounded-lg px-2 py-0.5 text-micro font-bold', s.title)}>
+              <span
+                className={cn(
+                  'shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
+                  s.title,
+                  'border border-current',
+                )}
+              >
                 {badge}
               </span>
             )}
           </div>
 
-          <div className="mt-3 min-w-0">
-            <p
-              className={cn(
-                'text-2xl font-black tabular-nums leading-none tracking-tight',
-                s.value,
-              )}
-            >
-              {value ?? '—'}
-              {unit && <span className={cn('ms-1 text-xs font-bold', s.title)}>{unit}</span>}
-            </p>
-            <p className={cn('mt-1 truncate text-xs font-medium', s.title)}>{title}</p>
-            {subtitle && (
-              <p className={cn('mt-0.5 truncate text-micro font-medium opacity-60', s.title)}>
-                {subtitle}
-              </p>
+          <div className="flex flex-col gap-1.5">
+            <p className={cn('truncate text-sm font-bold tracking-wide', s.title)}>{title}</p>
+
+            {(subtitle || trend) && (
+              <div className="mt-1 flex items-center gap-2">
+                {trend && (
+                  <div
+                    className={cn(
+                      'flex items-center gap-1 rounded-md bg-white/10 px-1.5 py-0.5 text-xs font-semibold',
+                      soft
+                        ? trend.isUp
+                          ? 'bg-success-soft text-success-strong'
+                          : 'bg-error-soft text-error-strong'
+                        : s.trend,
+                    )}
+                  >
+                    <span>
+                      {trend.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                    </span>
+                    <span>{trend.value}%</span>
+                    {trend.label && <span className="font-medium opacity-70">{trend.label}</span>}
+                  </div>
+                )}
+                {subtitle && (
+                  <p className={cn('truncate text-xs font-medium opacity-70', s.title)}>
+                    {subtitle}
+                  </p>
+                )}
+              </div>
             )}
           </div>
-
-          {trend && (
-            <div
-              className={cn(
-                'mt-2 flex items-center gap-1 text-xs font-semibold',
-                soft ? (trend.isUp ? 'text-success-strong' : 'text-error-strong') : s.trend,
-              )}
-            >
-              <span>{trend.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}</span>
-              <span>{trend.value}%</span>
-              {trend.label && <span className="opacity-60">{trend.label}</span>}
-            </div>
-          )}
-        </>
+        </div>
       )}
     </div>
   )

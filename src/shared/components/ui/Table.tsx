@@ -120,19 +120,19 @@ function TableInner<T>({
       ? 'bg-gradient-to-l from-primary to-primary-deep text-on-primary'
       : headerVariant === 'primary'
         ? 'bg-primary text-on-primary'
-        : 'bg-surface text-muted'
+        : 'bg-transparent text-muted'
 
-  const thClass = headerVariant === 'surface' ? 'text-dim' : 'text-on-primary'
+  const thClass = headerVariant === 'surface' ? 'text-muted' : 'text-on-primary'
 
   const renderHeader = () => (
     <thead>
-      <tr className={cn('border-b border-border', headerClass)}>
+      <tr className={cn('border-b-2 border-border', headerClass)}>
         {columns.map((col) => (
           <th
             key={col.key}
             scope="col"
             className={cn(
-              'select-none px-5 py-3 text-start text-xs font-bold',
+              'select-none px-5 py-4 text-start text-xs font-bold uppercase tracking-wider',
               col.align === 'center' && 'text-center',
               col.align === 'right' && 'text-end',
               thClass,
@@ -173,7 +173,7 @@ function TableInner<T>({
     </thead>
   )
 
-  const cellPad = dense ? 'px-4 py-2.5' : 'px-5 py-3.5'
+  const cellPad = dense ? 'px-4 py-3' : 'px-5 py-4'
 
   const renderBody = () => {
     if (isLoading) {

@@ -16,21 +16,21 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variants = {
-  default: 'bg-surface text-muted border-border',
-  success: 'bg-success-soft text-success-dark border-success',
-  warning: 'bg-warning-soft text-warning-dark border-warning',
-  error: 'bg-error-soft text-error-dark border-error',
-  info: 'bg-info-soft text-info-dark border-info',
+  default: 'bg-hover text-muted border-transparent',
+  success: 'bg-success-soft text-success-dark border-success-soft',
+  warning: 'bg-warning-soft text-warning-dark border-warning-soft',
+  error: 'bg-error-soft text-error-dark border-error-soft',
+  info: 'bg-info-soft text-info-dark border-info-soft',
   premium:
-    'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent shadow-elevation-1',
-  glow: 'bg-primary/10 text-primary border-primary/20 shadow-elevation-1 shadow-primary/10',
+    'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent-soft shadow-elevation-1',
+  glow: 'bg-primary-soft text-primary-active border-primary/20',
   outline: 'bg-transparent text-muted border-border',
   destructive: 'bg-error text-on-error border-error',
 }
 
 const sizes = {
-  sm: 'px-2 py-0.5 text-micro',
-  md: 'px-2.5 py-1 text-xs',
+  sm: 'px-2 py-0.5 text-micro tracking-wide',
+  md: 'px-2.5 py-1 text-xs tracking-wide',
 }
 
 export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(

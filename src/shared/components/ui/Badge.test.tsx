@@ -10,7 +10,7 @@ describe('Badge', () => {
 
   it('applies default variant', () => {
     const { container } = render(<Badge>افتراضي</Badge>)
-    expect(container.firstChild).toHaveClass('bg-surface')
+    expect(container.firstChild).toHaveClass('bg-hover')
   })
 
   it('applies success variant', () => {
@@ -40,7 +40,7 @@ describe('Badge', () => {
 
   it('applies glow variant', () => {
     const { container } = render(<Badge variant="glow">توهج</Badge>)
-    expect(container.firstChild).toHaveClass('shadow-elevation-1')
+    expect(container.firstChild).toHaveClass('border-primary/20')
   })
 
   it('applies sm size', () => {
