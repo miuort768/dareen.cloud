@@ -84,7 +84,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   return (
     <section
       aria-label={`لوحة متابعة ${child.name}`}
-      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-elevation-1 transition-colors duration-slow"
+      className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft transition-colors duration-slow"
     >
       {/* Header — هوية الابن + حلقة الحضور + أرقام */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
@@ -182,29 +182,29 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               return (
                 <div
                   key={en.id || `en-${idx}`}
-                  className="rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1 transition-colors duration-slow"
+                  className="rounded-3xl border border-border bg-card p-5 shadow-soft transition-colors duration-slow"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <p className="flex min-w-0 items-center gap-2 text-xs font-black text-main">
                       <span
                         className={cn(
-                          'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
+                          'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
                           accent.tile,
                           accent.text,
                         )}
                       >
-                        <BookMarked size={14} />
+                        <BookMarked size={16} />
                       </span>
                       <span className="truncate">{en.subject}</span>
                     </p>
                     {frozen ? (
-                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2 py-1 text-[9px] font-bold text-muted">
-                        <Snowflake size={9} /> مجمّدة
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2.5 py-1 text-[10px] font-bold text-muted">
+                        <Snowflake size={10} /> مجمّدة
                       </span>
                     ) : (
                       <span
                         className={cn(
-                          'shrink-0 font-dash text-lg font-black tabular-nums leading-none',
+                          'shrink-0 font-dash text-2xl font-black tabular-nums leading-none',
                           accent.text,
                         )}
                       >
@@ -213,14 +213,14 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                     )}
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-black text-muted">المنهج</span>
-                    <span className="flex items-baseline gap-1 text-[11px] font-black tabular-nums text-main">
+                  <div className="mt-4 flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-black text-muted">المنهج</span>
+                    <span className="flex items-baseline gap-1 text-xs font-black tabular-nums text-main">
                       {used}
                       <span className="text-[10px] font-bold text-muted">/ {total} حصة</span>
                     </span>
                   </div>
-                  <div className="mt-1.5">
+                  <div className="mt-2">
                     {frozen ? (
                       <div className="h-1.5 rounded-full bg-divider" />
                     ) : (
@@ -228,7 +228,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                     )}
                   </div>
                   {teacherName && (
-                    <p className="mt-2 truncate text-[10px] font-bold text-muted">{teacherName}</p>
+                    <p className="mt-3 truncate text-[11px] font-bold text-muted">{teacherName}</p>
                   )}
                 </div>
               )
@@ -238,22 +238,24 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
         {/* ملاحظات المعلمات */}
         {notes.length > 0 && (
-          <div className="mt-4">
-            <h3 className="mb-2 flex items-center gap-1.5 text-xs font-black text-muted">
-              <FileText size={12} className="text-primary" />
+          <div className="mt-5">
+            <h3 className="mb-3 flex items-center gap-1.5 text-xs font-black text-muted">
+              <FileText size={14} className="text-primary" />
               ملاحظات المعلمات
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {notes.map((note, i) => (
                 <div
                   key={`note-${i}`}
-                  className="rounded-none border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-elevation-1"
+                  className="rounded-2xl border border-border bg-primary-soft p-4 shadow-soft"
                 >
-                  <div className="mb-1 flex items-center justify-between">
-                    <span className="text-[11px] font-black text-main">{note.subject}</span>
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="text-primary-strong text-[11px] font-black">
+                      {note.subject}
+                    </span>
                     <span className="text-[10px] font-bold text-primary">{note.teacher}</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed text-muted">{note.text}</p>
+                  <p className="text-[12px] leading-relaxed text-main opacity-90">{note.text}</p>
                 </div>
               ))}
             </div>
@@ -262,7 +264,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
         <button
           onClick={() => navigate('/parent-students')}
-          className="group mt-4 flex min-h-14 w-full items-center gap-3 rounded-full bg-primary pe-2.5 ps-4 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+          className="group mt-5 flex min-h-14 w-full items-center gap-3 rounded-full bg-primary pe-2.5 ps-4 text-start text-on-primary shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
             <FileText size={18} />

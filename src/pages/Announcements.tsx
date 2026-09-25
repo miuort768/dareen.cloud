@@ -196,10 +196,7 @@ export const Announcements = () => {
   }
 
   return (
-    <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-2"
-      dir="rtl"
-    >
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-2" dir="rtl">
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         {/* Header — unified PageHeader pattern */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -237,10 +234,10 @@ export const Announcements = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-shadow hover:shadow-elevation-2"
+                  className="rounded-3xl border border-border bg-card p-5 shadow-soft transition-shadow hover:shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2 shadow-elevation-1', kpi.iconBg)}>
+                    <div className={cn('rounded-xl p-2.5', kpi.iconBg)}>
                       <Icon size={16} />
                     </div>
                   </div>

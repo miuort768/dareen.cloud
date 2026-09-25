@@ -649,7 +649,7 @@ export const Leads = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: stat.delay }}
               className={cn(
-                'rounded-2xl border p-4 transition-all duration-slow hover:shadow-[0_0_24px_rgb(99_102_241/0.10)] hover:shadow-elevation-1',
+                'rounded-3xl border p-5 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
                 stat.card,
               )}
             >
@@ -678,7 +678,7 @@ export const Leads = () => {
         </div>
 
         {/* ===== TOOLBAR ===== */}
-        <div className="rounded-2xl border border-primary/15 bg-card p-3 shadow-[0_0_30px_rgb(99_102_241/0.06)] shadow-elevation-1 dark:shadow-none sm:p-4">
+        <div className="rounded-3xl border border-border bg-card p-4 shadow-soft sm:p-5">
           <div className="relative">
             <Search size={15} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" />
             <input

@@ -25,7 +25,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
   return (
     <div
       className={cn(
-        'relative rounded-none border border-border bg-card p-5 shadow-elevation-1 transition-all hover:shadow-elevation-2',
+        'relative rounded-2xl border border-border bg-card p-5 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-1',
         isCompleted && 'opacity-60',
         !isCompleted &&
           (task.priority === 'high'

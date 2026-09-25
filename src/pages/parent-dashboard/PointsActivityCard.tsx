@@ -60,7 +60,7 @@ export const PointsActivityCard = ({
   return (
     <section
       aria-label="النقاط والنشاطات"
-      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-elevation-1 transition-colors duration-slow"
+      className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft transition-colors duration-slow"
     >
       {/* رتبة الأبناء */}
       <div className="flex items-center justify-between gap-3 border-b border-border bg-primary-soft p-4 sm:p-5">

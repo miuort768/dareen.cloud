@@ -16,11 +16,11 @@ export const LiveNowBanner = ({ activeTimers, childNames, formatTime }: LiveNowB
       {activeTimers.map((session) => (
         <div
           key={session.id}
-          className="border-error/40 relative overflow-hidden rounded-2xl border bg-error-soft shadow-elevation-1 transition-colors duration-slow"
+          className="relative overflow-hidden rounded-3xl border border-error-soft bg-error-soft shadow-soft transition-colors duration-slow"
           role="status"
         >
           <div
-            className="bg-error/10 pointer-events-none absolute -end-10 -top-10 h-32 w-32 rounded-full blur-2xl"
+            className="pointer-events-none absolute -end-10 -top-10 h-32 w-32 rounded-full bg-error blur-2xl"
             aria-hidden="true"
           />
           <div className="relative flex items-center justify-between gap-3 p-4">
@@ -28,7 +28,7 @@ export const LiveNowBanner = ({ activeTimers, childNames, formatTime }: LiveNowB
               <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-card shadow-elevation-1">
                 <Radio size={18} className="text-error" />
                 <span
-                  className="border-error/40 absolute inset-0 animate-ping rounded-2xl border-2"
+                  className="absolute inset-0 animate-ping rounded-2xl border-2 border-error-soft"
                   aria-hidden="true"
                 />
               </div>

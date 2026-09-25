@@ -50,13 +50,13 @@ export const ForumCreatePost = ({
   const [postType, setPostType] = useState<ForumPostType>('discussion')
 
   return (
-    <div className="rounded-card bg-card p-5">
+    <div className="rounded-3xl border border-border bg-card p-5 shadow-soft">
       <div className="space-y-3">
         <textarea
           aria-label="اكتب منشورك"
           value={newPostContent}
           onChange={(e) => setNewPostContent(e.target.value)}
-          className="min-h-[100px] w-full resize-none rounded-card border border-border bg-background p-4 text-sm font-medium leading-relaxed text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
+          className="min-h-[100px] w-full resize-none rounded-2xl border border-border bg-background p-4 text-sm font-medium leading-relaxed text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="شارك فكرة أو سؤال…"
         />
 
@@ -72,9 +72,9 @@ export const ForumCreatePost = ({
                 onClick={() => setPostType(opt.value)}
                 aria-pressed={active}
                 className={cn(
-                  'flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border px-1 py-2 text-[10px] font-bold outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                  'flex min-h-11 flex-col items-center justify-center gap-1 rounded-2xl border px-1 py-2 text-[10px] font-bold outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                   active
-                    ? cn(opt.tone, 'shadow-elevation-1 hover:brightness-110')
+                    ? cn(opt.tone, 'shadow-soft hover:brightness-110')
                     : 'border-border bg-surface text-muted hover:bg-hover',
                 )}
               >
@@ -92,7 +92,7 @@ export const ForumCreatePost = ({
           <button
             onClick={() => handleCreatePost(postType)}
             disabled={!newPostContent.trim()}
-            className="flex items-center gap-2 rounded-card bg-primary px-5 py-2.5 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-30"
+            className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-30"
           >
             <Send size={13} /> نشر
           </button>

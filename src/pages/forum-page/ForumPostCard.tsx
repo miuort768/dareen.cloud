@@ -140,11 +140,11 @@ export const ForumPostCard = ({
     <div
       id={`post-${post.id}`}
       className={cn(
-        'group/card relative overflow-hidden rounded-card border border-border bg-card shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 dark:bg-surface',
+        'group/card relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-1 dark:bg-surface',
         isHighlighted && 'ring-2 ring-primary',
       )}
     >
-      {/* شريط لون علوي حسب نوع المنشور — يشتد عند التحويم */}
+      {/* شريط لون علوي حسب نوع المنشور */}
       <div
         aria-hidden="true"
         className={cn(
@@ -153,35 +153,35 @@ export const ForumPostCard = ({
         )}
       />
       {/* Post Header */}
-      <div className="flex items-start justify-between rounded-t-card p-4 md:p-5">
+      <div className="flex items-start justify-between rounded-t-3xl p-4 md:p-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary text-sm font-bold text-on-primary shadow-elevation-1 transition-transform duration-300 group-hover/card:scale-105">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-soft text-sm font-bold text-primary ring-2 ring-primary/10 transition-transform duration-300 group-hover/card:scale-105">
             {(displayAuthorName[0] || '').toUpperCase()}
           </div>
           <div>
             <div className="mb-0.5 flex items-center gap-2">
               <h4 className="text-sm font-bold text-main">{displayAuthorName}</h4>
-              <span className="inline-flex items-center gap-1 rounded-card border border-border bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+              <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-0.5 text-micro font-bold text-muted">
                 <TypeIcon size={9} strokeWidth={2.2} />
                 {typeMeta.label}
               </span>
               {post.authorRole === 'admin' && (
-                <span className="rounded-card border border-error bg-error px-2 py-0.5 text-micro font-bold text-on-error">
+                <span className="rounded-full border border-error bg-error px-2 py-0.5 text-micro font-bold text-on-error">
                   إدارة
                 </span>
               )}
               {post.authorRole === 'teacher' && (
-                <span className="rounded-card border border-success bg-success px-2 py-0.5 text-micro font-bold text-on-success">
+                <span className="rounded-full border border-success bg-success px-2 py-0.5 text-micro font-bold text-on-success">
                   معلمة
                 </span>
               )}
               {post.authorRole === 'student' && (
-                <span className="rounded-card border border-info bg-info px-2 py-0.5 text-micro font-bold text-on-info">
+                <span className="rounded-full border border-info bg-info px-2 py-0.5 text-micro font-bold text-on-info">
                   طالب
                 </span>
               )}
               {(post.authorRole === 'parent' || (post.authorRole as string) === 'ولي أمر') && (
-                <span className="rounded-card border border-primary bg-primary px-2 py-0.5 text-micro font-bold text-on-primary">
+                <span className="rounded-full border border-primary bg-primary px-2 py-0.5 text-micro font-bold text-on-primary">
                   شريك النجاح
                 </span>
               )}
@@ -222,7 +222,7 @@ export const ForumPostCard = ({
           {isAdmin && (
             <button
               onClick={() => onDelete(post.id)}
-              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-error-light hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="حذف المنشور"
             >
               <Trash2 size={15} />
@@ -232,7 +232,7 @@ export const ForumPostCard = ({
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setShowMenuPostId(isMenuOpen ? null : post.id)}
-              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-surface hover:text-muted focus-visible:ring-2 focus-visible:ring-focus"
+              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="خيارات المنشور"
               aria-haspopup="menu"
               aria-expanded={isMenuOpen}
@@ -242,7 +242,7 @@ export const ForumPostCard = ({
             {isMenuOpen && (
               <div
                 role="menu"
-                className="absolute end-0 top-full z-50 mt-1 w-36 rounded-card border border-border bg-card py-1 shadow-elevation-1"
+                className="absolute end-0 top-full z-50 mt-1 w-36 rounded-2xl border border-border bg-card py-1 shadow-soft"
               >
                 <button
                   role="menuitem"
@@ -336,8 +336,8 @@ export const ForumPostCard = ({
                 )
                 return (
                   <div key={node.comment.id} className="group/comment">
-                    <div className="flex gap-3 rounded-xl p-3 transition-colors duration-fast hover:bg-card">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-card bg-primary-soft text-xs font-bold text-primary">
+                    <div className="flex gap-3 rounded-2xl p-3 transition-colors duration-fast hover:bg-card">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
                         {(commentAuthorName[0] || '').toUpperCase()}
                       </div>
                       <div className="min-w-0 flex-1">
@@ -589,7 +589,7 @@ export const ForumPostCard = ({
           </div>
 
           <div className="mt-3 flex items-center gap-3 border-t border-border pt-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-card bg-primary-soft text-xs font-bold text-primary">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
               {currentUserName?.[0]?.toUpperCase() || <User size={14} />}
             </div>
             <div className="relative flex-1">
@@ -602,7 +602,7 @@ export const ForumPostCard = ({
                   setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))
                 }
                 placeholder="اكتب تعليقاً..."
-                className="w-full rounded-xl border border-border bg-card py-2.5 pe-11 ps-4 text-xs font-medium text-dim text-main outline-none transition-colors duration-fast focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-2xl border border-border bg-card py-2.5 pe-11 ps-4 text-xs font-medium text-dim text-main outline-none transition-colors duration-fast focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') onAddComment(post.id)
                 }}
@@ -611,7 +611,7 @@ export const ForumPostCard = ({
                 onClick={() => onAddComment(post.id)}
                 disabled={!(commentTexts[post.id] || '').trim()}
                 aria-label="إرسال التعليق"
-                className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg bg-primary text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90 disabled:opacity-25"
+                className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-xl bg-primary text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90 disabled:opacity-25"
               >
                 <Send size={12} />
               </button>
@@ -621,21 +621,21 @@ export const ForumPostCard = ({
       )}
 
       {isAdmin && post.status === 'pending' && (
-        <div className="flex items-center justify-between rounded-card border-t border-warning bg-warning p-3.5">
-          <div className="flex items-center gap-2 text-on-warning">
+        <div className="flex items-center justify-between rounded-b-3xl border-t border-warning-soft bg-warning-soft p-3.5">
+          <div className="flex items-center gap-2 text-warning-strong">
             <AlertTriangle size={13} />
             <span className="text-micro font-bold">هذا المنشور ينتظر الموافقة</span>
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => onUpdateStatus(post.id, 'approved')}
-              className="rounded-card bg-success px-3.5 py-1.5 text-micro font-bold text-on-success outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="rounded-full bg-success px-3.5 py-1.5 text-micro font-bold text-on-success outline-none transition-all duration-fast hover:-translate-y-0.5 hover:shadow-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               موافقة
             </button>
             <button
               onClick={() => onDelete(post.id)}
-              className="rounded-card bg-error px-3.5 py-1.5 text-micro font-bold text-on-error outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="rounded-full bg-error px-3.5 py-1.5 text-micro font-bold text-on-error outline-none transition-all duration-fast hover:-translate-y-0.5 hover:shadow-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               حذف
             </button>

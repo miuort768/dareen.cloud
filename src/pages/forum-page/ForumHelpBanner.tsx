@@ -69,16 +69,16 @@ export const ForumHelpBanner = () => {
 
   return (
     <div className="mx-auto mb-6 mt-6 max-w-[700px] px-4">
-      <div className="flex flex-col items-center justify-between gap-4 rounded-card border border-border bg-card p-4 sm:flex-row sm:p-5">
+      <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border border-border bg-card p-4 shadow-soft sm:flex-row sm:p-5">
         <div className="flex w-full items-start gap-3.5 text-start sm:w-auto sm:items-center">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-card bg-primary text-on-primary sm:h-11 sm:w-11">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary sm:h-11 sm:w-11">
             <Scale size={20} />
           </div>
           <div className="min-w-0 flex-1">
             <div className="mb-1 flex flex-wrap items-center gap-2">
               <h4 className="text-xs font-bold text-main sm:text-sm">قواعد وإرشادات المنتدى</h4>
               <span
-                className={`rounded-card border px-2 py-0.5 text-micro font-bold ${currentRules.badgeClass}`}
+                className={`rounded-full border px-2 py-0.5 text-micro font-bold ${currentRules.badgeClass}`}
               >
                 خاص بـ {currentRules.roleTitle}
               </span>
@@ -90,7 +90,7 @@ export const ForumHelpBanner = () => {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="w-full shrink-0 rounded-card bg-primary px-4 py-2.5 text-center text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:w-auto sm:px-5"
+          className="w-full shrink-0 rounded-full bg-primary px-4 py-2.5 text-center text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:w-auto sm:px-5"
         >
           عرض القواعد والتعليمات
         </button>
@@ -114,7 +114,7 @@ export const ForumHelpBanner = () => {
               aria-labelledby="forum-rules-title"
               ref={containerRef}
               onKeyDown={handleKeyDown}
-              className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-card border border-border bg-card shadow-elevation-3"
+              className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft"
               dir="rtl"
             >
               <div className="flex shrink-0 items-center justify-between bg-primary p-4 text-on-primary sm:p-5">
@@ -128,7 +128,7 @@ export const ForumHelpBanner = () => {
                   onClick={() => setShowModal(false)}
                   autoFocus
                   aria-label="إغلاق النافذة"
-                  className="flex h-7 w-7 items-center justify-center rounded-card bg-white/10 outline-none transition-colors duration-fast hover:bg-error focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 outline-none transition-colors duration-fast hover:bg-error focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <X size={16} />
                 </button>
@@ -142,9 +142,9 @@ export const ForumHelpBanner = () => {
                   {currentRules.rules.map((rule, index) => (
                     <li
                       key={index}
-                      className="flex items-start gap-3 rounded-card border border-border bg-surface p-3"
+                      className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-3"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-card bg-primary text-xs font-bold text-on-primary">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-on-primary">
                         {index + 1}
                       </span>
                       <span className="text-xs font-semibold leading-relaxed text-main">
@@ -155,7 +155,7 @@ export const ForumHelpBanner = () => {
                 </ul>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="mt-4 w-full rounded-card bg-primary py-3 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="mt-4 w-full rounded-full bg-primary py-3 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   فهمت وأوافق على الإرشادات
                 </button>

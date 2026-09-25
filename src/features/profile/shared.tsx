@@ -97,7 +97,7 @@ export const AccountHero = ({
   <motion.section
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-light via-card to-card p-4 shadow-elevation-2 transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
+    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-light via-card to-card p-4 shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
   >
     {/* توهج زمردي خفيف في الزاوية */}
     <div className="pointer-events-none absolute -end-12 -top-12 hidden h-44 w-44 rounded-full bg-jade-light blur-3xl dark:bg-jade-soft sm:block" />
@@ -105,7 +105,7 @@ export const AccountHero = ({
     <div className="relative flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex min-w-0 items-center gap-3">
         {/* الحرف الأول — خلية زمردية متدرجة */}
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-jade to-jade-deep text-lg font-black text-jade-on shadow-[0_8px_18px_rgb(15_157_143/0.3)] shadow-elevation-1 ring-1 ring-jade-light dark:shadow-[0_8px_18px_rgb(47_192_176/0.26)] md:h-20 md:w-20 md:rounded-2xl md:text-3xl md:shadow-elevation-2">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-jade to-jade-deep text-lg font-black text-jade-on shadow-soft ring-1 ring-jade-light md:h-20 md:w-20 md:rounded-2xl md:text-3xl md:shadow-elevation-1">
           {(name || '?').charAt(0)}
         </div>
         <div className="min-w-0">
@@ -142,7 +142,7 @@ export const AccountHero = ({
       {onEdit && (
         <button
           onClick={onEdit}
-          className="flex min-h-10 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2 text-[9px] font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] md:min-h-11 md:px-5 md:py-2.5 md:text-xs"
+          className="flex min-h-10 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2 text-[9px] font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:min-h-11 md:px-5 md:py-2.5 md:text-xs"
         >
           <PencilLine size={13} /> تعديل البيانات
         </button>
@@ -299,7 +299,7 @@ interface InfoTileProps {
 export const InfoTile = ({ label, value, icon: Icon, tone = 'primary' }: InfoTileProps) => (
   <div
     className={cn(
-      'relative overflow-hidden rounded-2xl p-4 text-center shadow-elevation-1 transition-colors duration-slow',
+      'relative overflow-hidden rounded-2xl p-4 text-center shadow-soft transition-colors duration-slow',
       INFO_FILL[tone],
     )}
   >
@@ -359,14 +359,14 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
             href={`https://wa.me/${supportPhone}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]"
+            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             <MessageCircle size={14} /> تواصل مع الدعم الفني
           </a>
         )}
         <button
           onClick={handleLogout}
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-bold text-on-error shadow-elevation-2 shadow-black/20 transition-all hover:bg-error-hover hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-bold text-on-error shadow-soft transition-all hover:-translate-y-0.5 hover:bg-error-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           <LogOut size={14} /> تسجيل الخروج
         </button>
@@ -379,12 +379,12 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
 
 export const ProfileSkeleton = () => (
   <div className="space-y-4 md:space-y-5" aria-busy="true" aria-label="جاري تحميل الحساب">
-    <Skeleton className="h-40 w-full rounded-3xl shadow-elevation-1 md:h-44" />
+    <Skeleton className="h-40 w-full rounded-3xl shadow-soft md:h-44" />
     <div className="grid gap-4 lg:grid-cols-3">
-      <Skeleton className="h-64 rounded-2xl shadow-elevation-1" />
-      <Skeleton className="h-64 rounded-2xl shadow-elevation-1 lg:col-span-2" />
+      <Skeleton className="h-64 rounded-2xl shadow-soft" />
+      <Skeleton className="h-64 rounded-2xl shadow-soft lg:col-span-2" />
     </div>
-    <Skeleton className="h-48 w-full rounded-2xl shadow-elevation-1" />
+    <Skeleton className="h-48 w-full rounded-2xl shadow-soft" />
   </div>
 )
 
@@ -401,7 +401,7 @@ export const ErrorBlock = ({ onRetry }: ErrorBlockProps) => (
     <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
     <button
       onClick={onRetry}
-      className="mx-auto mt-4 flex min-h-11 items-center rounded-full bg-jade-deep px-6 py-2.5 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]"
+      className="mx-auto mt-4 flex min-h-11 items-center rounded-full bg-jade-deep px-6 py-2.5 text-xs font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
     >
       إعادة المحاولة
     </button>

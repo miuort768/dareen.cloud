@@ -335,15 +335,17 @@ export const Forum = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ y: -2 }}
-                  className="relative overflow-hidden rounded-card border border-border bg-card p-4 shadow-elevation-1 dark:bg-surface"
+                  className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-soft dark:bg-surface"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2', kpi.iconBg)}>
-                      <Icon size={16} />
+                    <div className={cn('rounded-xl p-2.5', kpi.iconBg)}>
+                      <Icon size={17} />
                     </div>
                   </div>
                   <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <p className="font-dash text-2xl font-black tabular-nums text-main">
+                    {kpi.value}
+                  </p>
                 </motion.div>
               )
             })}
@@ -362,10 +364,10 @@ export const Forum = () => {
               onClick={() => setSortMode(opt.value)}
               aria-pressed={sortMode === opt.value}
               className={cn(
-                'flex-1 rounded-card border px-2 py-1.5 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
+                'flex-1 rounded-full border px-2 py-1.5 text-micro font-bold outline-none transition-all duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                 sortMode === opt.value
-                  ? 'border-primary bg-primary text-on-primary'
-                  : 'border-border bg-card text-muted hover:border-hover hover:text-main',
+                  ? 'border-primary bg-primary text-on-primary shadow-soft'
+                  : 'border-border bg-card text-muted hover:border-primary/30 hover:bg-primary-soft hover:text-primary',
               )}
             >
               {opt.label}
@@ -377,7 +379,7 @@ export const Forum = () => {
         {sortMode !== 'latest' && (
           <div
             className={
-              'mb-3 flex items-center justify-between rounded-xl border border-primary bg-primary p-2.5 text-xs font-bold text-on-primary'
+              'mb-3 flex items-center justify-between rounded-2xl border border-primary/20 bg-primary-soft p-3 text-xs font-bold text-primary'
             }
           >
             <span>
@@ -385,7 +387,7 @@ export const Forum = () => {
             </span>
             <button
               onClick={() => setSortMode('latest')}
-              className="rounded-lg bg-primary-active px-2.5 py-1 text-micro text-on-primary outline-none transition-colors duration-fast hover:brightness-110 focus-visible:ring-2 focus-visible:ring-focus"
+              className="rounded-full bg-primary px-3 py-1 text-micro text-on-primary outline-none transition-all duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة تعيين الفرز
             </button>
@@ -399,14 +401,14 @@ export const Forum = () => {
             handleCreatePost={handleCreatePost}
           />
           {loading ? (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <div
                   key={`skel-${i}`}
-                  className="space-y-4 rounded-card border border-border bg-card p-4 md:p-5"
+                  className="space-y-4 rounded-3xl border border-border bg-card p-5 shadow-soft md:p-6"
                 >
                   <div className="flex items-center gap-3">
-                    <Skeleton className="h-11 w-11 rounded-card" />
+                    <Skeleton className="h-11 w-11 rounded-full" />
                     <div className="flex-1 space-y-1.5">
                       <Skeleton className="h-3 w-28" />
                       <Skeleton className="h-2 w-20" />
@@ -420,7 +422,7 @@ export const Forum = () => {
             <EmptyState
               icon={MessageSquare}
               title="لا توجد منشورات هنا"
-              className="rounded-card border-2 border-dashed border-border bg-card p-6 md:p-16"
+              className="rounded-3xl border-2 border-dashed border-border bg-card p-6 md:p-16"
             />
           ) : (
             <div className="space-y-6">
@@ -483,7 +485,7 @@ export const Forum = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-card border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-soft">
                   {action.label}
                 </span>
                 <button
@@ -491,7 +493,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className={cn(FAB_SURFACE, 'h-12 w-12 rounded-card')}
+                  className={cn(FAB_SURFACE, 'h-12 w-12 rounded-full')}
                 >
                   <action.icon size={20} />
                 </button>

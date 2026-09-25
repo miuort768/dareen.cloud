@@ -1,149 +1,78 @@
-import { CheckCircle2, XCircle, ClipboardList, TrendingUp } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { CheckCircle2, ClipboardList, TrendingUp } from 'lucide-react'
 import type { WeeklyPulseStats } from './types'
 import { CountUp } from '../../shared/components/CountUp'
-import { cn } from '../../lib/utils'
 
 interface WeeklyPulseProps {
   stats: WeeklyPulseStats
 }
 
-type Tone = 'success' | 'error' | 'info' | 'primary'
-
-const CARD_FILL: Record<Tone, string> = {
-  success: 'bg-success text-on-success',
-  error: 'bg-error text-on-error',
-  info: 'bg-info text-on-info',
-  primary: 'bg-primary text-on-primary',
-}
-
-const ICON_FG: Record<Tone, string> = {
-  success: 'text-on-success',
-  error: 'text-on-error',
-  info: 'text-on-info',
-  primary: 'text-on-primary',
-}
-
-interface TileSpec {
-  key: Tone
-  icon: LucideIcon
-  label: string
-  value: number
-  caption: string
-  bar?: number
-  hideMobile?: boolean
-}
-
-/** شريط نبض الأسبوع — صناديق مشبعة بألوان الحالة مع رقائق زجاجية وأرقام كبرى */
+/** شريط نبض الأسبوع — تصميم بصري هرمي يبرز التقدم الأكاديمي أولاً مع إحصائيات داعمة */
 export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
-  const tiles: TileSpec[] = [
-    {
-      key: 'success',
-      icon: CheckCircle2,
-      label: 'حصص منجزة',
-      value: stats.completed,
-      caption: `حضور ${stats.attendanceRate}% · ${stats.weeklyCompleted} هذا الأسبوع`,
-      bar: stats.attendanceRate,
-    },
-    {
-      key: 'error',
-      icon: XCircle,
-      label: 'حصص ملغاة',
-      value: stats.cancelled,
-      caption: 'من إجمالي تسجيلات أبنائك',
-      hideMobile: true,
-    },
-    {
-      key: 'info',
-      icon: ClipboardList,
-      label: 'حصص اليوم',
-      value: stats.todayCount,
-      caption: 'في جدول اليوم',
-      hideMobile: true,
-    },
-    {
-      key: 'primary',
-      icon: TrendingUp,
-      label: 'التقدم الأكاديمي',
-      value: stats.academicProgress,
-      caption: 'من الخطة الأكاديمية المخطط لها',
-      bar: stats.academicProgress,
-    },
-  ]
-
   return (
-    <section aria-label="نبض الأسبوع" className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
-      {tiles.map((tile) => {
-        const Icon = tile.icon
-        return (
-          <article
-            key={tile.key}
-            className={cn(
-              'relative overflow-hidden rounded-2xl p-3.5 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 sm:p-4',
-              CARD_FILL[tile.key],
-              tile.hideMobile && 'hidden sm:block',
-            )}
-          >
-            <div className="flex items-start justify-between gap-2">
-              <span
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ${ICON_FG[tile.key]}`}
-              >
-                <Icon size={18} />
-              </span>
-              {tile.bar !== undefined && (
-                <span className="hidden text-[10px] font-black tabular-nums text-on-success opacity-70 sm:block">
-                  {tile.bar}%
+    <section
+      aria-label="نبض الأسبوع"
+      className="rounded-3xl border border-border bg-card p-6 shadow-soft"
+    >
+      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        {/* Featured KPI: Academic Progress */}
+        <div className="flex-1">
+          <div className="mb-4 flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-primary">
+              <TrendingUp size={24} />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-muted">التقدم الأكاديمي العام</p>
+              <div className="mt-1 flex items-baseline gap-2">
+                <CountUp
+                  value={stats.academicProgress}
+                  format={(n) => `${n}%`}
+                  className="font-dash text-3xl font-black tabular-nums text-main"
+                />
+                <span className="rounded-lg bg-success-soft px-2 py-0.5 text-[11px] font-bold text-success">
+                  حضور {stats.attendanceRate}%
                 </span>
-              )}
+              </div>
             </div>
+          </div>
+          <div className="h-2 w-full overflow-hidden rounded-full bg-surface">
+            <div
+              className="h-full rounded-full bg-primary transition-all duration-700"
+              style={{ width: `${Math.min(Math.max(stats.academicProgress, 0), 100)}%` }}
+            />
+          </div>
+          <p className="mt-2 text-[11px] font-medium text-muted">
+            من إجمالي الخطة الأكاديمية لأبنائك
+          </p>
+        </div>
 
-            <div className="mt-3 min-w-0">
-              <CountUp
-                value={tile.value}
-                format={tile.key === 'primary' ? (n) => `${n}%` : undefined}
-                className={cn(
-                  'font-dash text-2xl font-black tabular-nums leading-none tracking-tight lg:text-3xl',
-                  tile.key === 'success' && 'text-on-success',
-                  tile.key === 'error' && 'text-on-error',
-                  tile.key === 'info' && 'text-on-info',
-                  tile.key === 'primary' && 'text-on-primary',
-                )}
-              />
-              <p
-                className={cn(
-                  'mt-1 truncate text-xs font-medium',
-                  tile.key === 'success' && 'text-on-success opacity-70',
-                  tile.key === 'error' && 'text-on-error opacity-70',
-                  tile.key === 'info' && 'text-on-info opacity-70',
-                  tile.key === 'primary' && 'text-on-primary opacity-70',
-                )}
-              >
-                {tile.label}
-              </p>
-              <p
-                className={cn(
-                  'mt-0.5 truncate text-micro font-medium opacity-60',
-                  tile.key === 'success' && 'text-on-success',
-                  tile.key === 'error' && 'text-on-error',
-                  tile.key === 'info' && 'text-on-info',
-                  tile.key === 'primary' && 'text-on-primary',
-                )}
-              >
-                {tile.caption}
-              </p>
+        {/* Desktop Divider */}
+        <div className="mx-4 hidden h-20 w-px bg-divider md:block lg:mx-8" />
 
-              {tile.bar !== undefined && (
-                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/25">
-                  <div
-                    className="h-full rounded-full bg-white transition-all duration-700"
-                    style={{ width: `${Math.min(Math.max(tile.bar, 0), 100)}%` }}
-                  />
-                </div>
-              )}
-            </div>
+        {/* Secondary KPIs */}
+        <div className="grid flex-1 grid-cols-2 gap-3 lg:gap-4">
+          <article className="flex flex-col rounded-2xl bg-success-soft p-4 transition-transform hover:-translate-y-0.5">
+            <CheckCircle2 className="mb-2 text-success" size={20} />
+            <CountUp
+              value={stats.completed}
+              className="font-dash text-2xl font-black tabular-nums text-success"
+            />
+            <p className="mt-1 text-xs font-bold text-success">حصص منجزة</p>
+            <p className="mt-0.5 text-[10px] font-medium text-success opacity-80">
+              {stats.weeklyCompleted} هذا الأسبوع
+            </p>
           </article>
-        )
-      })}
+
+          <article className="flex flex-col rounded-2xl bg-surface p-4 transition-transform hover:-translate-y-0.5">
+            <ClipboardList className="mb-2 text-primary" size={20} />
+            <CountUp
+              value={stats.todayCount}
+              className="font-dash text-2xl font-black tabular-nums text-main"
+            />
+            <p className="mt-1 text-xs font-bold text-muted">في جدول اليوم</p>
+            <p className="mt-0.5 text-[10px] font-medium text-muted">استعد لحصص اليوم</p>
+          </article>
+        </div>
+      </div>
     </section>
   )
 }

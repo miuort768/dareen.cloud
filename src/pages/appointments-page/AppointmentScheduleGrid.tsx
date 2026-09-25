@@ -115,8 +115,8 @@ export const AppointmentScheduleGrid = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25 }}
               className={cn(
-                'overflow-hidden rounded-2xl border bg-card',
-                isToday ? 'border-primary shadow-elevation-2 shadow-primary/10' : 'border-border',
+                'overflow-hidden rounded-3xl border bg-card transition-shadow',
+                isToday ? 'border-primary shadow-elevation-1' : 'border-border shadow-soft',
               )}
             >
               {/* Day header */}

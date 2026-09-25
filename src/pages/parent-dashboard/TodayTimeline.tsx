@@ -102,10 +102,10 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
               <li key={item.id}>
                 <div
                   className={cn(
-                    'h-full rounded-none border border-s-4 border-border bg-card p-3 shadow-elevation-1 transition-all duration-slow',
+                    'h-full rounded-3xl border border-s-4 border-border bg-card p-5 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
                     meta.bar,
                     item.status === 'cancelled' && 'opacity-70',
-                    item.status === 'live' && 'bg-error-soft',
+                    item.status === 'live' && 'border-s-error bg-error-soft',
                   )}
                 >
                   <div className="flex items-center gap-3">
