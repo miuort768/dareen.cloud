@@ -1,43 +1,43 @@
 :root {
   /* ── shadcn/ui CSS Variables (live subset) ── */
-  --radius: 0.75rem;
-  --sidebar-background: #eef1f7;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #6366f1;
+  --radius: 1rem;
+  --sidebar-background: #fdfcfb;
+  --sidebar-foreground: #18181b;
+  --sidebar-primary: #3a5fa9;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f1f5f9;
-  --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #6366f1;
+  --sidebar-accent: #f5f3ef;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #ece9e2;
+  --sidebar-ring: #3a5fa9;
 
-  --bg-surface: #eef1f7;
-  --bg-background: #dfe4ee;
+  --bg-surface: #fdfcfb;
+  --bg-background: #f5f3ef;
   --bg-card: #ffffff;
-  --bg-hover: #e6ebf3;
+  --bg-hover: #ece9e2;
 
-  --bg-primary: #6366f1;
-  --bg-primary-deep: #1e1b4b;
-  --bg-primary-hover: #4f46e5;
-  --bg-primary-active: #4338ca;
-  --bg-primary-soft: #eef2ff;
-  --bg-primary-light: #e0e7ff;
-  --text-primary: #6366f1;
+  --bg-primary: #3a5fa9;
+  --bg-primary-deep: #17223b;
+  --bg-primary-hover: #304d89;
+  --bg-primary-active: #2a4173;
+  --bg-primary-soft: #f4f6fb;
+  --bg-primary-light: #e7ecf6;
+  --text-primary: #3a5fa9;
   --text-on-primary: #ffffff;
-  --border-primary: #6366f1;
+  --border-primary: #3a5fa9;
 
-  --text-accent: #D4AF37;
-  --bg-accent: #D4AF37;
-  --bg-accent-hover: #b8960e;
-  --bg-accent-soft: #fdf8e8;
-  --bg-accent-light: #faf1d1;
-  --border-accent: #D4AF37;
+  --text-accent: #d1ab52;
+  --bg-accent: #d1ab52;
+  --bg-accent-hover: #b88d3d;
+  --bg-accent-soft: #fdfbf6;
+  --bg-accent-light: #fbf6ea;
+  --border-accent: #d1ab52;
 
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --text-dim: #66778e;
+  --text-main: #18181b;
+  --text-muted: #71717a;
+  --text-dim: #a1a1aa;
   --text-inverse: #ffffff;
 
-  --chart-1: #6366f1;
+  --chart-1: #3a5fa9;
   --chart-2: #10b981;
   --chart-3: #f43f5e;
   --chart-4: #8b5cf6;
@@ -47,13 +47,13 @@
   --text-on-success: #ffffff;
   --text-on-warning: #ffffff;
   --text-on-info: #ffffff;
-  --text-on-accent: #0f172a;
+  --text-on-accent: #18181b;
 
-  --ring-focus: #6366f1;
+  --ring-focus: #3a5fa9;
 
-  --border: #d8dfeb;
-  --border-strong: #c5cfdd;
-  --divider: #d8dfeb;
+  --border: #ece9e2;
+  --border-strong: #ded8cc;
+  --divider: #ece9e2;
 
   --bg-success: #059669;
   --bg-success-dark: #047857;
@@ -91,43 +91,43 @@
 
 .dark {
   /* ── Gold/Black Dark Mode ── */
-  --sidebar-background: #0a0a0c;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #D4AF37;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1a1a1e;
-  --sidebar-accent-foreground: #f8fafc;
+  --sidebar-background: #0c0c0e;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #d1ab52;
+  --sidebar-primary-foreground: #0c0c0e;
+  --sidebar-accent: #18181b;
+  --sidebar-accent-foreground: #fafafa;
   --sidebar-border: #27272a;
-  --sidebar-ring: #D4AF37;
+  --sidebar-ring: #d1ab52;
 
-  --bg-surface: #08080a;
-  --bg-background: #050507;
-  --bg-card: #0d0d0f;
-  --bg-hover: #1a1a1e;
+  --bg-surface: #18181b;
+  --bg-background: #0c0c0e;
+  --bg-card: #18181b;
+  --bg-hover: #27272a;
 
-  --bg-primary: #D4AF37;
-  --bg-primary-deep: #b8962e;
-  --bg-primary-hover: #e8c447;
-  --bg-primary-active: #f5d060;
-  --bg-primary-soft: #2a2208;
-  --bg-primary-light: #3d3110;
-  --text-primary: #D4AF37;
-  --text-on-primary: #000000;
-  --border-primary: #D4AF37;
+  --bg-primary: #d1ab52;
+  --bg-primary-deep: #946932;
+  --bg-primary-hover: #dfc37a;
+  --bg-primary-active: #ecdaaa;
+  --bg-primary-soft: #382313;
+  --bg-primary-light: #644528;
+  --text-primary: #d1ab52;
+  --text-on-primary: #0c0c0e;
+  --border-primary: #d1ab52;
 
-  --text-accent: #e8c447;
-  --bg-accent: #D4AF37;
-  --bg-accent-hover: #e8c447;
-  --bg-accent-soft: #2a2208;
-  --bg-accent-light: #3d3110;
-  --border-accent: #D4AF37;
+  --text-accent: #dfc37a;
+  --bg-accent: #d1ab52;
+  --bg-accent-hover: #dfc37a;
+  --bg-accent-soft: #382313;
+  --bg-accent-light: #644528;
+  --border-accent: #d1ab52;
 
-  --text-main: #f1f5f9;
-  --text-muted: #8b8b93;
-  --text-dim: #7b7b85;
-  --text-inverse: #000000;
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+  --text-inverse: #0c0c0e;
 
-  --ring-focus: #D4AF37;
+  --ring-focus: #d1ab52;
 
   --border: #27272a;
   --border-strong: #3f3f46;
@@ -157,13 +157,13 @@
   --text-error: #fb7185;
   --text-error-dark: #fda4af;
   --text-on-error: #ffffff;
-  --text-on-accent: #000000;
+  --text-on-accent: #0c0c0e;
   --border-error: #e11d48;
 
   --text-on-success: #ffffff;
   --text-on-warning: #ffffff;
   --text-on-info: #ffffff;
-  --chart-1: #D4AF37;
+  --chart-1: #d1ab52;
   --chart-2: #34d399;
   --chart-3: #fb7185;
   --chart-4: #a78bfa;
@@ -177,28 +177,27 @@
   --text-info-dark: #7dd3fc;
 }
 
-/* Light-form island: forces light token values inside a form card in dark mode.
-   Used by Login + Jobs forms whose fields must look identical to light mode. */
+/* Light-form island */
 .dark .form-light {
   --bg-card: #ffffff;
-  --bg-hover: #e6ebf3;
-  --border: #d8dfeb;
-  --border-strong: #c5cfdd;
-  --divider: #d8dfeb;
-  --text-main: #0f172a;
-  --text-muted: #64748b;
-  --text-dim: #66778e;
+  --bg-hover: #ece9e2;
+  --border: #ece9e2;
+  --border-strong: #ded8cc;
+  --divider: #ece9e2;
+  --text-main: #18181b;
+  --text-muted: #71717a;
+  --text-dim: #a1a1aa;
   --text-inverse: #ffffff;
-  --ring-focus: #6366f1;
-  --bg-primary: #6366f1;
-  --bg-primary-deep: #1e1b4b;
-  --bg-primary-hover: #4f46e5;
-  --bg-primary-active: #4338ca;
-  --bg-primary-soft: #eef2ff;
-  --bg-primary-light: #e0e7ff;
-  --text-primary: #6366f1;
+  --ring-focus: #3a5fa9;
+  --bg-primary: #3a5fa9;
+  --bg-primary-deep: #17223b;
+  --bg-primary-hover: #304d89;
+  --bg-primary-active: #2a4173;
+  --bg-primary-soft: #f4f6fb;
+  --bg-primary-light: #e7ecf6;
+  --text-primary: #3a5fa9;
   --text-on-primary: #ffffff;
-  --border-primary: #6366f1;
+  --border-primary: #3a5fa9;
   --bg-error-soft: #fff1f2;
   --bg-error-light: #ffe4e6;
   --text-error: #e11d48;
@@ -210,25 +209,20 @@
 @media (min-width: 768px) {
   .dark .desktop-light {
     --bg-card: #ffffff;
-    --bg-primary-soft: #eef2ff;
-    --border: #e2e8f0;
-    --border-primary: #4f46e5;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --text-dim: #66778e;
-    --text-primary: #6366f1;
-    --bg-primary: #6366f1;
-    --bg-primary-hover: #4f46e5;
-    --bg-primary-active: #3730a3;
-    --bg-primary-light: #e0e7ff;
+    --bg-primary-soft: #f4f6fb;
+    --border: #ece9e2;
+    --border-primary: #3a5fa9;
+    --text-main: #18181b;
+    --text-muted: #71717a;
+    --text-dim: #a1a1aa;
+    --text-primary: #3a5fa9;
+    --bg-primary: #3a5fa9;
+    --bg-primary-hover: #304d89;
+    --bg-primary-active: #2a4173;
+    --bg-primary-light: #e7ecf6;
   }
 }
 
-/* ============================================================
-   Profile pages premium identity (صفحات الحسابات فقط).
-   أسرة «jade» الزمردية تُطبَّق داخل نطاق .profile-scope حصرًا
-   حتى تبقى بقية التطبيق على هوية الماركة (بنفسجي/ذهبي).
-   ============================================================ */
 .profile-scope {
   --jade: #0f9d8f;
   --jade-deep: #0a7b70;
@@ -247,12 +241,6 @@
   --jade-on: #032b26;
 }
 
-/* ============================================================
-   Student pages premium identity (صفحات الطالب فقط).
-   الهوية الخضراء التعليمية تُطبَّق داخل نطاق .student-scope
-   حصرًا — بقية التطبيق يبقى على هوية الماركة (بنفسجي/ذهبي).
-   أخضر نهارًا فقط: الوضع الليلي يعيد تأكيد الجولد/الأسود.
-   ============================================================ */
 .student-scope {
   --color-primary: 22 163 74;
   --color-primary-deep: 21 128 61;
@@ -277,24 +265,18 @@
   --color-primary-mid: 232 196 71;
   --color-primary-light: 61 49 16;
   --color-primary-h: 88 68 18;
-  --bg-primary: #D4AF37;
-  --bg-primary-deep: #b8962e;
-  --bg-primary-hover: #e8c447;
-  --bg-primary-active: #f5d060;
-  --bg-primary-soft: #2a2208;
-  --bg-primary-light: #3d3110;
-  --text-primary: #D4AF37;
-  --text-on-primary: #000000;
-  --border-primary: #D4AF37;
-  --ring-focus: #D4AF37;
+  --bg-primary: #d1ab52;
+  --bg-primary-deep: #946932;
+  --bg-primary-hover: #dfc37a;
+  --bg-primary-active: #ecdaaa;
+  --bg-primary-soft: #382313;
+  --bg-primary-light: #644528;
+  --text-primary: #d1ab52;
+  --text-on-primary: #0c0c0e;
+  --border-primary: #d1ab52;
+  --ring-focus: #d1ab52;
 }
 
-/* ============================================================
-   Parent dashboard premium identity (لوحة ولي الأمر فقط).
-   هوية برتقالية دافئة تُطبَّق داخل نطاق .parent-scope حصرًا —
-   بقية التطبيق يبقى على هوية الماركة (بنفسجي/ذهبي).
-   برتقالي نهارًا فقط: الوضع الليلي يعيد تأكيد الجولد/الأسود.
-   ============================================================ */
 .parent-scope {
   --color-primary: 194 65 12;
   --color-primary-deep: 154 52 18;
@@ -319,39 +301,34 @@
   --color-primary-mid: 232 196 71;
   --color-primary-light: 61 49 16;
   --color-primary-h: 88 68 18;
-  --bg-primary: #D4AF37;
-  --bg-primary-deep: #b8962e;
-  --bg-primary-hover: #e8c447;
-  --bg-primary-active: #f5d060;
-  --bg-primary-soft: #2a2208;
-  --bg-primary-light: #3d3110;
-  --text-primary: #D4AF37;
-  --text-on-primary: #000000;
-  --border-primary: #D4AF37;
-  --ring-focus: #D4AF37;
+  --bg-primary: #d1ab52;
+  --bg-primary-deep: #946932;
+  --bg-primary-hover: #dfc37a;
+  --bg-primary-active: #ecdaaa;
+  --bg-primary-soft: #382313;
+  --bg-primary-light: #644528;
+  --text-primary: #d1ab52;
+  --text-on-primary: #0c0c0e;
+  --border-primary: #d1ab52;
+  --ring-focus: #d1ab52;
 }
 
-/* ============================================================
-   Teacher pages premium identity (لوحة المعلمة فقط).
-   هوية بنفسجية = الهوية الافتراضية للماركة نفسها بلا تغيير
-   بصري، والوضع الليلي يعيد تأكيد الجولد/الأسود.
-   ============================================================ */
 .teacher-scope {
-  --color-primary: 79 70 229;
-  --color-primary-deep: 49 46 129;
-  --color-primary-mid: 99 102 241;
-  --color-primary-light: 238 242 255;
-  --color-primary-h: 224 231 255;
-  --bg-primary: #6366f1;
-  --bg-primary-deep: #1e1b4b;
-  --bg-primary-hover: #4f46e5;
-  --bg-primary-active: #4338ca;
-  --bg-primary-soft: #eef2ff;
-  --bg-primary-light: #e0e7ff;
-  --text-primary: #6366f1;
+  --color-primary: 58 95 169;
+  --color-primary-deep: 23 34 59;
+  --color-primary-mid: 78 123 197;
+  --color-primary-light: 231 236 246;
+  --color-primary-h: 205 218 240;
+  --bg-primary: #3a5fa9;
+  --bg-primary-deep: #17223b;
+  --bg-primary-hover: #304d89;
+  --bg-primary-active: #2a4173;
+  --bg-primary-soft: #f4f6fb;
+  --bg-primary-light: #e7ecf6;
+  --text-primary: #3a5fa9;
   --text-on-primary: #ffffff;
-  --border-primary: #6366f1;
-  --ring-focus: #6366f1;
+  --border-primary: #3a5fa9;
+  --ring-focus: #3a5fa9;
 }
 
 .dark .teacher-scope {
@@ -360,14 +337,14 @@
   --color-primary-mid: 232 196 71;
   --color-primary-light: 61 49 16;
   --color-primary-h: 88 68 18;
-  --bg-primary: #D4AF37;
-  --bg-primary-deep: #b8962e;
-  --bg-primary-hover: #e8c447;
-  --bg-primary-active: #f5d060;
-  --bg-primary-soft: #2a2208;
-  --bg-primary-light: #3d3110;
-  --text-primary: #D4AF37;
-  --text-on-primary: #000000;
-  --border-primary: #D4AF37;
-  --ring-focus: #D4AF37;
+  --bg-primary: #d1ab52;
+  --bg-primary-deep: #946932;
+  --bg-primary-hover: #dfc37a;
+  --bg-primary-active: #ecdaaa;
+  --bg-primary-soft: #382313;
+  --bg-primary-light: #644528;
+  --text-primary: #d1ab52;
+  --text-on-primary: #0c0c0e;
+  --border-primary: #d1ab52;
+  --ring-focus: #d1ab52;
 }

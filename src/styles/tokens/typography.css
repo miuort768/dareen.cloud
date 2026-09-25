@@ -1,8 +1,8 @@
 :root {
-  --font-family-sans: 'Tajawal', 'IBM Plex Sans Arabic', 'Readex Pro', sans-serif;
-  --font-family-heading: 'Noto Kufi Arabic', 'El Messiri', sans-serif;
-  --font-family-dash: 'Tajawal', 'Cairo', sans-serif;
-  --font-family-display: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+  --font-family-sans: 'IBM Plex Sans Arabic', 'Tajawal', 'Readex Pro', sans-serif;
+  --font-family-heading: 'Cairo', 'Noto Kufi Arabic', 'El Messiri', sans-serif;
+  --font-family-dash: 'Cairo', 'Tajawal', sans-serif;
+  --font-family-display: 'Cairo', 'Noto Kufi Arabic', 'Tajawal', sans-serif;
 
   --font-size-xs: 0.75rem;
   --line-height-xs: 1rem;
@@ -38,5 +38,5 @@
   --font-size-micro: 0.625rem;
   --line-height-micro: 0.875rem;
 
-  --letter-spacing-label: 0.2em;
+  --letter-spacing-label: 0.05em; /* Softer letter spacing for quiet luxury */
 }

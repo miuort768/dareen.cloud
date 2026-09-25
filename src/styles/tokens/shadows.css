@@ -1,16 +1,16 @@
 :root {
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
-  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
-  --shadow-card: 0 4px 16px -4px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
-  --shadow-gold: 0 10px 30px -10px rgb(var(--color-gold) / 0.3);
-  --shadow-glass: 0 8px 32px 0 rgb(var(--color-primary-deep) / 0.05);
-  --shadow-soft: 0 8px 30px 0 rgb(0 0 0 / 0.06);
-  --shadow-glow: 0 0 50px rgb(79 70 229 / 0.15);
-  --shadow-navbar: 0 8px 32px rgb(0 0 0 / 0.12);
-  --drop-shadow-bell: drop-shadow(0 0 8px rgb(0 0 0 / 0.3));
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.02);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.02);
+  --shadow-card: 0 4px 20px -2px rgb(0 0 0 / 0.03), 0 2px 8px -2px rgb(0 0 0 / 0.02);
+  --shadow-gold: 0 10px 30px -10px rgb(var(--color-gold) / 0.15);
+  --shadow-glass: 0 8px 32px 0 rgb(var(--color-primary-deep) / 0.03);
+  --shadow-soft: 0 8px 30px 0 rgb(0 0 0 / 0.04);
+  --shadow-glow: 0 0 40px rgb(58 95 169 / 0.08); /* royal blue glow */
+  --shadow-navbar: 0 8px 32px rgb(0 0 0 / 0.04);
+  --drop-shadow-bell: drop-shadow(0 0 8px rgb(0 0 0 / 0.15));
 }
 
 .dark {
-  --drop-shadow-bell: drop-shadow(0 0 8px rgb(255 255 255 / 0.4));
+  --drop-shadow-bell: drop-shadow(0 0 8px rgb(255 255 255 / 0.2));
 }

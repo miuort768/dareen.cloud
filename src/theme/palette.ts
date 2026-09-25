@@ -5,38 +5,38 @@
  * جميع المكونات تتعامل مع semantic.ts فقط.
  */
 
-import { indigo, slate, gold, emerald, amber, rose, sky } from './primitives'
+import { royalBlue, charcoal, warmIvory, matteGold, emerald, amber, rose, sky } from './primitives'
 
 export const palette = {
-  // Primary
-  primary: indigo[600],
-  primaryHover: indigo[700],
-  primaryActive: indigo[800],
-  primarySoft: indigo[50],
-  primaryLight: indigo[100],
-  primary200: indigo[200],
-  primary400: indigo[400],
-  primaryDark: indigo[900],
+  // Primary (Deep Navy / Royal Blue)
+  primary: royalBlue[600],
+  primaryHover: royalBlue[700],
+  primaryActive: royalBlue[800],
+  primarySoft: royalBlue[50],
+  primaryLight: royalBlue[100],
+  primary200: royalBlue[200],
+  primary400: royalBlue[400],
+  primaryDark: royalBlue[900],
 
-  // Accent (Gold — استخدام محدود)
-  accent: gold[500],
-  accentHover: gold[600],
-  accentSoft: gold[50],
-  accentLight: gold[100],
+  // Accent (Matte Gold — استخدام محدود)
+  accent: matteGold[500],
+  accentHover: matteGold[600],
+  accentSoft: matteGold[50],
+  accentLight: matteGold[100],
 
-  // Neutral (Slate)
-  surface: slate[50],
-  background: slate[100],
+  // Neutral (Charcoal / Ivory)
+  surface: warmIvory[50],
+  background: warmIvory[100],
   card: '#ffffff',
-  cardDark: slate[800],
-  border: slate[200],
-  borderAccent: slate[300],
-  divider: slate[200],
+  cardDark: charcoal[800],
+  border: warmIvory[300],
+  borderAccent: warmIvory[400],
+  divider: warmIvory[300],
 
   // Text
-  text: slate[900],
-  textMuted: slate[500],
-  textDim: '#66778e',
+  text: charcoal[900],
+  textMuted: charcoal[500],
+  textDim: charcoal[400],
   textInverse: '#ffffff',
   textOnPrimary: '#ffffff',
 
@@ -64,23 +64,23 @@ export const palette = {
   infoDark: sky[700],
 
   // Text on colored backgrounds
-  textOnAccent: slate[900],
+  textOnAccent: charcoal[900],
   textOnError: '#ffffff',
   textOnSuccess: '#ffffff',
   textOnWarning: '#ffffff',
   textOnInfo: '#ffffff',
 
   // Focus
-  focusRing: indigo[600],
+  focusRing: royalBlue[600],
 
   // Hover backgrounds
-  hover: slate[100],
-  hoverDark: slate[700],
-  surfaceActive: slate[200],
+  hover: warmIvory[200],
+  hoverDark: charcoal[700],
+  surfaceActive: warmIvory[300],
 
   // Aliases
-  textSecondary: slate[500],
-  borderHover: slate[300],
+  textSecondary: charcoal[600],
+  borderHover: warmIvory[400],
 } as const
 
 export type PaletteToken = keyof typeof palette
