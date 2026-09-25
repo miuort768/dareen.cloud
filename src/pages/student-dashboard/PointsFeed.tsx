@@ -55,11 +55,11 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
   return (
     <section
       aria-label="آخر النشاطات"
-      className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-colors duration-slow sm:p-5"
+      className="rounded-3xl border border-border bg-card p-4 shadow-soft transition-colors duration-slow sm:p-5"
     >
       <div className="mb-4 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
             <Activity size={14} />
           </div>
           <h3 className="text-sm font-black text-main">آخر النشاطات</h3>
@@ -76,7 +76,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
           return (
             <li
               key={item.id}
-              className="relative flex items-start gap-3 rounded-xl px-1 py-2.5 transition-colors hover:bg-surface"
+              className="relative flex items-start gap-3 rounded-xl px-1 py-2.5 transition-colors hover:bg-hover"
             >
               <span
                 className={cn(
@@ -107,7 +107,9 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
                 <span
                   className={cn(
                     'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-black tabular-nums',
-                    item.amount >= 0 ? 'bg-success text-on-success' : 'bg-error text-on-error',
+                    item.amount >= 0
+                      ? 'bg-success-soft text-success-dark'
+                      : 'bg-error-soft text-error-dark',
                   )}
                 >
                   {item.amount >= 0 ? '+' : ''}

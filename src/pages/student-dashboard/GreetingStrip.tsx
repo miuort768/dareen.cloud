@@ -43,19 +43,11 @@ export const GreetingStrip = ({
   return (
     <section
       aria-label="ترحيب"
-      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
+      className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft"
     >
       {/* خلفية خضراء ناعمة + هالات زخرفية */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light via-primary-soft to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-primary/10 lg:-end-20 lg:h-80 lg:w-80"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -end-4 -top-8 h-28 w-28 rounded-full border border-primary/10 bg-primary/5 lg:-end-10 lg:h-40 lg:w-40"
+        className="via-primary/3 pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"
         aria-hidden="true"
       />
 
@@ -66,7 +58,7 @@ export const GreetingStrip = ({
               <CalendarDays size={13} className="text-primary" />
               <span className="font-dash">{today}</span>
             </p>
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[10px] font-black text-on-primary shadow-elevation-1">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-3 py-1 text-[10px] font-black text-primary-active shadow-none">
               <GraduationCap size={11} />
               {grade || 'طالب'}
             </span>
@@ -83,7 +75,7 @@ export const GreetingStrip = ({
         {/* لقطة أرقام سطح المكتب — تملأ الفراغ في نهاية الهيرو */}
         {hasSnapshot && (
           <div className="hidden shrink-0 gap-3 lg:flex" aria-label="ملخص مسيرتك الدراسية">
-            <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-elevation-1">
+            <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-5 py-4 shadow-soft">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft text-success-strong">
                 <CheckCircle2 size={16} />
               </span>
@@ -93,7 +85,7 @@ export const GreetingStrip = ({
               <span className="text-[10px] font-bold text-muted">نسبة الحضور</span>
             </div>
 
-            <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-elevation-1">
+            <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-5 py-4 shadow-soft">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <CalendarCheck size={16} />
               </span>
@@ -104,7 +96,7 @@ export const GreetingStrip = ({
               <span className="text-[10px] font-bold text-muted">حصص منفذة</span>
             </div>
 
-            <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-elevation-1">
+            <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-5 py-4 shadow-soft">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft text-info-strong">
                 <CalendarClock size={16} />
               </span>

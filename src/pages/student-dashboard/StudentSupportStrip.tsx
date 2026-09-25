@@ -12,21 +12,19 @@ export const StudentSupportStrip = () => {
     <div className="grid grid-cols-1 gap-3">
       <button
         onClick={() => navigate('/student-invoices')}
-        className="group flex min-h-14 items-center gap-3 rounded-full bg-primary pe-2.5 ps-3 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+        className="group flex min-h-14 items-center gap-3 rounded-2xl border border-border bg-surface pe-2.5 ps-3 text-start shadow-soft transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         aria-label="فتح صفحة الفواتير"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary">
           <Receipt size={18} />
         </span>
         <span className="min-w-0 flex-1 leading-tight">
-          <span className="block truncate text-xs font-black text-on-primary">الفواتير</span>
-          <span className="block truncate text-micro font-bold text-on-primary opacity-80">
-            فواتيرك ومدفوعاتك
-          </span>
+          <span className="block truncate text-xs font-black text-main">الفواتير</span>
+          <span className="block truncate text-micro font-bold text-muted">فواتيرك ومدفوعاتك</span>
         </span>
         <span
           aria-hidden
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-primary transition-transform duration-normal group-hover:-translate-x-1"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary transition-transform duration-normal group-hover:-translate-x-1"
         >
           <ArrowLeft size={16} />
         </span>
@@ -37,23 +35,21 @@ export const StudentSupportStrip = () => {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex min-h-14 items-center gap-3 rounded-full bg-success pe-2.5 ps-3 text-start text-on-success shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+          className="group flex min-h-14 items-center gap-3 rounded-2xl border border-border bg-surface pe-2.5 ps-3 text-start shadow-soft transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           aria-label="تواصل مع الدعم عبر واتساب"
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-success">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-success-soft text-success-strong">
             <MessageCircle size={18} />
           </span>
           <span className="min-w-0 flex-1 leading-tight">
-            <span className="block truncate text-xs font-black text-on-success">
+            <span className="block truncate text-xs font-black text-main">
               تواصل مع الدعم الفني
             </span>
-            <span className="block truncate text-micro font-bold text-on-success opacity-80">
-              متاح عبر واتساب
-            </span>
+            <span className="block truncate text-micro font-bold text-muted">متاح عبر واتساب</span>
           </span>
           <span
             aria-hidden
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-success transition-transform duration-normal group-hover:-translate-x-1"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-success-soft text-success-strong transition-transform duration-normal group-hover:-translate-x-1"
           >
             <ArrowLeft size={16} />
           </span>

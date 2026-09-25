@@ -198,7 +198,7 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
   if (!items) return null
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 font-dash" dir="rtl">
+    <div className="rounded-3xl border border-border bg-card p-5 font-dash shadow-soft" dir="rtl">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
@@ -232,7 +232,10 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
           const isLast = i === items.length - 1
 
           return (
-            <div key={item.id} className="relative flex gap-3 pb-4 last:pb-0">
+            <div
+              key={item.id}
+              className="relative flex gap-3 rounded-xl pb-4 transition-colors last:pb-0 hover:bg-hover"
+            >
               {!isLast && (
                 <div className="absolute bottom-0 start-[19px] top-11 w-px bg-border" aria-hidden />
               )}

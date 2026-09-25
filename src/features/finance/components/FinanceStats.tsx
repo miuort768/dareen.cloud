@@ -54,26 +54,33 @@ const KPICard = ({
   note?: string
 }) => (
   <motion.div
-    whileHover={{ scale: 1.01, y: -1 }}
-    className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2"
+    whileHover={{ y: -2 }}
+    transition={{ duration: 0.2 }}
+    className="rounded-3xl border border-border bg-card p-5 shadow-soft transition-all hover:shadow-elevation-1"
   >
-    <div className="relative p-3.5">
-      <div className="mb-2 flex items-start justify-between">
-        <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl', tone)}>
-          <Icon size={14} />
-        </div>
-        {note && <span className="text-[9px] font-bold text-muted">{note}</span>}
+    {/* Icon + note */}
+    <div className="mb-4 flex items-start justify-between">
+      <div className={cn('flex h-10 w-10 items-center justify-center rounded-2xl', tone)}>
+        <Icon size={18} />
       </div>
-      <p className="text-[10px] font-bold text-muted">{title}</p>
-      <p className="mt-0.5 text-lg font-bold leading-none text-main">
-        <Counter value={value} />
-      </p>
-      <div className="mt-2 flex items-center gap-1.5 border-t border-divider pt-2">
-        <span className="text-[9px] font-bold text-muted">{monthLabel}</span>
-        <span className="text-[10px] font-bold tabular-nums text-main">
-          <Counter value={monthValue} />
+      {note && (
+        <span className="rounded-full bg-hover px-2 py-0.5 text-[10px] font-medium text-muted">
+          {note}
         </span>
-      </div>
+      )}
+    </div>
+    {/* Label */}
+    <p className="text-xs font-medium text-muted">{title}</p>
+    {/* Main value */}
+    <p className="mt-1 text-2xl font-black leading-none tracking-tight text-main">
+      <Counter value={value} />
+    </p>
+    {/* Month divider */}
+    <div className="mt-3 flex items-center gap-1.5 border-t border-border pt-3">
+      <span className="text-[11px] font-medium text-muted">{monthLabel}:</span>
+      <span className="text-xs font-bold tabular-nums text-main">
+        <Counter value={monthValue} />
+      </span>
     </div>
   </motion.div>
 )

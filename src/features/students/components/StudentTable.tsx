@@ -385,7 +385,7 @@ export const StudentTable = memo(
 
     if (students.length === 0) {
       return (
-        <div className="rounded-2xl border border-border bg-card py-16 text-center">
+        <div className="rounded-3xl border border-border bg-card py-16 text-center shadow-soft">
           <GraduationCap size={48} className="mx-auto mb-3 text-muted opacity-20" />
           <p className="text-xs font-bold text-muted">لا توجد بيانات طلاب حالياً</p>
           <p className="mt-1 text-[10px] text-muted opacity-60">قم بإضافة طالب جديد للبدء</p>

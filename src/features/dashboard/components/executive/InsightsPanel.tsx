@@ -149,7 +149,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
 
   return (
     <div
-      className="flex h-full flex-col rounded-2xl border border-border bg-card p-5 font-dash"
+      className="flex h-full flex-col rounded-3xl border border-border bg-card p-5 font-dash shadow-soft"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between">
@@ -201,7 +201,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
             >
               <div
                 className={cn(
-                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl',
+                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-xl',
                   cfg.iconBg,
                 )}
               >

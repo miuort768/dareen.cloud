@@ -377,7 +377,7 @@ export const Schedule = () => {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-3"
+            className="mb-4"
           >
             <AnimatePresence mode="wait">
               {queueDone ? (
@@ -386,21 +386,23 @@ export const Schedule = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative overflow-hidden rounded-2xl border border-success-soft bg-success-soft p-6 text-center"
+                  className="relative overflow-hidden rounded-3xl border border-success-soft bg-success-soft p-8 text-center shadow-soft"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', damping: 12, delay: 0.1 }}
-                    className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-success-soft"
+                    className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/50"
                   >
-                    <PartyPopper size={28} className="text-success" />
+                    <PartyPopper size={28} className="text-success-strong" />
                   </motion.div>
-                  <h3 className="mb-1 text-lg font-bold text-main">
+                  <h3 className="mb-1.5 text-lg font-black text-main">
                     ماشاء الله! أنهيتِ كل حصص اليوم
                   </h3>
-                  <p className="text-sm text-muted">أحسنتِ يا معلمة — استمري في التميّز</p>
-                  <div className="mt-3 flex items-center justify-center gap-2 text-xs font-bold text-success">
+                  <p className="text-sm font-medium text-muted">
+                    أحسنتِ يا معلمة — استمري في التميّز
+                  </p>
+                  <div className="mt-4 flex items-center justify-center gap-2 text-xs font-bold text-success-strong">
                     <CheckCircle2 size={14} />
                     <span>{todayQueue.length} حصص مكتملة</span>
                   </div>
@@ -411,15 +413,15 @@ export const Schedule = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="rounded-2xl border border-border bg-card p-4"
+                  className="rounded-3xl border border-border bg-card p-5 shadow-soft"
                 >
                   {/* Progress bar */}
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="rounded-lg bg-primary-soft p-1.5 text-primary">
-                        <Sparkles size={14} />
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="rounded-xl bg-primary-soft p-2 text-primary">
+                        <Sparkles size={15} />
                       </div>
-                      <span className="text-xs font-bold text-muted">
+                      <span className="text-xs font-bold text-main">
                         الحصة الحالية — {todayQueue.length - remainingQueue.length + 1}/
                         {todayQueue.length}
                       </span>
@@ -429,13 +431,13 @@ export const Schedule = () => {
                         <div key={i} className="h-1.5 w-1.5 rounded-full bg-border" />
                       ))}
                       {remainingQueue.length > 4 && (
-                        <span className="text-[9px] font-bold text-muted">
+                        <span className="text-[10px] font-bold tabular-nums text-muted">
                           +{remainingQueue.length - 4}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className="mb-3 h-1 overflow-hidden rounded-full bg-surface">
+                  <div className="mb-4 h-1.5 overflow-hidden rounded-full bg-surface">
                     <motion.div
                       className="h-full rounded-full bg-primary"
                       initial={{ width: 0 }}
@@ -445,9 +447,9 @@ export const Schedule = () => {
                   </div>
 
                   {/* Current session card */}
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex min-w-0 items-center gap-3.5">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
                         <span className="text-sm font-bold text-primary">
                           {currentSession.studentName.charAt(0)}
                         </span>
@@ -456,23 +458,25 @@ export const Schedule = () => {
                         <p className="truncate text-sm font-bold text-main">
                           {currentSession.studentName}
                         </p>
-                        <p className="truncate text-xs text-muted">
+                        <p className="mt-0.5 truncate text-xs font-medium text-muted">
                           {currentSession.subject} — {currentSession.teacherName}
                         </p>
                       </div>
                     </div>
-                    <div className="flex shrink-0 items-center gap-3">
+                    <div className="flex shrink-0 items-center gap-4">
                       <div className="flex items-center gap-1.5 text-muted">
-                        <Clock size={12} />
-                        <span className="text-xs font-bold">{currentSession.time}</span>
+                        <Clock size={13} />
+                        <span className="text-xs font-bold tabular-nums">
+                          {currentSession.time}
+                        </span>
                       </div>
                       <button
                         onClick={() => completeMutation.mutate(currentSession.id)}
                         disabled={completeMutation.isPending}
-                        className="flex items-center gap-1.5 rounded-xl bg-success px-3 py-1.5 text-xs font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                        className="flex h-10 items-center gap-1.5 rounded-xl bg-success px-4 text-xs font-bold text-on-success shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-success-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:pointer-events-none disabled:opacity-50"
                       >
-                        <CheckCircle2 size={13} />
-                        <span className="hidden sm:inline">إتمام</span>
+                        <CheckCircle2 size={14} />
+                        <span className="hidden sm:inline">إتمام الحصة</span>
                       </button>
                     </div>
                   </div>
@@ -487,16 +491,16 @@ export const Schedule = () => {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-3"
+            className="mb-4"
           >
-            <div className="flex items-center justify-between rounded-xl border border-border bg-card p-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-soft text-primary">
-                  <Sparkles size={14} />
+            <div className="flex items-center justify-between rounded-3xl border border-border bg-card p-4 shadow-soft">
+              <div className="flex items-center gap-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
+                  <Sparkles size={16} />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-muted">الحصة القادمة</p>
-                  <p className="mt-0.5 text-xs font-bold text-main">
+                  <p className="text-[11px] font-bold text-muted">الحصة القادمة</p>
+                  <p className="mt-0.5 text-sm font-bold text-main">
                     {nextSession.subject} — {nextSession.studentName}
                   </p>
                 </div>

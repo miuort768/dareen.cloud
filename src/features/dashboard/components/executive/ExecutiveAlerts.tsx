@@ -71,7 +71,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
 
   return (
     <div
-      className="border-warning-soft/60 flex h-full flex-col rounded-2xl border bg-card p-5 font-dash"
+      className="flex h-full flex-col rounded-3xl border border-warning-soft bg-card p-5 font-dash"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between">
@@ -148,7 +148,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
             </>
           )
           const rowClass = cn(
-            'flex items-start gap-2.5 rounded-xl border p-3 transition-colors',
+            'flex items-start gap-2.5 rounded-2xl border p-3 transition-colors',
             cfg.rowBg,
             actionTo && 'hover:border-primary/30 hover:bg-card',
           )

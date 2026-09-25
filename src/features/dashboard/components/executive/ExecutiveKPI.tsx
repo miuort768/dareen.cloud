@@ -52,7 +52,7 @@ const OPS = (s: ExecutiveStats) => [
 export const OpsMetrics = memo(function OpsMetrics({ stats }: { stats: ExecutiveStats }) {
   return (
     <div
-      className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-divider font-dash sm:grid-cols-3 lg:grid-cols-6"
+      className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-border bg-divider font-dash sm:grid-cols-3 lg:grid-cols-6"
       dir="rtl"
     >
       {OPS(stats).map((m) => {

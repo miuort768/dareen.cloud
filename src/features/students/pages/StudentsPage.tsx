@@ -314,10 +314,7 @@ export const Students = () => {
 
   if (loading) {
     return (
-      <div
-        className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background"
-        dir="rtl"
-      >
+      <div className="relative min-h-full bg-background" dir="rtl">
         <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
           <Skeleton className="h-14 w-full rounded-2xl" />
           <Skeleton className="h-12 w-full rounded-xl" />
@@ -334,10 +331,7 @@ export const Students = () => {
   }
 
   return (
-    <div
-      className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-2"
-      dir="rtl"
-    >
+    <div className="relative min-h-full bg-background pb-4" dir="rtl">
       <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
         {/* Mobile compact header */}
         <div className="md:hidden">
@@ -352,7 +346,7 @@ export const Students = () => {
                   setShowAddForm(true)
                 }}
                 aria-label="إضافة طالب"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 <Plus size={16} /> طالب
               </button>
@@ -368,7 +362,7 @@ export const Students = () => {
             placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-bold text-main shadow-elevation-1 outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+            className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-bold text-main shadow-soft outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
           />
         </div>
         {/* Desktop header — unified PageHeader pattern */}
@@ -415,13 +409,13 @@ export const Students = () => {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.05 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-shadow hover:shadow-elevation-2"
+                  whileHover={{ y: -2 }}
+                  className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-soft transition-shadow hover:shadow-elevation-1"
                 >
-                  <div className="mb-3 flex items-center justify-between">
+                  <div className="mb-4 flex items-center justify-between">
                     <div
                       className={cn(
-                        'flex h-10 w-10 items-center justify-center rounded-xl',
+                        'flex h-10 w-10 items-center justify-center rounded-2xl',
                         stat.iconBg,
                       )}
                     >
@@ -429,10 +423,10 @@ export const Students = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-2xl font-bold tabular-nums tracking-tight text-main">
+                    <p className="text-2xl font-black tabular-nums tracking-tight text-main">
                       <AnimatedCounter value={stat.value} />
                     </p>
-                    <p className="mt-1 text-xs text-muted">{stat.label}</p>
+                    <p className="mt-1 text-xs font-medium text-muted">{stat.label}</p>
                   </div>
                 </motion.div>
               )
@@ -446,7 +440,7 @@ export const Students = () => {
           transition={{ delay: 0.2 }}
         >
           {showAddForm && (
-            <div className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 md:p-6">
+            <div className="rounded-3xl border border-border bg-card p-5 shadow-soft md:p-8">
               <StudentForm
                 initialData={editId ? allStudents.find((s) => s.id === editId) : null}
                 onSubmit={handleAddOrUpdateStudent}

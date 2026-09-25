@@ -9,11 +9,32 @@ interface KpiStripProps {
 
 type Tone = 'success' | 'primary' | 'info' | 'warning'
 
-const CARD_FILL: Record<Tone, string> = {
-  success: 'bg-success text-on-success',
-  primary: 'bg-primary text-on-primary',
-  info: 'bg-info text-on-info',
-  warning: 'bg-warning text-on-warning',
+/** Soft palette: card bg stays neutral, accent colour on the value & icon */
+const CARD_SOFT: Record<Tone, { card: string; icon: string; value: string; bar: string }> = {
+  success: {
+    card: 'bg-card border-border',
+    icon: 'bg-success-soft text-success-strong',
+    value: 'text-success-strong',
+    bar: 'bg-success',
+  },
+  primary: {
+    card: 'bg-card border-border',
+    icon: 'bg-primary-soft text-primary',
+    value: 'text-primary',
+    bar: 'bg-primary',
+  },
+  info: {
+    card: 'bg-card border-border',
+    icon: 'bg-info-soft text-info-strong',
+    value: 'text-info-strong',
+    bar: 'bg-info',
+  },
+  warning: {
+    card: 'bg-card border-border',
+    icon: 'bg-warning-soft text-warning-strong',
+    value: 'text-warning-strong',
+    bar: 'bg-warning',
+  },
 }
 
 interface CardSpec {
@@ -75,46 +96,65 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
     <section aria-label="مؤشرات سريعة" className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
       {cards.map((card) => {
         const Icon = card.icon
+        const tone = CARD_SOFT[card.tone]
         return (
           <article
             key={card.key}
             className={cn(
-              'rounded-2xl p-3.5 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 sm:p-4',
-              CARD_FILL[card.tone],
+              'rounded-3xl border p-4 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1 sm:p-5',
+              tone.card,
             )}
           >
-            <div className="flex items-center justify-between gap-2">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-current">
-                <Icon size={17} />
+            {/* Icon + optional bar% chip */}
+            <div className="flex items-start justify-between gap-2">
+              <span
+                className={cn(
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl',
+                  tone.icon,
+                )}
+              >
+                <Icon size={18} />
               </span>
               {card.bar !== undefined && (
-                <span className="hidden rounded-full bg-white/15 px-2 py-0.5 text-[9px] font-black tabular-nums opacity-90 sm:block">
+                <span className="hidden rounded-full bg-hover px-2 py-0.5 text-[10px] font-bold tabular-nums text-muted sm:block">
                   {card.bar}%
                 </span>
               )}
             </div>
 
-            <p className="mt-3 flex items-baseline gap-1">
-              <span className="font-dash text-2xl font-black tabular-nums leading-none lg:text-3xl">
+            {/* Value */}
+            <p className="mt-4 flex items-baseline gap-1">
+              <span
+                className={cn(
+                  'font-dash text-3xl font-black tabular-nums leading-none',
+                  tone.value,
+                )}
+              >
                 {card.value}
               </span>
               {card.unit && (
-                <span className="text-[11px] font-black tabular-nums opacity-80">{card.unit}</span>
+                <span className="text-xs font-bold tabular-nums text-muted">{card.unit}</span>
               )}
             </p>
-            <p className="mt-1 truncate text-[11px] font-black opacity-90">{card.title}</p>
-            <p className="mt-0.5 truncate text-[10px] font-bold opacity-70">{card.caption}</p>
 
+            {/* Title & caption */}
+            <p className="mt-1.5 truncate text-xs font-bold text-main">{card.title}</p>
+            <p className="mt-0.5 truncate text-[11px] font-medium text-muted">{card.caption}</p>
+
+            {/* Progress bar */}
             {card.bar !== undefined && (
               <div
                 role="progressbar"
                 aria-valuenow={card.bar}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/25"
+                className="mt-3 h-1 overflow-hidden rounded-full bg-border"
               >
                 <div
-                  className="h-full rounded-full bg-white/80 transition-all duration-1000 ease-out"
+                  className={cn(
+                    'h-full rounded-full transition-all duration-1000 ease-out',
+                    tone.bar,
+                  )}
                   style={{ width: `${Math.max(0, Math.min(100, card.bar))}%` }}
                 />
               </div>

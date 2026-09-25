@@ -36,7 +36,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
   return (
     <section
       aria-label="رحلة الرتب"
-      className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
+      className="rounded-3xl border border-border bg-card p-6 shadow-soft transition-colors duration-slow"
     >
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">

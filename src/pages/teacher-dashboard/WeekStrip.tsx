@@ -31,16 +31,16 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   return (
     <section
       aria-label="حمل الأسبوع القادم"
-      className="flex h-full flex-col rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
+      className="flex h-full flex-col rounded-3xl border border-border bg-card p-6 shadow-soft transition-colors duration-slow hover:shadow-elevation-1"
     >
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between">
         <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
-        <span className="rounded-lg bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary shadow-elevation-1">
+        <span className="rounded-xl bg-primary-soft px-3 py-1 text-[11px] font-bold tabular-nums text-primary">
           {weekTotal} {weekTotal === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
 
-      <div className="grid flex-1 grid-cols-7 gap-1.5 sm:gap-2">
+      <div className="grid flex-1 grid-cols-7 gap-2">
         {ordered.map((day) => (
           <div
             key={day.label}
@@ -49,29 +49,29 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
                 ? `${day.label}: ${day.count} ${day.count === 1 ? 'حصة' : 'حصص'}${day.isToday ? ' (اليوم)' : ''}`
                 : `${day.label}: لا حصص`
             }
-            className="flex cursor-default flex-col items-center gap-1.5 transition-all duration-slow hover:-translate-y-0.5"
+            className="flex cursor-default flex-col items-center gap-2 transition-all duration-slow hover:-translate-y-0.5"
           >
             <span
               className={cn(
-                'text-[9px] font-black sm:text-[10px]',
-                day.isToday ? 'text-primary' : day.count > 0 ? 'text-info' : 'text-dim',
+                'text-[10px] font-bold',
+                day.isToday ? 'text-primary' : day.count > 0 ? 'text-main' : 'text-muted',
               )}
             >
               {day.label}
             </span>
 
-            <div className="flex h-16 w-full items-end justify-center sm:h-20">
-              <div className="flex w-full items-end justify-center rounded-lg">
+            <div className="flex h-20 w-full items-end justify-center">
+              <div className="flex w-full items-end justify-center">
                 <div
                   style={{ height: `${day.barPct}%` }}
                   className={cn(
-                    'w-full rounded-md transition-all duration-slow',
+                    'w-full max-w-[14px] rounded-full transition-all duration-slow',
                     day.isToday
-                      ? 'bg-gradient-to-t from-primary-deep to-primary shadow-elevation-2 shadow-primary/25 ring-1 ring-white/30'
+                      ? 'bg-primary shadow-soft'
                       : day.count > 0
-                        ? 'bg-info'
-                        : 'bg-hover dark:bg-hover',
-                    day.isToday && 'min-h-2.5',
+                        ? 'bg-info-soft'
+                        : 'bg-hover',
+                    day.isToday && 'min-h-[10px]',
                   )}
                 />
               </div>
@@ -79,8 +79,8 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
 
             <span
               className={cn(
-                'text-sm font-black tabular-nums leading-none sm:text-base',
-                day.isToday ? 'text-primary' : day.count > 0 ? 'text-info' : 'text-dim opacity-60',
+                'text-sm font-black tabular-nums leading-none',
+                day.isToday ? 'text-primary' : day.count > 0 ? 'text-main' : 'text-muted',
               )}
             >
               {day.count}

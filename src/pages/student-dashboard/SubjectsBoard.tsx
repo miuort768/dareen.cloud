@@ -43,8 +43,8 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               to="/schedule"
               aria-label={`عرض مادة ${sub.subject} في الجدول الأسبوعي`}
               className={cn(
-                'group relative block overflow-hidden rounded-2xl border bg-card p-4 shadow-elevation-1 outline-none transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus',
-                sub.isFrozen ? 'border-border' : 'border-border',
+                'group relative block overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-soft outline-none transition-all duration-slow hover:-translate-y-1 hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus',
+                sub.isFrozen && 'opacity-80',
               )}
             >
               <div className="flex items-start justify-between gap-3">
@@ -119,7 +119,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                 </p>
               )}
 
-              <span className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-primary px-4 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal group-hover:bg-primary-hover">
+              <span className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-2xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-soft transition-all duration-normal group-hover:bg-primary-hover group-hover:shadow">
                 عرض الجدول الدراسي
                 <ArrowLeft
                   size={13}

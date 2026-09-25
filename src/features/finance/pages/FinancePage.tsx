@@ -100,63 +100,66 @@ export const Finance = () => {
   return (
     <div className="relative min-h-full overflow-x-hidden bg-background" dir="rtl">
       <div className="mx-auto max-w-page space-y-6 px-2.5 sm:px-4 md:px-6">
-        {/* Hero — clean divided card with finance identity */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6"
+          className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-soft md:p-8"
         >
-          <div className="bg-success/10 pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
-
-          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+            {/* Title + icon */}
             <div className="flex items-center gap-4">
-              <div className="shadow-success/30 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success shadow-elevation-3">
-                <TrendingUp size={22} className="text-on-success" />
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success-soft">
+                <TrendingUp size={22} className="text-success-strong" />
               </div>
               <div>
-                <h1 className="text-xl font-black leading-tight text-main">الإدارة المالية</h1>
-                <p className="mt-0.5 text-xs text-muted">نظرة شاملة على التدفقات المالية للمعهد</p>
+                <h1 className="text-2xl font-bold leading-tight tracking-tight text-main">
+                  الإدارة المالية
+                </h1>
+                <p className="mt-1 text-sm text-muted">نظرة شاملة على التدفقات المالية للمعهد</p>
               </div>
             </div>
 
-            <div className="hidden h-12 w-px bg-border lg:block" />
+            <div className="hidden h-10 w-px bg-border lg:block" />
 
-            <div className="grid flex-1 grid-cols-3 gap-2">
+            {/* 3 mini stats */}
+            <div className="grid flex-1 grid-cols-3 gap-3">
               {[
                 {
                   label: 'إيرادات الشهر',
                   value: (state.monthIncome || 0).toLocaleString(),
                   icon: ArrowUpRight,
-                  tone: 'text-success',
+                  tone: 'text-success-strong',
+                  bg: 'bg-success-soft',
                 },
                 {
                   label: 'مصاريف الشهر',
                   value: (state.monthExpenses || 0).toLocaleString(),
                   icon: ArrowDownRight,
                   tone: 'text-error',
+                  bg: 'bg-error-soft',
                 },
                 {
                   label: 'صافي ربح الشهر',
                   value: ((state.monthIncome || 0) - (state.monthExpenses || 0)).toLocaleString(),
                   icon: Wallet,
-                  tone: 'text-info',
+                  tone: 'text-primary',
+                  bg: 'bg-primary-soft',
                 },
               ].map((s) => {
                 const Icon = s.icon
                 return (
                   <div
                     key={s.label}
-                    className="rounded-xl border border-border bg-surface px-2 py-2.5 text-center"
+                    className={`rounded-2xl border border-border px-3 py-3.5 ${s.bg}`}
                   >
-                    <p className={cn('text-base font-black tabular-nums leading-none', s.tone)}>
+                    <p className={cn('text-xl font-black tabular-nums leading-none', s.tone)}>
                       {s.value}
-                      <span className="ms-1 text-[9px] font-bold text-muted">
+                      <span className="ms-1 text-[10px] font-bold text-muted">
                         {getCurrencySymbol(state.reportCurrency)}
                       </span>
                     </p>
-                    <p className="mt-1 flex items-center justify-center gap-1 text-[10px] font-bold text-muted">
-                      <Icon size={10} className={s.tone} />
+                    <p className="mt-1.5 flex items-center gap-1 text-[11px] font-medium text-muted">
+                      <Icon size={11} className={s.tone} />
                       {s.label}
                     </p>
                   </div>
@@ -164,16 +167,17 @@ export const Finance = () => {
               })}
             </div>
 
+            {/* Actions */}
             <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={() => actions.refresh?.()}
-                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10 md:flex-none"
+                className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-transparent px-4 text-sm font-medium text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:flex-none"
               >
                 <RefreshCcw size={13} /> تحديث
               </button>
               <button
                 onClick={() => navigate('/monthly-closing')}
-                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10 md:flex-none"
+                className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-sm font-medium text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:flex-none"
               >
                 <CalendarCheck size={13} /> تسوية
               </button>

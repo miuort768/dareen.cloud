@@ -67,28 +67,11 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
     <section
       aria-label="ترحيب"
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2',
+        'relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-active to-primary-deep shadow-soft',
         className,
       )}
     >
-      <div
-        className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -end-6 -top-10 h-36 w-36 rounded-full border border-white/5"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-16 -start-12 h-44 w-44 rounded-full bg-white/5"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 p-5 sm:p-6">
+      <div className="relative z-10 p-6 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-white/90">

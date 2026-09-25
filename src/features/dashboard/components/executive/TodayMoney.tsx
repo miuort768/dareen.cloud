@@ -37,7 +37,7 @@ const MoneyStat = memo(function MoneyStat({
 export const TodayMoney = memo(function TodayMoney({ stats }: { stats: ExecutiveStats }) {
   return (
     <div
-      className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card font-dash lg:grid-cols-3"
+      className="grid grid-cols-1 overflow-hidden rounded-3xl border border-border bg-card font-dash lg:grid-cols-3"
       dir="rtl"
     >
       <div className="relative border-divider bg-primary-soft lg:border-e">

@@ -36,28 +36,30 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
   const navigate = useNavigate()
 
   return (
-    <div className="grid grid-cols-3 gap-2.5 font-dash sm:grid-cols-6" dir="rtl">
-      {QUICK_ACTIONS.map((action) => {
-        const Icon = action.icon
-        return (
-          <button
-            key={action.label}
-            onClick={() => navigate(action.path)}
-            className={cn(
-              'group flex flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-4 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97]',
-              action.btn,
-            )}
-            title={action.label}
-          >
-            <Icon
-              size={20}
-              strokeWidth={1.9}
-              className="transition-transform duration-normal group-hover:scale-110"
-            />
-            <span className="text-[10px] font-bold leading-tight">{action.label}</span>
-          </button>
-        )
-      })}
+    <div className="rounded-3xl border border-border bg-card p-5 font-dash shadow-soft" dir="rtl">
+      <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-6">
+        {QUICK_ACTIONS.map((action) => {
+          const Icon = action.icon
+          return (
+            <button
+              key={action.label}
+              onClick={() => navigate(action.path)}
+              className={cn(
+                'group flex flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-4 outline-none transition-all duration-normal hover:opacity-90 hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97]',
+                action.btn,
+              )}
+              title={action.label}
+            >
+              <Icon
+                size={20}
+                strokeWidth={1.9}
+                className="transition-transform duration-normal group-hover:scale-110"
+              />
+              <span className="text-[10px] font-bold leading-tight">{action.label}</span>
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 })

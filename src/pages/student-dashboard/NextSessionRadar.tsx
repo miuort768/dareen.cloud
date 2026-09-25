@@ -36,11 +36,8 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
   return (
     <section
       aria-label="الحصة القادمة"
-      className="relative flex flex-col gap-4 overflow-hidden rounded-none border border-primary/20 bg-card p-5 shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2"
+      className="relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-soft transition-all duration-slow hover:shadow-elevation-1"
     >
-      {/* شريط جانبي ملون */}
-      <div className="absolute inset-y-0 start-0 w-1 bg-primary" aria-hidden="true" />
-
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="flex items-center gap-2 text-xs font-black text-main">
@@ -74,7 +71,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
 
       <button
         onClick={() => navigate('/schedule')}
-        className="group inline-flex min-h-12 w-full items-center gap-3 rounded-full bg-primary pe-2.5 ps-4 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+        className="group inline-flex min-h-12 w-full items-center gap-3 rounded-2xl bg-primary pe-2.5 ps-4 text-start text-on-primary shadow-soft transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         aria-label="عرض تفاصيل الحصة القادمة في الجدول"
       >
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">

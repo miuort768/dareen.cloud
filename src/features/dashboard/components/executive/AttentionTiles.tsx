@@ -59,7 +59,7 @@ export const AttentionTiles = memo(function AttentionTiles({ stats }: { stats: E
           >
             <span
               className={cn(
-                'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card shadow-elevation-1',
+                'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card shadow-soft',
               )}
             >
               <Icon size={16} strokeWidth={1.9} className={cn(tile.text, 'opacity-80')} />

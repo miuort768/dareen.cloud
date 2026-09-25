@@ -56,7 +56,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
 
   return (
     <div
-      className="flex h-full flex-col rounded-2xl border border-border bg-card p-3.5 font-dash"
+      className="flex h-full flex-col rounded-3xl border border-border bg-card p-5 font-dash"
       dir="rtl"
     >
       {/* Header + status badge */}
@@ -115,7 +115,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
 
       {/* Message */}
       <div className="mt-auto pt-2">
-        <p className="rounded-lg bg-surface p-2 text-center text-[10px] leading-relaxed text-muted">
+        <p className="rounded-2xl bg-surface p-3 text-center text-[10px] leading-relaxed text-muted">
           {pulse.message}
         </p>
       </div>

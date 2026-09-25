@@ -47,14 +47,13 @@ const PADDING: Record<NonNullable<SectionCardProps['padding']>, string> = {
 const SHADOW: Record<NonNullable<SectionCardProps['shadow']>, string> = {
   none: '',
   soft: 'shadow-soft',
-  'elevation-1': 'shadow-elevation-1',
+  'elevation-1': 'shadow-soft', // remap legacy token to quiet luxury shadow
 }
 
 /**
  * بطاقة قسم موحدة — مصدر واحد لكل تعريفات SectionCard الـ 8 المكررة سابقًا
  * (الإعدادات/لوحات المعلمة/صفحات الحسابات/التقارير/الفواتير/تقفيل الشهر).
  * كل عائلة تضبط افتراضاتها عبر wrapper رفيع يحافظ على الكلاسات الدقيقة
- * (radius موحّد: rounded-card = --radius-card = 1rem = rounded-2xl سابقًا).
  */
 export const SectionCard: React.FC<SectionCardProps> = ({
   children,
@@ -78,11 +77,11 @@ export const SectionCard: React.FC<SectionCardProps> = ({
   action,
 }) => {
   const chrome = cn(
-    'rounded-card border bg-card',
+    'rounded-3xl border bg-card',
     border === 'divider' ? 'border-divider' : 'border-border',
     PADDING[padding],
     SHADOW[shadow],
-    hover && 'hover:shadow-elevation-2',
+    hover && 'hover:shadow-elevation-1 hover:-translate-y-0.5',
     transition === 'all' ? 'transition-all' : transition === 'colors' ? 'transition-colors' : '',
     slow && transition !== 'none' && 'duration-slow',
     overflowHidden && 'overflow-hidden',
