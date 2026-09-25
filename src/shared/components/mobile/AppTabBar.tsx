@@ -1,7 +1,15 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
-import { CalendarDays, UserPlus, MessageSquare, LayoutGrid, UserCheck, Home } from 'lucide-react'
+import {
+  CalendarDays,
+  ClipboardList,
+  UserPlus,
+  MessageSquare,
+  LayoutGrid,
+  UserCheck,
+  Home,
+} from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { useUnreadStore } from '../../../store/unreadStore'
 import { useChatUIStore } from '../../../store/chatUIStore'
@@ -29,6 +37,7 @@ const ADMIN_TABS: TabItem[] = [
 const TEACHER_TABS: TabItem[] = [
   { id: 'home', label: 'الرئيسية', icon: Home, path: '/teacher-dashboard' },
   { id: 'schedule', label: 'الجداول', icon: CalendarDays, path: '/schedule' },
+  { id: 'reports', label: 'التقارير', icon: ClipboardList, path: '/teacher-reports' },
   { id: 'attendance', label: 'الحضور', icon: UserCheck, path: '/attendance' },
 ]
 

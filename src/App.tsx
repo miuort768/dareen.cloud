@@ -39,6 +39,9 @@ const StudentDashboard = lazy(() =>
 const TeacherDashboard = lazy(() =>
   import('./pages/TeacherDashboard').then((m) => ({ default: m.TeacherDashboard })),
 )
+const TeacherReports = lazy(() =>
+  import('./pages/TeacherReports').then((m) => ({ default: m.TeacherReports })),
+)
 const ParentStudents = lazy(() =>
   import('./pages/ParentStudents').then((m) => ({ default: m.ParentStudents })),
 )
@@ -400,6 +403,14 @@ function App() {
                   element={
                     <ProtectedRoute permission="dashboard">
                       <TeacherDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="teacher-reports"
+                  element={
+                    <ProtectedRoute permission="dashboard">
+                      <TeacherReports />
                     </ProtectedRoute>
                   }
                 />

@@ -330,3 +330,44 @@
   --border-primary: #D4AF37;
   --ring-focus: #D4AF37;
 }
+
+/* ============================================================
+   Teacher pages premium identity (لوحة المعلمة فقط).
+   هوية بنفسجية = الهوية الافتراضية للماركة نفسها بلا تغيير
+   بصري، والوضع الليلي يعيد تأكيد الجولد/الأسود.
+   ============================================================ */
+.teacher-scope {
+  --color-primary: 79 70 229;
+  --color-primary-deep: 49 46 129;
+  --color-primary-mid: 99 102 241;
+  --color-primary-light: 238 242 255;
+  --color-primary-h: 224 231 255;
+  --bg-primary: #6366f1;
+  --bg-primary-deep: #1e1b4b;
+  --bg-primary-hover: #4f46e5;
+  --bg-primary-active: #4338ca;
+  --bg-primary-soft: #eef2ff;
+  --bg-primary-light: #e0e7ff;
+  --text-primary: #6366f1;
+  --text-on-primary: #ffffff;
+  --border-primary: #6366f1;
+  --ring-focus: #6366f1;
+}
+
+.dark .teacher-scope {
+  --color-primary: 212 175 55;
+  --color-primary-deep: 184 150 46;
+  --color-primary-mid: 232 196 71;
+  --color-primary-light: 61 49 16;
+  --color-primary-h: 88 68 18;
+  --bg-primary: #D4AF37;
+  --bg-primary-deep: #b8962e;
+  --bg-primary-hover: #e8c447;
+  --bg-primary-active: #f5d060;
+  --bg-primary-soft: #2a2208;
+  --bg-primary-light: #3d3110;
+  --text-primary: #D4AF37;
+  --text-on-primary: #000000;
+  --border-primary: #D4AF37;
+  --ring-focus: #D4AF37;
+}
