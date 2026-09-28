@@ -16,16 +16,15 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variants = {
-  default: 'bg-hover text-muted border-transparent',
-  success: 'bg-success-soft text-success-dark border-success-soft',
-  warning: 'bg-warning-soft text-warning-dark border-warning-soft',
-  error: 'bg-error-soft text-error-dark border-error-soft',
-  info: 'bg-info-soft text-info-dark border-info-soft',
-  premium:
-    'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent-soft shadow-elevation-1',
-  glow: 'bg-primary-soft text-primary-active border-primary/20',
-  outline: 'bg-transparent text-muted border-border',
-  destructive: 'bg-error text-on-error border-error',
+  default: 'bg-hover text-main border-transparent',
+  success: 'bg-success text-on-success border-success shadow-soft',
+  warning: 'bg-warning text-on-warning border-warning shadow-soft',
+  error: 'bg-error text-on-error border-error shadow-soft',
+  info: 'bg-info text-on-info border-info shadow-soft',
+  premium: 'bg-accent text-on-accent border-accent shadow-elevation-1',
+  glow: 'bg-primary text-on-primary border-primary shadow-soft',
+  outline: 'bg-transparent text-main border-border',
+  destructive: 'bg-error text-on-error border-error shadow-soft',
 }
 
 const sizes = {

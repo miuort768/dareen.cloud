@@ -50,7 +50,7 @@ const variantStyles = {
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
         'active:scale-[0.985] active:duration-fast',
         isActive
-          ? 'bg-primary-soft text-primary-active'
+          ? 'bg-primary text-on-primary shadow-soft'
           : 'bg-transparent text-muted hover:bg-hover hover:text-main',
       ),
   },
@@ -86,7 +86,11 @@ export const Tabs: React.FC<TabsProps> = ({
           <span
             className={cn(
               'ms-1 min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-[10px] font-bold',
-              isActive ? 'bg-primary/10 text-primary-active' : 'bg-border text-muted',
+              isActive
+                ? variant === 'buttons'
+                  ? 'bg-card text-primary'
+                  : 'bg-primary text-on-primary'
+                : 'bg-border text-muted',
             )}
           >
             {tab.badge}

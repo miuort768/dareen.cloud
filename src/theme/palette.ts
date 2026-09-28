@@ -5,82 +5,82 @@
  * جميع المكونات تتعامل مع semantic.ts فقط.
  */
 
-import { royalBlue, charcoal, warmIvory, matteGold, emerald, amber, rose, sky } from './primitives'
+import { blue, slate, gold, green, amber, red, sky } from './primitives'
 
 export const palette = {
-  // Primary (Deep Navy / Royal Blue)
-  primary: royalBlue[600],
-  primaryHover: royalBlue[700],
-  primaryActive: royalBlue[800],
-  primarySoft: royalBlue[50],
-  primaryLight: royalBlue[100],
-  primary200: royalBlue[200],
-  primary400: royalBlue[400],
-  primaryDark: royalBlue[900],
+  // Primary (Solid Blue)
+  primary: blue[600],
+  primaryHover: blue[700],
+  primaryActive: blue[800],
+  primarySoft: blue[50],
+  primaryLight: blue[100],
+  primary200: blue[200],
+  primary400: blue[400],
+  primaryDark: blue[900], // Deep Blue
 
-  // Accent (Matte Gold — استخدام محدود)
-  accent: matteGold[500],
-  accentHover: matteGold[600],
-  accentSoft: matteGold[50],
-  accentLight: matteGold[100],
+  // Accent (Solid Gold)
+  accent: gold[500],
+  accentHover: gold[600],
+  accentSoft: gold[50],
+  accentLight: gold[100],
 
-  // Neutral (Charcoal / Ivory)
-  surface: warmIvory[50],
-  background: warmIvory[100],
+  // Neutral (Slate / White)
+  surface: slate[50],
+  background: slate[100],
   card: '#ffffff',
-  cardDark: charcoal[800],
-  border: warmIvory[300],
-  borderAccent: warmIvory[400],
-  divider: warmIvory[300],
+  cardDark: slate[900],
+  border: slate[200],
+  borderAccent: slate[300],
+  divider: slate[200],
 
   // Text
-  text: charcoal[900],
-  textMuted: charcoal[500],
-  textDim: charcoal[400],
+  text: slate[900],
+  textMuted: slate[500],
+  textDim: slate[400],
   textInverse: '#ffffff',
   textOnPrimary: '#ffffff',
 
-  // Status — ثابتة في جميع الثيمات
-  success: emerald[600],
-  successSoft: emerald[50],
-  successLight: emerald[100],
-  successDark: emerald[700],
+  // Status — ثابتة في جميع الثيمات وبألوان واضحة Solid
+  success: green[600],
+  successSoft: green[50],
+  successLight: green[100],
+  successDark: green[700],
 
-  warning: amber[700],
+  warning: amber[600],
   warningSoft: amber[50],
   warningLight: amber[100],
   warningDark: amber[700],
 
-  error: rose[600],
-  errorSoft: rose[50],
-  errorLight: rose[100],
-  errorDark: rose[700],
-  errorHover: rose[700],
-  errorActive: rose[800],
+  error: red[600],
+  errorSoft: red[50],
+  errorLight: red[100],
+  errorDark: red[700],
+  errorHover: red[700],
+  errorActive: red[800],
 
-  info: sky[700],
+  info: sky[600],
   infoSoft: sky[50],
   infoLight: sky[100],
   infoDark: sky[700],
 
-  // Text on colored backgrounds
-  textOnAccent: charcoal[900],
+  // Text on colored backgrounds (Contrast is priority)
+  textOnAccent: '#18181b', // navy ink on gold – AA
   textOnError: '#ffffff',
   textOnSuccess: '#ffffff',
   textOnWarning: '#ffffff',
   textOnInfo: '#ffffff',
 
   // Focus
-  focusRing: royalBlue[600],
+  focusRing: blue[600],
 
   // Hover backgrounds
-  hover: warmIvory[200],
-  hoverDark: charcoal[700],
-  surfaceActive: warmIvory[300],
+  hover: slate[100],
+  hoverDark: slate[800],
+  surfaceActive: slate[200],
 
   // Aliases
-  textSecondary: charcoal[600],
-  borderHover: warmIvory[400],
+  textSecondary: slate[600],
+  borderHover: slate[300],
 } as const
 
 export type PaletteToken = keyof typeof palette

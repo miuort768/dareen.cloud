@@ -15,32 +15,32 @@ describe('Badge', () => {
 
   it('applies success variant', () => {
     const { container } = render(<Badge variant="success">نجاح</Badge>)
-    expect(container.firstChild).toHaveClass('bg-success-soft')
+    expect(container.firstChild).toHaveClass('bg-success')
   })
 
   it('applies warning variant', () => {
     const { container } = render(<Badge variant="warning">تحذير</Badge>)
-    expect(container.firstChild).toHaveClass('bg-warning-soft')
+    expect(container.firstChild).toHaveClass('bg-warning')
   })
 
   it('applies error variant', () => {
     const { container } = render(<Badge variant="error">خطأ</Badge>)
-    expect(container.firstChild).toHaveClass('bg-error-soft')
+    expect(container.firstChild).toHaveClass('bg-error')
   })
 
   it('applies info variant', () => {
     const { container } = render(<Badge variant="info">معلومة</Badge>)
-    expect(container.firstChild).toHaveClass('bg-info-soft')
+    expect(container.firstChild).toHaveClass('bg-info')
   })
 
   it('applies premium variant', () => {
     const { container } = render(<Badge variant="premium">مميز</Badge>)
-    expect(container.firstChild).toHaveClass('bg-gradient-to-l')
+    expect(container.firstChild).toHaveClass('bg-accent')
   })
 
   it('applies glow variant', () => {
     const { container } = render(<Badge variant="glow">توهج</Badge>)
-    expect(container.firstChild).toHaveClass('border-primary/20')
+    expect(container.firstChild).toHaveClass('bg-primary')
   })
 
   it('applies sm size', () => {

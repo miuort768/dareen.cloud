@@ -71,9 +71,9 @@ const variants = {
     ` ${PRESSED} active:bg-success-dark active:border-success-dark` +
     ' focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-success',
   glass:
-    'bg-white/70 dark:bg-card backdrop-blur-xl text-main border border-white/20 dark:border-white/10 shadow-button' +
-    ' hover:bg-white/90 dark:hover:bg-card hover:shadow-button-hover hover:border-white/30 dark:hover:border-white/20' +
-    ` ${PRESSED} active:bg-white/80` +
+    'bg-surface text-main border border-border shadow-soft' +
+    ' hover:bg-hover hover:border-border-strong hover:shadow-button-hover' +
+    ` ${PRESSED} active:bg-hover` +
     ` ${FOCUS_RING}`,
   premium:
     'bg-gradient-to-l from-primary via-primary-hover to-primary-active text-on-primary border border-primary/50' +

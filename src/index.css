@@ -35,10 +35,10 @@ html, body {
 @layer base {
   :root {
     /* ── Dareen Brand: Dynamic Theme ── */
-    --color-primary:   79 70 229; /* indigo-600 – default brand */
-    --color-primary-deep: 30 27 75; /* indigo-950 – deep nav bg */
-    --color-primary-mid: 99 102 241; /* indigo-500 – hover/accents */
-    --color-primary-light: 224 231 255; /* indigo-100 – light tint */
+    --color-primary:   37 99 235; /* blue-600 – default brand */
+    --color-primary-deep: 23 37 84; /* blue-950 – deep nav bg */
+    --color-primary-mid: 59 130 246; /* blue-500 – hover/accents */
+    --color-primary-light: 219 234 254; /* blue-100 – light tint */
     --color-primary-h: 254 205 223; /* rose-200  – tint for badges */
     --color-success:   52 211 153;  /* emerald-400 */
     --color-warning:   251 191 36;  /* amber-400   */
@@ -55,10 +55,10 @@ html, body {
 
   /* ── Unified Dark Mode – same brand hue, adjusted luminance ── */
   .dark {
-    --color-primary:   129 140 248; /* indigo-400 – lighter for dark bg */
-    --color-primary-deep: 30 27 75; /* indigo-950 */
-    --color-primary-mid: 99 102 241; /* indigo-500 */
-    --color-primary-light: 49 46 129; /* indigo-900 – dark tint */
+    --color-primary:   37 99 235; /* blue-600 – same hue as light */
+    --color-primary-deep: 23 37 84; /* blue-950 */
+    --color-primary-mid: 59 130 246; /* blue-500 */
+    --color-primary-light: 30 58 138; /* blue-900 – dark tint */
     --color-primary-h:  63  12  24; /* dark rose tint for hover */
     --color-success:   52 211 153;
     --color-warning:   251 191 36;

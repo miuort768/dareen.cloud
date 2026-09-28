@@ -34,15 +34,15 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
           id={id}
           type={type}
           className={cn(
-            'w-full rounded-xl border border-border bg-card font-medium outline-none transition-all duration-normal',
-            'focus:border-primary/60 focus:shadow-elevation-1 focus:ring-2 focus:ring-primary/10',
-            'hover:border-border-strong',
+            'w-full rounded-xl border border-border-strong bg-surface font-medium outline-none transition-all duration-normal',
+            'focus:border-primary focus:shadow-elevation-1 focus:ring-2 focus:ring-primary/20',
+            'hover:border-primary/50 hover:bg-card',
             'placeholder:text-dim',
-            'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-45',
+            'disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-hover disabled:opacity-50',
             sizeStyles[sz],
             leftIcon ? 'ps-10' : '',
             rightIcon ? 'pe-12' : '',
-            error ? 'border-error focus:border-error focus:ring-error-soft' : '',
+            error ? 'focus:ring-error/20 border-error focus:border-error' : '',
             className,
           )}
           aria-invalid={!!error}
