@@ -29,7 +29,7 @@ import { PlatformOffer } from '../../components/blog/PlatformOffer'
 import { parseLibraryAdsRoot } from '../../components/blog/adConfig'
 import { useSettingsStore } from '../../store/settingsStore'
 import { DesktopLibraryLanding } from '../../components/blog/DesktopLibraryLanding'
-import { LanguageToolsBar } from '../../components/blog/LanguageToolsBar'
+import { LanguageQuizSection } from '../../components/blog/LanguageQuizSection'
 import { SelectionGrid } from '../../components/blog/SelectionGrid'
 import { PageLoader } from '../../components/ui/PageLoader'
 
@@ -223,7 +223,7 @@ export const Blog = () => {
     else if (view === 'grades') setView('curriculums')
     else if (view === 'curriculums') setView('types')
     else if (view === 'languages') setView('types')
-    else if (view === 'language-sections') setView('types')
+    else if (view === 'language-sections') setView('languages')
     else navigate('/')
   }
 
@@ -368,7 +368,19 @@ export const Blog = () => {
                 </>
               )}
             </div>
-          ) : view === 'results' || view === 'language-sections' ? (
+          ) : view === 'language-sections' ? (
+            <div className="pb-6">
+              <BlogBreadcrumb
+                items={breadcrumbItems}
+                currentName={currentLanguageName}
+                onBack={goBack}
+                onHome={() => setView('types')}
+                showChangeButton={false}
+                isMobile
+              />
+              <LanguageQuizSection languageId={selectedLanguage} />
+            </div>
+          ) : view === 'results' ? (
             <div className="pb-6">
               <BlogBreadcrumb
                 items={breadcrumbItems}
@@ -378,9 +390,6 @@ export const Blog = () => {
                 showChangeButton={!isDirectType}
                 isMobile
               />
-              {view === 'language-sections' && (
-                <LanguageToolsBar languageName={currentLanguageName} />
-              )}
               {loading ? (
                 <LoadingState />
               ) : filteredPosts.length === 0 ? (
@@ -454,7 +463,18 @@ export const Blog = () => {
                 className="mt-4"
               />
             </div>
-          ) : view === 'results' || view === 'language-sections' ? (
+          ) : view === 'language-sections' ? (
+            <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
+              <BlogBreadcrumb
+                items={breadcrumbItems}
+                currentName={currentLanguageName}
+                onBack={goBack}
+                onHome={() => setView('types')}
+                showChangeButton={false}
+              />
+              <LanguageQuizSection languageId={selectedLanguage} />
+            </div>
+          ) : view === 'results' ? (
             <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
               <BlogBreadcrumb
                 items={breadcrumbItems}
@@ -463,9 +483,6 @@ export const Blog = () => {
                 onHome={() => setView('types')}
                 showChangeButton={!isDirectType}
               />
-              {view === 'language-sections' && (
-                <LanguageToolsBar languageName={currentLanguageName} />
-              )}
               {loading ? (
                 <LoadingState />
               ) : filteredPosts.length === 0 ? (
