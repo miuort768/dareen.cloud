@@ -1,6 +1,21 @@
 import { TrendingUp, User, Medal, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
+import { isSameMonth } from 'date-fns'
+
+/**
+ * Month membership by date value, not by string prefix.
+ * `startsWith('2026-09')` silently dropped any timestamp that did not begin
+ * with the yyyy-mm bucket (e.g. an ISO datetime with a timezone offset, or a
+ * slash-separated date), which is why this card could render empty mid-month.
+ */
+const inCurrentMonth = (value: string | undefined, now: Date): boolean => {
+  if (!value) return false
+  const parsed = new Date(value)
+  if (!Number.isNaN(parsed.getTime())) return isSameMonth(parsed, now)
+  const nowKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  return value.startsWith(nowKey)
+}
 
 interface TopAttendanceStudentsProps {
   sessions: {
@@ -11,56 +26,40 @@ interface TopAttendanceStudentsProps {
     studentName?: string
   }[]
   onStudentClick?: (student: { id?: string; name?: string }) => void
-  currentUser?: { id?: string; role?: string; teacherName?: string }
 }
 
-export const TopAttendanceStudents = ({
-  sessions,
-  onStudentClick,
-  currentUser,
-}: TopAttendanceStudentsProps) => {
+export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanceStudentsProps) => {
   const topPresentStudents = useMemo(() => {
     const studentStats: Record<string, { id: string; name: string; count: number }> = {}
     const now = new Date()
-    // Local month key — toISOString() would shift the bucket at month
-    // boundaries for UTC+2/+3 users (sessions logged on the 1st at midnight
-    // would land in the previous month).
-    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
 
     sessions.forEach((s) => {
       const isCompleted = ['completed', 'مكتملة', 'تمت'].includes(
         String(s.status ?? '').toLowerCase(),
       )
-      const isThisMonth = s.date?.startsWith(currentMonth)
 
-      if (isCompleted && isThisMonth) {
+      if (isCompleted && inCurrentMonth(s.date, now)) {
         const id = String(s.studentId || s.studentName)
         const stat = studentStats[id]
         if (!stat) {
-          studentStats[id] = { id, name: s.studentName || '', count: 0 }
+          studentStats[id] = { id, name: s.studentName || '', count: 1 }
         } else {
           stat.count += 1
         }
       }
     })
 
-    // Filter by teacher if currentUser is provided
-    const filteredStats = Object.values(studentStats)
-    if (currentUser?.role === 'teacher' && currentUser?.teacherName) {
-      // This is a simplified filter - in a real app, you'd match by enrollment
-      // For now, we'll keep all students but note the filter possibility
-    }
-
-    return filteredStats.sort((a, b) => b.count - a.count).slice(0, 3)
-  }, [sessions, currentUser])
+    return Object.values(studentStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3)
+  }, [sessions])
 
   const totalMonthSessions = useMemo(() => {
     const now = new Date()
-    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
     return sessions.filter(
       (s) =>
         ['completed', 'مكتملة', 'تمت'].includes(String(s.status ?? '').toLowerCase()) &&
-        s.date?.startsWith(currentMonth),
+        inCurrentMonth(s.date, now),
     ).length
   }, [sessions])
 
@@ -82,7 +81,7 @@ export const TopAttendanceStudents = ({
               key={`att-${i}`}
               type="button"
               onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-              className="hover:border-warning/40 w-full cursor-pointer rounded-2xl border border-border bg-surface p-3 text-start transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-hover dark:hover:border-border"
+              className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-3 text-start transition-colors duration-normal hover:border-warning hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2.5">

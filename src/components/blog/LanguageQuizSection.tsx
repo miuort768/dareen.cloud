@@ -165,7 +165,12 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
                     levelTitles={isPlacement ? quizData.levels.map((l) => l.title) : []}
                     onComplete={(correct, total) => handleComplete(quiz.id, correct, total)}
                     onStartLevel={
-                      isPlacement ? (idx) => startLevel(quizData.levels[idx].id) : undefined
+                      isPlacement
+                        ? (idx) => {
+                            const level = quizData.levels[idx]
+                            if (level) startLevel(level.id)
+                          }
+                        : undefined
                     }
                     onClose={() => toggle(quiz.id)}
                   />

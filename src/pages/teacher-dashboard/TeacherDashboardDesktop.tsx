@@ -18,31 +18,9 @@ import { SmartNotifications } from '../../features/dashboard/components/SmartNot
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
 import { WeekStrip } from './WeekStrip'
-import type {
-  DashboardStats as DashboardStatsType,
-  LowBalanceStudent,
-  DashboardTask,
-} from '../../features/dashboard/types'
+import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { Session } from '../../types'
-import type { User } from '../../types/auth'
-
-interface TeacherDashboardDesktopProps {
-  currentUser: User | null
-  stats: DashboardStatsType
-  rawSessions: Session[]
-  tasks: DashboardTask[]
-  lowBalanceStudents: LowBalanceStudent[]
-  focusStudents: { id: string; name: string; reason: string; type: string }[]
-  timeline: {
-    id: string
-    studentId?: string
-    studentName: string
-    time: string
-    subject: string
-    status: string
-  }[]
-  weekCounts: number[]
-}
+import type { TeacherDashboardShellProps } from './types'
 
 export const TeacherDashboardDesktop = ({
   currentUser,
@@ -53,7 +31,7 @@ export const TeacherDashboardDesktop = ({
   focusStudents,
   timeline,
   weekCounts,
-}: TeacherDashboardDesktopProps) => {
+}: TeacherDashboardShellProps) => {
   const [briefingStudent, setBriefingStudent] = useState<{
     id?: string
     name?: string
@@ -83,79 +61,79 @@ export const TeacherDashboardDesktop = ({
           studentsCount={stats.studentsCount}
           todayCount={stats.todaySessions}
           monthCompleted={stats.monthCompletedSessions}
+          monthTotal={stats.monthTotalSessions}
           points={stats.teacherPoints}
         />
       </motion.div>
 
-      {/* الإعلانات — مباشرة تحت الهيرو */}
       <motion.div {...fadeUp(0.02)} id="announcements-section" className="scroll-mt-32">
         <ModernAnnouncements />
       </motion.div>
 
-      {/* الحصة القادمة + الأسبوع — نصفا الشاشة */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <motion.div {...fadeUp(0.04)}>
         <motion.div {...fadeUp(0.04)}>
-          {nextSession ? (
-            <NextSessionHero timeline={timeline} />
-          ) : (
-            <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-soft">
-              <EmptyState
-                icon={Calendar}
-                title="لا توجد حصة قادمة اليوم"
-                subtitle="يمكنك بدء حصة مباشرة متى شئت"
-                compact
-              />
-            </div>
-          )}
-        </motion.div>
-        <motion.div {...fadeUp(0.06)}>
           <WeekStrip counts={weekCounts} />
         </motion.div>
-      </div>
 
-      <motion.div {...fadeUp(0.08)}>
-        <DashboardStats stats={stats} isTeacher={true} />
+        {nextSession ? (
+          <NextSessionHero timeline={timeline} />
+        ) : (
+          <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-soft">
+            <EmptyState
+              icon={Calendar}
+              title="لا توجد حصة قادمة اليوم"
+              subtitle="يمكنك بدء حصة مباشرة متى شئت"
+              compact
+            />
+          </div>
+        )}
       </motion.div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
-        <SectionCard delay={0.1} className="md:col-span-1 lg:col-span-8">
-          <LiveSessions />
-        </SectionCard>
+        <div className="space-y-5 lg:col-span-8">
+          <motion.div {...fadeUp(0.08)}>
+            <DashboardStats stats={stats} isTeacher={true} />
+          </motion.div>
 
-        <SectionCard delay={0.12} className="p-4 md:col-span-1 lg:col-span-4">
-          <QuickActions showQuickLinks={true} />
-        </SectionCard>
-      </div>
+          <SectionCard delay={0.1} className="lg:col-span-8">
+            <LiveSessions />
+          </SectionCard>
 
-      {timeline.length > 0 && (
-        <SectionCard delay={0.14}>
-          <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
-        </SectionCard>
-      )}
+          {timeline.length > 0 && (
+            <SectionCard delay={0.14}>
+              <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
+            </SectionCard>
+          )}
 
-      <motion.div {...fadeUp(0.16)}>
-        <SmartNotifications
-          lowBalanceStudents={lowBalanceStudents}
-          focusStudents={focusStudents || []}
-        />
-      </motion.div>
+          <SectionCard delay={0.18}>
+            <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+          </SectionCard>
+        </div>
 
-      <SectionCard delay={0.18}>
-        <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-      </SectionCard>
+        <div className="space-y-5 lg:col-span-4">
+          <SectionCard delay={0.12} className="p-4">
+            <QuickActions showQuickLinks={true} />
+          </SectionCard>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <SectionCard delay={0.22} className="p-4">
-          <TasksAndRequests tasks={tasks} limit={3} />
-        </SectionCard>
+          <motion.div {...fadeUp(0.16)}>
+            <SmartNotifications
+              lowBalanceStudents={lowBalanceStudents}
+              focusStudents={focusStudents || []}
+            />
+          </motion.div>
 
-        <SectionCard delay={0.24} className="p-4">
-          <TeacherAchievements
-            stats={stats}
-            lowBalanceStudents={lowBalanceStudents}
-            isTeacher={true}
-          />
-        </SectionCard>
+          <SectionCard delay={0.22} className="p-4">
+            <TasksAndRequests tasks={tasks} limit={3} />
+          </SectionCard>
+
+          <SectionCard delay={0.24} className="p-4">
+            <TeacherAchievements
+              stats={stats}
+              lowBalanceStudents={lowBalanceStudents}
+              isTeacher={true}
+            />
+          </SectionCard>
+        </div>
       </div>
 
       {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
@@ -163,14 +141,15 @@ export const TeacherDashboardDesktop = ({
           isOpen={!!briefingStudent}
           onClose={() => setBriefingStudent(null)}
           onGenerateReport={(student) => {
+            // Canonical resolver — the raw `'completed'` equality missed the Arabic
+            // statuses ('مكتملة', 'تم الإنجاز') and silently reported 0% attendance.
             const studentSessions = rawSessions.filter(
               (s: Session & { studentID?: string }) =>
                 s.studentId === student.id || s.studentID === student.id,
             )
-            const completed = studentSessions.filter((s) => s.status === 'completed').length
-            const total = studentSessions.filter(
-              (s) => s.status === 'completed' || s.status === 'cancelled',
-            ).length
+            const concluded = studentSessions.filter((s) => sessionOutcome(s.status) !== null)
+            const completed = concluded.filter((s) => sessionOutcome(s.status) === 'done').length
+            const total = concluded.length
             setSelectedStudentForReport({
               id: student.id,
               name: student.name,

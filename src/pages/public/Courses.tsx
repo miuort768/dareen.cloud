@@ -267,7 +267,7 @@ export const Courses = () => {
                         </div>
                       </div>
 
-                      <span className="flex items-center gap-1.5 rounded-lg bg-success-light px-3 py-1.5 text-xs font-black text-success dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_6px_rgba(99,102,241,0.12)]">
+                      <span className="flex items-center gap-1.5 rounded-lg bg-success-light px-3 py-1.5 text-xs font-black text-success dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_6px_rgb(var(--color-primary)/0.12)]">
                         <Sparkles size={10} />
                         تجربة مجانية
                       </span>

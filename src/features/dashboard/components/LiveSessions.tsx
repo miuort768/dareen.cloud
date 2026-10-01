@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
@@ -362,112 +363,119 @@ export const LiveSessions = () => {
       {/* Create Dialog */}
       <StartLiveSessionDialog open={showCreateDialog} onClose={() => setShowCreateDialog(false)} />
 
-      {showEditDialog && editingSession && (
-        <div
-          ref={containerRef}
-          className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
-          onClick={() => setShowEditDialog(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="تعديل الجلسة المباشرة"
-          onKeyDown={handleKeyDown}
-        >
+      {showEditDialog &&
+        editingSession &&
+        typeof document !== 'undefined' &&
+        createPortal(
           <div
-            className="w-full max-w-md space-y-5 rounded-2xl border border-border bg-card p-6 shadow-2xl dark:border-primary/20"
-            onClick={(e) => e.stopPropagation()}
+            ref={containerRef}
+            className="fixed inset-0 z-[200] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
+            onClick={() => setShowEditDialog(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="تعديل الجلسة المباشرة"
+            onKeyDown={handleKeyDown}
           >
-            <div className="text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
-                <Globe size={20} className="text-primary" />
+            <div
+              className="w-full max-w-md space-y-5 rounded-2xl border border-border bg-card p-6 shadow-2xl dark:border-primary/20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-center">
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
+                  <Globe size={20} className="text-primary" />
+                </div>
+                <h3 className="text-base font-bold text-main">تعديل رابط الحصة</h3>
+                <p className="mt-1 text-[11px] text-muted">غيّر رابط الاجتماع للحصة المباشرة</p>
               </div>
-              <h3 className="text-base font-bold text-main">تعديل رابط الحصة</h3>
-              <p className="mt-1 text-[11px] text-muted">غيّر رابط الاجتماع للحصة المباشرة</p>
-            </div>
 
-            <div>
-              <label className="mb-2 block text-xs font-bold text-muted">نوع الاجتماع</label>
-              <div className="flex gap-2">
-                {PROVIDERS.map((p) => (
-                  <button
-                    key={p.value}
-                    onClick={() => setEditProvider(p.value)}
-                    className={cn(
-                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
-                      editProvider === p.value
-                        ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10'
-                        : 'border-border text-muted hover:border-primary/30 dark:border-primary/15',
-                    )}
-                  >
-                    {p.label}
-                  </button>
-                ))}
+              <div>
+                <label className="mb-2 block text-xs font-bold text-muted">نوع الاجتماع</label>
+                <div className="flex gap-2">
+                  {PROVIDERS.map((p) => (
+                    <button
+                      key={p.value}
+                      onClick={() => setEditProvider(p.value)}
+                      className={cn(
+                        'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                        editProvider === p.value
+                          ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10'
+                          : 'border-border text-muted hover:border-primary/30 dark:border-primary/15',
+                      )}
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="edit-meeting-url"
+                  className="mb-2 block text-xs font-bold text-muted"
+                >
+                  رابط الاجتماع
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    id="edit-meeting-url"
+                    type="url"
+                    value={editUrl}
+                    onChange={(e) => setEditUrl(e.target.value)}
+                    placeholder={
+                      editProvider === 'google_meet'
+                        ? 'https://meet.google.com/abc-defg-hij'
+                        : editProvider === 'zoom'
+                          ? 'https://zoom.us/j/1234567890'
+                          : 'https://...'
+                    }
+                    className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/20 dark:bg-surface"
+                  />
+                  {editProvider === 'google_meet' && (
+                    <a
+                      href="https://meet.google.com/new"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:bg-success-soft"
+                      title="إنشاء رابط Google Meet جديد"
+                    >
+                      <LinkIcon size={14} /> إنشاء
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              {editError && <p className="text-xs font-bold text-error">{editError}</p>}
+
+              <div className="flex gap-3 pt-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowEditDialog(false)
+                    setEditingSession(null)
+                    setEditError(null)
+                  }}
+                  className="h-11 flex-1 rounded-xl text-xs font-bold"
+                >
+                  إلغاء
+                </Button>
+                <Button
+                  onClick={saveEditedLink}
+                  disabled={editMutation.isPending}
+                  className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary"
+                >
+                  {editMutation.isPending ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" /> جاري...
+                    </>
+                  ) : (
+                    'حفظ التعديل'
+                  )}
+                </Button>
               </div>
             </div>
-
-            <div>
-              <label htmlFor="edit-meeting-url" className="mb-2 block text-xs font-bold text-muted">
-                رابط الاجتماع
-              </label>
-              <div className="flex gap-2">
-                <input
-                  id="edit-meeting-url"
-                  type="url"
-                  value={editUrl}
-                  onChange={(e) => setEditUrl(e.target.value)}
-                  placeholder={
-                    editProvider === 'google_meet'
-                      ? 'https://meet.google.com/abc-defg-hij'
-                      : editProvider === 'zoom'
-                        ? 'https://zoom.us/j/1234567890'
-                        : 'https://...'
-                  }
-                  className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/20 dark:bg-surface"
-                />
-                {editProvider === 'google_meet' && (
-                  <a
-                    href="https://meet.google.com/new"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:bg-success-soft"
-                    title="إنشاء رابط Google Meet جديد"
-                  >
-                    <LinkIcon size={14} /> إنشاء
-                  </a>
-                )}
-              </div>
-            </div>
-
-            {editError && <p className="text-xs font-bold text-error">{editError}</p>}
-
-            <div className="flex gap-3 pt-2">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setShowEditDialog(false)
-                  setEditingSession(null)
-                  setEditError(null)
-                }}
-                className="h-11 flex-1 rounded-xl text-xs font-bold"
-              >
-                إلغاء
-              </Button>
-              <Button
-                onClick={saveEditedLink}
-                disabled={editMutation.isPending}
-                className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary"
-              >
-                {editMutation.isPending ? (
-                  <>
-                    <Loader2 size={14} className="animate-spin" /> جاري...
-                  </>
-                ) : (
-                  'حفظ التعديل'
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </div>
   )
 }

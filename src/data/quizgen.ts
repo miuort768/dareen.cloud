@@ -51,8 +51,8 @@ function shuffled<T>(arr: readonly T[], rng: () => number): T[] {
   for (let i = out.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1))
     const tmp = out[i]
-    out[i] = out[j]
-    out[j] = tmp
+    out[i] = out[j] as T
+    out[j] = tmp as T
   }
   return out
 }

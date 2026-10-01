@@ -31,6 +31,21 @@ import {
 } from '../../attendance/utils/slotUtils'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 
+/** Query keys owned by this hook — used by fetchDashboardData for scoped refresh. */
+const DASHBOARD_QUERY_KEYS = [
+  'students',
+  'teachers',
+  'teacherMe',
+  'parents',
+  'sessions',
+  'teacherInvoices',
+  'studentInvoices',
+  'tasks',
+  'transactions',
+  'fixedExpenses',
+  'evaluations',
+] as const
+
 export const useDashboardData = (currentUser: User | null) => {
   const queryClient = useQueryClient()
 
@@ -304,7 +319,7 @@ export const useDashboardData = (currentUser: User | null) => {
     // 6. Low Balance
     const { lowBalance, anticipatedCollection } = computeLowBalanceStudents(
       filteredStudents,
-      sessions,
+      filteredSessions,
       teacherName,
       currentUser.id,
       isTeacher,
@@ -541,7 +556,7 @@ export const useDashboardData = (currentUser: User | null) => {
         ].includes(String(t.status ?? '').toLowerCase()),
       ),
       topStudents: isTeacher
-        ? filteredStudents
+        ? [...filteredStudents]
             .sort(
               (a: Student, b: Student) =>
                 (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0),
@@ -603,6 +618,14 @@ export const useDashboardData = (currentUser: User | null) => {
     rawStudentInvoices: getSafeArray(studentInvoicesQuery.data),
     isLoading,
     hasErrors,
-    fetchDashboardData: () => queryClient.invalidateQueries(),
+    fetchDashboardData: async () => {
+      // Scoped to this hook's own keys. `invalidateQueries()` with no filter
+      // invalidated EVERY query in the app cache, so a pull-to-refresh on the
+      // dashboard also refetched chat, notifications, settings and screens the
+      // teacher cannot even see.
+      await Promise.all(
+        DASHBOARD_QUERY_KEYS.map((key) => queryClient.invalidateQueries({ queryKey: [key] })),
+      )
+    },
   }
 }

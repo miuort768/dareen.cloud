@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react'
 import { Button } from '../../../shared/components/ui'
@@ -42,11 +43,11 @@ export const StudentQuickBrief = ({
 
   if (!isOpen || !student) return null
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       onKeyDown={handleKeyDown}
-      className="fixed inset-0 z-[100] flex items-end justify-center bg-background dark:bg-black/70 md:items-center md:p-4"
+      className="fixed inset-0 z-[200] flex items-end justify-center bg-background dark:bg-black/70 md:items-center md:p-4"
       dir="rtl"
       role="dialog"
       aria-modal="true"
@@ -176,6 +177,9 @@ export const StudentQuickBrief = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    // Portalled to body: the dashboard root is a transformed/stacking motion.div,
+    // so an inline `fixed inset-0` sheet painted BELOW the fixed AppTabBar on phone.
+    document.body,
   )
 }

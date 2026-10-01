@@ -42,7 +42,7 @@ export const TeacherSessionTimeline = ({
     <div dir="rtl">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary dark:bg-primary/10 dark:text-primary">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary dark:bg-primary/10">
             <Clock size={18} />
           </div>
           <div>
@@ -50,8 +50,8 @@ export const TeacherSessionTimeline = ({
             <p className="mt-0.5 text-[11px] font-medium text-muted">جدول الحصص اليومية</p>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success dark:bg-success-soft dark:text-success">
-          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-success dark:bg-success" />
+        <div className="flex items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success">
+          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
           مباشر
         </div>
       </div>
@@ -80,12 +80,12 @@ export const TeacherSessionTimeline = ({
                   }
                 }}
                 className={cn(
-                  'group/card relative w-60 min-w-60 shrink-0 cursor-pointer snap-center rounded-2xl border p-4 transition-all sm:w-[calc(50%-6px)] md:w-[calc(25%-9px)] md:min-w-0',
+                  'group/card relative w-60 min-w-60 shrink-0 cursor-pointer snap-center rounded-2xl border p-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:w-[calc(50%-6px)] md:w-[calc(25%-9px)] md:min-w-0',
                   isCompleted
-                    ? 'border-success-soft bg-success-soft dark:border-success-soft dark:bg-success-soft'
+                    ? 'border-success-soft bg-success-soft'
                     : isCancelled
-                      ? 'border-error-soft bg-error-soft dark:border-error-soft dark:bg-error-soft'
-                      : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30 dark:border-border dark:bg-card dark:hover:border-border',
+                      ? 'border-error-soft bg-error-soft'
+                      : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30 dark:bg-card',
                 )}
               >
                 <div className="mb-3 flex items-center justify-between">
@@ -93,21 +93,17 @@ export const TeacherSessionTimeline = ({
                     className={cn(
                       'rounded-lg px-2 py-0.5 text-[11px] font-bold tabular-nums',
                       isCompleted
-                        ? 'bg-success-soft text-success dark:bg-success-soft dark:text-success'
+                        ? 'bg-success-soft text-success'
                         : isCancelled
-                          ? 'bg-error-soft text-error dark:bg-error-soft dark:text-error'
-                          : 'bg-primary/10 text-primary dark:bg-primary/10 dark:text-primary',
+                          ? 'bg-error-soft text-error'
+                          : 'bg-primary/10 text-primary dark:bg-primary/10',
                     )}
                   >
                     {session.time}
                   </div>
-                  {isCompleted && (
-                    <CheckCircle2 size={14} className="text-success dark:text-success" />
-                  )}
-                  {isCancelled && <AlertCircle size={14} className="text-error dark:text-error" />}
-                  {isOngoing && (
-                    <div className="h-2 w-2 animate-pulse rounded-full bg-primary dark:bg-primary" />
-                  )}
+                  {isCompleted && <CheckCircle2 size={14} className="text-success" />}
+                  {isCancelled && <AlertCircle size={14} className="text-error" />}
+                  {isOngoing && <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />}
                 </div>
 
                 <h4 className="mb-1 truncate text-xs font-bold text-main">{session.studentName}</h4>
@@ -116,25 +112,17 @@ export const TeacherSessionTimeline = ({
                   <div
                     className={cn(
                       'h-1.5 w-1.5 rounded-full',
-                      isCompleted
-                        ? 'bg-success dark:bg-success'
-                        : isCancelled
-                          ? 'bg-error dark:bg-error'
-                          : 'bg-primary dark:bg-primary',
+                      isCompleted ? 'bg-success' : isCancelled ? 'bg-error' : 'bg-primary',
                     )}
                   />
                   <p className="truncate text-[11px] text-muted">{session.subject}</p>
                 </div>
 
-                <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5 dark:border-border">
+                <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5">
                   <span
                     className={cn(
                       'text-[11px] font-bold',
-                      isCompleted
-                        ? 'text-success dark:text-success'
-                        : isCancelled
-                          ? 'text-error dark:text-error'
-                          : 'text-primary dark:text-primary',
+                      isCompleted ? 'text-success' : isCancelled ? 'text-error' : 'text-primary',
                     )}
                   >
                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
@@ -150,7 +138,7 @@ export const TeacherSessionTimeline = ({
             <button
               onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
               disabled={currentPage === 0}
-              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
+              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:bg-card md:h-9 md:w-9"
               aria-label="السابق"
             >
               <ChevronRight size={16} className="text-main" />
@@ -158,7 +146,7 @@ export const TeacherSessionTimeline = ({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
               disabled={currentPage === totalPages - 1}
-              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
+              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:bg-card md:h-9 md:w-9"
               aria-label="التالي"
             >
               <ChevronLeft size={16} className="text-main" />
@@ -174,9 +162,7 @@ export const TeacherSessionTimeline = ({
                 onClick={() => setCurrentPage(i)}
                 className={cn(
                   'h-2 w-2 rounded-full outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
-                  i === currentPage
-                    ? 'w-6 bg-primary dark:bg-primary'
-                    : 'bg-hover hover:bg-hover dark:bg-hover',
+                  i === currentPage ? 'w-6 bg-primary' : 'bg-hover',
                 )}
                 aria-label={`صفحة ${i + 1}`}
               />

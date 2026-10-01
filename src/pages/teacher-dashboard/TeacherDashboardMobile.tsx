@@ -1,46 +1,24 @@
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Bell, Loader2, RefreshCw } from 'lucide-react'
+import { Calendar, Bell, GraduationCap, Loader2, RefreshCw } from 'lucide-react'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
-import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
+import { MobilePageHeader } from '../../shared/components/mobile/MobilePageHeader'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
+import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
 import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
 import { ModernAnnouncements } from '../../features/dashboard/components/ModernAnnouncements'
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
+import { TasksAndRequests } from '../../features/dashboard/components/TasksAndRequests'
 import { GreetingStrip } from './GreetingStrip'
 import { WeekStrip } from './WeekStrip'
-import type {
-  DashboardStats as DashboardStatsType,
-  LowBalanceStudent,
-  DashboardTask,
-} from '../../features/dashboard/types'
-import type { Session } from '../../types'
-import type { User } from '../../types/auth'
-
-interface TeacherDashboardMobileProps {
-  currentUser: User | null
-  stats: DashboardStatsType
-  rawSessions: Session[]
-  tasks: DashboardTask[]
-  lowBalanceStudents: LowBalanceStudent[]
-  focusStudents: { id: string; name: string; reason: string; type: string }[]
-  timeline: {
-    id: string
-    studentId?: string
-    studentName: string
-    time: string
-    subject: string
-    status: string
-  }[]
-  weekCounts: number[]
-  onRefresh: () => void
-}
+import type { TeacherDashboardMobileProps } from './types'
 
 export const TeacherDashboardMobile = ({
   currentUser,
   stats,
+  tasks,
   lowBalanceStudents,
   focusStudents,
   timeline,
@@ -79,69 +57,65 @@ export const TeacherDashboardMobile = ({
         </div>
       </motion.div>
 
-      <div className="mx-auto max-w-page space-y-5 pt-4 sm:px-4">
-        <div className="flex items-center justify-between">
+      <MobilePageHeader
+        title={`أ. ${firstName}`}
+        subtitle="لوحة المعلمة"
+        className="mx-auto max-w-page sm:px-4"
+        icon={<GraduationCap size={16} />}
+        action={
           <button
-            onClick={() => navigate('/teacher-profile')}
-            className="flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-            aria-label="الملف الشخصي"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-base font-black text-on-primary">
-              {firstName.charAt(0)}
-            </div>
-            <div className="text-start">
-              <p className="text-sm font-black text-main">أ. {firstName}</p>
-              <p className="text-[11px] font-bold text-muted">لوحة المعلمة</p>
-            </div>
-          </button>
-          <button
-            onClick={() => {
-              setTimeout(() => {
-                document
-                  .getElementById('announcements-section-mobile')
-                  ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }, 250)
-            }}
-            className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            onClick={() => navigate('/announcements')}
+            className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-button outline-none transition-all duration-normal hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985]"
             aria-label="الإعلانات"
           >
-            <Bell size={16} className="text-main" />
+            <Bell size={16} />
             <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-background bg-error" />
           </button>
-        </div>
+        }
+      />
 
+      <div className="mx-auto max-w-page space-y-5 pt-4 sm:px-4">
         <GreetingStrip
           name={currentUser?.name || currentUser?.username || 'المعلمة'}
           studentsCount={stats.studentsCount}
           todayCount={stats.todaySessions}
           monthCompleted={stats.monthCompletedSessions}
+          monthTotal={stats.monthTotalSessions}
           points={stats.teacherPoints}
         />
 
-        {/* الإعلانات — بين الهيرو والمحتوى */}
-        <div id="announcements-section-mobile" className="scroll-mt-24">
-          <ModernAnnouncements />
-        </div>
+        <ModernAnnouncements />
 
         {nextSession ? (
           <NextSessionHero timeline={timeline} />
         ) : (
-          <SectionCard>
-            <EmptyState icon={Calendar} title="لا حصص قادمة اليوم" subtitle="يوم هادئ" compact />
-          </SectionCard>
+          <div className="flex min-h-[140px] items-center justify-center rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
+            <EmptyState
+              icon={Calendar}
+              title="لا توجد حصة قادمة اليوم"
+              subtitle="يمكنك بدء حصة مباشرة متى شئت"
+              compact
+            />
+          </div>
         )}
-        <SectionCard>
-          <TeacherAchievements
-            stats={stats}
-            lowBalanceStudents={lowBalanceStudents}
-            isTeacher={true}
-          />
-        </SectionCard>
+
+        <DashboardStats stats={stats} isTeacher={true} />
+
         <QuickActions showQuickLinks={true} />
+
         <SmartNotifications
           lowBalanceStudents={lowBalanceStudents}
           focusStudents={focusStudents || []}
         />
+
+        <TasksAndRequests tasks={tasks} limit={3} />
+
+        <TeacherAchievements
+          stats={stats}
+          lowBalanceStudents={lowBalanceStudents}
+          isTeacher={true}
+        />
+
         <WeekStrip counts={weekCounts} />
       </div>
     </div>

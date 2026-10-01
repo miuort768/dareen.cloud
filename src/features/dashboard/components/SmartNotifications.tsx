@@ -84,23 +84,21 @@ export const SmartNotifications = ({
       <div className="mb-4 flex items-center justify-between">
         <h3 className="flex items-center gap-2 text-sm font-black text-main">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
-            <BellRing size={14} className="text-primary dark:text-primary" />
+            <BellRing size={14} className="text-primary" />
           </div>
           مركز التنبيهات
           {urgencyLabel && (
             <span
               className={cn(
                 'rounded-md px-1.5 py-0.5 text-[10px] font-bold',
-                expired.length > 0
-                  ? 'bg-error-soft text-error dark:bg-error-soft dark:text-error'
-                  : 'bg-warning-soft text-warning dark:bg-warning-soft dark:text-warning',
+                expired.length > 0 ? 'bg-error-soft text-error' : 'bg-warning-soft text-warning',
               )}
             >
               {urgencyLabel}
             </span>
           )}
         </h3>
-        <span className="rounded-lg border border-border bg-surface px-2.5 py-1 text-[10px] font-bold text-muted dark:border-border dark:bg-hover dark:text-muted">
+        <span className="rounded-lg border border-border bg-surface px-2.5 py-1 text-[10px] font-bold text-muted dark:bg-hover">
           {alerts.length} تنبيه
         </span>
       </div>

@@ -107,6 +107,10 @@ export const computeLowBalanceStudents = (
   const anticipatedByCurrency: Record<string, number> = {}
 
   students.forEach((s: Student) => {
+    // One row per student: a student enrolled in two nearly-exhausted subjects
+    // was pushed twice, which inflated both the card count and the totals.
+    const nearExhausted: { enrollment: Enrollment; remaining: number }[] = []
+
     s.enrollments?.forEach((en: Enrollment) => {
       if (isTeacher && en.teacher !== teacherName && en.teacherId !== currentUserId) return
       const total = Number(en.sessionsTotal) || 0
@@ -119,22 +123,28 @@ export const computeLowBalanceStudents = (
       ).length
 
       const remaining = total - actualUsed
-      if (remaining <= 2 && remaining >= 0) {
-        const price = Number(s.sessionPrice) || 0
-        const cur = s.currency || 'EGP'
-        lowBalance.push({
-          id: s.id,
-          studentName: s.name || '',
-          subject: en.subject || '',
-          remainingSessions: remaining,
-          teacherName: typeof en.teacher === 'string' ? en.teacher : (en.teacher?.name ?? ''),
-          parentPhone: (isTeacher ? '••••••••' : s.parentPhone) || '',
-        })
-        // المتوقع الحقيقي = المتبقي فعليًا × سعر الحصة (لا رقم سحري)
-        anticipatedByCurrency[cur] =
-          (anticipatedByCurrency[cur] || 0) + price * Math.max(remaining, 0)
-      }
+      if (remaining <= 2 && remaining >= 0) nearExhausted.push({ enrollment: en, remaining })
     })
+
+    if (nearExhausted.length > 0) {
+      // Lowest remaining balance wins — that is the enrollment the teacher must act on.
+      const { enrollment: en, remaining: worstRemaining } = nearExhausted.reduce((a, b) =>
+        a.remaining <= b.remaining ? a : b,
+      )
+      const price = Number(s.sessionPrice) || 0
+      const cur = s.currency || 'EGP'
+      lowBalance.push({
+        id: s.id,
+        studentName: s.name || '',
+        subject: en.subject || '',
+        remainingSessions: worstRemaining,
+        teacherName: typeof en.teacher === 'string' ? en.teacher : (en.teacher?.name ?? ''),
+        parentPhone: (isTeacher ? '••••••••' : s.parentPhone) || '',
+      })
+      // المتوقع الحقيقي = المتبقي فعليًا × سعر الحصة (لا رقم سحري)
+      anticipatedByCurrency[cur] =
+        (anticipatedByCurrency[cur] || 0) + price * Math.max(worstRemaining, 0)
+    }
   })
 
   // لا يجمع عملات مختلفة معًا — يأخذ أكبر مجموعة عملة فقط

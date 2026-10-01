@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '../../../shared/components/ui'
@@ -32,11 +33,11 @@ export const MonthlyReportPreview = ({
 
   if (!isOpen || !student) return null
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       onKeyDown={handleKeyDown}
-      className="fixed inset-0 z-[110] flex items-end justify-center bg-background dark:bg-black/70 md:items-center md:p-4"
+      className="fixed inset-0 z-[200] flex items-end justify-center bg-background dark:bg-black/70 md:items-center md:p-4"
       dir="rtl"
       role="dialog"
       aria-modal="true"
@@ -180,6 +181,8 @@ export const MonthlyReportPreview = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    // Portalled to body — see StudentQuickBrief for the stacking-context trap.
+    document.body,
   )
 }
