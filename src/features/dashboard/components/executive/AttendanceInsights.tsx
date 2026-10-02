@@ -5,9 +5,10 @@ import { api } from '../../../../lib/api'
 import type { Session } from '../../../../types'
 import { getSafeArray } from '../../utils/dashboardHelpers'
 import { parseTimeTo24 } from '../../../attendance/utils/slotUtils'
+import { sessionOutcome } from '../../../../shared/utils/enrollments'
 import { cn } from '@/lib/utils'
 
-const COMPLETED = ['completed', 'مكتملة', 'تم الإنجاز']
+const isCompleted = (s: Session) => sessionOutcome(s.status) === 'done'
 
 interface RankEntry {
   name: string
@@ -102,9 +103,7 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
 
   const analytics = useMemo(() => {
     const sessions = getSafeArray(data) as Session[]
-    const completed = sessions.filter((s) =>
-      COMPLETED.includes(String(s.status ?? '').toLowerCase()),
-    )
+    const completed = sessions.filter(isCompleted)
 
     const teacherCounts: Record<string, number> = {}
     sessions.forEach((s) => {

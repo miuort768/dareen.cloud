@@ -1,6 +1,7 @@
 import type { Student, Session, Transaction, TeacherInvoice, Enrollment } from '../../../types'
 import type { LowBalanceStudent, DashboardMonthData } from '../types'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 export const getSafeArray = (val: unknown): unknown[] => {
   if (!val) return []
@@ -119,7 +120,7 @@ export const computeLowBalanceStudents = (
           ss.studentId === s.id &&
           (ss.teacherId === en.teacherId || ss.teacherName === en.teacher) &&
           ss.subject === en.subject &&
-          ['completed', 'مكتملة', 'تم الإنجاز'].includes(ss.status?.toLowerCase()),
+          sessionOutcome(ss.status) === 'done',
       ).length
 
       const remaining = total - actualUsed
@@ -174,9 +175,7 @@ export const computeChartData = (
     }
 
     const mSess = filteredSessions.filter((s: Session) => isTargetMonth(s.date))
-    const mComp = mSess.filter((s: Session) =>
-      ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase()),
-    )
+    const mComp = mSess.filter((s: Session) => sessionOutcome(s.status) === 'done')
 
     // Currency policy: chart lines sum the target currency only — same as the KPI totals.
     const rev =

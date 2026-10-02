@@ -3,6 +3,7 @@ import { RefreshCw, CheckCircle2 } from 'lucide-react'
 import { SectionCard, SectionTitle } from './ClosingUI'
 import { Table, EmptyState } from '../../../shared/components/ui'
 import type { Column } from '../../../shared/components/ui'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 interface CompensationSession {
   needsCompensation?: boolean
@@ -27,7 +28,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
   const rows = useMemo<CompensationRow[]>(
     () =>
       filteredSessions
-        .filter((s) => s.needsCompensation && s.status === 'cancelled')
+        .filter((s) => s.needsCompensation && sessionOutcome(s.status) === 'cancelled')
         .map((s, i) => ({ id: `${s.date}-${s.studentName}-${i}`, ...s })),
     [filteredSessions],
   )

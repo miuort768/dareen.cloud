@@ -6,6 +6,7 @@ import { ar } from 'date-fns/locale'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 interface ParentEnrollment {
   teacherName?: string
@@ -193,9 +194,7 @@ export const SessionsModal = ({
                   const filtered = childSessions.filter(
                     (s) =>
                       s.subject === viewingSubject.subject &&
-                      (s.status === 'completed' ||
-                        s.status === 'absent' ||
-                        s.status === 'cancelled') &&
+                      (s.status === 'absent' || sessionOutcome(s.status) !== null) &&
                       s.date >= sessionsStartDate &&
                       s.date <= sessionsEndDate,
                   )
@@ -243,70 +242,74 @@ export const SessionsModal = ({
                       .filter(
                         (s) =>
                           s.subject === viewingSubject.subject &&
-                          (s.status === 'completed' ||
-                            s.status === 'absent' ||
-                            s.status === 'cancelled') &&
+                          (s.status === 'absent' || sessionOutcome(s.status) !== null) &&
                           s.date >= sessionsStartDate &&
                           s.date <= sessionsEndDate,
                       )
                       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                     return filtered
                       .slice((sessionsPage - 1) * 7, sessionsPage * 7)
-                      .map((session, sIdx) => (
-                        <div key={sIdx} className="relative">
-                          <div
-                            className={cn(
-                              'absolute -end-[27px] top-1 h-3 w-3 rounded-full border-[3px] bg-card',
-                              session.status === 'completed' ? 'border-success' : 'border-error',
-                            )}
-                          ></div>
-                          <div className="group rounded-xl border border-border bg-card p-3 transition-all hover:border-primary/30">
-                            <div className="flex items-center justify-between gap-2">
-                              <div className="flex items-center gap-2">
-                                <p className="text-xs font-medium text-main">
-                                  {format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}
-                                </p>
-                              </div>
-                              <div
-                                className={cn(
-                                  'rounded-full px-2 py-0.5 text-micro font-medium uppercase tracking-widest',
-                                  session.status === 'completed'
-                                    ? 'bg-success text-on-success'
-                                    : 'bg-error text-on-error',
-                                )}
-                              >
-                                {session.status === 'completed' ? 'حضر' : 'غائب'}
-                              </div>
-                            </div>
-                            {session.notes && (
-                              <div className="mt-2 border-t border-border pt-2">
-                                <div className="flex gap-1.5">
-                                  <div className="w-0.5 shrink-0 rounded-full bg-primary" />
-                                  <p className="text-micro font-normal italic leading-relaxed text-muted">
-                                    {session.notes}
+                      .map((session, sIdx) => {
+                        const attended = sessionOutcome(session.status) === 'done'
+                        return (
+                          <div key={sIdx} className="relative">
+                            <div
+                              className={cn(
+                                'absolute -end-[27px] top-1 h-3 w-3 rounded-full border-[3px] bg-card',
+                                attended ? 'border-success' : 'border-error',
+                              )}
+                            ></div>
+                            <div className="group rounded-xl border border-border bg-card p-3 transition-all hover:border-primary/30">
+                              <div className="flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2">
+                                  <p className="text-xs font-medium text-main">
+                                    {format(new Date(session.date), 'eeee, d MMMM', { locale: ar })}
                                   </p>
                                 </div>
+                                <div
+                                  className={cn(
+                                    'rounded-full px-2 py-0.5 text-micro font-medium uppercase tracking-widest',
+                                    attended
+                                      ? 'bg-success text-on-success'
+                                      : 'bg-error text-on-error',
+                                  )}
+                                >
+                                  {attended ? 'حضر' : 'غائب'}
+                                </div>
                               </div>
-                            )}
-                            {session.topics && (
-                              <div className="mt-2 border-t border-border pt-2">
-                                <p className="text-micro font-bold text-main">
-                                  <span className="text-success">✓</span> تم إنجازه:{' '}
-                                  <span className="font-normal text-muted">{session.topics}</span>
-                                </p>
-                              </div>
-                            )}
-                            {session.homework && (
-                              <div className="mt-1.5">
-                                <p className="text-micro font-bold text-main">
-                                  <span className="text-warning dark:text-primary">★</span> الواجب:{' '}
-                                  <span className="font-normal text-muted">{session.homework}</span>
-                                </p>
-                              </div>
-                            )}
+                              {session.notes && (
+                                <div className="mt-2 border-t border-border pt-2">
+                                  <div className="flex gap-1.5">
+                                    <div className="w-0.5 shrink-0 rounded-full bg-primary" />
+                                    <p className="text-micro font-normal italic leading-relaxed text-muted">
+                                      {session.notes}
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                              {session.topics && (
+                                <div className="mt-2 border-t border-border pt-2">
+                                  <p className="text-micro font-bold text-main">
+                                    <span className="text-success">✓</span> تم إنجازه:{' '}
+                                    <span className="font-normal text-muted">{session.topics}</span>
+                                  </p>
+                                </div>
+                              )}
+                              {session.homework && (
+                                <div className="mt-1.5">
+                                  <p className="text-micro font-bold text-main">
+                                    <span className="text-warning dark:text-primary">★</span>{' '}
+                                    الواجب:{' '}
+                                    <span className="font-normal text-muted">
+                                      {session.homework}
+                                    </span>
+                                  </p>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        )
+                      })
                   })()}
                 </div>
               )}

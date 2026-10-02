@@ -92,8 +92,8 @@ export const StudentDashboard = () => {
 
   // ── Stats ──────────────────────────────────────────────────────────────────
   const stats = useMemo<StudentStats>(() => {
-    const attendance = sessions.filter((s) => s.status === 'completed').length
-    const absence = sessions.filter((s) => s.status === 'cancelled').length
+    const attendance = sessions.filter((s) => sessionOutcome(s.status) === 'done').length
+    const absence = sessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length
     const recorded = attendance + absence
     let used = 0
     let total = 0

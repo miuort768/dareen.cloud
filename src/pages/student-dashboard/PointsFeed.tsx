@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { cn } from '../../lib/utils'
 import type { PointLog, Session } from './types'
+import { sessionOutcome } from '../../shared/utils/enrollments'
 
 interface PointsFeedProps {
   pointLogs: PointLog[]
@@ -40,7 +41,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
     title: `حصة ${s.subject || ''}`,
     meta: s.date || '',
     detail: s.topics && s.homework ? `${s.topics} · الواجب: ${s.homework}` : s.topics || undefined,
-    tone: s.status === 'completed' ? 'neutral' : 'negative',
+    tone: sessionOutcome(s.status) === 'done' ? 'neutral' : 'negative',
   }))
 
   const items = [...pointItems, ...sessionItems].slice(0, 5)

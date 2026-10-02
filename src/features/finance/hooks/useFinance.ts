@@ -5,6 +5,15 @@ import { CHART_COLORS } from '../types'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 import { confirm } from '../../../lib/confirmDialog'
 import { formatLocalDate } from '../../../lib/utils'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
+
+// A session only reaches the finance ledger when it is concluded or still pending.
+// The raw `status === 'completed' || status === 'scheduled'` test silently dropped
+// every session stored with an Arabic status.
+const isSessionDoneOrScheduled = (status?: string | null) => {
+  const s = (status || '').toLowerCase()
+  return sessionOutcome(status) === 'done' || s === 'scheduled' || s === 'مجدولة'
+}
 
 interface FinanceStats {
   reportCurrency?: string
@@ -166,7 +175,7 @@ export const useFinance = () => {
         0,
       )
       const laborCost = sessions
-        .filter((s) => s.status === 'completed')
+        .filter((s) => sessionOutcome(s.status) === 'done')
         .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
       return {
         ...serverStats,
@@ -178,7 +187,7 @@ export const useFinance = () => {
     // Client-side fallback: filter ALL items by reportCurrency to avoid mixing currencies.
     // The client has no access to exchange rates, so amounts in other currencies are excluded for income.
     const curFilter = (cur?: string) => (cur || 'EGP') === reportCurrency
-    const allCompletedSessions = sessions.filter((s) => s.status === 'completed')
+    const allCompletedSessions = sessions.filter((s) => sessionOutcome(s.status) === 'done')
     const completedSessions = allCompletedSessions.filter((s) => curFilter(s.studentCurrency))
     const monthSessions = completedSessions.filter((s) => isSameMonth(s.date))
     const allMonthSessions = allCompletedSessions.filter((s) => isSameMonth(s.date))
@@ -276,7 +285,7 @@ export const useFinance = () => {
     const combined: Transaction[] = [
       ...manualTransactions,
       ...sessions
-        .filter((s) => s.status === 'completed' || s.status === 'scheduled')
+        .filter((s) => isSessionDoneOrScheduled(s.status))
         .map((s) => ({
           id: `session-rev-${s.id}`,
           type: 'income' as const,
@@ -285,7 +294,7 @@ export const useFinance = () => {
           currency: s.studentCurrency || 'EGP',
           date: s.date || '',
           description: `(دفق مالي) ${s.studentName} - ${s.subject}`,
-          status: s.status === 'completed' ? 'completed' : ('pending' as const),
+          status: sessionOutcome(s.status) === 'done' ? 'completed' : ('pending' as const),
         })),
       ...invoices.map((inv) => ({
         id: `invoice-${inv.id}`,

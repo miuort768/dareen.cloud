@@ -17,6 +17,7 @@ import { cn } from '../../../lib/utils'
 import { useCurrentUser, useShowNotification } from '../../../context/AppContext'
 import { useAttendance } from '../hooks/useAttendance'
 import { useAttendanceLogger } from '../hooks/useAttendanceLogger'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { getPeriodRange, getPeriodLabel } from '../utils/periodRange'
 import { MobilePage, usePullToRefresh } from '../../../shared/components/mobile'
 import { SkeletonCard } from '../../../shared/components/ui'
@@ -74,10 +75,9 @@ export const MobileAttendance = () => {
   const todayStats = useMemo(() => {
     const daySessions = allSessions.filter((s) => s.date === date)
     return {
-      completed: daySessions.filter((s) => s.status === 'completed').length,
-      cancelled: daySessions.filter((s) => s.status === 'cancelled').length,
-      scheduled: daySessions.filter((s) => s.status !== 'cancelled' && s.status !== 'completed')
-        .length,
+      completed: daySessions.filter((s) => sessionOutcome(s.status) === 'done').length,
+      cancelled: daySessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length,
+      scheduled: daySessions.filter((s) => sessionOutcome(s.status) === null).length,
     }
   }, [allSessions, date])
 

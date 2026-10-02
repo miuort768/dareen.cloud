@@ -15,6 +15,7 @@ import { Skeleton } from '../../../shared/components/ui'
 import { cn } from '../../../lib/utils'
 import { useShowNotification } from '../../../context/AppContext'
 import { confirm } from '../../../lib/confirmDialog'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import type { Session } from '../types'
 
 interface AttendanceHistoryListProps {
@@ -39,6 +40,8 @@ export const AttendanceHistoryList = ({
 }: AttendanceHistoryListProps) => {
   const [editingSession, setEditingSession] = useState<Session | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  // Raw 'completed' equality mis-coloured every Arabic variant as an absence.
+  const isPresent = (s: Session) => sessionOutcome(s.status) === 'done'
   const showNotification = useShowNotification()
   const queryClient = useQueryClient()
 
@@ -52,7 +55,7 @@ export const AttendanceHistoryList = ({
           (s) =>
             s.studentId === studentId &&
             (studentSubject ? s.subject === studentSubject : true) &&
-            (s.status === 'completed' || s.status === 'cancelled'),
+            sessionOutcome(s.status) !== null,
         )
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     },
@@ -161,7 +164,7 @@ export const AttendanceHistoryList = ({
                 key={session.id}
                 className={cn(
                   'rounded-2xl border bg-surface p-2.5',
-                  session.status === 'completed' ? 'border-success-soft' : 'border-error-soft',
+                  isPresent(session) ? 'border-success-soft' : 'border-error-soft',
                 )}
               >
                 {editingSession?.id === session.id ? (
@@ -215,10 +218,10 @@ export const AttendanceHistoryList = ({
                       <div
                         className={cn(
                           'flex h-7 w-7 items-center justify-center rounded-2xl',
-                          session.status === 'completed' ? 'bg-success-soft' : 'bg-error-soft',
+                          isPresent(session) ? 'bg-success-soft' : 'bg-error-soft',
                         )}
                       >
-                        {session.status === 'completed' ? (
+                        {isPresent(session) ? (
                           <CheckCircle2 size={14} className="text-success" />
                         ) : (
                           <XCircle size={14} className="text-error" />
@@ -246,12 +249,12 @@ export const AttendanceHistoryList = ({
                       <span
                         className={cn(
                           'rounded px-1.5 py-0.5 text-[9px] font-bold',
-                          session.status === 'completed'
+                          isPresent(session)
                             ? 'bg-success-soft text-success'
                             : 'bg-error-soft text-error',
                         )}
                       >
-                        {session.status === 'completed' ? 'حضور' : 'غياب'}
+                        {isPresent(session) ? 'حضور' : 'غياب'}
                       </span>
                       <button
                         onClick={() => setEditingSession(session)}

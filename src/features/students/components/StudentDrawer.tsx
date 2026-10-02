@@ -26,6 +26,7 @@ import type { Student, ScheduleSlot } from '../types'
 import type { Teacher } from '../../teachers/types'
 import { EnrollmentForm } from './EnrollmentForm'
 import { enrollmentTeacherName } from '../utils/enrollmentUtils'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { normalizeCurriculum } from '../utils/curriculumUtils'
 
 interface StudentDrawerProps {
@@ -133,7 +134,7 @@ export const StudentDrawer = ({
     const d = new Date()
     for (let i = 0; i < 30; i++) {
       const dateStr = formatLocalDate(d)
-      if (sessions.some((s) => s.date === dateStr && s.status === 'completed')) {
+      if (sessions.some((s) => s.date === dateStr && sessionOutcome(s.status) === 'done')) {
         streak++
       } else if (i > 0) break
       d.setDate(d.getDate() - 1)
@@ -150,7 +151,7 @@ export const StudentDrawer = ({
   const enrollments = student.enrollments || []
   const totalSessionsUsed = enrollments.reduce((acc, en) => acc + (en.sessionsUsed || 0), 0)
 
-  const completedSessions = sessions.filter((s) => s.status === 'completed').length
+  const completedSessions = sessions.filter((s) => sessionOutcome(s.status) === 'done').length
   const totalSess = sessions.length
   const overallAttendance = totalSess > 0 ? Math.round((completedSessions / totalSess) * 100) : 0
 
@@ -405,7 +406,7 @@ export const StudentDrawer = ({
                           <div
                             className={cn(
                               'h-2 w-2 shrink-0 rounded-full',
-                              s.status === 'completed' ? 'bg-success' : 'bg-warning',
+                              sessionOutcome(s.status) === 'done' ? 'bg-success' : 'bg-warning',
                             )}
                           />
                           <span className="flex-1 text-[10px] font-bold text-main">
@@ -414,10 +415,10 @@ export const StudentDrawer = ({
                           <span
                             className={cn(
                               'text-[9px] font-bold',
-                              s.status === 'completed' ? 'text-success' : 'text-warning',
+                              sessionOutcome(s.status) === 'done' ? 'text-success' : 'text-warning',
                             )}
                           >
-                            {s.status === 'completed' ? 'تمت' : 'مجدولة'}
+                            {sessionOutcome(s.status) === 'done' ? 'تمت' : 'مجدولة'}
                           </span>
                         </div>
                       ))}
@@ -650,8 +651,9 @@ export const StudentDrawer = ({
                 ) : (
                   <div className="relative">
                     {sessions.slice(0, 20).map((s, idx) => {
-                      const isCompleted = s.status === 'completed'
-                      const isCancelled = s.status === 'cancelled'
+                      const outcome = sessionOutcome(s.status)
+                      const isCompleted = outcome === 'done'
+                      const isCancelled = outcome === 'cancelled'
                       const isLast = idx === Math.min(sessions.length - 1, 19)
                       return (
                         <div key={idx} className="flex gap-3 pb-4 last:pb-0">

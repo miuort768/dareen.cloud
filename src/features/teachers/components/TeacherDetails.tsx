@@ -9,6 +9,7 @@ import { TeacherEnrollmentList } from './TeacherEnrollmentList'
 import { TeacherActivitySection } from './TeacherActivitySection'
 import { TeacherPaymentInfo } from './TeacherPaymentInfo'
 import { useTeacherActivity } from '../hooks/useTeacherActivity'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 interface TeacherDetailsProps {
   teacher: Teacher
@@ -62,7 +63,9 @@ export const TeacherDetails = ({
   const monthlySessions = teacherSessions.filter((s) => {
     const d = new Date(s.date)
     return (
-      d.getMonth() === currentMonth && d.getFullYear() === currentYear && s.status === 'completed'
+      d.getMonth() === currentMonth &&
+      d.getFullYear() === currentYear &&
+      sessionOutcome(s.status) === 'done'
     )
   }).length
 
@@ -70,7 +73,9 @@ export const TeacherDetails = ({
     const d = new Date(s.date)
     const prevMonth = currentMonth === 0 ? 11 : currentMonth - 1
     const year = currentMonth === 0 ? currentYear - 1 : currentYear
-    return d.getMonth() === prevMonth && d.getFullYear() === year && s.status === 'completed'
+    return (
+      d.getMonth() === prevMonth && d.getFullYear() === year && sessionOutcome(s.status) === 'done'
+    )
   }).length
 
   const performanceChange =

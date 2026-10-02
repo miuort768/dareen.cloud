@@ -6,6 +6,7 @@ import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { api } from '../lib/api'
 import { parseNumberSafe, formatLocalDate } from '../lib/utils'
 import { CURRENCY_SYMBOL } from '../config/constants'
+import { sessionOutcome } from '../shared/utils/enrollments'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import {
   type TeacherInvoice,
@@ -163,7 +164,7 @@ export const TeacherInvoices = () => {
                 const teacherSessions = allSessions.filter(
                   (sess) =>
                     (sess.teacherId === t.id || sess.teacherName === t.name) &&
-                    sess.status === 'completed',
+                    sessionOutcome(sess.status) === 'done',
                 )
                 const totalAmount = teacherSessions.reduce(
                   (sum, sess) => sum + (sess.teacherPrice || t.price || 0),

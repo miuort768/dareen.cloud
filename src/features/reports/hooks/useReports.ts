@@ -5,6 +5,7 @@ import { safeArray } from '../../../lib/api'
 import type { ReportData, ReportType } from '../types'
 import type { Student, Session, StudentInvoice } from '../../../types'
 import { getCurrencySymbol } from '../../../config/constants'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 const EMPTY_DATA: ReportData = { students: [], sessions: [], invoices: [] }
 
@@ -44,8 +45,10 @@ export const useReports = () => {
 
     // Attendance
     const totalSessions = sessions.length
-    const completedSessions = sessions.filter((s) => s.status === 'completed').length
-    const cancelledSessions = sessions.filter((s) => s.status === 'cancelled').length
+    const completedSessions = sessions.filter((s) => sessionOutcome(s.status) === 'done').length
+    const cancelledSessions = sessions.filter(
+      (s) => sessionOutcome(s.status) === 'cancelled',
+    ).length
     const attendanceRate =
       totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0
 
@@ -54,7 +57,7 @@ export const useReports = () => {
     const isEgp = (c?: string) => !c || c === 'EGP'
 
     const totalRevenue = sessions
-      .filter((s) => s.status === 'completed' && isEgp(s.studentCurrency))
+      .filter((s) => sessionOutcome(s.status) === 'done' && isEgp(s.studentCurrency))
       .reduce((sum, s) => {
         let price = Number(s.price) || 0
         if (price === 0) {
@@ -69,7 +72,7 @@ export const useReports = () => {
     // expense is still owed (same policy as the finance page).
     // NOTE: student invoices are collections (revenue), never expenses.
     const teacherCostFromSessions = sessions
-      .filter((s) => s.status === 'completed')
+      .filter((s) => sessionOutcome(s.status) === 'done')
       .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
 
     const totalExpenses = teacherCostFromSessions
@@ -77,7 +80,7 @@ export const useReports = () => {
     const monthRevenue = sessions
       .filter(
         (s) =>
-          s.status === 'completed' &&
+          sessionOutcome(s.status) === 'done' &&
           s.date?.startsWith(currentMonthStr) &&
           isEgp(s.studentCurrency),
       )
@@ -93,7 +96,9 @@ export const useReports = () => {
     const prevMonthRevenue = sessions
       .filter(
         (s) =>
-          s.status === 'completed' && s.date?.startsWith(prevMonthStr) && isEgp(s.studentCurrency),
+          sessionOutcome(s.status) === 'done' &&
+          s.date?.startsWith(prevMonthStr) &&
+          isEgp(s.studentCurrency),
       )
       .reduce((sum, s) => {
         let price = Number(s.price) || 0
@@ -119,7 +124,7 @@ export const useReports = () => {
             : 0
 
     const monthTeacherCost = sessions
-      .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
+      .filter((s) => sessionOutcome(s.status) === 'done' && s.date?.startsWith(currentMonthStr))
       .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
 
     const monthExpenses = monthTeacherCost
@@ -144,8 +149,8 @@ export const useReports = () => {
         const monthSessions = sessions.filter((s) => s.date?.startsWith(month))
         return {
           month: new Date(month + '-01').toLocaleDateString('ar-EG', { month: 'short' }),
-          completed: monthSessions.filter((s) => s.status === 'completed').length,
-          cancelled: monthSessions.filter((s) => s.status === 'cancelled').length,
+          completed: monthSessions.filter((s) => sessionOutcome(s.status) === 'done').length,
+          cancelled: monthSessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length,
           total: monthSessions.length,
         }
       })
@@ -198,8 +203,9 @@ export const useReports = () => {
           acc[teacher] = { total: 0, completed: 0, cancelled: 0 }
         }
         acc[teacher]!.total++
-        if (s.status === 'completed') acc[teacher]!.completed++
-        if (s.status === 'cancelled') acc[teacher]!.cancelled++
+        const outcome = sessionOutcome(s.status)
+        if (outcome === 'done') acc[teacher]!.completed++
+        if (outcome === 'cancelled') acc[teacher]!.cancelled++
         return acc
       },
       {} as Record<string, { total: number; completed: number; cancelled: number }>,

@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { api } from '../../../lib/api'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { attendanceService } from '../services/attendanceService'
 import type {
   Session,
@@ -196,12 +197,12 @@ export const useAttendance = (
     })
 
     return {
-      todayCompleted: todaySessions.filter((s) => s.status === 'completed').length,
-      todayCancelled: todaySessions.filter((s) => s.status === 'cancelled').length,
+      todayCompleted: todaySessions.filter((s) => sessionOutcome(s.status) === 'done').length,
+      todayCancelled: todaySessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length,
       todayScheduled: todaySessions.filter((s) => s.status === 'scheduled').length,
       todayTotal: todaySessions.length,
-      totalCompleted: allSessions.filter((s) => s.status === 'completed').length,
-      totalCancelled: allSessions.filter((s) => s.status === 'cancelled').length,
+      totalCompleted: allSessions.filter((s) => sessionOutcome(s.status) === 'done').length,
+      totalCancelled: allSessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length,
     }
   }, [allSessions, date])
 
@@ -225,12 +226,12 @@ export const useAttendance = (
     const prevEndStr = prevEnd.toLocaleDateString('en-CA')
     const prevSessions = allSessions.filter((s) => s.date >= prevStartStr && s.date <= prevEndStr)
     return {
-      completed: rangeSessions.filter((s) => s.status === 'completed').length,
-      cancelled: rangeSessions.filter((s) => s.status === 'cancelled').length,
+      completed: rangeSessions.filter((s) => sessionOutcome(s.status) === 'done').length,
+      cancelled: rangeSessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length,
       scheduled: rangeSessions.filter((s) => s.status === 'scheduled').length,
       total: rangeSessions.length,
-      prevCompleted: prevSessions.filter((s) => s.status === 'completed').length,
-      prevCancelled: prevSessions.filter((s) => s.status === 'cancelled').length,
+      prevCompleted: prevSessions.filter((s) => sessionOutcome(s.status) === 'done').length,
+      prevCancelled: prevSessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length,
     }
   }, [allSessions, dateRange])
 
@@ -335,14 +336,14 @@ export const useAttendance = (
         const entry = studentMap.get(key)
         if (entry) {
           entry.total++
-          if (s.status === 'completed') entry.completed++
+          if (sessionOutcome(s.status) === 'done') entry.completed++
         } else {
           // Session exists but no enrollment found — still show it
           studentMap.set(key, {
             studentId: s.studentId,
             studentName: s.studentName || '',
             subject: s.subject || '',
-            completed: s.status === 'completed' ? 1 : 0,
+            completed: sessionOutcome(s.status) === 'done' ? 1 : 0,
             total: 1,
           })
         }
@@ -354,15 +355,17 @@ export const useAttendance = (
         teacherSessions
           .filter((s) => s.studentId === data.studentId && s.subject === data.subject)
           .forEach((s) => {
-            if (s.status === 'completed') sCompleted++
-            else if (s.status === 'cancelled') sCancelled++
+            if (sessionOutcome(s.status) === 'done') sCompleted++
+            else if (sessionOutcome(s.status) === 'cancelled') sCancelled++
           })
         const resolved = sCompleted + sCancelled
         return { ...data, rate: resolved > 0 ? Math.round((sCompleted / resolved) * 100) : 0 }
       })
 
-      const completed = teacherSessions.filter((s) => s.status === 'completed').length
-      const cancelled = teacherSessions.filter((s) => s.status === 'cancelled').length
+      const completed = teacherSessions.filter((s) => sessionOutcome(s.status) === 'done').length
+      const cancelled = teacherSessions.filter(
+        (s) => sessionOutcome(s.status) === 'cancelled',
+      ).length
       const scheduled = teacherSessions.filter((s) => s.status === 'scheduled').length
       const totalSessions = completed + cancelled + scheduled
       const resolvedSessions = completed + cancelled

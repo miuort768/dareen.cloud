@@ -5,6 +5,7 @@ import { ProgressBar } from '../../../shared/components/ui'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { useSupportWhatsappNumber } from '../../profile/shared'
 
 interface ParentStudent {
@@ -117,13 +118,15 @@ export const AttendanceModal = ({
                 const subjectSessions = childSessions.filter(
                   (s) =>
                     s.subject === en.subject &&
-                    (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'),
+                    (s.status === 'absent' || sessionOutcome(s.status) !== null),
                 )
                 const enTeacher = parentEnrollmentTeacherName(en)
-                const attended = subjectSessions.filter((s) => s.status === 'completed').length
+                const attended = subjectSessions.filter(
+                  (s) => sessionOutcome(s.status) === 'done',
+                ).length
                 const totalRecorded = subjectSessions.length
                 const absent = subjectSessions.filter(
-                  (s) => s.status === 'absent' || s.status === 'cancelled',
+                  (s) => s.status === 'absent' || sessionOutcome(s.status) === 'cancelled',
                 ).length
                 const percentage =
                   totalRecorded > 0 ? Math.round((attended / totalRecorded) * 100) : 0

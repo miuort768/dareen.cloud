@@ -2,6 +2,7 @@ import { ListTodo, Calendar, Clock } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '../../../shared/components/ui'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 interface ActivityTimelineProps {
   sessions: { id: string; studentName: string; date?: string; status?: string }[]
@@ -19,14 +20,17 @@ interface TimelineItem {
 }
 
 export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: ActivityTimelineProps) => {
-  const sessionItems: TimelineItem[] = sessions.slice(0, 5).map((s) => ({
-    id: `s-${s.id}`,
-    title: `جلسة: ${s.studentName}`,
-    time: s.date || '',
-    icon: Calendar,
-    variant: s.status === 'completed' ? 'success' : s.status === 'cancelled' ? 'error' : 'info',
-    badge: s.status === 'completed' ? 'تمت' : s.status === 'cancelled' ? 'ملغاة' : 'نشطة',
-  }))
+  const sessionItems: TimelineItem[] = sessions.slice(0, 5).map((s) => {
+    const outcome = sessionOutcome(s.status)
+    return {
+      id: `s-${s.id}`,
+      title: `جلسة: ${s.studentName}`,
+      time: s.date || '',
+      icon: Calendar,
+      variant: outcome === 'done' ? 'success' : outcome === 'cancelled' ? 'error' : 'info',
+      badge: outcome === 'done' ? 'تمت' : outcome === 'cancelled' ? 'ملغاة' : 'نشطة',
+    }
+  })
 
   const taskItems: TimelineItem[] = tasks.slice(0, 5).map((t) => ({
     id: `t-${t.id}`,

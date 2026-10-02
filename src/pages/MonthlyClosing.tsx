@@ -20,6 +20,7 @@ import { teacherService } from '../features/teachers/services/teacherService'
 import { cn } from '../lib/utils'
 import { api, safeGet } from '../lib/api'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice'
+import { sessionOutcome } from '../shared/utils/enrollments'
 import { CURRENCY_SYMBOL } from '@/config/constants'
 import { PageLoader } from '../components/ui/PageLoader'
 import { Skeleton, FAB_SURFACE } from '../shared/components/ui'
@@ -154,7 +155,8 @@ export const MonthlyClosing = () => {
     teachers
       ?.map((teacher) => {
         const teacherSessions = filteredSessions.filter(
-          (s) => s.teacherName?.trim() === teacher.name?.trim() && s.status === 'completed',
+          (s) =>
+            s.teacherName?.trim() === teacher.name?.trim() && sessionOutcome(s.status) === 'done',
         )
         const baseAmount = teacherSessions.reduce(
           (acc, curr) => acc + (Number(curr.teacherPrice) || Number(teacher.price) || 0),
@@ -176,7 +178,7 @@ export const MonthlyClosing = () => {
   const subjectAnalysis = subjectsList
     .map((subj) => {
       const subjectSessions = filteredSessions.filter(
-        (s) => s.subject === subj && s.status === 'completed',
+        (s) => s.subject === subj && sessionOutcome(s.status) === 'done',
       )
       const income = subjectSessions.reduce((acc, curr) => {
         let price = Number(curr.price) || 0
@@ -225,10 +227,12 @@ export const MonthlyClosing = () => {
         const teacherMonthSessions = filteredSessions.filter(
           (s) => s.teacherName?.trim() === teacher.name?.trim(),
         )
-        const completed = teacherMonthSessions.filter((s) => s.status === 'completed').length
+        const completed = teacherMonthSessions.filter(
+          (s) => sessionOutcome(s.status) === 'done',
+        ).length
         const total = teacherMonthSessions.length
         const documented = teacherMonthSessions.filter(
-          (s) => s.status === 'completed' && (s.topics || s.homework),
+          (s) => sessionOutcome(s.status) === 'done' && (s.topics || s.homework),
         ).length
         return {
           name: teacher.name,
@@ -266,7 +270,7 @@ export const MonthlyClosing = () => {
       .filter((item) => item.isLow)
       .sort((a, b) => a.remaining - b.remaining) || []
 
-  const validSessions = filteredSessions.filter((s) => s.status !== 'cancelled')
+  const validSessions = filteredSessions.filter((s) => sessionOutcome(s.status) !== 'cancelled')
   // Currency policy (same as dashboard): totals are summed in EGP only —
   // non-EGP money is counted separately and surfaced as a warning, never mixed.
   const isEgp = (c?: string | null) => !c || c === 'EGP'

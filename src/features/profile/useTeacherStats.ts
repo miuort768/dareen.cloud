@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { api } from '../../lib/api'
 import type { Session, Student, TeacherInvoice } from '../../types'
 import { getPaidInv } from '../dashboard/utils/dashboardHelpers'
+import { sessionOutcome } from '../../shared/utils/enrollments'
 
 interface UseTeacherStatsResult {
   /** جاري تحميل بيانات المؤشرات أول مرة */
@@ -55,9 +56,7 @@ export const useTeacherStats = (
         (s.teacherName || '').trim().toLowerCase() === normalizedName ||
         s.teacherId === currentUserId,
     )
-    const completed = mySessions.filter((s: Session) =>
-      ['completed', 'مكتملة', 'تم الإنجاز'].includes((s.status || '').toLowerCase()),
-    )
+    const completed = mySessions.filter((s: Session) => sessionOutcome(s.status) === 'done')
 
     const revenue = completed
       .filter((s: Session) => {

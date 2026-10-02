@@ -71,8 +71,8 @@ const findNextSession = (child: Student): ChildNextSession | null => {
 }
 
 const computeChildStats = (child: Student, childSessions: Session[]): ChildStats => {
-  const completed = childSessions.filter((s) => s.status === 'completed').length
-  const cancelled = childSessions.filter((s) => s.status === 'cancelled').length
+  const completed = childSessions.filter((s) => sessionOutcome(s.status) === 'done').length
+  const cancelled = childSessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length
   const totalRecorded = completed + cancelled
   const attendanceRate = totalRecorded > 0 ? Math.round((completed / totalRecorded) * 100) : 0
 
@@ -317,13 +317,13 @@ export const ParentDashboard = () => {
 
   // ── Derived: weekly pulse ──────────────────────────────────────────────────
   const weekly = useMemo<WeeklyPulseStats>(() => {
-    const completed = sessions.filter((s) => s.status === 'completed').length
-    const cancelled = sessions.filter((s) => s.status === 'cancelled').length
+    const completed = sessions.filter((s) => sessionOutcome(s.status) === 'done').length
+    const cancelled = sessions.filter((s) => sessionOutcome(s.status) === 'cancelled').length
     const weekStart = new Date()
     weekStart.setDate(weekStart.getDate() - weekStart.getDay())
     weekStart.setHours(0, 0, 0, 0)
     const weeklyCompleted = sessions.filter((s) => {
-      if (s.status !== 'completed') return false
+      if (sessionOutcome(s.status) !== 'done') return false
       const d = s.date
       if (!d || typeof d !== 'string') return false
       try {

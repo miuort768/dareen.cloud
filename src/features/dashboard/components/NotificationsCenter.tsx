@@ -4,6 +4,7 @@ import { Bell, Zap, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-reac
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../../lib/utils'
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { useAdminPhone } from '../../../context/AppContext'
 import { Button } from '../../../shared/components/ui'
 import { Badge } from '../../../shared/components/ui'
@@ -63,7 +64,9 @@ export const NotificationsCenter = ({
     students.forEach((s) => {
       const studentSessions = sessions.filter((ss) => ss.studentId === s.id)
       if (studentSessions.length < 3) return
-      const absent = studentSessions.filter((ss) => ss.status === 'cancelled').length
+      const absent = studentSessions.filter(
+        (ss) => sessionOutcome(ss.status as string | undefined) === 'cancelled',
+      ).length
       const rate = (absent / studentSessions.length) * 100
       if (rate > 30) {
         result.push({
