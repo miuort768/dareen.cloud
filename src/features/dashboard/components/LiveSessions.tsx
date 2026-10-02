@@ -28,6 +28,7 @@ import { cn } from '@/lib/utils'
 import { confirm } from '../../../lib/confirmDialog'
 import { Button } from '../../../shared/components/ui'
 import { StartLiveSessionDialog } from './StartLiveSessionDialog'
+import { DashboardSectionHead } from './DashboardSectionHead'
 import type { LiveSession } from '../../../types'
 
 const PROVIDERS = [
@@ -170,47 +171,36 @@ export const LiveSessions = () => {
   return (
     <div className="font-dash" dir="rtl">
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">
-              <Radio size={16} className="text-success" />
-            </div>
-            {sessions.length > 0 && (
-              <span className="absolute -start-1 -top-1 flex h-3.5 w-3.5 items-center justify-center">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
-              </span>
-            )}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-main">الحصص المباشرة</h3>
-              {sessions.length > 0 && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success dark:bg-success-soft">
-                  <span className="h-1.5 w-1.5 rounded-full bg-success" />
-                  مباشر
-                </span>
-              )}
-            </div>
-            <p className="text-[11px] text-muted">
-              {sessions.length > 0
-                ? `${sessions.length} ${sessions.length === 1 ? 'حصة' : 'حصص'} جارية الآن`
-                : 'روابط البث المباشر'}
-            </p>
-          </div>
-        </div>
-        {isTeacher && (
-          <Button
-            onClick={() => setShowCreateDialog(true)}
-            size="sm"
-            className="h-9 gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary"
-          >
-            <Plus size={13} />
-            بدء حصة
-          </Button>
-        )}
-      </div>
+      <DashboardSectionHead
+        icon={Radio}
+        tone="success"
+        title="الحصص المباشرة"
+        description={
+          sessions.length > 0
+            ? `${sessions.length} ${sessions.length === 1 ? 'حصة' : 'حصص'} جارية الآن`
+            : 'روابط البث المباشر'
+        }
+        afterTitle={
+          sessions.length > 0 ? (
+            <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success-strong">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
+              مباشر
+            </span>
+          ) : null
+        }
+        action={
+          isTeacher ? (
+            <Button
+              onClick={() => setShowCreateDialog(true)}
+              size="sm"
+              className="h-9 gap-1.5 rounded-lg bg-primary px-3.5 text-[11px] font-bold text-on-primary"
+            >
+              <Plus size={13} />
+              بدء حصة
+            </Button>
+          ) : null
+        }
+      />
 
       {/* Error */}
       {displayError && (

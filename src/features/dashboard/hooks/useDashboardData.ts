@@ -139,7 +139,18 @@ export const useDashboardData = (currentUser: User | null) => {
   ] = results
 
   const isLoading = results.some((r) => r.isLoading)
-  const hasErrors = results.some((r) => r.isError)
+
+  // Critical queries for the teacher dashboard shell — students, sessions and teacherMe
+  // must succeed to paint the core tables and performance numbers. Everything else
+  // (invoices, transactions, fixed expenses, parents, teachers, evaluations, tasks)
+  // is non-critical and should never flip the entire page to an ErrorState.
+  const criticalQueries = [studentsQuery, sessionsQuery, teacherMeQuery]
+  const nonCriticalErrors = results
+    .filter((_, i) => !criticalQueries.includes(results[i] as never))
+    .some((r) => r.isError)
+
+  const hasCriticalErrors = criticalQueries.some((r) => r.isError)
+  const hasErrors = hasCriticalErrors || nonCriticalErrors
 
   // Process Data
   const processedData = useMemo(() => {
@@ -618,6 +629,8 @@ export const useDashboardData = (currentUser: User | null) => {
     rawStudentInvoices: getSafeArray(studentInvoicesQuery.data),
     isLoading,
     hasErrors,
+    hasCriticalErrors,
+    nonCriticalErrors,
     fetchDashboardData: async () => {
       // Scoped to this hook's own keys. `invalidateQueries()` with no filter
       // invalidated EVERY query in the app cache, so a pull-to-refresh on the

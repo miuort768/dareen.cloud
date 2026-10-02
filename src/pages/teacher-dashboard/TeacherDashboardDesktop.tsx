@@ -71,22 +71,26 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       <motion.div {...fadeUp(0.04)}>
-        <motion.div {...fadeUp(0.04)}>
-          <WeekStrip counts={weekCounts} />
-        </motion.div>
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+          <motion.div {...fadeUp(0.04)} className="lg:col-span-7">
+            <WeekStrip counts={weekCounts} />
+          </motion.div>
 
-        {nextSession ? (
-          <NextSessionHero timeline={timeline} />
-        ) : (
-          <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-soft">
-            <EmptyState
-              icon={Calendar}
-              title="لا توجد حصة قادمة اليوم"
-              subtitle="يمكنك بدء حصة مباشرة متى شئت"
-              compact
-            />
+          <div className="lg:col-span-5">
+            {nextSession ? (
+              <NextSessionHero timeline={timeline} />
+            ) : (
+              <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-soft">
+                <EmptyState
+                  icon={Calendar}
+                  title="لا توجد حصة قادمة اليوم"
+                  subtitle="يمكنك بدء حصة مباشرة متى شئت"
+                  compact
+                />
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
@@ -95,7 +99,7 @@ export const TeacherDashboardDesktop = ({
             <DashboardStats stats={stats} isTeacher={true} />
           </motion.div>
 
-          <SectionCard delay={0.1} className="lg:col-span-8">
+          <SectionCard delay={0.1}>
             <LiveSessions />
           </SectionCard>
 
@@ -111,7 +115,7 @@ export const TeacherDashboardDesktop = ({
         </div>
 
         <div className="space-y-5 lg:col-span-4">
-          <SectionCard delay={0.12} className="p-4">
+          <SectionCard delay={0.12}>
             <QuickActions showQuickLinks={true} />
           </SectionCard>
 
@@ -122,11 +126,11 @@ export const TeacherDashboardDesktop = ({
             />
           </motion.div>
 
-          <SectionCard delay={0.22} className="p-4">
+          <SectionCard delay={0.22}>
             <TasksAndRequests tasks={tasks} limit={3} />
           </SectionCard>
 
-          <SectionCard delay={0.24} className="p-4">
+          <SectionCard delay={0.24}>
             <TeacherAchievements
               stats={stats}
               lowBalanceStudents={lowBalanceStudents}

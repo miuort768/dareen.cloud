@@ -4,7 +4,7 @@ import { PageLoader } from '../components/ui/PageLoader'
 import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData'
 import { useDeviceWidth } from '../shared/hooks/useDeviceWidth'
-import { ErrorState } from '../shared/components/ui/ErrorState'
+import { ErrorState, ErrorBanner } from '../shared/components/ui/ErrorState'
 import { TeacherDashboardDesktop } from './teacher-dashboard/TeacherDashboardDesktop'
 import { TeacherDashboardTablet } from './teacher-dashboard/TeacherDashboardTablet'
 import { TeacherDashboardMobile } from './teacher-dashboard/TeacherDashboardMobile'
@@ -27,7 +27,8 @@ export const TeacherDashboard = () => {
     focusStudents,
     weekCounts,
     fetchDashboardData,
-    hasErrors,
+    hasCriticalErrors,
+    nonCriticalErrors,
   } = useDashboardData(currentUser)
 
   const isInvalidRole = !!currentUser && currentUser.role !== 'teacher'
@@ -39,8 +40,11 @@ export const TeacherDashboard = () => {
     return <div className="min-h-full bg-surface font-sans" />
   if (loading) return <PageLoader />
 
-  // A failed query must never masquerade as "0 students, 0 sessions".
-  if (hasErrors)
+  // Critical query failure must never masquerade as "0 students, 0 sessions",
+  // and must not paint a half-empty dashboard either. Non-critical failures
+  // (invoices / transactions / expenses / parents / evaluations) degrade to a
+  // banner so the rest of the dashboard stays usable.
+  if (hasCriticalErrors)
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4" dir="rtl">
         <ErrorState
@@ -67,11 +71,32 @@ export const TeacherDashboard = () => {
   // The JS device hook is the single owner of the split. The previous build ALSO
   // gated with `md:hidden` / `hidden md:block`; that double gate is what let the
   // 768–1023px band fall through to the desktop shell while CSS hid its wrapper.
+  const nonCriticalBanner = nonCriticalErrors ? (
+    <div className="mx-auto w-full max-w-page px-2.5 pt-3 sm:px-4 md:px-6">
+      <ErrorBanner message="تعذّر تحميل بعض البيانات (الفواتير / المصروفات). بقية اللوحة تعمل بشكل طبيعي." />
+    </div>
+  ) : null
+
   if (device === 'mobile') {
-    return <TeacherDashboardMobile {...sharedProps} onRefresh={fetchDashboardData} />
+    return (
+      <>
+        {nonCriticalBanner}
+        <TeacherDashboardMobile {...sharedProps} onRefresh={fetchDashboardData} />
+      </>
+    )
   }
   if (device === 'tablet') {
-    return <TeacherDashboardTablet {...sharedProps} />
+    return (
+      <>
+        {nonCriticalBanner}
+        <TeacherDashboardTablet {...sharedProps} />
+      </>
+    )
   }
-  return <TeacherDashboardDesktop {...sharedProps} />
+  return (
+    <>
+      {nonCriticalBanner}
+      <TeacherDashboardDesktop {...sharedProps} />
+    </>
+  )
 }

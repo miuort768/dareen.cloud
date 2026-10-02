@@ -1,6 +1,7 @@
 import { AlertCircle, Clock, AlertTriangle, Info, BellRing, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { LowBalanceStudent } from '../types'
+import { DashboardSectionHead } from './DashboardSectionHead'
 
 interface FocusStudent {
   id: string
@@ -81,38 +82,40 @@ export const SmartNotifications = ({
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-black text-main">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
-            <BellRing size={14} className="text-primary" />
-          </div>
-          مركز التنبيهات
-          {urgencyLabel && (
+      <DashboardSectionHead
+        icon={BellRing}
+        title="مركز التنبيهات"
+        afterTitle={
+          urgencyLabel ? (
             <span
               className={cn(
                 'rounded-md px-1.5 py-0.5 text-[10px] font-bold',
-                expired.length > 0 ? 'bg-error-soft text-error' : 'bg-warning-soft text-warning',
+                expired.length > 0
+                  ? 'bg-error-soft text-error-strong'
+                  : 'bg-warning-soft text-warning-strong',
               )}
             >
               {urgencyLabel}
             </span>
-          )}
-        </h3>
-        <span className="rounded-lg border border-border bg-surface px-2.5 py-1 text-[10px] font-bold text-muted dark:bg-hover">
-          {alerts.length} تنبيه
-        </span>
-      </div>
+          ) : null
+        }
+        action={
+          <span className="shrink-0 rounded-lg border border-border bg-surface px-2.5 py-1 text-[10px] font-bold text-muted">
+            {alerts.length} تنبيه
+          </span>
+        }
+      />
 
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
         {alerts.map((alert, i) => (
           <div
             key={`alert-${i}`}
             className={cn(
-              'flex items-start gap-3 rounded-none p-4 transition-colors duration-normal hover:brightness-110',
+              'flex items-start gap-3 rounded-xl p-4 transition-colors duration-normal hover:brightness-110',
               alert.bg,
             )}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/15">
               <alert.icon size={17} className="text-white" />
             </div>
             <div className="min-w-0 flex-1">

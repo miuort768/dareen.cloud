@@ -2,6 +2,7 @@ import { TrendingUp, User, Medal, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 import { isSameMonth } from 'date-fns'
+import { DashboardSectionHead } from './DashboardSectionHead'
 
 /**
  * Month membership by date value, not by string prefix.
@@ -67,12 +68,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
 
   return (
     <div>
-      <div className="mb-3 flex items-center gap-2">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning-soft dark:bg-primary/10">
-          <Medal size={14} className="text-warning dark:text-primary" />
-        </div>
-        <h3 className="text-sm font-black text-main">الأكثر حضوراً</h3>
-      </div>
+      <DashboardSectionHead icon={Medal} tone="warning" title="الأكثر حضوراً" />
 
       <div className="space-y-2">
         {topPresentStudents.length > 0 ? (
@@ -81,16 +77,14 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
               key={`att-${i}`}
               type="button"
               onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-              className="w-full cursor-pointer rounded-2xl border border-border bg-surface p-3 text-start transition-colors duration-normal hover:border-warning hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover"
+              className="w-full cursor-pointer rounded-xl border border-border bg-surface p-3 text-start transition-colors duration-normal hover:border-warning hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2.5">
                   <div
                     className={cn(
-                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl',
-                      i === 0
-                        ? 'bg-warning text-on-warning'
-                        : 'bg-hover text-muted dark:bg-surface dark:text-muted',
+                      'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
+                      i === 0 ? 'bg-warning text-on-warning' : 'bg-hover text-muted',
                     )}
                   >
                     {i === 0 ? <Trophy size={14} /> : <Medal size={14} />}
@@ -104,9 +98,9 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                   <span className="text-[10px] font-bold text-muted">حصة</span>
                 </div>
               </div>
-              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-hover dark:bg-surface">
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-hover">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-warning to-warning-hover transition-all duration-700 dark:from-primary dark:to-primary-hover"
+                  className="h-full rounded-full bg-gradient-to-r from-warning to-warning-hover transition-all duration-700"
                   style={{ width: `${Math.max((stu.count / leaderCount) * 100, 8)}%` }}
                   aria-hidden="true"
                 />
@@ -115,7 +109,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-6 opacity-50">
-            <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-xl bg-surface">
+            <div className="mb-1.5 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
               <User size={14} className="text-dim" />
             </div>
             <p className="text-xs font-bold text-muted">لا توجد سجلات حالياً</p>
@@ -123,17 +117,14 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
         )}
       </div>
 
-      <div className="mt-3 flex items-center justify-between rounded-2xl bg-gradient-to-l from-warning to-warning-hover p-3 dark:from-primary dark:to-primary-hover">
+      <div className="mt-3 flex items-center justify-between rounded-xl bg-gradient-to-l from-warning to-warning-hover p-3">
         <div>
-          <p className="text-[11px] font-bold text-on-warning dark:text-main">إجمالي حصص الشهر</p>
-          <p className="text-base font-black tabular-nums text-on-warning dark:text-on-primary">
+          <p className="text-[11px] font-bold text-on-warning">إجمالي حصص الشهر</p>
+          <p className="font-dash text-base font-black tabular-nums text-on-warning">
             {totalMonthSessions}
           </p>
         </div>
-        <TrendingUp
-          size={18}
-          className="text-on-warning opacity-70 dark:text-on-primary dark:opacity-70"
-        />
+        <TrendingUp size={18} className="text-on-warning opacity-70" />
       </div>
     </div>
   )

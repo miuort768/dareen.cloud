@@ -1,6 +1,7 @@
 import { Clock, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState, useMemo } from 'react'
+import { DashboardSectionHead } from './DashboardSectionHead'
 
 interface TimelineSession {
   id: string
@@ -40,21 +41,17 @@ export const TeacherSessionTimeline = ({
 
   return (
     <div dir="rtl">
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary dark:bg-primary/10">
-            <Clock size={18} />
+      <DashboardSectionHead
+        icon={Clock}
+        title="الجدول الزمني"
+        description="جدول الحصص اليومية"
+        action={
+          <div className="flex shrink-0 items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success-strong">
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
+            مباشر
           </div>
-          <div>
-            <h3 className="text-sm font-black text-main">الجدول الزمني</h3>
-            <p className="mt-0.5 text-[11px] font-medium text-muted">جدول الحصص اليومية</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success">
-          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
-          مباشر
-        </div>
-      </div>
+        }
+      />
 
       <div className="relative">
         <div className="no-scrollbar flex snap-x snap-mandatory items-center gap-3 overflow-x-auto scroll-smooth pb-3 pt-1">
@@ -80,12 +77,12 @@ export const TeacherSessionTimeline = ({
                   }
                 }}
                 className={cn(
-                  'group/card relative w-60 min-w-60 shrink-0 cursor-pointer snap-center rounded-2xl border p-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:w-[calc(50%-6px)] md:w-[calc(25%-9px)] md:min-w-0',
+                  'group/card relative w-60 min-w-60 shrink-0 cursor-pointer snap-center rounded-xl border p-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:w-[calc(50%-6px)] md:w-[calc(25%-9px)] md:min-w-0',
                   isCompleted
                     ? 'border-success-soft bg-success-soft'
                     : isCancelled
                       ? 'border-error-soft bg-error-soft'
-                      : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30 dark:bg-card',
+                      : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30',
                 )}
               >
                 <div className="mb-3 flex items-center justify-between">
@@ -93,10 +90,10 @@ export const TeacherSessionTimeline = ({
                     className={cn(
                       'rounded-lg px-2 py-0.5 text-[11px] font-bold tabular-nums',
                       isCompleted
-                        ? 'bg-success-soft text-success'
+                        ? 'bg-success-soft text-success-strong'
                         : isCancelled
-                          ? 'bg-error-soft text-error'
-                          : 'bg-primary/10 text-primary dark:bg-primary/10',
+                          ? 'bg-error-soft text-error-strong'
+                          : 'bg-primary-soft text-primary',
                     )}
                   >
                     {session.time}
@@ -122,7 +119,11 @@ export const TeacherSessionTimeline = ({
                   <span
                     className={cn(
                       'text-[11px] font-bold',
-                      isCompleted ? 'text-success' : isCancelled ? 'text-error' : 'text-primary',
+                      isCompleted
+                        ? 'text-success-strong'
+                        : isCancelled
+                          ? 'text-error-strong'
+                          : 'text-primary',
                     )}
                   >
                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
@@ -138,7 +139,7 @@ export const TeacherSessionTimeline = ({
             <button
               onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
               disabled={currentPage === 0}
-              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:bg-card md:h-9 md:w-9"
+              className="pointer-events-auto z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="السابق"
             >
               <ChevronRight size={16} className="text-main" />
@@ -146,7 +147,7 @@ export const TeacherSessionTimeline = ({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
               disabled={currentPage === totalPages - 1}
-              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:bg-card md:h-9 md:w-9"
+              className="pointer-events-auto z-10 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30"
               aria-label="التالي"
             >
               <ChevronLeft size={16} className="text-main" />

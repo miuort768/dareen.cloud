@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import type { DashboardTask as Task } from '../types'
 import { Button } from '../../../shared/components/ui'
 import { Badge } from '../../../shared/components/ui'
+import { DashboardSectionHead } from './DashboardSectionHead'
 
 interface TasksAndRequestsProps {
   tasks: Task[]
@@ -15,29 +16,32 @@ export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) =>
 
   return (
     <div className="flex h-full flex-col">
-      <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
-            <ListTodo size={14} className="text-primary dark:text-primary" />
-          </div>
-          <h3 className="text-sm font-black text-main">المهام والطلبات</h3>
-          {urgentCount > 0 && (
-            <span className="rounded-md bg-error-soft px-1.5 py-0.5 text-[10px] font-bold text-error dark:bg-error-soft dark:text-error">
+      <DashboardSectionHead
+        icon={ListTodo}
+        title="المهام والطلبات"
+        afterTitle={
+          urgentCount > 0 ? (
+            <span className="rounded-md bg-error-soft px-1.5 py-0.5 text-[10px] font-bold text-error-strong">
               {urgentCount} عاجلة
             </span>
-          )}
-        </div>
-        <Link to="/tasks">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 rounded-lg"
-            aria-label="عرض المهام"
+          ) : null
+        }
+        action={
+          <Link
+            to="/tasks"
+            className="rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
-            <ChevronLeft size={14} />
-          </Button>
-        </Link>
-      </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9 rounded-xl"
+              aria-label="عرض المهام"
+            >
+              <ChevronLeft size={15} />
+            </Button>
+          </Link>
+        }
+      />
 
       <div className="custom-scrollbar flex-1 space-y-2 overflow-y-auto">
         {tasks.length > 0 ? (
@@ -45,22 +49,22 @@ export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) =>
             <div
               key={task.id}
               className={cn(
-                'flex items-center gap-2.5 rounded-2xl border p-3 transition-colors duration-normal',
+                'flex items-center gap-2.5 rounded-xl border p-3 transition-colors duration-normal',
                 task.priority === 'high'
                   ? 'border-error-soft bg-error-soft'
                   : task.priority === 'medium'
                     ? 'border-warning-soft bg-warning-soft'
-                    : 'border-border bg-surface dark:border-border dark:bg-hover',
+                    : 'border-border bg-surface',
               )}
             >
               <div
                 className={cn(
-                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
+                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
                   task.priority === 'high'
-                    ? 'bg-card text-error dark:bg-hover dark:text-error'
+                    ? 'bg-card text-error-strong'
                     : task.priority === 'medium'
-                      ? 'bg-card text-warning dark:bg-hover dark:text-warning'
-                      : 'bg-primary-soft text-primary dark:bg-primary/10 dark:text-primary',
+                      ? 'bg-card text-warning-strong'
+                      : 'bg-primary-soft text-primary',
                 )}
               >
                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}
@@ -80,10 +84,10 @@ export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) =>
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-10 opacity-50">
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface dark:bg-hover">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
               <ListTodo size={18} className="text-dim" />
             </div>
-            <p className="text-[11px] font-bold text-muted">لا توجد مهام نشطة حالياً</p>
+            <p className="text-xs font-bold text-muted">لا توجد مهام نشطة حالياً</p>
           </div>
         )}
       </div>

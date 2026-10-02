@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
+import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
 import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
@@ -17,6 +18,7 @@ import { SmartNotifications } from '../../features/dashboard/components/SmartNot
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
 import { WeekStrip } from './WeekStrip'
+import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { TeacherDashboardShellProps } from './types'
 import type { Session } from '../../types'
 
@@ -89,47 +91,47 @@ export const TeacherDashboardTablet = ({
         </motion.div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <motion.div {...fadeUp(0.08)}>
+          <SectionCard delay={0.08}>
             <SmartNotifications
               lowBalanceStudents={lowBalanceStudents}
               focusStudents={focusStudents || []}
             />
-          </motion.div>
-          <motion.div {...fadeUp(0.1)}>
+          </SectionCard>
+          <SectionCard delay={0.1}>
             <QuickActions showQuickLinks={true} />
-          </motion.div>
+          </SectionCard>
         </div>
 
-        <motion.div {...fadeUp(0.12)}>
+        <SectionCard delay={0.12}>
           <LiveSessions />
-        </motion.div>
+        </SectionCard>
 
         <motion.div {...fadeUp(0.14)}>
           <WeekStrip counts={weekCounts} />
         </motion.div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <motion.div {...fadeUp(0.16)}>
+          <SectionCard delay={0.16}>
             <TasksAndRequests tasks={tasks} limit={3} />
-          </motion.div>
-          <motion.div {...fadeUp(0.18)}>
+          </SectionCard>
+          <SectionCard delay={0.18}>
             <TeacherAchievements
               stats={stats}
               lowBalanceStudents={lowBalanceStudents}
               isTeacher={true}
             />
-          </motion.div>
+          </SectionCard>
         </div>
 
         {timeline.length > 0 && (
-          <motion.div {...fadeUp(0.2)}>
+          <SectionCard delay={0.2}>
             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
-          </motion.div>
+          </SectionCard>
         )}
 
-        <motion.div {...fadeUp(0.22)}>
+        <SectionCard delay={0.22}>
           <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-        </motion.div>
+        </SectionCard>
 
         {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
           <StudentQuickBrief
@@ -140,10 +142,11 @@ export const TeacherDashboardTablet = ({
                 (s: Session & { studentID?: string }) =>
                   s.studentId === student.id || s.studentID === student.id,
               )
-              const completed = studentSessions.filter((s) => s.status === 'completed').length
-              const total = studentSessions.filter(
-                (s) => s.status === 'completed' || s.status === 'cancelled',
-              ).length
+              // Canonical resolver — raw 'completed' equality misses the Arabic
+              // statuses ('مكتملة', 'تم الإنجاز') and reported 0% attendance.
+              const concluded = studentSessions.filter((s) => sessionOutcome(s.status) !== null)
+              const completed = concluded.filter((s) => sessionOutcome(s.status) === 'done').length
+              const total = concluded.length
               setSelectedStudentForReport({
                 id: student.id,
                 name: student.name,

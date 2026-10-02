@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, Bell, GraduationCap, Loader2, RefreshCw } from 'lucide-react'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
+import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import { MobilePageHeader } from '../../shared/components/mobile/MobilePageHeader'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
@@ -101,20 +102,28 @@ export const TeacherDashboardMobile = ({
 
         <DashboardStats stats={stats} isTeacher={true} />
 
-        <QuickActions showQuickLinks={true} />
+        <SectionCard>
+          <QuickActions showQuickLinks={true} />
+        </SectionCard>
 
-        <SmartNotifications
-          lowBalanceStudents={lowBalanceStudents}
-          focusStudents={focusStudents || []}
-        />
+        <SectionCard>
+          <SmartNotifications
+            lowBalanceStudents={lowBalanceStudents}
+            focusStudents={focusStudents || []}
+          />
+        </SectionCard>
 
-        <TasksAndRequests tasks={tasks} limit={3} />
+        <SectionCard>
+          <TasksAndRequests tasks={tasks} limit={3} />
+        </SectionCard>
 
-        <TeacherAchievements
-          stats={stats}
-          lowBalanceStudents={lowBalanceStudents}
-          isTeacher={true}
-        />
+        <SectionCard>
+          <TeacherAchievements
+            stats={stats}
+            lowBalanceStudents={lowBalanceStudents}
+            isTeacher={true}
+          />
+        </SectionCard>
 
         <WeekStrip counts={weekCounts} />
       </div>
