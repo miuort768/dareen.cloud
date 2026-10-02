@@ -2,6 +2,7 @@ import { TrendingUp, User, Medal, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 import { isSameMonth } from 'date-fns'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { DashboardSectionHead } from './DashboardSectionHead'
 
 /**
@@ -35,9 +36,9 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
     const now = new Date()
 
     sessions.forEach((s) => {
-      const isCompleted = ['completed', 'مكتملة', 'تمت'].includes(
-        String(s.status ?? '').toLowerCase(),
-      )
+      // Canonical resolver. The local list missed 'تم الإنجاز', so sessions stored
+      // with that status were silently excluded from the leaderboard.
+      const isCompleted = sessionOutcome(s.status) === 'done'
 
       if (isCompleted && inCurrentMonth(s.date, now)) {
         const id = String(s.studentId || s.studentName)
@@ -58,9 +59,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
   const totalMonthSessions = useMemo(() => {
     const now = new Date()
     return sessions.filter(
-      (s) =>
-        ['completed', 'مكتملة', 'تمت'].includes(String(s.status ?? '').toLowerCase()) &&
-        inCurrentMonth(s.date, now),
+      (s) => sessionOutcome(s.status) === 'done' && inCurrentMonth(s.date, now),
     ).length
   }, [sessions])
 

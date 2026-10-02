@@ -30,6 +30,7 @@ import {
   normalizePeriod,
 } from '../../attendance/utils/slotUtils'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 
 /** Query keys owned by this hook — used by fetchDashboardData for scoped refresh. */
 const DASHBOARD_QUERY_KEYS = [
@@ -204,9 +205,10 @@ export const useDashboardData = (currentUser: User | null) => {
     const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']
     const currentDayName = dayNames[now.getDay()]
 
-    // 3. Sessions & Performance
-    const completedSessions = filteredSessions.filter((s: Session) =>
-      ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase()),
+    // 3. Sessions & Performance — canonical resolver so every Arabic status
+    // variant ('مكتملة', 'تم الإنجاز', 'تمت') is counted, not just 'completed'.
+    const completedSessions = filteredSessions.filter(
+      (s: Session) => sessionOutcome(s.status) === 'done',
     )
     const monthComplete = completedSessions.filter((s: Session) => isSameMonth(s.date, now))
 
@@ -345,9 +347,7 @@ export const useDashboardData = (currentUser: User | null) => {
     }[] = []
     filteredStudents.forEach((s: Student) => {
       const stuSessions = filteredSessions.filter((ss: Session) => ss.studentId === s.id)
-      const stuCompleted = stuSessions.filter((ss: Session) =>
-        ['completed', 'مكتملة', 'تم الإنجاز'].includes(ss.status?.toLowerCase()),
-      )
+      const stuCompleted = stuSessions.filter((ss: Session) => sessionOutcome(ss.status) === 'done')
       const attendanceRate = stuSessions.length >= 3 ? stuCompleted.length / stuSessions.length : 1
 
       const stuEvals = isTeacher
@@ -423,8 +423,8 @@ export const useDashboardData = (currentUser: User | null) => {
       monthNetProfit: monthNetProfitValue,
       todaySessions: todayScheduledCount,
       completedSessions: completedSessions.length,
-      cancelledSessions: filteredSessions.filter((s: Session) =>
-        ['cancelled', 'ملغاة', 'تم الإلغاء'].includes(s.status?.toLowerCase()),
+      cancelledSessions: filteredSessions.filter(
+        (s: Session) => sessionOutcome(s.status) === 'cancelled',
       ).length,
       attendanceRate:
         filteredSessions.length > 0
@@ -438,9 +438,9 @@ export const useDashboardData = (currentUser: User | null) => {
       monthTotalSessions: filteredSessions.filter(
         (s: Session) =>
           isSameMonth(s.date, now) &&
-          ['scheduled', 'مجدولة', 'completed', 'مكتملة', 'تم الإنجاز'].includes(
-            s.status?.toLowerCase() || '',
-          ),
+          (s.status?.toLowerCase() === 'scheduled' ||
+            s.status?.toLowerCase() === 'مجدولة' ||
+            sessionOutcome(s.status) === 'done'),
       ).length,
 
       pendingInvoices: studentInvoices.filter((inv: StudentInvoice) =>
@@ -460,7 +460,7 @@ export const useDashboardData = (currentUser: User | null) => {
             const sDate = new Date(s.date)
             const weekAgo = new Date()
             weekAgo.setDate(weekAgo.getDate() - 7)
-            return sDate >= weekAgo && s.status === 'completed'
+            return sDate >= weekAgo && sessionOutcome(s.status) === 'done'
           }).length
         : undefined,
       newBadgesRecommended: isTeacher
@@ -544,7 +544,7 @@ export const useDashboardData = (currentUser: User | null) => {
         : undefined,
       evaluationsCompleted: isTeacher
         ? filteredSessions.filter(
-            (s: Session) => s.status === 'completed' && s.topics && s.topics !== '',
+            (s: Session) => sessionOutcome(s.status) === 'done' && s.topics && s.topics !== '',
           ).length
         : undefined,
     }

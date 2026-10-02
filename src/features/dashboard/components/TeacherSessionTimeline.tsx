@@ -1,6 +1,7 @@
 import { Clock, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState, useMemo } from 'react'
+import { sessionOutcome } from '../../../shared/utils/enrollments'
 import { DashboardSectionHead } from './DashboardSectionHead'
 
 interface TimelineSession {
@@ -56,13 +57,12 @@ export const TeacherSessionTimeline = ({
       <div className="relative">
         <div className="no-scrollbar flex snap-x snap-mandatory items-center gap-3 overflow-x-auto scroll-smooth pb-3 pt-1">
           {visibleSessions.map((session) => {
-            const isCompleted = ['completed', 'مكتملة', 'تمت'].includes(
-              session.status?.toLowerCase(),
-            )
-            const isCancelled = ['cancelled', 'ملغاة', 'تم الإلغاء'].includes(
-              session.status?.toLowerCase(),
-            )
-            const isOngoing = !isCompleted && !isCancelled
+            // Canonical resolver. The local lists missed 'تم الإنجاز', so those sessions
+            // rendered as "قادمة" instead of "مكتملة".
+            const outcome = sessionOutcome(session.status)
+            const isCompleted = outcome === 'done'
+            const isCancelled = outcome === 'cancelled'
+            const isOngoing = outcome === null
 
             return (
               <div
