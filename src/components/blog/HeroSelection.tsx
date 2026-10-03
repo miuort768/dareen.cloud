@@ -1,9 +1,11 @@
-import { BookOpen, MessageCircle, Send, CheckCircle, Languages, ArrowLeft } from 'lucide-react'
+import { MessageCircle, Send, CheckCircle, Languages, ArrowLeft } from 'lucide-react'
 import { directTypes, languages } from './LibraryConfig'
 import type { ViewType, GridItem } from './LibraryConfig'
 import { useAcademyName } from '../../context/AppContext'
 import { useSettingsStore } from '../../store/settingsStore'
 import { Image } from '../../shared/components/ui'
+import { SelectionHeroBanner } from './SelectionHeroBanner'
+import type { SelectionStep } from './SelectionHeroBanner'
 
 const GRID_TONES = [
   'bg-primary text-on-primary',
@@ -12,6 +14,33 @@ const GRID_TONES = [
   'bg-warning text-on-warning',
   'bg-error text-on-error',
 ]
+
+const STEP_LABELS: Record<'curriculums' | 'grades' | 'languages', string> = {
+  curriculums: 'المنهج',
+  grades: 'المرحلة',
+  languages: 'اللغة',
+}
+
+/** Trail of already-picked steps plus the one the user is choosing now. */
+function buildSteps(view: ViewType, typeName: string, curriculumName: string): SelectionStep[] {
+  if (view === 'grades') {
+    return [
+      { label: typeName, state: 'done' },
+      { label: curriculumName, state: 'done' },
+      { label: STEP_LABELS.grades, state: 'current' },
+    ]
+  }
+  if (view === 'languages') {
+    return [
+      { label: typeName, state: 'done' },
+      { label: STEP_LABELS.languages, state: 'current' },
+    ]
+  }
+  return [
+    { label: typeName, state: 'done' },
+    { label: STEP_LABELS.curriculums, state: 'current' },
+  ]
+}
 
 interface HeroSelectionProps {
   view: ViewType
@@ -205,54 +234,33 @@ export const MobileHero = ({
   // For other views (curriculums, grades, languages), show selection grid
   return (
     <div className="pb-6">
-      <div className="relative mb-5 overflow-hidden rounded-2xl bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-1">
-        <div
-          className="pointer-events-none absolute -end-16 -top-20 h-52 w-52 rounded-full border border-white/10"
-          aria-hidden="true"
-        />
-
-        <div className="relative p-5">
-          <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-extrabold text-on-primary backdrop-blur-sm">
-            <BookOpen size={11} />
-            {view === 'curriculums'
-              ? currentTypeName
-              : view === 'languages'
-                ? 'تعلم اللغة'
-                : currentCurriculumName}
-          </span>
-          <h2 className="mb-1.5 text-2xl font-black leading-tight text-on-primary">
-            {view === 'curriculums' ? (
-              <>
-                اختر <span className="text-accent">المنهج</span>
-              </>
-            ) : view === 'languages' ? (
-              <>
-                اختر <span className="text-accent">اللغة</span>
-              </>
-            ) : (
-              <>
-                اختر <span className="text-accent">المرحلة</span>
-              </>
-            )}
-          </h2>
-          <p className="mb-4 max-w-sm text-xs font-bold leading-relaxed text-white/80">
-            {view === 'curriculums'
-              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-              : view === 'languages'
-                ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
-          </p>
-          <a
-            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-xs font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
-          >
-            <MessageCircle size={14} />
-            طلب حصة مجانية
-          </a>
-        </div>
-      </div>
+      <SelectionHeroBanner
+        className="mb-4"
+        steps={buildSteps(view, currentTypeName, currentCurriculumName)}
+        title={
+          view === 'curriculums' ? (
+            <>
+              اختر <span className="text-accent">المنهج</span>
+            </>
+          ) : view === 'languages' ? (
+            <>
+              اختر <span className="text-accent">اللغة</span>
+            </>
+          ) : (
+            <>
+              اختر <span className="text-accent">المرحلة</span>
+            </>
+          )
+        }
+        description={
+          view === 'curriculums'
+            ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+            : view === 'languages'
+              ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+              : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`
+        }
+        whatsappNumber={whatsappNumber}
+      />
 
       <div className="mb-4 grid grid-cols-2 gap-2.5">
         {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
@@ -539,87 +547,35 @@ export const DesktopHero = ({
   return (
     <div className="mx-auto w-full">
       {/* Banner */}
-      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-1 lg:rounded-none">
-        <div
-          className="pointer-events-none absolute -end-24 -top-28 h-72 w-72 rounded-full border border-white/10"
-          aria-hidden="true"
-        />
-
-        <div className="relative grid gap-6 px-8 py-7 lg:grid-cols-[1fr_280px] lg:items-center lg:gap-10 lg:px-10 lg:py-10">
-          {/* Copy */}
-          <div>
-            <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
-              <BookOpen size={12} />
-              {view === 'curriculums'
-                ? `تحميل ${currentTypeName}`
-                : view === 'languages'
-                  ? 'تعلم اللغة'
-                  : currentCurriculumName}
-            </span>
-
-            <h1 className="mb-2 font-heading text-3xl font-black leading-tight text-on-primary md:text-4xl lg:text-5xl">
-              {view === 'curriculums' ? (
-                <>
-                  اختر <span className="text-accent">المنهج</span>
-                </>
-              ) : view === 'languages' ? (
-                <>
-                  اختر <span className="text-accent">اللغة</span>
-                </>
-              ) : (
-                <>
-                  اختر <span className="text-accent">المرحلة</span>
-                </>
-              )}
-            </h1>
-            <p className="max-w-xl text-sm font-bold leading-relaxed text-white/80 lg:text-base">
-              {view === 'curriculums'
-                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                : view === 'languages'
-                  ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-            </p>
-
-            {/* Mobile CTA: full-width inline */}
-            <a
-              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-xs font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97] lg:hidden"
-            >
-              <MessageCircle size={14} />
-              طلب حصة مجانية
-            </a>
-          </div>
-
-          {/* Desktop CTA: dedicated side unit */}
-          <div className="hidden flex-col gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-5 backdrop-blur-sm lg:flex">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft">
-                <MessageCircle size={19} className="text-accent" />
-              </span>
-              <div>
-                <span className="block text-sm font-black text-white">حصة تجريبية مجانية</span>
-                <span className="block text-[11px] font-bold text-white/70">
-                  فردية عبر الإنترنت — احجز موعدك الآن
-                </span>
-              </div>
-            </div>
-            <a
-              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
-            >
-              <MessageCircle size={15} />
-              طلب حصة مجانية
-            </a>
-          </div>
-        </div>
-      </section>
+      <SelectionHeroBanner
+        steps={buildSteps(view, currentTypeName, currentCurriculumName)}
+        title={
+          view === 'curriculums' ? (
+            <>
+              اختر <span className="text-accent">المنهج</span>
+            </>
+          ) : view === 'languages' ? (
+            <>
+              اختر <span className="text-accent">اللغة</span>
+            </>
+          ) : (
+            <>
+              اختر <span className="text-accent">المرحلة</span>
+            </>
+          )
+        }
+        description={
+          view === 'curriculums'
+            ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+            : view === 'languages'
+              ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+              : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`
+        }
+        whatsappNumber={whatsappNumber}
+      />
 
       {/* Selection grid */}
-      <div className="mt-7 grid grid-cols-2 gap-3.5 lg:grid-cols-3">
+      <div className="mt-6 grid grid-cols-2 gap-3.5 lg:grid-cols-3">
         {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
           (item: GridItem, i: number) => (
             <button
