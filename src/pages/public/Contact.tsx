@@ -89,7 +89,7 @@ export const Contact = () => {
         title="اتصل بنا"
         description="تواصل مع فريق دارين السابعة للاستفسار عن دروس خصوصية أونلاين في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، تأسيس أطفال، واشتراكات الطلاب في السعودية والكويت والإمارات وقطر وعمان والبحرين. احجز حصة تجريبية مجانية عبر واتساب."
         url="https://dareen.cloud/contact"
-        image="/dareen_logo_new.jpg"
+        image="/dareen_logo_new.v2.jpg"
         breadcrumbs={[
           { name: 'الرئيسية', item: '/' },
           { name: 'اتصل بنا', item: '/contact' },
@@ -149,10 +149,10 @@ export const Contact = () => {
           {/* ── Image Banner ── */}
           <div className="mb-6">
             <picture>
-              <source srcSet="/dareen8.webp" type="image/webp" />
-              <source srcSet="/dareen8.avif" type="image/avif" />
+              <source srcSet="/dareen8.v2.webp" type="image/webp" />
+              <source srcSet="/dareen8.v2.avif" type="image/avif" />
               <img
-                src="/dareen8.png"
+                src="/dareen8.v2.png"
                 alt="دارين السابعة"
                 width="1983"
                 height="793"

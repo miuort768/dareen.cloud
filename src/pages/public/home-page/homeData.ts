@@ -50,7 +50,7 @@ export const heroSlides = [
     title: 'منصة دارين',
     subtitle: 'دروس خصوصية فردية اونلاين',
     desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.',
-    image: '/hero-child.png',
+    image: '/hero-child.v2.png',
     alt: 'طفل يدرس على منصة دارين السابعة للتعليم عن بعد في الكويت',
   },
   {
@@ -64,7 +64,7 @@ export const heroSlides = [
     title: 'مستقبل مشرق',
     subtitle: 'مع نخبة المعلمين',
     desc: 'كوادر تعليمية متميزة لضمان أفضل النتائج في الرياضيات والعلوم واللغات.',
-    image: '/dareen_books_portal_v3.png',
+    image: '/dareen_books_portal_v3.v2.png',
     alt: 'مكتبة دارين السابعة التعليمية - كتب ومواد دراسية للمناهج الخليجية',
   },
 ]

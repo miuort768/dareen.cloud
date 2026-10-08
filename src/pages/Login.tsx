@@ -69,7 +69,7 @@ export const Login = () => {
         title="تسجيل الدخول"
         description="تسجيل دخول الطلاب والمعلمين وأولياء الأمور إلى منصة دارين السابعة"
         url="https://dareen.cloud/login"
-        image="/dareen_logo_new.jpg"
+        image="/dareen_logo_new.v2.jpg"
         breadcrumbs={[
           { name: 'الرئيسية', item: '/' },
           { name: 'تسجيل الدخول', item: '/login' },
@@ -83,7 +83,15 @@ export const Login = () => {
 
       {/* Mobile: Full Background Image */}
       <div className="fixed inset-0 lg:hidden">
-        <img src="/loginphone.png" alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <picture>
+          <source srcSet="/loginphone.v2.avif" type="image/avif" />
+          <source srcSet="/loginphone.v2.webp" type="image/webp" />
+          <img
+            src="/loginphone.v2.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
       </div>
 
@@ -94,7 +102,15 @@ export const Login = () => {
 
       {/* Desktop: Full Background Image */}
       <div className="fixed inset-0 hidden lg:block">
-        <img src="/login1.png" alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <picture>
+          <source srcSet="/login1.v2.avif" type="image/avif" />
+          <source srcSet="/login1.v2.webp" type="image/webp" />
+          <img
+            src="/login1.v2.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-white/80 to-white/20" />
       </div>
 

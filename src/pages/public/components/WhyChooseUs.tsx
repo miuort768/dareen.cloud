@@ -62,7 +62,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               تختارنا؟
             </span>
           </h2>
-          <p className="mx-auto max-w-4xl text-sm font-medium leading-relaxed text-muted dark:text-white/80 md:text-base lg:text-xs">
+          <p className="mx-auto max-w-4xl text-xs font-medium leading-relaxed text-muted dark:text-white/80 md:text-base lg:text-xs">
             <span className="hidden md:inline">
               في دارين السابعة، لا نكتفي بالتعليم فقط — نصنع تجربة متكاملة تجمع بين الجودة والدعم
               والتقدير.

@@ -160,7 +160,7 @@ export const BlogPost = () => {
             '@type': 'EducationalOrganization',
             name: 'دارين السابعة',
             url: 'https://dareen.cloud',
-            logo: { '@type': 'ImageObject', url: 'https://dareen.cloud/logo.png' },
+            logo: { '@type': 'ImageObject', url: 'https://dareen.cloud/logo.v2.png' },
           },
           mainEntityOfPage: {
             '@type': 'WebPage',

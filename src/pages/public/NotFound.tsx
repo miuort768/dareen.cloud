@@ -48,10 +48,10 @@ export const NotFound = () => {
 
         <div className="container relative z-10 mx-auto max-w-lg px-4 text-center md:max-w-7xl">
           <picture>
-            <source srcSet="/404.webp" type="image/webp" />
-            <source srcSet="/404.avif" type="image/avif" />
+            <source srcSet="/404.v2.webp" type="image/webp" />
+            <source srcSet="/404.v2.avif" type="image/avif" />
             <img
-              src="/404.png"
+              src="/404.v2.png"
               alt="صفحة غير موجودة"
               loading="lazy"
               className="mx-auto mb-0 block max-h-64 w-80 object-contain md:mb-4 md:max-h-[70vh] md:w-[1200px]"

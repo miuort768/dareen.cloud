@@ -1,0 +1,31 @@
+{
+  "redirects": [
+    { "source": "/404.png", "destination": "/404.v2.png", "permanent": true },
+    { "source": "/404.webp", "destination": "/404.v2.webp", "permanent": true },
+    { "source": "/404.avif", "destination": "/404.v2.avif", "permanent": true },
+    { "source": "/login1.png", "destination": "/login1.v2.png", "permanent": true },
+    { "source": "/login1.webp", "destination": "/login1.v2.webp", "permanent": true },
+    { "source": "/login1.avif", "destination": "/login1.v2.avif", "permanent": true },
+    { "source": "/loginphone.png", "destination": "/loginphone.v2.png", "permanent": true },
+    { "source": "/loginphone.webp", "destination": "/loginphone.v2.webp", "permanent": true },
+    { "source": "/loginphone.avif", "destination": "/loginphone.v2.avif", "permanent": true },
+    { "source": "/dareen8.png", "destination": "/dareen8.v2.png", "permanent": true },
+    { "source": "/dareen8.webp", "destination": "/dareen8.v2.webp", "permanent": true },
+    { "source": "/dareen8.avif", "destination": "/dareen8.v2.avif", "permanent": true },
+    { "source": "/hero-child.png", "destination": "/hero-child.v2.png", "permanent": true },
+    { "source": "/hero-child.webp", "destination": "/hero-child.v2.webp", "permanent": true },
+    { "source": "/hero-child.avif", "destination": "/hero-child.v2.avif", "permanent": true },
+    { "source": "/dareen_books_portal_v3.png", "destination": "/dareen_books_portal_v3.v2.png", "permanent": true },
+    { "source": "/dareen_books_portal_v3.webp", "destination": "/dareen_books_portal_v3.v2.webp", "permanent": true },
+    { "source": "/dareen_books_portal_v3.avif", "destination": "/dareen_books_portal_v3.v2.avif", "permanent": true },
+    { "source": "/chat-avatar.jpg", "destination": "/chat-avatar.v2.jpg", "permanent": true },
+    { "source": "/chat-avatar.webp", "destination": "/chat-avatar.v2.webp", "permanent": true },
+    { "source": "/chat-avatar.avif", "destination": "/chat-avatar.v2.avif", "permanent": true },
+    { "source": "/dareen_logo_new.jpg", "destination": "/dareen_logo_new.v2.jpg", "permanent": true },
+    { "source": "/dareen_logo_new.webp", "destination": "/dareen_logo_new.v2.webp", "permanent": true },
+    { "source": "/dareen_logo_new.avif", "destination": "/dareen_logo_new.v2.avif", "permanent": true },
+    { "source": "/logo.png", "destination": "/logo.v2.png", "permanent": true },
+    { "source": "/logo.webp", "destination": "/logo.v2.webp", "permanent": true },
+    { "source": "/logo.avif", "destination": "/logo.v2.avif", "permanent": true }
+  ]
+}

@@ -30,7 +30,7 @@ export const HeroSection = ({
                   منصة تعليم عن بعد رائدة في الكويت والخليج
                 </span>
               </div>
-              <h1 className="relative mb-0 font-heading text-3xl font-black leading-none text-main dark:text-main sm:text-4xl lg:text-6xl">
+              <h1 className="relative mb-0 font-heading text-3xl font-black leading-none text-main dark:text-main lg:text-5xl">
                 <span className="sr-only">
                   دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم 1 للدروس الخصوصية وتحفيظ القرآن
                   في الكويت، الكويت، الإمارات، قطر وسلطنة عمان ومملكة البحرين - دروس خصوصية في
@@ -98,10 +98,10 @@ export const HeroSection = ({
 
                 <div className="absolute inset-0 animate-pulse rounded-[3rem] bg-gradient-to-br from-primary/20 to-accent-soft blur-2xl dark:from-primary/20 dark:to-transparent"></div>
                 <picture>
-                  <source srcSet="/hero-child.webp" type="image/webp" />
-                  <source srcSet="/hero-child.avif" type="image/avif" />
+                  <source srcSet="/hero-child.v2.webp" type="image/webp" />
+                  <source srcSet="/hero-child.v2.avif" type="image/avif" />
                   <img
-                    src="/hero-child.png"
+                    src="/hero-child.v2.png"
                     alt="طفل يدرس على منصة دارين السابعة"
                     width="490"
                     height="490"

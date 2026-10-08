@@ -104,7 +104,7 @@ export const Home = () => {
         title="منصة تعليم عن بعد في الكويت والخليج"
         description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
         url="https://dareen.cloud/"
-        image="/hero-child.png"
+        image="/hero-child.v2.png"
         breadcrumbs={[{ name: 'الرئيسية', item: '/' }]}
       />
       <script
@@ -171,7 +171,7 @@ export const Home = () => {
                   <div className="relative w-[90px]">
                     {i === 0 ? (
                       <picture>
-                        <source srcSet="/hero-child.webp" type="image/webp" />
+                        <source srcSet="/hero-child.v2.webp" type="image/webp" />
                         <img
                           src={slide.image}
                           alt={slide.alt}
