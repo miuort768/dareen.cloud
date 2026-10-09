@@ -5,9 +5,12 @@ import {
   gradesMap,
   subjectsMap,
   subjectNameMap,
+  subjectTones,
   classroomsMap,
   directTypes,
 } from './LibraryConfig'
+
+const VALID_TONES = ['primary', 'success', 'info', 'warning', 'error', 'accent']
 
 describe('LibraryConfig', () => {
   it('types has correct entries', () => {
@@ -61,5 +64,14 @@ describe('LibraryConfig', () => {
   it('basic and preparatory alias middle', () => {
     expect(subjectsMap.basic).toBe(subjectsMap.middle)
     expect(subjectsMap.preparatory).toBe(subjectsMap.middle)
+  })
+
+  it('every subject has a valid color tone', () => {
+    const ids = new Set<string>()
+    Object.values(subjectsMap).forEach((list) => list.forEach((s) => ids.add(s.id)))
+    ids.forEach((id) => {
+      expect(subjectTones[id], `missing tone for ${id}`).toBeDefined()
+      expect(VALID_TONES).toContain(subjectTones[id])
+    })
   })
 })

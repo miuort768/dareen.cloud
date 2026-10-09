@@ -418,6 +418,7 @@ export const Blog = () => {
                 currentSubjects={currentSubjects}
                 selectedGrade={selectedGrade}
                 termLabel={termLabel}
+                currentTypeName={currentTypeName}
                 currentCurriculumName={currentCurriculumName}
                 currentLevelName={currentLevelName}
                 filteredCount={filteredPosts.length}
@@ -511,6 +512,7 @@ export const Blog = () => {
                 currentSubjects={currentSubjects}
                 selectedGrade={selectedGrade}
                 termLabel={termLabel}
+                currentTypeName={currentTypeName}
                 currentCurriculumName={currentCurriculumName}
                 currentLevelName={currentLevelName}
                 filteredCount={filteredPosts.length}

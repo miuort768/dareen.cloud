@@ -5,7 +5,7 @@ import { useAcademyName } from '../../context/AppContext'
 import { useSettingsStore } from '../../store/settingsStore'
 import { Image } from '../../shared/components/ui'
 import { SelectionHeroBanner } from './SelectionHeroBanner'
-import type { SelectionStep } from './SelectionHeroBanner'
+import { buildSteps } from './selectionSteps'
 
 const GRID_TONES = [
   'bg-primary text-on-primary',
@@ -14,33 +14,6 @@ const GRID_TONES = [
   'bg-warning text-on-warning',
   'bg-error text-on-error',
 ]
-
-const STEP_LABELS: Record<'curriculums' | 'grades' | 'languages', string> = {
-  curriculums: 'المنهج',
-  grades: 'المرحلة',
-  languages: 'اللغة',
-}
-
-/** Trail of already-picked steps plus the one the user is choosing now. */
-function buildSteps(view: ViewType, typeName: string, curriculumName: string): SelectionStep[] {
-  if (view === 'grades') {
-    return [
-      { label: typeName, state: 'done' },
-      { label: curriculumName, state: 'done' },
-      { label: STEP_LABELS.grades, state: 'current' },
-    ]
-  }
-  if (view === 'languages') {
-    return [
-      { label: typeName, state: 'done' },
-      { label: STEP_LABELS.languages, state: 'current' },
-    ]
-  }
-  return [
-    { label: typeName, state: 'done' },
-    { label: STEP_LABELS.curriculums, state: 'current' },
-  ]
-}
 
 interface HeroSelectionProps {
   view: ViewType
@@ -236,7 +209,14 @@ export const MobileHero = ({
     <div className="pb-6">
       <SelectionHeroBanner
         className="mb-4"
-        steps={buildSteps(view, currentTypeName, currentCurriculumName)}
+        steps={buildSteps({
+          view,
+          typeName: currentTypeName,
+          curriculumName: currentCurriculumName,
+          levelName: '',
+          gradeLabel: '',
+          termLabel: '',
+        })}
         title={
           view === 'curriculums' ? (
             <>
@@ -548,7 +528,14 @@ export const DesktopHero = ({
     <div className="mx-auto w-full">
       {/* Banner */}
       <SelectionHeroBanner
-        steps={buildSteps(view, currentTypeName, currentCurriculumName)}
+        steps={buildSteps({
+          view,
+          typeName: currentTypeName,
+          curriculumName: currentCurriculumName,
+          levelName: '',
+          gradeLabel: '',
+          termLabel: '',
+        })}
         title={
           view === 'curriculums' ? (
             <>

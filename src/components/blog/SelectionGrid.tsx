@@ -1,6 +1,14 @@
 import { ArrowLeft } from 'lucide-react'
-import { gradeNames, subjectIcons } from './LibraryConfig'
-import type { ViewType } from './LibraryConfig'
+import {
+  gradeNames,
+  subjectIcons,
+  subjectTones,
+  type SubjectTone,
+  type ViewType,
+} from './LibraryConfig'
+import { SelectionHeroBanner } from './SelectionHeroBanner'
+import { buildSteps } from './selectionSteps'
+import { useSettingsStore } from '../../store/settingsStore'
 
 interface SelectionGridProps {
   view: ViewType
@@ -8,6 +16,7 @@ interface SelectionGridProps {
   currentSubjects: { id: string; name: string }[]
   selectedGrade: string
   termLabel: string
+  currentTypeName: string
   currentCurriculumName: string
   currentLevelName: string
   filteredCount: number
@@ -33,12 +42,22 @@ const ARABIC_DIGITS: Record<string, string> = {
   '12': '١٢',
 }
 
+const SUBJECT_TONE_FILL: Record<SubjectTone, string> = {
+  primary: 'bg-primary text-on-primary hover:bg-primary-hover',
+  success: 'bg-success text-on-success hover:bg-success-hover',
+  info: 'bg-info text-on-info hover:bg-info-hover',
+  warning: 'bg-warning text-on-warning hover:bg-warning-hover',
+  error: 'bg-error text-on-error hover:bg-error-hover',
+  accent: 'bg-accent text-on-accent hover:bg-accent-hover',
+}
+
 export const SelectionGrid = ({
   view,
   currentClassrooms,
   currentSubjects,
   selectedGrade,
   termLabel,
+  currentTypeName,
   currentCurriculumName,
   currentLevelName,
   filteredCount,
@@ -48,28 +67,41 @@ export const SelectionGrid = ({
   onSelectSubject,
   isMobile,
 }: SelectionGridProps) => {
-  const headerLabel =
-    view === 'classrooms'
-      ? `${currentCurriculumName} — ${currentLevelName}`
-      : view === 'terms'
-        ? `الصف ${gradeNames[selectedGrade]}`
-        : `المواد — ${termLabel}`
+  const adminPhone = useSettingsStore((s) => s.adminPhone)
+  const whatsappNumber = adminPhone.replace(/\D/g, '')
 
-  const headerTitle = view === 'classrooms' ? 'الصف الدراسي' : view === 'terms' ? 'الترم' : 'المادة'
+  const gradeLabel = `الصف ${gradeNames[selectedGrade] || selectedGrade}`
 
-  const headerSubtitle =
-    view === 'classrooms'
-      ? 'اختر الصف للوصول للمحتوى'
-      : view === 'terms'
-        ? 'اختر الترم الدراسي'
-        : `${filteredCount} نتيجة متاحة`
+  const steps = buildSteps({
+    view,
+    typeName: currentTypeName,
+    curriculumName: currentCurriculumName,
+    levelName: currentLevelName,
+    gradeLabel,
+    termLabel,
+  })
 
-  const headerTone =
+  const heroTitle =
+    view === 'classrooms' ? (
+      <>
+        اختر <span className="text-accent">الصف الدراسي</span>
+      </>
+    ) : view === 'terms' ? (
+      <>
+        اختر <span className="text-accent">الترم</span>
+      </>
+    ) : (
+      <>
+        اختر <span className="text-accent">المادة</span>
+      </>
+    )
+
+  const heroDescription =
     view === 'classrooms'
-      ? 'bg-primary-soft text-primary'
+      ? `جميع ملفات ${currentCurriculumName} — ${currentLevelName} مرتبة حسب الصف`
       : view === 'terms'
-        ? 'bg-success-soft text-success'
-        : 'bg-info-soft text-info'
+        ? `اختر الترم للوصول إلى مواد ${gradeLabel}`
+        : `اختر المادة لعرض ${filteredCount} من الملفات المتاحة`
 
   const isClassrooms = view === 'classrooms'
   const isTerms = view === 'terms'
@@ -77,20 +109,14 @@ export const SelectionGrid = ({
   if (isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
     return (
       <div className="pb-6">
-        {/* Header Card */}
-        <div className="mb-5 mt-2 rounded-[1.5rem] border border-border bg-card p-5 shadow-elevation-1">
-          <div
-            className={`mb-3 inline-flex items-center gap-2 rounded-xl px-3 py-1.5 ${headerTone}`}
-          >
-            <span className="text-[11px] font-extrabold">{headerLabel}</span>
-          </div>
-          <h2 className="text-base font-black text-main">
-            اختر <span className="text-primary">{headerTitle}</span>
-          </h2>
-          <p className="mt-1 text-[11px] font-medium text-muted">{headerSubtitle}</p>
-        </div>
+        <SelectionHeroBanner
+          className="mb-5 mt-2"
+          steps={steps}
+          title={heroTitle}
+          description={heroDescription}
+          whatsappNumber={whatsappNumber}
+        />
 
-        {/* Grid */}
         <div className="grid grid-cols-2 gap-2.5">
           {isClassrooms &&
             currentClassrooms.map((cls) => (
@@ -119,7 +145,7 @@ export const SelectionGrid = ({
                   type="button"
                   key={t.id}
                   onClick={() => onSelectTerm(t.id)}
-                  className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl bg-success p-4 text-on-success shadow-elevation-1 outline-none transition-all duration-200 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                  className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl bg-success p-4 text-on-success shadow-elevation-1 outline-none transition-all duration-200 hover:bg-success-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 font-dash text-lg font-black">
                     {ARABIC_DIGITS[t.id]}
@@ -133,6 +159,7 @@ export const SelectionGrid = ({
           {view === 'subjects' &&
             currentSubjects.map((subj) => {
               const Icon = subjectIcons[subj.id]
+              const tone = subjectTones[subj.id] ?? 'info'
               return (
                 <button
                   type="button"
@@ -141,7 +168,7 @@ export const SelectionGrid = ({
                     onSelectSubject(subj.id)
                     window.scrollTo(0, 0)
                   }}
-                  className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl bg-info p-4 text-on-info shadow-elevation-1 outline-none transition-all duration-200 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                  className={`flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl p-4 shadow-elevation-1 outline-none transition-all duration-200 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${SUBJECT_TONE_FILL[tone]}`}
                 >
                   {Icon && (
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
@@ -154,7 +181,6 @@ export const SelectionGrid = ({
             })}
         </div>
 
-        {/* Back */}
         <div className="mt-4 flex justify-center">
           <button
             type="button"
@@ -171,96 +197,89 @@ export const SelectionGrid = ({
 
   if (!isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
     return (
-      <>
-        {/* Header */}
-        <div className="mx-auto mb-6 max-w-3xl text-center">
-          <div className={`mb-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 ${headerTone}`}>
-            <span className="text-xs font-extrabold">{headerLabel}</span>
-          </div>
-          <h2 className="mb-3 font-heading text-2xl font-black text-main">
-            اختر <span className="text-primary">{headerTitle}</span>
-          </h2>
-          <p className="text-sm font-medium text-muted">{headerSubtitle}</p>
-        </div>
+      <div className="container relative z-10 mx-auto max-w-[1400px] px-6 pb-16 lg:px-10">
+        <SelectionHeroBanner
+          steps={steps}
+          title={heroTitle}
+          description={heroDescription}
+          whatsappNumber={whatsappNumber}
+        />
 
-        {/* Grid */}
-        <div className="mx-auto w-full px-6 pb-16 lg:px-10">
-          <div className="mb-6 flex flex-wrap justify-center gap-4">
-            {isClassrooms &&
-              currentClassrooms.map((cls) => (
+        <div className="mb-6 mt-8 flex flex-wrap justify-center gap-4">
+          {isClassrooms &&
+            currentClassrooms.map((cls) => (
+              <button
+                type="button"
+                key={cls}
+                onClick={() => onSelectGrade(cls)}
+                className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-primary px-3 py-6 text-on-primary shadow-elevation-1 outline-none transition-all duration-200 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-black">
+                  {ARABIC_DIGITS[cls] || cls}
+                </div>
+                <span className="text-center text-sm font-extrabold">
+                  الصف {gradeNames[cls] || cls}
+                </span>
+              </button>
+            ))}
+
+          {isTerms && (
+            <>
+              {[
+                { id: '1', label: 'ترم أول' },
+                { id: '2', label: 'ترم ثاني' },
+              ].map((t) => (
                 <button
                   type="button"
-                  key={cls}
-                  onClick={() => onSelectGrade(cls)}
-                  className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-primary px-3 py-6 text-on-primary shadow-elevation-1 outline-none transition-all duration-200 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                  key={t.id}
+                  onClick={() => onSelectTerm(t.id)}
+                  className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-success px-3 py-6 text-on-success shadow-elevation-1 outline-none transition-all duration-200 hover:bg-success-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-black">
-                    {ARABIC_DIGITS[cls] || cls}
+                    {ARABIC_DIGITS[t.id]}
                   </div>
-                  <span className="text-center text-sm font-extrabold">
-                    الصف {gradeNames[cls] || cls}
-                  </span>
+                  <span className="text-sm font-extrabold">{t.label}</span>
                 </button>
               ))}
+            </>
+          )}
 
-            {isTerms && (
-              <>
-                {[
-                  { id: '1', label: 'ترم أول' },
-                  { id: '2', label: 'ترم ثاني' },
-                ].map((t) => (
-                  <button
-                    type="button"
-                    key={t.id}
-                    onClick={() => onSelectTerm(t.id)}
-                    className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-success px-3 py-6 text-on-success shadow-elevation-1 outline-none transition-all duration-200 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-black">
-                      {ARABIC_DIGITS[t.id]}
+          {view === 'subjects' &&
+            currentSubjects.map((subj) => {
+              const Icon = subjectIcons[subj.id]
+              const tone = subjectTones[subj.id] ?? 'info'
+              return (
+                <button
+                  type="button"
+                  key={subj.id}
+                  onClick={() => {
+                    onSelectSubject(subj.id)
+                    window.scrollTo(0, 0)
+                  }}
+                  className={`flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl px-3 py-6 shadow-elevation-1 outline-none transition-all duration-200 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${SUBJECT_TONE_FILL[tone]}`}
+                >
+                  {Icon && (
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
+                      <Icon size={22} />
                     </div>
-                    <span className="text-sm font-extrabold">{t.label}</span>
-                  </button>
-                ))}
-              </>
-            )}
-
-            {view === 'subjects' &&
-              currentSubjects.map((subj) => {
-                const Icon = subjectIcons[subj.id]
-                return (
-                  <button
-                    type="button"
-                    key={subj.id}
-                    onClick={() => {
-                      onSelectSubject(subj.id)
-                      window.scrollTo(0, 0)
-                    }}
-                    className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-info px-3 py-6 text-on-info shadow-elevation-1 outline-none transition-all duration-200 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
-                  >
-                    {Icon && (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
-                        <Icon size={22} />
-                      </div>
-                    )}
-                    <span className="text-center text-sm font-extrabold">{subj.name}</span>
-                  </button>
-                )
-              })}
-          </div>
-
-          {/* Back */}
-          <div className="flex justify-center pb-6">
-            <button
-              type="button"
-              onClick={goBack}
-              className="inline-flex min-h-11 w-full max-w-[32rem] cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
-            >
-              <ArrowLeft size={16} />
-              <span>العودة</span>
-            </button>
-          </div>
+                  )}
+                  <span className="text-center text-sm font-extrabold">{subj.name}</span>
+                </button>
+              )
+            })}
         </div>
-      </>
+
+        <div className="flex justify-center pb-6">
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex min-h-11 w-full max-w-[32rem] cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+          >
+            <ArrowLeft size={16} />
+            <span>العودة</span>
+          </button>
+        </div>
+      </div>
     )
   }
 

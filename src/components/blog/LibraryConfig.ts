@@ -173,6 +173,28 @@ export const classroomsMap: Record<string, Record<string, string[]>> = {
   },
 }
 
+export type SubjectTone = 'primary' | 'success' | 'info' | 'warning' | 'error' | 'accent'
+
+/**
+ * Per-subject color tone (semantic token family). Assigned so that no two
+ * subjects that sit next to each other in a level share the same tone.
+ */
+export const subjectTones: Record<string, SubjectTone> = {
+  islamic: 'success',
+  arabic: 'primary',
+  math: 'info',
+  science: 'warning',
+  social: 'error',
+  physics: 'warning',
+  chemistry: 'error',
+  biology: 'success',
+  english: 'accent',
+  history: 'warning',
+  geography: 'success',
+  computer: 'primary',
+  stats: 'info',
+}
+
 export const subjectIcons: Record<string, React.ElementType> = {
   islamic: Moon,
   arabic: PenLine,
