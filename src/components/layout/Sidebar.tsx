@@ -302,7 +302,7 @@ export const Sidebar = memo(
             >
               <div className={cn('shrink-0', collapsed ? 'h-8 w-8' : 'h-7 w-7')}>
                 <Image
-                  src="/dareen_logo_new.webp"
+                  src="/dareen_logo_new.v2.webp"
                   alt="الشعار"
                   className="h-full w-full"
                   imgClassName="object-contain"

@@ -104,7 +104,7 @@ export const MobileQuickAccess = ({
         {/* Header */}
         <div className="flex shrink-0 items-center gap-2.5 px-4 pb-2 pt-1.5">
           <Image
-            src="/dareen_logo_new.webp"
+            src="/dareen_logo_new.v2.webp"
             alt=""
             className="h-11 w-11 rounded-2xl"
             imgClassName="object-contain"

@@ -149,7 +149,7 @@ export const Header = memo(() => {
             className="shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <Image
-              src="/dareen_logo_new.webp"
+              src="/dareen_logo_new.v2.webp"
               alt="دارين السابعة"
               className="h-9 w-9 overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-white/5 lg:h-10 lg:w-10"
               imgClassName="object-contain scale-[1.28]"

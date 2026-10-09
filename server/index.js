@@ -22,6 +22,7 @@ const { prisma } = require('./utils/prisma');
 const logger = require('./utils/logger');
 
 const { healthRouter } = require('./routes/health');
+const { buildLegacyImageAliases } = require('./config/legacyImages');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -154,6 +155,17 @@ app.use((err, req, res, next) => {
     });
 });
 
+// Legacy public-image URLs → their compressed `.v2` replacements. Shared with
+// `vercel.json`: the Vercel frontend deploy never runs this server, so it needs the same
+// map in its own config. See server/config/legacyImages.js for why the old names live on.
+const LEGACY_IMAGE_ALIASES = buildLegacyImageAliases();
+app.use((req, res, next) => {
+    const target = LEGACY_IMAGE_ALIASES.get(req.path);
+    if (!target) return next();
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.redirect(301, target);
+});
+
 app.use(express.static(path.join(__dirname, '../dist'), {
     maxAge: '1y',
     immutable: true,
@@ -237,14 +249,14 @@ const BOT_UA = /googlebot|bingbot|yandexbot|facebookexternalhit|facebot|twitterb
 
 // Per-route OG data (static routes that get shared)
 const OG_MAP = {
-    '/':                  { title: 'دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج', desc: 'دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية.', img: '/dareen_logo_new.jpg' },
-    '/courses':           { title: 'دوراتنا التعليمية | دارين السابعة', desc: 'استعرض جميع المواد والدورات المتاحة في منصة دارين السابعة للتعليم عن بعد.', img: '/dareen_logo_new.jpg' },
-    '/about':             { title: 'من نحن | دارين السابعة', desc: 'تعرّف على منصة دارين السابعة للتعليم والتدريب عن بعد في الكويت والخليج.', img: '/dareen_logo_new.jpg' },
-    '/contact':           { title: 'تواصل معنا | دارين السابعة', desc: 'تواصل مع فريق دارين السابعة لمزيد من المعلومات.', img: '/dareen_logo_new.jpg' },
-    '/jobs':              { title: 'وظائف | دارين السابعة', desc: 'انضم إلى فريق دارين السابعة — فرص عمل للمعلمين والمحترفين.', img: '/dareen_logo_new.jpg' },
-    '/books':             { title: 'المدونة والموارد | دارين السابعة', desc: 'مقالات تعليمية، نصائح، وموارد مفيدة للطلاب وأولياء الأمور.', img: '/dareen_logo_new.jpg' },
-    '/privacy-policy':    { title: 'سياسة الخصوصية | دارين السابعة', desc: 'اقرأ سياسة الخصوصية الخاصة بمنصة دارين السابعة.', img: '/dareen_logo_new.jpg' },
-    '/terms-of-service':  { title: 'شروط الاستخدام | دارين السابعة', desc: 'اطلع على شروط وأحكام استخدام منصة دارين السابعة.', img: '/dareen_logo_new.jpg' },
+    '/':                  { title: 'دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج', desc: 'دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية.', img: '/dareen_logo_new.v2.jpg' },
+    '/courses':           { title: 'دوراتنا التعليمية | دارين السابعة', desc: 'استعرض جميع المواد والدورات المتاحة في منصة دارين السابعة للتعليم عن بعد.', img: '/dareen_logo_new.v2.jpg' },
+    '/about':             { title: 'من نحن | دارين السابعة', desc: 'تعرّف على منصة دارين السابعة للتعليم والتدريب عن بعد في الكويت والخليج.', img: '/dareen_logo_new.v2.jpg' },
+    '/contact':           { title: 'تواصل معنا | دارين السابعة', desc: 'تواصل مع فريق دارين السابعة لمزيد من المعلومات.', img: '/dareen_logo_new.v2.jpg' },
+    '/jobs':              { title: 'وظائف | دارين السابعة', desc: 'انضم إلى فريق دارين السابعة — فرص عمل للمعلمين والمحترفين.', img: '/dareen_logo_new.v2.jpg' },
+    '/books':             { title: 'المدونة والموارد | دارين السابعة', desc: 'مقالات تعليمية، نصائح، وموارد مفيدة للطلاب وأولياء الأمور.', img: '/dareen_logo_new.v2.jpg' },
+    '/privacy-policy':    { title: 'سياسة الخصوصية | دارين السابعة', desc: 'اقرأ سياسة الخصوصية الخاصة بمنصة دارين السابعة.', img: '/dareen_logo_new.v2.jpg' },
+    '/terms-of-service':  { title: 'شروط الاستخدام | دارين السابعة', desc: 'اطلع على شروط وأحكام استخدام منصة دارين السابعة.', img: '/dareen_logo_new.v2.jpg' },
 };
 
 const SITE_NAME = 'دارين السابعة للتعليم والتدريب';
@@ -301,7 +313,7 @@ app.get(/(.*)/, async (req, res) => {
                     og = {
                         title: `${post.title} | دارين السابعة`,
                         desc: post.excerpt || 'مقال تعليمي من دارين السابعة',
-                        img: post.coverImage || '/dareen_logo_new.jpg',
+                        img: post.coverImage || '/dareen_logo_new.v2.jpg',
                         url: `${BASE_URL}/books/${slug}`
                     };
                 }

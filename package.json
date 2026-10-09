@@ -10,8 +10,12 @@
   },
   "scripts": {
     "dev": "vite",
+    "predev": "node scripts/convert-webp.mjs",
     "typecheck": "tsc -b",
     "census": "ts-prune -p tsconfig.app.json",
+    "images:check": "node scripts/check-image-budget.mjs && node scripts/check-image-variants.mjs",
+    "images:variants": "node scripts/check-image-variants.mjs",
+    "images:compress": "node scripts/compress-large-images.mjs",
     "build": "node scripts/convert-webp.mjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

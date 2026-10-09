@@ -6,6 +6,11 @@ const PUBLIC_DIR = join(process.cwd(), 'public');
 const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg'];
 const DELETE_ORIGINALS = process.argv.includes('--delete');
 
+// Directories the app never wraps in <picture> — `pictureVariants` bails on the same
+// two prefixes, so their rasters must NOT get generated siblings (user uploads would
+// just accumulate dead files, and PWA icons are always referenced as .png).
+const SKIP_DIRS = ['uploads', 'icons'];
+
 function getFilesRecursive(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
   const files = [];
@@ -24,15 +29,28 @@ async function convertToWebP(inputPath) {
   const ext = parse(inputPath).ext.toLowerCase();
   if (!IMAGE_EXTENSIONS.includes(ext)) return;
 
+  const skipped = SKIP_DIRS.some((dir) => relative(PUBLIC_DIR, inputPath).split('\\').join('/').startsWith(dir + '/'));
   const webpPath = inputPath.replace(ext, '.webp');
   const avifPath = inputPath.replace(ext, '.avif');
 
   try {
+    // `public/**/*.webp|avif` are gitignored build artifacts, so a fresh clone has
+    // none of them. <picture> commits to the first matching <source> and never
+    // retries the <img> on a 404 — so this must run before dev too, not just build.
+    // Both siblings matter (the avif <source> is offered first), so only a full pair
+    // counts as already converted.
+    const fresh = [webpPath, avifPath].every((p) => existsSync(p) && statSync(p).mtimeMs >= statSync(inputPath).mtimeMs);
+    if (fresh) {
+      return;
+    }
+
     const img = sharp(inputPath);
     const metadata = await img.metadata();
+    const originalSize = statSync(inputPath).size;
 
-    // Skip if source is already tiny
-    if (metadata.width < 50 && metadata.height < 50) return;
+    // Skip if source is already tiny (skipped dirs only — a public raster this small is
+    // still wrapped in <picture>, so it must ship both siblings or it renders blank)
+    if (skipped && metadata.width < 50 && metadata.height < 50) return;
 
     // Generate WebP
     let webpCreated = false;
@@ -40,7 +58,9 @@ async function convertToWebP(inputPath) {
       .webp({ quality: 75, effort: 4 })
       .toBuffer();
 
-    if (webpBuffer.length < statSync(inputPath).size) {
+    if (skipped && webpBuffer.length >= originalSize) {
+      console.log(`- WebP skipped (not smaller): ${inputPath}`);
+    } else {
       await sharp(webpBuffer).toFile(webpPath);
       webpCreated = true;
       console.log(`✓ WebP: ${inputPath} → ${(webpBuffer.length / 1024).toFixed(1)} KB`);
@@ -52,15 +72,17 @@ async function convertToWebP(inputPath) {
       .avif({ quality: 60, effort: 4 })
       .toBuffer();
 
-    if (avifBuffer.length < statSync(inputPath).size) {
+    if (skipped && avifBuffer.length >= originalSize) {
+      console.log(`- AVIF skipped (not smaller): ${inputPath}`);
+    } else {
       await sharp(avifBuffer).toFile(avifPath);
       avifCreated = true;
       console.log(`✓ AVIF: ${inputPath} → ${(avifBuffer.length / 1024).toFixed(1)} KB`);
     }
 
-    // Delete original if both WebP and AVIF were created successfully
-    if (DELETE_ORIGINALS && (webpCreated || avifCreated)) {
-      const originalSize = statSync(inputPath).size;
+    // Delete original only when both variants landed — a half-converted file would leave
+    // <picture> pointing at a 404 source.
+    if (DELETE_ORIGINALS && webpCreated && avifCreated) {
       unlinkSync(inputPath);
       console.log(`🗑️ Deleted original: ${inputPath} (${(originalSize / 1024).toFixed(1)} KB freed)`);
     }

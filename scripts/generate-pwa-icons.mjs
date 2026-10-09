@@ -1,9 +1,9 @@
-import sharp from 'sharp';
+﻿import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 
 const sizes = [48, 72, 96, 128, 144, 152, 167, 180, 192, 256, 384, 512];
-const input = 'public/logo.png';
+const input = 'public/dareen_logo_new.v2.png';
 const outputDir = 'public/icons';
 
 if (!fs.existsSync(outputDir)) {
@@ -32,3 +32,4 @@ async function generate() {
 }
 
 generate();
+

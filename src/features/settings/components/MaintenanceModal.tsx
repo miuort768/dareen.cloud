@@ -45,7 +45,7 @@ export const MaintenanceModal = ({
         <div className="space-y-4 border-b border-divider p-5 text-center md:p-6">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
             <Image
-              src="/dareen_logo_new.webp"
+              src="/dareen_logo_new.v2.webp"
               alt="دارين السابعة"
               className="h-11 w-11"
               imgClassName="object-contain"

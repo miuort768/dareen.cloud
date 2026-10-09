@@ -25,7 +25,7 @@ function escHtml(str) {
 }
 
 function injectOG(html, { title, desc, image, url, type = 'website' }) {
-    const absImg = image && image.startsWith('http') ? image : `${BASE_URL}${image || '/dareen_logo_new.jpg'}`;
+    const absImg = image && image.startsWith('http') ? image : `${BASE_URL}${image || '/dareen_logo_new.v2.jpg'}`;
     return html
         .replace(/(<title>).*?(<\/title>)/,                             `$1${escHtml(title)}$2`)
         .replace(/(<meta name="description" content=")[^"]*(")/,        `$1${escHtml(desc)}$2`)
@@ -173,7 +173,7 @@ Sitemap: ${BASE_URL}/sitemap-blog.xml
     Object.entries(PUBLIC_ROUTES_META).forEach(([route, meta]) => {
         app.get(route, (req, res, next) => {
             if (!BOT_UA.test(req.headers['user-agent'] || '')) return next();
-            const html = injectOG(getIndex(), { title: meta.title, desc: meta.desc, image: '/dareen_logo_new.jpg', url: `${BASE_URL}${route}` });
+            const html = injectOG(getIndex(), { title: meta.title, desc: meta.desc, image: '/dareen_logo_new.v2.jpg', url: `${BASE_URL}${route}` });
             res.header('Content-Type', 'text/html; charset=utf-8');
             res.header('Cache-Control', 'public, max-age=300');
             res.send(html);
@@ -188,7 +188,7 @@ Sitemap: ${BASE_URL}/sitemap-blog.xml
                 const html = injectOG(getIndex(), {
                     title: `${post.title} | دارين السابعة للتعليم والتدريب`,
                     desc:  post.excerpt || 'مقال تعليمي من دارين السابعة للتعليم والتدريب',
-                    image: post.coverImage || '/dareen_logo_new.jpg',
+                    image: post.coverImage || '/dareen_logo_new.v2.jpg',
                     url:   `${BASE_URL}/books/${post.slug}`,
                     type:  'article'
                 });

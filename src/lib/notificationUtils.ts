@@ -9,8 +9,8 @@ export const sendNativeNotification = async (title: string, options?: Notificati
 
   try {
     const defaultOptions: NotificationOptions & { vibrate?: number[] } = {
-      icon: '/logo.png',
-      badge: '/logo.png',
+      icon: '/logo.v2.png',
+      badge: '/logo.v2.png',
       silent: false,
       vibrate: [200, 100, 200],
       ...options,

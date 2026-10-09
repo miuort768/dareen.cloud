@@ -42,10 +42,10 @@ export const MasarSection = () => {
                 <div className="relative z-10 flex h-full w-full items-center justify-center">
                   <div className="absolute h-64 w-64 rounded-none bg-primary/20 opacity-0 blur-[80px] transition-opacity duration-700 group-hover:opacity-100 dark:bg-primary/10"></div>
                   <picture>
-                    <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
-                    <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
+                    <source srcSet="/dareen_books_portal_v3.v2.webp" type="image/webp" />
+                    <source srcSet="/dareen_books_portal_v3.v2.avif" type="image/avif" />
                     <img
-                      src="/dareen_books_portal_v3.png"
+                      src="/dareen_books_portal_v3.v2.png"
                       alt="بوابة الكتب والملخصات - دارين السابعة"
                       width="680"
                       height="680"
@@ -124,10 +124,10 @@ export const MasarSection = () => {
           <div className="relative mb-4 overflow-hidden rounded-2xl shadow-elevation-3">
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary/60 via-transparent to-transparent dark:from-black/80"></div>
             <picture>
-              <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
-              <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
+              <source srcSet="/dareen_books_portal_v3.v2.webp" type="image/webp" />
+              <source srcSet="/dareen_books_portal_v3.v2.avif" type="image/avif" />
               <img
-                src="/dareen_books_portal_v3.png"
+                src="/dareen_books_portal_v3.v2.png"
                 alt="بوابة الكتب والملخصات"
                 width="400"
                 height="300"

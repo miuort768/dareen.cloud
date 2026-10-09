@@ -1,4 +1,4 @@
-const CACHE = 'dareen-v17';
+const CACHE = 'dareen-v18';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',

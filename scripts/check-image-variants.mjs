@@ -19,6 +19,12 @@ import { join, parse, relative } from 'path';
  *   node scripts/check-image-variants.mjs            # public/ (+ dist/ when built)
  *   node scripts/check-image-variants.mjs --dir=dist
  *   node scripts/check-image-variants.mjs --list     # report only, always exit 0
+ *
+ * In `dist/` only the *existence* of a sibling is enforced, never its mtime: the build
+ * runs `vite-plugin-image-optimizer` over the copied rasters (rewriting them with a fresh
+ * mtime) while the generated siblings keep their `public/` timestamps — so staleness
+ * there is a copy artifact, not a content drift. A missing sibling still fails, because
+ * that is the real "<picture> silently renders blank" risk on the deployed site.
  */
 
 const ROOT = process.cwd();
@@ -55,6 +61,9 @@ const scanned = [];
 for (const target of targets) {
   const base = join(ROOT, target);
   if (!existsSync(base)) continue;
+  // `dist/` rasters are rewritten by the image optimizer after the copy, so their mtime
+  // is always newer than the copied sibling — only existence is meaningful there.
+  const checkStaleness = posix(target).replace(/\/+$/, '') !== 'dist';
   for (const file of getFilesRecursive(base)) {
     if (!SOURCE_EXTENSIONS.includes(parse(file).ext.toLowerCase())) continue;
     const rel = posix(relative(base, file));
@@ -66,7 +75,7 @@ for (const target of targets) {
     for (const ext of GENERATED_EXTENSIONS) {
       const generated = file.replace(/\.(png|jpe?g)$/i, ext);
       if (!existsSync(generated)) missing.push(ext);
-      else if (statSync(generated).mtimeMs < sourceMtime) stale.push(ext);
+      else if (checkStaleness && statSync(generated).mtimeMs < sourceMtime) stale.push(ext);
     }
 
     scanned.push({ file: posix(relative(ROOT, file)), missing, stale });

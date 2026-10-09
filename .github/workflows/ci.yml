@@ -1,4 +1,4 @@
-name: CI — Lint + Typecheck + Test + Build
+name: CI — Lint + Typecheck + Test + Build + Image Budget
 
 on:
   push:
@@ -34,3 +34,6 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Image Budget + Variant Audit
+        run: npm run images:check

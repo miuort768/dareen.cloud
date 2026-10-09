@@ -68,11 +68,11 @@ export const ChatWindowHeader = ({
           }
         >
           <Image
-            src="/chat-avatar.webp"
+            src="/chat-avatar.v2.webp"
             alt="avatar"
             className="h-full w-full"
             onError={(e) => {
-              ;(e.target as HTMLImageElement).src = '/chat-avatar.jpg'
+              ;(e.target as HTMLImageElement).src = '/chat-avatar.v2.jpg'
             }}
           />
         </div>

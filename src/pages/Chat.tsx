@@ -197,11 +197,11 @@ export const Chat = () => {
         <div className="relative z-10 flex items-center gap-4">
           <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-success-soft bg-surface">
             <Image
-              src="/chat-avatar.webp"
+              src="/chat-avatar.v2.webp"
               alt="الشعار"
               className="h-full w-full"
               onError={(e) => {
-                ;(e.target as HTMLImageElement).src = '/chat-avatar.jpg'
+                ;(e.target as HTMLImageElement).src = '/chat-avatar.v2.jpg'
               }}
             />
           </div>
@@ -258,7 +258,7 @@ export const Chat = () => {
             <div className="z-10 text-center">
               <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-1">
                 <Image
-                  src="/logo.png"
+                  src="/logo.v2.png"
                   alt={academyName}
                   className="h-12 w-12"
                   imgClassName="object-contain"

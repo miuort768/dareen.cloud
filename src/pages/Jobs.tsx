@@ -121,7 +121,7 @@ export const Jobs = () => {
         title="التوظيف"
         description="فرصة للانضمام إلى فريق دارين السابعة للتعليم والتدريب. نبحث عن معلمات متميزات للتدريس أون لاين في جميع المواد. قدمي طلبك الآن."
         url="https://dareen.cloud/jobs"
-        image="/dareen_logo_new.jpg"
+        image="/dareen_logo_new.v2.jpg"
         breadcrumbs={[
           { name: 'الرئيسية', item: '/' },
           { name: 'التوظيف', item: '/jobs' },

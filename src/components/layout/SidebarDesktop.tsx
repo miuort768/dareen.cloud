@@ -118,7 +118,7 @@ export const SidebarDesktop = ({
           )}
         >
           <Image
-            src="/dareen_logo_new.webp"
+            src="/dareen_logo_new.v2.webp"
             alt="الشعار"
             className="h-full w-full"
             imgClassName="object-contain"
