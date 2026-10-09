@@ -364,23 +364,25 @@ export const DesktopLibraryLanding = ({
 
       {/* ===== SEARCH BAR ===== */}
       <section className="mb-6">
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 dark:border-white/10 lg:rounded-none">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-1 lg:rounded-none">
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage:
-                'linear-gradient(var(--bg-primary-soft) 1px, transparent 1px), linear-gradient(90deg, var(--bg-primary-soft) 1px, transparent 1px)',
+                'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
               backgroundSize: '28px 28px',
             }}
           />
           <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
             <div className="flex items-center gap-3 lg:w-80 lg:shrink-0">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary shadow-elevation-2 ring-1 ring-white/20 backdrop-blur-sm">
                 <Search size={22} />
               </span>
               <div>
-                <h2 className="font-heading text-base font-black text-main">ابحث في المكتبة</h2>
-                <p className="text-xs font-medium text-muted">تصفح أحدث المقالات والملفات</p>
+                <h2 className="font-heading text-base font-black text-on-primary">
+                  ابحث في المكتبة
+                </h2>
+                <p className="text-xs font-medium text-white/80">تصفح أحدث المقالات والملفات</p>
               </div>
             </div>
             <div className="relative min-w-0 flex-1">
@@ -394,7 +396,7 @@ export const DesktopLibraryLanding = ({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="ابحث عن مادة، كتاب، أو ملزمة..."
                 aria-label="البحث في المكتبة"
-                className="h-12 w-full rounded-full border border-border bg-surface py-3 pe-4 ps-11 text-sm text-main outline-none transition-all placeholder:text-muted hover:border-primary/40 focus:border-primary focus:bg-card focus:ring-2 focus:ring-primary/30 dark:border-white/10 [&::-moz-search-clear-button]:hidden [&::-webkit-search-cancel-button]:hidden"
+                className="h-12 w-full rounded-full border border-white/30 bg-card py-3 pe-4 ps-11 text-sm text-main outline-none transition-all placeholder:text-muted hover:border-white/60 focus:border-white focus:ring-2 focus:ring-white/40 dark:border-white/15 [&::-moz-search-clear-button]:hidden [&::-webkit-search-cancel-button]:hidden"
               />
               {search && (
                 <button
