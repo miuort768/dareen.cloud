@@ -5,10 +5,12 @@ import {
   ArrowRight,
   Award,
   Check,
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
   Flame,
   X,
+  XCircle,
   Zap,
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
@@ -313,27 +315,27 @@ export const QuizGame = ({
             exit="exit"
             transition={transition}
           >
-            <div dir={foreign ? 'ltr' : undefined} className="flex flex-col gap-3">
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
-                  <Award size={13} />
+            <div dir={foreign ? 'ltr' : undefined} className="flex flex-col gap-3.5">
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary font-dash text-lg font-black tabular-nums text-on-primary shadow-elevation-2">
+                  {viewIndex + 1}
                 </span>
-                <p className="flex-1 rounded-xl border border-border bg-surface px-3.5 py-3 text-start text-sm font-bold leading-relaxed text-main">
+                <p className="min-w-0 flex-1 rounded-2xl border border-border bg-surface px-4 py-3.5 text-start text-sm font-bold leading-relaxed text-main shadow-elevation-1 md:text-base">
                   {current.prompt}
                 </p>
               </div>
 
-              <div className="grid gap-2" role="listbox" aria-label={quiz.title}>
+              <div className="grid gap-2.5" role="listbox" aria-label={quiz.title}>
                 {current.options.map((option, i) => {
                   const isCorrect = current.correctIndex === i
                   const isSelected = selected === i
                   const isWrongSelected = answered && isSelected && !isCorrect
                   const stateClass = !answered
-                    ? 'cursor-pointer border-border bg-card text-main hover:border-primary hover:bg-hover'
+                    ? 'cursor-pointer border-border bg-card text-main shadow-elevation-1 hover:border-primary hover:bg-hover hover:shadow-elevation-2'
                     : isCorrect
-                      ? 'border-success bg-success text-on-success'
+                      ? 'border-success bg-success text-on-success shadow-elevation-2'
                       : isWrongSelected
-                        ? 'border-error bg-error text-on-error'
+                        ? 'border-error bg-error text-on-error shadow-elevation-2'
                         : 'border-border bg-card text-muted opacity-60'
                   return (
                     <motion.button
@@ -348,27 +350,29 @@ export const QuizGame = ({
                       }
                       transition={{ duration: 0.35 }}
                       className={cn(
-                        'flex min-h-11 items-center gap-3 whitespace-normal rounded-xl border px-3 py-3 text-start text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]',
+                        'flex min-h-12 items-center gap-3 whitespace-normal rounded-2xl border px-4 py-3 text-start text-sm font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]',
                         stateClass,
                       )}
                     >
                       <span
                         className={cn(
-                          'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[11px] font-black',
-                          answered ? 'bg-white/20' : 'bg-surface text-muted',
+                          'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-black',
+                          answered
+                            ? 'bg-white/20'
+                            : 'bg-surface text-muted ring-1 ring-inset ring-border',
                         )}
                       >
                         {letters[i] ?? i + 1}
                       </span>
                       <span className="min-w-0 flex-1">{option}</span>
                       {answered && isCorrect && (
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/20">
-                          <Check size={12} />
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/20">
+                          <Check size={13} />
                         </span>
                       )}
                       {isWrongSelected && (
-                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/25">
-                          <X size={12} />
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/25">
+                          <X size={13} />
                         </span>
                       )}
                     </motion.button>
@@ -377,33 +381,41 @@ export const QuizGame = ({
               </div>
             </div>
 
-            <div role="status" aria-live="polite" className="mt-3 min-h-8">
+            <div role="status" aria-live="polite" className="mt-3 min-h-10">
               {answered && (
                 <p
                   className={cn(
-                    'rounded-xl px-3 py-2 text-xs font-bold',
+                    'flex items-start gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold',
                     selected === current.correctIndex
-                      ? 'bg-success-soft text-success-strong'
-                      : 'bg-error-soft text-error',
+                      ? 'bg-success text-on-success shadow-elevation-1'
+                      : 'bg-error text-on-error shadow-elevation-1',
                   )}
                 >
-                  {selected === current.correctIndex
-                    ? 'إجابة صحيحة! أحسنت'
-                    : 'إجابة خاطئة — الإجابة الصحيحة ملونة بالأخضر'}
+                  {selected === current.correctIndex ? (
+                    <>
+                      <CheckCircle2 size={15} className="mt-0.5 shrink-0" />
+                      إجابة صحيحة! أحسنت
+                    </>
+                  ) : (
+                    <>
+                      <XCircle size={15} className="mt-0.5 shrink-0" />
+                      إجابة خاطئة — الإجابة الصحيحة ملونة بالأخضر
+                    </>
+                  )}
                 </p>
               )}
             </div>
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-3 flex items-center gap-2">
+        <div className="mt-4 flex items-center gap-2.5">
           <button
             type="button"
             onClick={goBack}
             disabled={viewIndex <= 0}
-            className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-1.5 rounded-xl border border-border bg-card px-4 text-xs font-extrabold text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-black text-main shadow-elevation-1 outline-none transition-all hover:bg-surface hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
           >
-            <ChevronRight size={14} />
+            <ChevronRight size={15} />
             السابق
           </button>
           <div className="flex-1" />
@@ -411,21 +423,24 @@ export const QuizGame = ({
             <button
               type="button"
               onClick={goForwardReview}
-              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-primary px-5 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-black text-on-primary shadow-elevation-2 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               {reviewIndex !== null && reviewIndex + 1 < qIndex ? 'التالي' : 'العودة للسؤال الحالي'}
-              <ChevronLeft size={14} />
+              <ChevronLeft size={15} />
             </button>
           ) : !answered ? (
-            <span className="text-[10px] font-bold text-muted">اختر إجابة للمتابعة…</span>
+            <span className="inline-flex min-h-12 items-center gap-1.5 rounded-full bg-surface px-4 text-[10px] font-bold text-muted">
+              <Zap size={12} className="shrink-0 text-primary" />
+              اختر إجابة للمتابعة…
+            </span>
           ) : (
             <button
               type="button"
               onClick={advanceNow}
-              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-5 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-black text-on-primary shadow-elevation-2 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               {qIndex >= total - 1 ? 'عرض النتيجة' : 'التالي الآن'}
-              <ArrowLeft size={14} />
+              <ArrowLeft size={15} />
             </button>
           )}
         </div>
