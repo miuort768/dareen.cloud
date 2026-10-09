@@ -6,7 +6,7 @@ import { QuizGame } from './quiz/QuizGame'
 import { QuizLevelMap } from './quiz/QuizLevelMap'
 import { QuizResult } from './quiz/QuizResult'
 import { useQuizProgress } from './quiz/useQuizProgress'
-import { isLevelUnlocked, mergeStat, randomSeed, summarizeProgress } from './quiz/quizEngine'
+import { mergeStat, randomSeed, summarizeProgress } from './quiz/quizEngine'
 
 export interface LanguageQuizSectionProps {
   languageId: string
@@ -46,8 +46,7 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
   const activeIndex = activeQuizId ? quizzes.findIndex((q) => q.id === activeQuizId) : -1
   const activeQuiz = activeIndex >= 0 ? quizzes[activeIndex] : undefined
   const nextIndex = activeIndex + 1
-  const canNext =
-    activeIndex >= 0 && nextIndex < quizzes.length && isLevelUnlocked(nextIndex, quizzes, progress)
+  const canNext = activeIndex >= 0 && nextIndex < quizzes.length
 
   const play = (quizId: string) => {
     setResult(null)

@@ -136,18 +136,6 @@ export function roundCount(total: number, size = QUIZ_ROUND_SIZE): number {
   return Math.max(1, Math.ceil(total / size))
 }
 
-export function isLevelUnlocked(
-  index: number,
-  quizzes: readonly QuizSet[],
-  progress: QuizLanguageProgress,
-): boolean {
-  if (index <= 1) return true
-  const previous = quizzes[index - 1]
-  if (!previous) return true
-  const stat = progress.levels[previous.id]
-  return !!stat && stat.bestStars >= PASS_STARS
-}
-
 export function firstUnansweredIndex(answers: readonly number[], total: number): number {
   for (let i = 0; i < total; i++) {
     const answer = answers[i]

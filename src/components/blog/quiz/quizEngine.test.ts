@@ -9,7 +9,6 @@ import {
   computeRunStats,
   emptyProgress,
   firstUnansweredIndex,
-  isLevelUnlocked,
   isPassing,
   mergeStat,
   randomSeed,
@@ -104,22 +103,6 @@ describe('chunkQuestions / roundCount', () => {
     expect(rounds.map((r) => r.length)).toEqual([10, 10, 5])
     expect(roundCount(25)).toBe(3)
     expect(roundCount(0)).toBe(1)
-  })
-})
-
-describe('isLevelUnlocked', () => {
-  const quizzes = [quiz('placement', 3), quiz('l1', 3), quiz('l2', 3)]
-
-  it('always unlocks the first two levels', () => {
-    expect(isLevelUnlocked(0, quizzes, emptyProgress())).toBe(true)
-    expect(isLevelUnlocked(1, quizzes, emptyProgress())).toBe(true)
-  })
-
-  it('locks a later level until the previous one passes', () => {
-    expect(isLevelUnlocked(2, quizzes, emptyProgress())).toBe(false)
-    const progress = emptyProgress()
-    progress.levels['l1'] = { bestStars: 1, bestCorrect: 2, bestTotal: 3, xp: 20, completed: true }
-    expect(isLevelUnlocked(2, quizzes, progress)).toBe(true)
   })
 })
 
