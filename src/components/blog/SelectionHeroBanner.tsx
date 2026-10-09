@@ -19,8 +19,8 @@ interface SelectionHeroBannerProps {
  * Shared banner for the library selection steps (curriculum / level / language).
  * Single source for the internal element order so the mobile and desktop
  * surfaces cannot drift apart. Mobile keeps the solid gradient card; desktop
- * switches to an open, edge-free layout (no solid rectangle) with a soft
- * fading tint and a hairline divider.
+ * switches to a fully open, edge-free layout (no colored rectangle, no tint)
+ * with a hairline divider.
  */
 export function SelectionHeroBanner({
   steps,
@@ -39,7 +39,6 @@ export function SelectionHeroBanner({
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute -end-20 -top-24 h-56 w-56 rounded-full border border-white/10 sm:h-72 sm:w-72 lg:hidden" />
         <div className="absolute -bottom-28 start-[-10%] h-56 w-56 rounded-full bg-accent-soft opacity-30 blur-[80px] lg:hidden" />
-        <div className="absolute inset-x-0 top-0 hidden h-2/3 bg-gradient-to-b from-primary-soft to-transparent lg:block" />
       </div>
 
       <div className="relative p-4 sm:p-5 lg:px-0 lg:py-8">
