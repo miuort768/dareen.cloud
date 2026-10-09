@@ -4,11 +4,11 @@ import { clearLanguageProgress, loadLanguageProgress, saveLanguageProgress } fro
 
 const STORAGE_KEY = 'dareen:quiz-progress:v1'
 
-const sample = (xp: number, answers: number[]): QuizLanguageProgress => ({
+const sample = (xp: number, answers: number[], seed = 42): QuizLanguageProgress => ({
   levels: {
     l1: { bestStars: 2, bestCorrect: 2, bestTotal: 3, xp, completed: true },
   },
-  runs: { l1: answers },
+  runs: { l1: { seed, answers } },
 })
 
 beforeEach(() => {
@@ -50,5 +50,47 @@ describe('quizProgress persistence', () => {
     saveLanguageProgress('iso-b', sample(20, [1, 2]))
     expect(loadLanguageProgress('iso-a').levels['l1']?.xp).toBe(10)
     expect(loadLanguageProgress('iso-b').levels['l1']?.xp).toBe(20)
+  })
+
+  it('migrates v1 data keeping levels and dropping runs', () => {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        version: 1,
+        languages: {
+          'v1-lang': {
+            levels: {
+              l1: { bestStars: 3, bestCorrect: 3, bestTotal: 3, xp: 99, completed: true },
+            },
+            runs: { l1: [0, 1, -1] },
+          },
+        },
+      }),
+    )
+    const loaded = loadLanguageProgress('v1-lang')
+    expect(loaded.levels['l1']?.xp).toBe(99)
+    expect(loaded.runs).toEqual({})
+  })
+
+  it('drops malformed run entries', () => {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        version: 2,
+        languages: {
+          'malformed-runs': {
+            levels: {},
+            runs: {
+              good: { seed: 5, answers: [0, -1] },
+              bad: { seed: Number.NaN, answers: [] },
+              ugly: { seed: 3, answers: 'nope' },
+            },
+          },
+        },
+      }),
+    )
+    const loaded = loadLanguageProgress('malformed-runs')
+    expect(Object.keys(loaded.runs)).toEqual(['good'])
+    expect(loaded.runs['good']).toEqual({ seed: 5, answers: [0, -1] })
   })
 })

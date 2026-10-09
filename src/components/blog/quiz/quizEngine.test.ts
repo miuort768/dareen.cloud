@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { McqQuestion, QuizSet } from '../../../data/languageQuizzes'
 import {
   answerXp,
+  buildShuffledQuiz,
   calcPercent,
   calcStars,
   chunkQuestions,
@@ -11,7 +12,9 @@ import {
   isLevelUnlocked,
   isPassing,
   mergeStat,
+  randomSeed,
   roundCount,
+  shuffleWithSeed,
   suggestedLevelIndex,
   summarizeProgress,
   XP_STREAK_BONUS_CAP,
@@ -185,5 +188,59 @@ describe('suggestedLevelIndex', () => {
     expect(suggestedLevelIndex(9, 10)).toBe(2)
     expect(suggestedLevelIndex(6, 10)).toBe(1)
     expect(suggestedLevelIndex(2, 10)).toBe(0)
+  })
+})
+
+describe('shuffleWithSeed / buildShuffledQuiz', () => {
+  it('shuffles deterministically for the same seed', () => {
+    const items = [1, 2, 3, 4, 5, 6, 7, 8]
+    expect(shuffleWithSeed(items, 5)).toEqual(shuffleWithSeed(items, 5))
+    expect(shuffleWithSeed(items, 5)).not.toEqual(items)
+  })
+
+  it('rebuilds the same question set for the same seed', () => {
+    const source = quiz('placement', 4)
+    const a = buildShuffledQuiz(source, 123)
+    const b = buildShuffledQuiz(source, 123)
+    expect(a.questions.map((qs) => qs.options)).toEqual(b.questions.map((qs) => qs.options))
+    expect(a.questions.map((qs) => qs.correctIndex)).toEqual(
+      b.questions.map((qs) => qs.correctIndex),
+    )
+  })
+
+  it('produces a different order for a different seed', () => {
+    const source = quiz('placement', 4)
+    const a = buildShuffledQuiz(source, 123)
+    const b = buildShuffledQuiz(source, 456)
+    const sameOrder = a.questions.every((qs, i) =>
+      qs.options.every((opt, j) => opt === b.questions[i]?.options[j]),
+    )
+    expect(sameOrder).toBe(false)
+  })
+
+  it('keeps the same options set and preserves the correct answer', () => {
+    const source = quiz('placement', 3)
+    const shuffled = buildShuffledQuiz(source, 999)
+    for (let i = 0; i < source.questions.length; i++) {
+      const src = source.questions[i] as McqQuestion
+      const out = shuffled.questions[i] as McqQuestion
+      expect(out.options).toEqual(expect.arrayContaining(src.options))
+      expect(src.options[src.correctIndex]).toBe(out.options[out.correctIndex])
+    }
+  })
+
+  it('actually reorders options inside questions', () => {
+    const source = quiz('placement', 8)
+    const shuffled = buildShuffledQuiz(source, 777)
+    const anyReordered = source.questions.some((qs, i) =>
+      qs.options.some((opt, j) => opt !== shuffled.questions[i]?.options[j]),
+    )
+    expect(anyReordered).toBe(true)
+  })
+
+  it('generates an in-range random seed', () => {
+    const seed = randomSeed()
+    expect(seed).toBeGreaterThanOrEqual(0)
+    expect(seed).toBeLessThan(0x80000000)
   })
 })

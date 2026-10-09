@@ -14,19 +14,29 @@ import {
 import { cn } from '../../../lib/utils'
 import type { QuizSet } from '../../../data/languageQuizzes'
 import { ProgressBar } from '../../../shared/components/ui/ProgressBar'
-import { computeRunStats, firstUnansweredIndex, QUIZ_ROUND_SIZE, roundCount } from './quizEngine'
+import {
+  buildShuffledQuiz,
+  computeRunStats,
+  firstUnansweredIndex,
+  QUIZ_ROUND_SIZE,
+  roundCount,
+} from './quizEngine'
 
 export interface QuizGameProps {
   quiz: QuizSet
+  languageId: string
   languageName: string
+  seed: number
   initialAnswers?: number[]
   onProgress: (answers: number[]) => void
   onComplete: (result: { correct: number; total: number; xp: number }) => void
   onExit: () => void
 }
 
-const LETTERS = ['أ', 'ب', 'ج', 'د', 'هـ', 'و']
+const ARABIC_LETTERS = ['أ', 'ب', 'ج', 'د', 'هـ', 'و']
+const LATIN_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F']
 const ADVANCE_DELAY = 1150
+const CORRECT_ADVANCE_DELAY = 350
 
 const makeAnswers = (total: number, initial?: number[]): number[] => {
   const base = Array.from({ length: total }, () => -1)
@@ -40,7 +50,9 @@ const makeAnswers = (total: number, initial?: number[]): number[] => {
 
 export const QuizGame = ({
   quiz,
+  languageId,
   languageName,
+  seed,
   initialAnswers,
   onProgress,
   onComplete,
@@ -49,6 +61,10 @@ export const QuizGame = ({
   const total = quiz.questions.length
   const reduced = useReducedMotion()
   const rtl = typeof document !== 'undefined' && document.documentElement.dir === 'rtl'
+  const foreign = languageId !== 'arabic'
+  const letters = foreign ? LATIN_LETTERS : ARABIC_LETTERS
+  const gameQuiz = useMemo(() => buildShuffledQuiz(quiz, seed), [quiz, seed])
+  const questions = gameQuiz.questions
 
   const [answers, setAnswers] = useState<number[]>(() => makeAnswers(total, initialAnswers))
   const [qIndex, setQIndex] = useState(() => {
@@ -68,37 +84,36 @@ export const QuizGame = ({
     progressRef.current(answers)
   }, [answers])
 
-  const stats = useMemo(() => computeRunStats(quiz.questions, answers), [quiz.questions, answers])
+  const stats = useMemo(() => computeRunStats(questions, answers), [questions, answers])
 
   const viewIndex = reviewIndex ?? qIndex
-  const current = quiz.questions[viewIndex]
+  const current = questions[viewIndex]
   const selected = answers[viewIndex] ?? -1
   const answered = selected >= 0
   const isReview = reviewIndex !== null
   const roundsTotal = roundCount(total)
   const currentRound = Math.min(roundsTotal, Math.floor(viewIndex / QUIZ_ROUND_SIZE) + 1)
   const progressPercent = total > 0 ? Math.round((stats.answered / total) * 100) : 0
+  const isCorrect = !!current && selected === current.correctIndex
 
   useEffect(() => {
     if (isReview || !answered || checkpoint !== null) return
     const isLast = qIndex >= total - 1
     const atCheckpoint = !isLast && (qIndex + 1) % QUIZ_ROUND_SIZE === 0
-    const timer = window.setTimeout(
-      () => {
-        if (isLast) {
-          const finalStats = computeRunStats(quiz.questions, answers)
-          completeRef.current({ correct: finalStats.correct, total, xp: finalStats.xp })
-        } else if (atCheckpoint) {
-          setCheckpoint(qIndex + 1)
-        } else {
-          setDir(1)
-          setQIndex((prev) => prev + 1)
-        }
-      },
-      reduced ? 500 : ADVANCE_DELAY,
-    )
+    const delay = reduced ? 200 : isCorrect ? CORRECT_ADVANCE_DELAY : ADVANCE_DELAY
+    const timer = window.setTimeout(() => {
+      if (isLast) {
+        const finalStats = computeRunStats(questions, answers)
+        completeRef.current({ correct: finalStats.correct, total, xp: finalStats.xp })
+      } else if (atCheckpoint) {
+        setCheckpoint(qIndex + 1)
+      } else {
+        setDir(1)
+        setQIndex((prev) => prev + 1)
+      }
+    }, delay)
     return () => window.clearTimeout(timer)
-  }, [answered, qIndex, checkpoint, isReview, answers, total, quiz.questions, reduced])
+  }, [answered, qIndex, checkpoint, isReview, answers, total, questions, reduced, isCorrect])
 
   const select = (i: number) => {
     if (answered || isReview || checkpoint !== null) return
@@ -113,7 +128,7 @@ export const QuizGame = ({
   const advanceNow = () => {
     if (!answered || isReview) return
     if (qIndex >= total - 1) {
-      const finalStats = computeRunStats(quiz.questions, answers)
+      const finalStats = computeRunStats(questions, answers)
       completeRef.current({ correct: finalStats.correct, total, xp: finalStats.xp })
     } else if ((qIndex + 1) % QUIZ_ROUND_SIZE === 0) {
       setCheckpoint(qIndex + 1)
@@ -166,7 +181,7 @@ export const QuizGame = ({
     let roundCorrect = 0
     for (let i = start; i < end; i++) {
       const answer = answers[i]
-      const question = quiz.questions[i]
+      const question = questions[i]
       if (
         typeof answer === 'number' &&
         answer >= 0 &&
@@ -298,64 +313,68 @@ export const QuizGame = ({
             exit="exit"
             transition={transition}
           >
-            <div className="mb-3 flex items-start gap-2">
-              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
-                <Award size={13} />
-              </span>
-              <p className="rounded-xl border border-border bg-surface px-3.5 py-3 text-sm font-bold leading-relaxed text-main">
-                {current.prompt}
-              </p>
-            </div>
+            <div dir={foreign ? 'ltr' : undefined} className="flex flex-col gap-3">
+              <div className="flex items-start gap-2">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
+                  <Award size={13} />
+                </span>
+                <p className="flex-1 rounded-xl border border-border bg-surface px-3.5 py-3 text-start text-sm font-bold leading-relaxed text-main">
+                  {current.prompt}
+                </p>
+              </div>
 
-            <div className="grid gap-2" role="listbox" aria-label={quiz.title}>
-              {current.options.map((option, i) => {
-                const isCorrect = current.correctIndex === i
-                const isSelected = selected === i
-                const isWrongSelected = answered && isSelected && !isCorrect
-                const stateClass = !answered
-                  ? 'cursor-pointer border-border bg-card text-main hover:border-primary hover:bg-hover'
-                  : isCorrect
-                    ? 'border-success bg-success text-on-success'
-                    : isWrongSelected
-                      ? 'border-error bg-error text-on-error'
-                      : 'border-border bg-card text-muted opacity-60'
-                return (
-                  <motion.button
-                    key={i}
-                    type="button"
-                    role="option"
-                    aria-selected={isSelected}
-                    disabled={answered || isReview}
-                    onClick={() => select(i)}
-                    animate={isWrongSelected && !reduced ? { x: [0, -6, 6, -5, 5, 0] } : undefined}
-                    transition={{ duration: 0.35 }}
-                    className={cn(
-                      'flex min-h-11 items-center gap-3 whitespace-normal rounded-xl border px-3 py-3 text-start text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]',
-                      stateClass,
-                    )}
-                  >
-                    <span
+              <div className="grid gap-2" role="listbox" aria-label={quiz.title}>
+                {current.options.map((option, i) => {
+                  const isCorrect = current.correctIndex === i
+                  const isSelected = selected === i
+                  const isWrongSelected = answered && isSelected && !isCorrect
+                  const stateClass = !answered
+                    ? 'cursor-pointer border-border bg-card text-main hover:border-primary hover:bg-hover'
+                    : isCorrect
+                      ? 'border-success bg-success text-on-success'
+                      : isWrongSelected
+                        ? 'border-error bg-error text-on-error'
+                        : 'border-border bg-card text-muted opacity-60'
+                  return (
+                    <motion.button
+                      key={i}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      disabled={answered || isReview}
+                      onClick={() => select(i)}
+                      animate={
+                        isWrongSelected && !reduced ? { x: [0, -6, 6, -5, 5, 0] } : undefined
+                      }
+                      transition={{ duration: 0.35 }}
                       className={cn(
-                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[11px] font-black',
-                        answered ? 'bg-white/20' : 'bg-surface text-muted',
+                        'flex min-h-11 items-center gap-3 whitespace-normal rounded-xl border px-3 py-3 text-start text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]',
+                        stateClass,
                       )}
                     >
-                      {LETTERS[i] ?? i + 1}
-                    </span>
-                    <span className="min-w-0 flex-1">{option}</span>
-                    {answered && isCorrect && (
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/20">
-                        <Check size={12} />
+                      <span
+                        className={cn(
+                          'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[11px] font-black',
+                          answered ? 'bg-white/20' : 'bg-surface text-muted',
+                        )}
+                      >
+                        {letters[i] ?? i + 1}
                       </span>
-                    )}
-                    {isWrongSelected && (
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/25">
-                        <X size={12} />
-                      </span>
-                    )}
-                  </motion.button>
-                )
-              })}
+                      <span className="min-w-0 flex-1">{option}</span>
+                      {answered && isCorrect && (
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/20">
+                          <Check size={12} />
+                        </span>
+                      )}
+                      {isWrongSelected && (
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/25">
+                          <X size={12} />
+                        </span>
+                      )}
+                    </motion.button>
+                  )
+                })}
+              </div>
             </div>
 
             <div role="status" aria-live="polite" className="mt-3 min-h-8">

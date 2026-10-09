@@ -38,7 +38,7 @@ export const QuizLevelMap = ({ quizzes, progress, onPlay }: QuizLevelMapProps) =
         const unlocked = isLevelUnlocked(i, quizzes, progress)
         const stat = progress.levels[quiz.id]
         const run = progress.runs[quiz.id]
-        const runIndex = run ? firstUnansweredIndex(run, quiz.questions.length) : 0
+        const runIndex = run ? firstUnansweredIndex(run.answers, quiz.questions.length) : 0
         const hasRun = runIndex > 0 && runIndex < quiz.questions.length
         const isPlacement = i === 0
         const tile = levelTileClass(i)

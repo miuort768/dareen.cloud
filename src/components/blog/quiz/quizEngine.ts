@@ -15,12 +15,61 @@ export interface QuizLevelStat {
   completed: boolean
 }
 
+export interface QuizRun {
+  seed: number
+  answers: number[]
+}
+
 export interface QuizLanguageProgress {
   levels: Record<string, QuizLevelStat>
-  runs: Record<string, number[]>
+  runs: Record<string, QuizRun>
 }
 
 export const emptyProgress = (): QuizLanguageProgress => ({ levels: {}, runs: {} })
+
+export function randomSeed(): number {
+  return Math.floor(Math.random() * 0x7fffffff)
+}
+
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0
+    let t = a
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+export function shuffleWithSeed<T>(items: readonly T[], seed: number): T[] {
+  const rng = mulberry32(seed)
+  const out = [...items]
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1))
+    const tmp = out[i] as T
+    out[i] = out[j] as T
+    out[j] = tmp
+  }
+  return out
+}
+
+export function buildShuffledQuiz(quiz: QuizSet, seed: number): QuizSet {
+  return {
+    id: quiz.id,
+    title: quiz.title,
+    description: quiz.description,
+    questions: quiz.questions.map((question, index) => {
+      const options = shuffleWithSeed(question.options, seed + index)
+      const correctText = question.options[question.correctIndex]
+      return {
+        ...question,
+        options,
+        correctIndex: correctText ? options.indexOf(correctText) : -1,
+      }
+    }),
+  }
+}
 
 export function calcPercent(correct: number, total: number): number {
   if (total <= 0) return 0

@@ -1,7 +1,7 @@
-import { emptyProgress, type QuizLanguageProgress } from './quizEngine'
+import { emptyProgress, type QuizLanguageProgress, type QuizRun } from './quizEngine'
 
 const STORAGE_KEY = 'dareen:quiz-progress:v1'
-const VERSION = 1
+const CURRENT_VERSION = 2
 
 interface StoredRoot {
   version: number
@@ -18,6 +18,21 @@ const canUseStorage = (): boolean => {
   }
 }
 
+function migrateStored(stored: StoredRoot | null): StoredRoot {
+  if (!stored) return { version: CURRENT_VERSION, languages: {} }
+  if (stored.version !== 1 && stored.version !== CURRENT_VERSION) {
+    return { version: CURRENT_VERSION, languages: {} }
+  }
+  if (stored.version === 1) {
+    const languages: Record<string, QuizLanguageProgress> = {}
+    for (const [id, lang] of Object.entries(stored.languages)) {
+      languages[id] = { levels: lang.levels ?? {}, runs: {} }
+    }
+    return { version: CURRENT_VERSION, languages }
+  }
+  return { version: CURRENT_VERSION, languages: stored.languages }
+}
+
 function readRoot(): StoredRoot | null {
   if (!canUseStorage()) return null
   let raw: string | null = null
@@ -26,24 +41,31 @@ function readRoot(): StoredRoot | null {
   } catch {
     return null
   }
-  if (!raw) return { version: VERSION, languages: {} }
+  if (!raw) return { version: CURRENT_VERSION, languages: {} }
   try {
-    const parsed = JSON.parse(raw) as Partial<StoredRoot>
-    if (!parsed || parsed.version !== VERSION || !parsed.languages) {
-      return { version: VERSION, languages: {} }
-    }
-    return { version: VERSION, languages: parsed.languages }
+    return migrateStored(JSON.parse(raw) as StoredRoot)
   } catch {
-    return { version: VERSION, languages: {} }
+    return { version: CURRENT_VERSION, languages: {} }
   }
+}
+
+function normalizeRun(run: unknown): QuizRun | null {
+  if (!run || typeof run !== 'object') return null
+  const candidate = run as { seed?: unknown; answers?: unknown }
+  if (typeof candidate.seed !== 'number' || !Number.isFinite(candidate.seed)) return null
+  if (!Array.isArray(candidate.answers)) return null
+  if (!candidate.answers.every((a) => typeof a === 'number')) return null
+  return { seed: candidate.seed, answers: candidate.answers as number[] }
 }
 
 function normalize(stored: QuizLanguageProgress | undefined): QuizLanguageProgress {
   if (!stored) return emptyProgress()
-  return {
-    levels: stored.levels ?? {},
-    runs: stored.runs ?? {},
+  const runs: Record<string, QuizRun> = {}
+  for (const [id, run] of Object.entries(stored.runs ?? {})) {
+    const parsed = normalizeRun(run)
+    if (parsed) runs[id] = parsed
   }
+  return { levels: stored.levels ?? {}, runs }
 }
 
 export function loadLanguageProgress(languageId: string): QuizLanguageProgress {

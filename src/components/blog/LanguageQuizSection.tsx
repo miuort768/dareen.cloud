@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Award, BookOpen, ClipboardCheck, Layers, RotateCcw, Star, Zap } from 'lucide-react'
 import { getQuizData, type QuizLanguageId, type QuizSet } from '../../data/languageQuizzes'
 import { languages } from './LibraryConfig'
@@ -6,7 +6,7 @@ import { QuizGame } from './quiz/QuizGame'
 import { QuizLevelMap } from './quiz/QuizLevelMap'
 import { QuizResult } from './quiz/QuizResult'
 import { useQuizProgress } from './quiz/useQuizProgress'
-import { isLevelUnlocked, mergeStat, summarizeProgress } from './quiz/quizEngine'
+import { isLevelUnlocked, mergeStat, randomSeed, summarizeProgress } from './quiz/quizEngine'
 
 export interface LanguageQuizSectionProps {
   languageId: string
@@ -28,6 +28,15 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
   const { progress, update, reset } = useQuizProgress(languageId)
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null)
   const [result, setResult] = useState<RunResult | null>(null)
+  const seedsRef = useRef<Record<string, number>>({})
+
+  const ensureSeed = (quizId: string): number => {
+    if (seedsRef.current[quizId] !== undefined) return seedsRef.current[quizId] as number
+    const stored = progress.runs[quizId]?.seed
+    const seed = stored ?? randomSeed()
+    seedsRef.current[quizId] = seed
+    return seed
+  }
 
   if (!quizData || !language) return null
 
@@ -42,6 +51,7 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
 
   const play = (quizId: string) => {
     setResult(null)
+    ensureSeed(quizId)
     setActiveQuizId(quizId)
   }
 
@@ -53,6 +63,7 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
   const restart = () => {
     const id = result?.quizId ?? activeQuizId
     if (!id) return
+    seedsRef.current[id] = randomSeed()
     update((prev) => {
       const runs = { ...prev.runs }
       delete runs[id]
@@ -63,7 +74,10 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
   }
 
   const handleProgress = (quizId: string, answers: number[]) => {
-    update((prev) => ({ ...prev, runs: { ...prev.runs, [quizId]: answers } }))
+    update((prev) => ({
+      ...prev,
+      runs: { ...prev.runs, [quizId]: { seed: seedsRef.current[quizId] ?? randomSeed(), answers } },
+    }))
   }
 
   const handleComplete = (quizId: string, run: { correct: number; total: number; xp: number }) => {
@@ -170,8 +184,10 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
           <QuizGame
             key={activeQuiz.id}
             quiz={activeQuiz}
+            languageId={languageId}
             languageName={language.name}
-            initialAnswers={progress.runs[activeQuiz.id]}
+            seed={seedsRef.current[activeQuiz.id] ?? 0}
+            initialAnswers={progress.runs[activeQuiz.id]?.answers}
             onProgress={(answers) => handleProgress(activeQuiz.id, answers)}
             onComplete={(run) => handleComplete(activeQuiz.id, run)}
             onExit={exit}
