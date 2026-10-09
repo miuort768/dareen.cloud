@@ -212,14 +212,6 @@ export const MobileHero = ({
     gradeLabel: '',
     termLabel: '',
   })
-  const bannerCount = view === 'languages' ? languages.length : gridItems.length
-  const bannerStats = [
-    {
-      value: String(bannerCount),
-      label: view === 'curriculums' ? 'منهج' : view === 'languages' ? 'لغات' : 'مراحل',
-    },
-    { value: String(bannerSteps.length), label: 'خطوات' },
-  ]
 
   // For other views (curriculums, grades, languages), show selection grid
   return (
@@ -250,7 +242,6 @@ export const MobileHero = ({
               : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`
         }
         whatsappNumber={whatsappNumber}
-        stats={bannerStats}
       />
 
       <div className="mb-4 grid grid-cols-2 gap-2.5">
@@ -542,14 +533,6 @@ export const DesktopHero = ({
     gradeLabel: '',
     termLabel: '',
   })
-  const bannerCount = view === 'languages' ? languages.length : gridItems.length
-  const bannerStats = [
-    {
-      value: String(bannerCount),
-      label: view === 'curriculums' ? 'منهج' : view === 'languages' ? 'لغات' : 'مراحل',
-    },
-    { value: String(bannerSteps.length), label: 'خطوات' },
-  ]
 
   // For other views (curriculums, grades, languages)
   return (
@@ -580,7 +563,6 @@ export const DesktopHero = ({
               : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`
         }
         whatsappNumber={whatsappNumber}
-        stats={bannerStats}
       />
 
       {/* Selection grid */}
