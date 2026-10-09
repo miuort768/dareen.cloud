@@ -16,9 +16,9 @@ import {
   Phone,
   ChevronDown,
   Languages,
+  X,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { BlogCoverImage } from './BlogCoverImage'
 import { cn } from '../../lib/utils'
 import { api } from '../../lib/api'
 import { useAcademyName } from '../../context/AppContext'
@@ -364,24 +364,48 @@ export const DesktopLibraryLanding = ({
 
       {/* ===== SEARCH BAR ===== */}
       <section className="mb-6">
-        <div className="rounded-2xl border border-primary/15 bg-primary-soft p-5 shadow-elevation-1 dark:bg-primary/5 lg:rounded-none">
-          <div className="flex items-center gap-4">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
-              <Search size={18} />
-            </span>
-            <div className="relative flex-1">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 dark:border-white/10 lg:rounded-none">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                'linear-gradient(var(--bg-primary-soft) 1px, transparent 1px), linear-gradient(90deg, var(--bg-primary-soft) 1px, transparent 1px)',
+              backgroundSize: '28px 28px',
+            }}
+          />
+          <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-3 lg:w-80 lg:shrink-0">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
+                <Search size={22} />
+              </span>
+              <div>
+                <h2 className="font-heading text-base font-black text-main">ابحث في المكتبة</h2>
+                <p className="text-xs font-medium text-muted">تصفح أحدث المقالات والملفات</p>
+              </div>
+            </div>
+            <div className="relative min-w-0 flex-1">
               <Search
-                size={15}
-                className="pointer-events-none absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                size={18}
+                className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-primary"
               />
               <input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="ابحث عن مادة، كتاب، أو ملزمة..."
-                aria-label="البحث في المقالات"
-                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-white/10 dark:placeholder:text-white"
+                aria-label="البحث في المكتبة"
+                className="h-12 w-full rounded-full border border-border bg-surface py-3 pe-4 ps-11 text-sm text-main outline-none transition-all placeholder:text-muted hover:border-primary/40 focus:border-primary focus:bg-card focus:ring-2 focus:ring-primary/30 dark:border-white/10 [&::-moz-search-clear-button]:hidden [&::-webkit-search-cancel-button]:hidden"
               />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  aria-label="مسح البحث"
+                  className="absolute end-3.5 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-muted transition-colors hover:bg-hover hover:text-error"
+                >
+                  <X size={15} />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -568,13 +592,14 @@ export const DesktopLibraryLanding = ({
           {loading ? (
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="overflow-hidden rounded-2xl border border-border bg-card">
-                  <div className="aspect-[16/10] animate-pulse bg-surface" />
-                  <div className="space-y-3 p-5">
-                    <div className="h-4 w-3/4 animate-pulse rounded-lg bg-surface" />
-                    <div className="h-3 w-full animate-pulse rounded-lg bg-surface" />
-                    <div className="h-3 w-1/2 animate-pulse rounded-lg bg-surface" />
-                  </div>
+                <div
+                  key={i}
+                  className="space-y-3 overflow-hidden rounded-2xl border border-border bg-card p-5 lg:rounded-none"
+                >
+                  <div className="h-4 w-20 animate-pulse rounded-lg bg-surface" />
+                  <div className="h-4 w-3/4 animate-pulse rounded-lg bg-surface" />
+                  <div className="h-3 w-full animate-pulse rounded-lg bg-surface" />
+                  <div className="h-3 w-1/2 animate-pulse rounded-lg bg-surface" />
                 </div>
               ))}
             </div>
@@ -596,20 +621,13 @@ export const DesktopLibraryLanding = ({
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
-                    className="group relative flex gap-4 overflow-hidden rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
+                    className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
                   >
                     <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-l from-transparent via-primary/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-surface">
-                      <BlogCoverImage
-                        src={post.coverImage}
-                        alt={post.title}
-                        className="absolute inset-0"
-                        imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
-                        iconSize={28}
-                      />
+                    <div className="flex items-center justify-between gap-2">
                       <span
                         className={cn(
-                          'absolute end-2 top-2 inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-extrabold',
+                          'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-extrabold',
                           style.badge,
                         )}
                       >
@@ -617,7 +635,7 @@ export const DesktopLibraryLanding = ({
                         {label}
                       </span>
                     </div>
-                    <div className="flex min-w-0 flex-1 flex-col">
+                    <div className="flex min-w-0 flex-col">
                       <h3 className="mb-1.5 line-clamp-2 text-sm font-extrabold leading-snug text-main transition-colors duration-300 group-hover:text-primary">
                         {post.title}
                       </h3>
