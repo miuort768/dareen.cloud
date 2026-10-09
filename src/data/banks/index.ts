@@ -1,6 +1,7 @@
 import type { LanguageBanks, QuizLanguageId } from './_bank-types'
 import { arabicPlacement } from './arabic-placement'
 import { arabicLevel1 } from './arabic-level1'
+import { arabicLevel2 } from './arabic-level2'
 import { englishPlacement } from './english-placement'
 import { frenchPlacement } from './french-placement'
 import { spanishPlacement } from './spanish-placement'
@@ -8,17 +9,16 @@ import { spanishPlacement } from './spanish-placement'
 /**
  * banksByLanguage aggregates the authored banks per language.
  *
- * COMPLETENESS (authoring in progress): only arabic level1 is authored so far
- * (1000 rows, validator-clean); the remaining level files are being filled template-by-template
- * (each validated by scripts/check-banks.cjs + audit-bank-text.cjs). A language becomes
- * servable — i.e. appears in `availableLanguageIds` — only once it has a placement bank AND
- * three fully-authored level banks. Until then it is wired with an empty/partial `levels`
- * array so getLanguageQuizzes' 3-level guard fails safely instead of serving a truncated bank.
+ * COMPLETENESS (authoring in progress): arabic has placement + levels 1-2 (validated by
+ * scripts/check-banks.cjs + audit-bank-text.cjs); the other languages only have a placement
+ * bank so far. A language appears in `availableLanguageIds` only once it has a placement AND
+ * three fully-authored level banks. `buildBankQuiz` (quizgen) is tolerant of partial banks: it
+ * serves whatever is authored and the UI merges it over the static fallback per quiz slot.
  */
 export const banksByLanguage: Partial<Record<QuizLanguageId, LanguageBanks>> = {
   arabic: {
     placement: arabicPlacement,
-    levels: [arabicLevel1],
+    levels: [arabicLevel1, arabicLevel2],
   },
   english: {
     placement: englishPlacement,

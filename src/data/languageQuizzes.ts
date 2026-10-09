@@ -1,3 +1,5 @@
+import { buildBankQuiz } from './quizgen'
+
 export interface McqQuestion {
   id: string
   prompt: string
@@ -551,3 +553,28 @@ export const allQuizzes: QuizSet[] = Object.values(languageQuizzes).flatMap((lan
   lang.placement,
   ...lang.levels,
 ])
+
+const mergedCache = new Map<QuizLanguageId, LanguageQuiz>()
+
+/**
+ * The quiz source for the UI: the authored bank (when present) merged over the
+ * static fallback per quiz slot. Authored quizzes win slot-by-slot, so a language
+ * with only a placement bank still serves its full static levels, while arabic
+ * serves the complete authored bank for placement + levels 1-2.
+ */
+export function getQuizData(langId: QuizLanguageId): LanguageQuiz {
+  const cached = mergedCache.get(langId)
+  if (cached) return cached
+  const base = languageQuizzes[langId]
+  const bank = buildBankQuiz(langId)
+  const quiz: LanguageQuiz = {
+    placement: bank.placement ?? base.placement,
+    levels: [
+      bank.levels[0] ?? base.levels[0],
+      bank.levels[1] ?? base.levels[1],
+      bank.levels[2] ?? base.levels[2],
+    ],
+  }
+  mergedCache.set(langId, quiz)
+  return quiz
+}

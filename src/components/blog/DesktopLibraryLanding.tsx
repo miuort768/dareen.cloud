@@ -121,6 +121,34 @@ const FALLBACK_STYLE: TypeStyle = {
   cardBorder: 'border-border hover:border-primary/40',
 }
 
+type SolidTone = 'primary' | 'success' | 'info' | 'warning' | 'error' | 'accent'
+
+// Full saturated fills (text inherits on-<tone>) for the language & curriculum cards.
+const SOLID_TONE: Record<SolidTone, string> = {
+  primary: 'bg-primary text-on-primary hover:bg-primary-hover',
+  success: 'bg-success text-on-success hover:bg-success-hover',
+  info: 'bg-info text-on-info hover:bg-info-hover',
+  warning: 'bg-warning text-on-warning hover:bg-warning-hover',
+  error: 'bg-error text-on-error hover:bg-error-hover',
+  accent: 'bg-accent text-on-accent hover:bg-accent-hover',
+}
+
+const LANGUAGE_TONE: Record<string, SolidTone> = {
+  arabic: 'primary',
+  english: 'success',
+  french: 'info',
+  spanish: 'warning',
+}
+
+const CURRICULUM_TONE: Record<string, SolidTone> = {
+  kuwait: 'primary',
+  qatar: 'success',
+  oman: 'info',
+  jordan: 'warning',
+  uae: 'error',
+  saudi: 'accent',
+}
+
 const getStyleFor = (post: BlogPost) => {
   const ct = (post.contentType || '') as TypeId
   const style = TYPE_STYLES[ct]
@@ -299,11 +327,13 @@ export const DesktopLibraryLanding = ({
                     >
                       <t.icon size={22} className={s.iconColor} />
                     </span>
-                    <span
-                      className={cn('rounded-lg px-2.5 py-1 text-[11px] font-extrabold', s.badge)}
-                    >
-                      {count} مقال
-                    </span>
+                    {t.id !== 'foundation' && (
+                      <span
+                        className={cn('rounded-lg px-2.5 py-1 text-[11px] font-extrabold', s.badge)}
+                      >
+                        {count} مقال
+                      </span>
+                    )}
                   </div>
                   <h3 className="mb-1 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-primary">
                     {t.name}
@@ -632,48 +662,52 @@ export const DesktopLibraryLanding = ({
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {languages.map((lang) => (
-            <button
-              key={lang.id}
-              type="button"
-              onClick={() => {
-                setSearchParams((prev) => {
-                  const next = new URLSearchParams(prev)
-                  next.set('type', 'foundation')
-                  next.set('language', lang.id)
-                  next.set('view', 'language-sections')
-                  ;['curriculum', 'level', 'grade', 'term', 'subject'].forEach((k) =>
-                    next.delete(k),
-                  )
-                  return next
-                })
-              }}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:border-warning hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
-            >
-              <div className="absolute bottom-0 end-0 top-0 w-1 rounded-l-xl bg-warning opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="absolute inset-0 bg-gradient-to-br from-warning-soft to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="relative z-10">
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-warning-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-3">
-                    <Globe size={22} className="text-warning" />
+          {languages.map((lang) => {
+            const tone = LANGUAGE_TONE[lang.id] ?? 'warning'
+            return (
+              <button
+                key={lang.id}
+                type="button"
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    const next = new URLSearchParams(prev)
+                    next.set('type', 'foundation')
+                    next.set('language', lang.id)
+                    next.set('view', 'language-sections')
+                    ;['curriculum', 'level', 'grade', 'term', 'subject'].forEach((k) =>
+                      next.delete(k),
+                    )
+                    return next
+                  })
+                }}
+                className={cn(
+                  'group relative cursor-pointer overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none',
+                  SOLID_TONE[tone],
+                )}
+              >
+                <div className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full bg-white/10" />
+                <div className="pointer-events-none absolute -bottom-12 -start-6 h-32 w-32 rounded-full bg-white/10" />
+                <div className="relative z-10">
+                  <div className="mb-3 flex items-center justify-between">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 transition-all duration-300 group-hover:scale-110">
+                      <Globe size={22} />
+                    </span>
+                  </div>
+                  <h3 className="mb-1 text-base font-extrabold">{lang.name}</h3>
+                  <p className="mb-3 text-[11px] font-medium leading-relaxed opacity-80">
+                    {lang.sub}
+                  </p>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5">
+                    تصفح المحتوى
+                    <ArrowLeft
+                      size={12}
+                      className="transition-transform duration-300 group-hover:-translate-x-1"
+                    />
                   </span>
                 </div>
-                <h3 className="mb-1 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-warning">
-                  {lang.name}
-                </h3>
-                <p className="mb-3 text-[11px] font-medium leading-relaxed text-muted">
-                  {lang.sub}
-                </p>
-                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-warning transition-all duration-300 group-hover:gap-2.5">
-                  تصفح المحتوى
-                  <ArrowLeft
-                    size={12}
-                    className="transition-transform duration-300 group-hover:-translate-x-1"
-                  />
-                </span>
-              </div>
-            </button>
-          ))}
+              </button>
+            )
+          })}
         </div>
       </section>
 
@@ -695,50 +729,54 @@ export const DesktopLibraryLanding = ({
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {curriculums.map((curr) => (
-            <button
-              key={curr.id}
-              type="button"
-              onClick={() => {
-                setSearchParams((prev) => {
-                  const next = new URLSearchParams(prev)
-                  next.set('curriculum', curr.id)
-                  next.set('view', 'grades')
-                  ;['grade', 'term', 'subject'].forEach((k) => next.delete(k))
-                  return next
-                })
-              }}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
-            >
-              <div className="absolute bottom-0 end-0 top-0 w-1 rounded-l-xl bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="relative z-10">
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-3">
-                    <curr.icon size={22} className="text-primary" />
+          {curriculums.map((curr) => {
+            const tone = CURRICULUM_TONE[curr.id] ?? 'primary'
+            return (
+              <button
+                key={curr.id}
+                type="button"
+                onClick={() => {
+                  setSearchParams((prev) => {
+                    const next = new URLSearchParams(prev)
+                    next.set('curriculum', curr.id)
+                    next.set('view', 'grades')
+                    ;['grade', 'term', 'subject'].forEach((k) => next.delete(k))
+                    return next
+                  })
+                }}
+                className={cn(
+                  'group relative cursor-pointer overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none',
+                  SOLID_TONE[tone],
+                )}
+              >
+                <div className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full bg-white/10" />
+                <div className="pointer-events-none absolute -bottom-12 -start-6 h-32 w-32 rounded-full bg-white/10" />
+                <div className="relative z-10">
+                  <div className="mb-3 flex items-center justify-between">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 transition-all duration-300 group-hover:scale-110">
+                      <curr.icon size={22} />
+                    </span>
+                  </div>
+                  <h3 className="mb-1 text-base font-extrabold">{curr.name}</h3>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-extrabold">
+                      حلول الكتب
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-extrabold">
+                      المذكرات
+                    </span>
+                  </div>
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5">
+                    تصفح المحتوى
+                    <ArrowLeft
+                      size={12}
+                      className="transition-transform duration-300 group-hover:-translate-x-1"
+                    />
                   </span>
                 </div>
-                <h3 className="mb-1 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-primary">
-                  {curr.name}
-                </h3>
-                <div className="mt-2 flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-success-soft px-2 py-0.5 text-[10px] font-extrabold text-success">
-                    حلول الكتب
-                  </span>
-                  <span className="inline-flex items-center gap-1 rounded-md bg-info-soft px-2 py-0.5 text-[10px] font-extrabold text-info">
-                    المذكرات
-                  </span>
-                </div>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-extrabold text-primary transition-all duration-300 group-hover:gap-2.5">
-                  تصفح المحتوى
-                  <ArrowLeft
-                    size={12}
-                    className="transition-transform duration-300 group-hover:-translate-x-1"
-                  />
-                </span>
-              </div>
-            </button>
-          ))}
+              </button>
+            )
+          })}
         </div>
       </section>
     </div>

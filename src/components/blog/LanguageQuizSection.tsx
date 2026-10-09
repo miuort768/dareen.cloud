@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Award,
   ArrowLeft,
@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 import { ProgressBar } from '../../shared/components/ui/ProgressBar'
 import { cn } from '../../lib/utils'
-import { languageQuizzes, type QuizLanguageId, type QuizSet } from '../../data/languageQuizzes'
+import { getQuizData, type QuizLanguageId, type QuizSet } from '../../data/languageQuizzes'
 import { languages } from './LibraryConfig'
 
 export interface LanguageQuizSectionProps {
@@ -48,8 +48,11 @@ const suggestedLevelIndex = (correct: number, total: number) => {
 }
 
 export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) => {
-  const quizData = languageQuizzes[languageId as QuizLanguageId]
   const language = languages.find((l) => l.id === languageId)
+  const quizData = useMemo(
+    () => (language ? getQuizData(languageId as QuizLanguageId) : undefined),
+    [language, languageId],
+  )
 
   const [openId, setOpenId] = useState<string | null>(null)
   const [results, setResults] = useState<Record<string, QuizResult>>({})

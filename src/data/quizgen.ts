@@ -181,6 +181,32 @@ export function getLanguageQuizzes(langId: QuizLanguageId): LanguageQuiz {
   return quiz
 }
 
+export interface BankQuiz {
+  placement?: QuizSet
+  levels: QuizSet[]
+}
+
+const bankCache = new Map<QuizLanguageId, BankQuiz>()
+
+/**
+ * Tolerant bank build: serves whatever is authored for a language without the 3-level
+ * completeness guard. Used by the UI to merge authored quizzes over the static fallback,
+ * so partial banks (e.g. a placement only, or levels 1-2) are usable immediately.
+ */
+export function buildBankQuiz(langId: QuizLanguageId): BankQuiz {
+  const cached = bankCache.get(langId)
+  if (cached) return cached
+  const banks: LanguageBanks | undefined = banksByLanguage[langId]
+  const quiz: BankQuiz = banks
+    ? {
+        placement: buildLevel(langId, banks.placement),
+        levels: banks.levels.map((level) => buildLevel(langId, level)),
+      }
+    : { levels: [] }
+  bankCache.set(langId, quiz)
+  return quiz
+}
+
 export function getQuizQuestions(langId: QuizLanguageId, quizId: string): McqQuestion[] {
   const quiz = getLanguageQuizzes(langId)
   if (quiz.placement.id === quizId) return quiz.placement.questions

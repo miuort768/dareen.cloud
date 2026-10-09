@@ -204,19 +204,29 @@ export const MobileHero = ({
     )
   }
 
+  const bannerSteps = buildSteps({
+    view,
+    typeName: currentTypeName,
+    curriculumName: currentCurriculumName,
+    levelName: '',
+    gradeLabel: '',
+    termLabel: '',
+  })
+  const bannerCount = view === 'languages' ? languages.length : gridItems.length
+  const bannerStats = [
+    {
+      value: String(bannerCount),
+      label: view === 'curriculums' ? 'منهج' : view === 'languages' ? 'لغات' : 'مراحل',
+    },
+    { value: String(bannerSteps.length), label: 'خطوات' },
+  ]
+
   // For other views (curriculums, grades, languages), show selection grid
   return (
     <div className="pb-6">
       <SelectionHeroBanner
         className="mb-4"
-        steps={buildSteps({
-          view,
-          typeName: currentTypeName,
-          curriculumName: currentCurriculumName,
-          levelName: '',
-          gradeLabel: '',
-          termLabel: '',
-        })}
+        steps={bannerSteps}
         title={
           view === 'curriculums' ? (
             <>
@@ -240,6 +250,7 @@ export const MobileHero = ({
               : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`
         }
         whatsappNumber={whatsappNumber}
+        stats={bannerStats}
       />
 
       <div className="mb-4 grid grid-cols-2 gap-2.5">
@@ -523,19 +534,29 @@ export const DesktopHero = ({
     )
   }
 
+  const bannerSteps = buildSteps({
+    view,
+    typeName: currentTypeName,
+    curriculumName: currentCurriculumName,
+    levelName: '',
+    gradeLabel: '',
+    termLabel: '',
+  })
+  const bannerCount = view === 'languages' ? languages.length : gridItems.length
+  const bannerStats = [
+    {
+      value: String(bannerCount),
+      label: view === 'curriculums' ? 'منهج' : view === 'languages' ? 'لغات' : 'مراحل',
+    },
+    { value: String(bannerSteps.length), label: 'خطوات' },
+  ]
+
   // For other views (curriculums, grades, languages)
   return (
     <div className="mx-auto w-full">
       {/* Banner */}
       <SelectionHeroBanner
-        steps={buildSteps({
-          view,
-          typeName: currentTypeName,
-          curriculumName: currentCurriculumName,
-          levelName: '',
-          gradeLabel: '',
-          termLabel: '',
-        })}
+        steps={bannerSteps}
         title={
           view === 'curriculums' ? (
             <>
@@ -559,6 +580,7 @@ export const DesktopHero = ({
               : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`
         }
         whatsappNumber={whatsappNumber}
+        stats={bannerStats}
       />
 
       {/* Selection grid */}

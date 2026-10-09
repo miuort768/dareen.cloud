@@ -106,6 +106,22 @@ export const SelectionGrid = ({
   const isClassrooms = view === 'classrooms'
   const isTerms = view === 'terms'
 
+  const heroStats =
+    view === 'classrooms'
+      ? [
+          { value: String(currentClassrooms.length), label: 'صفوف' },
+          { value: String(filteredCount), label: 'ملف' },
+        ]
+      : view === 'terms'
+        ? [
+            { value: '٢', label: 'ترم' },
+            { value: String(filteredCount), label: 'ملف' },
+          ]
+        : [
+            { value: String(currentSubjects.length), label: 'مواد' },
+            { value: String(filteredCount), label: 'ملف' },
+          ]
+
   if (isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
     return (
       <div className="pb-6">
@@ -115,6 +131,7 @@ export const SelectionGrid = ({
           title={heroTitle}
           description={heroDescription}
           whatsappNumber={whatsappNumber}
+          stats={heroStats}
         />
 
         <div className="grid grid-cols-2 gap-2.5">
@@ -203,6 +220,7 @@ export const SelectionGrid = ({
           title={heroTitle}
           description={heroDescription}
           whatsappNumber={whatsappNumber}
+          stats={heroStats}
         />
 
         <div className="mb-6 mt-8 flex flex-wrap justify-center gap-4">
