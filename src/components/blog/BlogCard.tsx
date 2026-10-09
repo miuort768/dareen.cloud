@@ -192,28 +192,31 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
         onClick={() => window.scrollTo(0, 0)}
         className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-elevation-1"
       >
-        <div
-          className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-surface`}
-        >
-          <BlogCoverImage
-            src={post.coverImage}
-            alt={post.title}
-            className="h-full w-full"
-            imgClassName={`${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'} transition-transform duration-500`}
-          />
-          <div
-            className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t ${isCoursesStyle ? 'from-card' : 'from-black/30'} to-transparent`}
-          />
-          <div className="absolute start-3 top-3 z-10">
-            <span
-              className={`rounded-xl px-2.5 py-1 text-[10px] font-extrabold ${isCoursesStyle ? 'bg-gradient-to-br from-error to-primary text-on-primary' : 'border border-border bg-card text-primary backdrop-blur-sm'}`}
-            >
-              {subjectNameMap[post.subject ?? ''] || post.category}
-            </span>
+        {!isCoursesStyle && (
+          <div className="relative aspect-video overflow-hidden bg-surface">
+            <BlogCoverImage
+              src={post.coverImage}
+              alt={post.title}
+              className="h-full w-full"
+              imgClassName="group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent" />
+            <div className="absolute start-3 top-3 z-10">
+              <span className="rounded-xl border border-border bg-card px-2.5 py-1 text-[10px] font-extrabold text-primary backdrop-blur-sm">
+                {subjectNameMap[post.subject ?? ''] || post.category}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="flex flex-1 flex-col p-4">
+          {isCoursesStyle && (
+            <div className="mb-3 flex items-center gap-2">
+              <span className="rounded-xl bg-gradient-to-br from-error to-primary px-2.5 py-1 text-[10px] font-extrabold text-on-primary">
+                {subjectNameMap[post.subject ?? ''] || post.category}
+              </span>
+            </div>
+          )}
           <div className="mb-2 flex items-center gap-3 text-[11px] font-bold text-muted">
             <span className="flex items-center gap-1">
               <Calendar size={11} />
