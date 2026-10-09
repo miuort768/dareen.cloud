@@ -203,12 +203,6 @@ export const Blog = () => {
           if (selectedGrade && p.grade !== selectedGrade) return false
           if (selectedTerm && p.term && p.term !== selectedTerm) return false
           if (selectedSubject && p.subject !== selectedSubject) return false
-          if (
-            selectedLanguage &&
-            p.category &&
-            !p.category.toLowerCase().includes(selectedLanguage)
-          )
-            return false
           return true
         })
       : posts
@@ -238,19 +232,6 @@ export const Blog = () => {
           ? languages.map((l) => ({ ...l, icon: l.icon }))
           : currentGrades
 
-  const [libraryTheme] = useState(() => {
-    try {
-      return localStorage.getItem('library-theme') || 'light'
-    } catch (e) {
-      console.warn(e)
-      return 'light'
-    }
-  })
-  useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark')
-    document.documentElement.classList.add(libraryTheme)
-  }, [libraryTheme])
-
   const currentLanguageName = languages.find((l) => l.id === selectedLanguage)?.name || ''
 
   const breadcrumbItems = [
@@ -259,7 +240,7 @@ export const Blog = () => {
       ? [
           {
             label: currentTypeName,
-            onClick: () => (isDirectType ? () => setView('types') : () => setView('curriculums')),
+            onClick: () => setView(isDirectType ? 'types' : 'curriculums'),
           },
         ]
       : []),

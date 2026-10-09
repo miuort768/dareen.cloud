@@ -38,6 +38,12 @@ export const MobileHero = ({
   const libraryWhatsapp = useSettingsStore((s) => s.libraryWhatsapp)
   const libraryTelegram = useSettingsStore((s) => s.libraryTelegram)
   const whatsappNumber = adminPhone.replace(/\D/g, '')
+  const libraryWhatsappDigits = (libraryWhatsapp || '').replace(/\D/g, '')
+  const hasLibraryWhatsapp = libraryWhatsappDigits.length > 0
+  const hasLibraryTelegram = (libraryTelegram || '').trim().length > 0
+  const telegramHref = libraryTelegram.startsWith('http')
+    ? libraryTelegram
+    : `https://t.me/${libraryTelegram}`
 
   if (view === 'types') {
     return (
@@ -62,28 +68,28 @@ export const MobileHero = ({
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <a
-                  href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/10 transition-all active:scale-95"
-                  aria-label="واتساب"
-                >
-                  <MessageCircle size={13} className="text-white/70" />
-                </a>
-                <a
-                  href={
-                    libraryTelegram.startsWith('http')
-                      ? libraryTelegram
-                      : `https://t.me/${libraryTelegram}`
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/10 transition-all active:scale-95"
-                  aria-label="تيليجرام"
-                >
-                  <Send size={13} className="text-white/70" />
-                </a>
+                {hasLibraryWhatsapp && (
+                  <a
+                    href={`https://wa.me/${libraryWhatsappDigits}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/10 transition-all active:scale-95"
+                    aria-label="واتساب"
+                  >
+                    <MessageCircle size={13} className="text-white/70" />
+                  </a>
+                )}
+                {hasLibraryTelegram && (
+                  <a
+                    href={telegramHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/10 transition-all active:scale-95"
+                    aria-label="تيليجرام"
+                  >
+                    <Send size={13} className="text-white/70" />
+                  </a>
+                )}
               </div>
             </div>
 
@@ -130,28 +136,28 @@ export const MobileHero = ({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <a
-              href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أريد الاستفسار عن المكتبة')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-[11px] font-extrabold text-on-success transition-all hover:bg-success-hover active:scale-[0.97]"
-            >
-              <MessageCircle size={13} />
-              واتساب
-            </a>
-            <a
-              href={
-                libraryTelegram.startsWith('http')
-                  ? libraryTelegram
-                  : `https://t.me/${libraryTelegram}`
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-info py-2.5 text-[11px] font-extrabold text-on-info transition-all hover:bg-info-hover active:scale-[0.97]"
-            >
-              <Send size={13} />
-              تيليجرام
-            </a>
+            {hasLibraryWhatsapp && (
+              <a
+                href={`https://wa.me/${libraryWhatsappDigits}?text=${encodeURIComponent('السلام عليكم، أريد الاستفسار عن المكتبة')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-[11px] font-extrabold text-on-success transition-all hover:bg-success-hover active:scale-[0.97]"
+              >
+                <MessageCircle size={13} />
+                واتساب
+              </a>
+            )}
+            {hasLibraryTelegram && (
+              <a
+                href={telegramHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-info py-2.5 text-[11px] font-extrabold text-on-info transition-all hover:bg-info-hover active:scale-[0.97]"
+              >
+                <Send size={13} />
+                تيليجرام
+              </a>
+            )}
           </div>
         </div>
 

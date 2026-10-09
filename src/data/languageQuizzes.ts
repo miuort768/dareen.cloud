@@ -360,7 +360,7 @@ const frenchLevel2: QuizSet = {
   description: 'تصريف الأفعال والقواعد المتوسطة',
   questions: [
     q('fr-level2-1', 'Nous ___ français. (speak)', ['parlons', 'parlez', 'parlent', 'parle'], 0),
-    q('fr-level2-2', 'Je ___ mes devoirs. (do)', ['fais', 'faits', 'font', 'font'], 0),
+    q('fr-level2-2', 'Je ___ mes devoirs. (do)', ['fais', 'fait', 'font', 'faisons'], 0),
     q('fr-level2-3', 'المؤنث من "un ami":', ['une amie', 'un amie', 'une ami', 'un amies'], 0),
     q(
       'fr-level2-4',

@@ -2,7 +2,6 @@ import type {
   BankTemplate,
   ItemRow,
   LanguageBanks,
-  LanguageQuiz,
   LevelBank,
   McqQuestion,
   QuizLanguageId,
@@ -159,28 +158,6 @@ function pickWrongs(
 
 /* --------------------------------- public API --------------------------------- */
 
-const cache = new Map<QuizLanguageId, LanguageQuiz>()
-
-export function getLanguageQuizzes(langId: QuizLanguageId): LanguageQuiz {
-  const cached = cache.get(langId)
-  if (cached) return cached
-
-  const banks: LanguageBanks | undefined = banksByLanguage[langId]
-  if (!banks) throw new Error(`[quizgen] no bank data for language "${langId}"`)
-  const level0: LevelBank | undefined = banks.levels[0]
-  const level1: LevelBank | undefined = banks.levels[1]
-  const level2: LevelBank | undefined = banks.levels[2]
-  if (!level0 || !level1 || !level2)
-    throw new Error(`[quizgen] language "${langId}" must define 3 levels`)
-
-  const quiz: LanguageQuiz = {
-    placement: buildLevel(langId, banks.placement),
-    levels: [buildLevel(langId, level0), buildLevel(langId, level1), buildLevel(langId, level2)],
-  }
-  cache.set(langId, quiz)
-  return quiz
-}
-
 export interface BankQuiz {
   placement?: QuizSet
   levels: QuizSet[]
@@ -205,11 +182,4 @@ export function buildBankQuiz(langId: QuizLanguageId): BankQuiz {
     : { levels: [] }
   bankCache.set(langId, quiz)
   return quiz
-}
-
-export function getQuizQuestions(langId: QuizLanguageId, quizId: string): McqQuestion[] {
-  const quiz = getLanguageQuizzes(langId)
-  if (quiz.placement.id === quizId) return quiz.placement.questions
-  const level = quiz.levels.find((l) => l.id === quizId)
-  return level ? level.questions : []
 }

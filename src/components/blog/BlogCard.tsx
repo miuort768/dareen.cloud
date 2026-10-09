@@ -62,9 +62,7 @@ export const FoundationCard = ({
   const watchLink = post.watchLink
   const borderAccent = cardStyle.gradient.includes('warning')
     ? 'border-s-warning'
-    : cardStyle.gradient.includes('primary')
-      ? 'border-s-primary'
-      : 'border-s-primary'
+    : 'border-s-primary'
 
   return (
     <div className="duration-500 animate-in zoom-in-95" style={{ animationDelay: `${i * 60}ms` }}>
@@ -192,7 +190,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
       <Link
         to={`/books/${post.slug}`}
         onClick={() => window.scrollTo(0, 0)}
-        className="group block flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-elevation-1"
+        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-elevation-1"
       >
         <div
           className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-surface`}
