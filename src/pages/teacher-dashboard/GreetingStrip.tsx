@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import { CalendarDays, CheckCircle2, Sparkles, Users, UserRound } from 'lucide-react'
+import { CalendarDays, CheckCircle2, Users, UserRound } from 'lucide-react'
 import { CountUp } from '../../shared/components/CountUp'
 import { hasMonthSessions, monthCompletionPercent } from './heroMetrics'
 
@@ -11,7 +11,6 @@ export interface GreetingStripProps {
   todayCount: number
   monthCompleted: number
   monthTotal: number
-  points?: number
 }
 
 const getGreeting = (): string => {
@@ -33,7 +32,6 @@ export const GreetingStrip = ({
   todayCount,
   monthCompleted,
   monthTotal,
-  points,
 }: GreetingStripProps) => {
   const firstName = (name || 'المعلمة').split(' ')[0] || 'المعلمة'
   const today = format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })
@@ -59,7 +57,7 @@ export const GreetingStrip = ({
       />
 
       <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
               <UserRound size={13} className="text-primary" />
@@ -141,12 +139,6 @@ export const GreetingStrip = ({
             <CheckCircle2 size={11} />
             {showRing ? `${monthCompleted} من ${monthTotal}` : 'لا إنجاز بعد'}
           </span>
-          {typeof points === 'number' && points > 0 && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
-              <Sparkles size={11} />
-              {points} نقطة
-            </span>
-          )}
         </div>
       </div>
     </section>

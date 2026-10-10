@@ -82,7 +82,6 @@ export const TeacherDashboardMobile = ({
           todayCount={stats.todaySessions}
           monthCompleted={stats.monthCompletedSessions}
           monthTotal={stats.monthTotalSessions}
-          points={stats.teacherPoints}
         />
 
         <ModernAnnouncements />
@@ -100,11 +99,9 @@ export const TeacherDashboardMobile = ({
           </div>
         )}
 
-        <DashboardStats stats={stats} isTeacher={true} />
+        <DashboardStats stats={stats} isTeacher={true} carousel />
 
-        <SectionCard>
-          <QuickActions showQuickLinks={true} />
-        </SectionCard>
+        <QuickActions showQuickLinks={true} />
 
         <SectionCard>
           <SmartNotifications

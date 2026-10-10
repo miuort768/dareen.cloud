@@ -13,7 +13,6 @@ import { TeacherSessionTimeline } from '../../features/dashboard/components/Teac
 import { StudentQuickBrief } from '../../features/dashboard/components/StudentQuickBrief'
 import { MonthlyReportPreview } from '../../features/dashboard/components/MonthlyReportPreview'
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
-import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
@@ -63,7 +62,6 @@ export const TeacherDashboardTablet = ({
             todayCount={stats.todaySessions}
             monthCompleted={stats.monthCompletedSessions}
             monthTotal={stats.monthTotalSessions}
-            points={stats.teacherPoints}
           />
         </motion.div>
 
@@ -98,7 +96,7 @@ export const TeacherDashboardTablet = ({
             />
           </SectionCard>
           <SectionCard delay={0.1}>
-            <QuickActions showQuickLinks={true} />
+            <TasksAndRequests tasks={tasks} limit={3} />
           </SectionCard>
         </div>
 

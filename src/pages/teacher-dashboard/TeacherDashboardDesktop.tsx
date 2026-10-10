@@ -13,7 +13,6 @@ import { TeacherSessionTimeline } from '../../features/dashboard/components/Teac
 import { StudentQuickBrief } from '../../features/dashboard/components/StudentQuickBrief'
 import { MonthlyReportPreview } from '../../features/dashboard/components/MonthlyReportPreview'
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
-import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
@@ -62,7 +61,6 @@ export const TeacherDashboardDesktop = ({
           todayCount={stats.todaySessions}
           monthCompleted={stats.monthCompletedSessions}
           monthTotal={stats.monthTotalSessions}
-          points={stats.teacherPoints}
         />
       </motion.div>
 
@@ -71,74 +69,8 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       <motion.div {...fadeUp(0.04)}>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-          <motion.div {...fadeUp(0.04)} className="lg:col-span-7">
-            <WeekStrip counts={weekCounts} />
-          </motion.div>
-
-          <div className="lg:col-span-5">
-            {nextSession ? (
-              <NextSessionHero timeline={timeline} />
-            ) : (
-              <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-soft">
-                <EmptyState
-                  icon={Calendar}
-                  title="لا توجد حصة قادمة اليوم"
-                  subtitle="يمكنك بدء حصة مباشرة متى شئت"
-                  compact
-                />
-              </div>
-            )}
-          </div>
-        </div>
+        <DashboardStats stats={stats} isTeacher={true} />
       </motion.div>
-
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
-        <div className="space-y-5 lg:col-span-8">
-          <motion.div {...fadeUp(0.08)}>
-            <DashboardStats stats={stats} isTeacher={true} />
-          </motion.div>
-
-          <SectionCard delay={0.1}>
-            <LiveSessions />
-          </SectionCard>
-
-          {timeline.length > 0 && (
-            <SectionCard delay={0.14}>
-              <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
-            </SectionCard>
-          )}
-
-          <SectionCard delay={0.18}>
-            <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-          </SectionCard>
-        </div>
-
-        <div className="space-y-5 lg:col-span-4">
-          <SectionCard delay={0.12}>
-            <QuickActions showQuickLinks={true} />
-          </SectionCard>
-
-          <motion.div {...fadeUp(0.16)}>
-            <SmartNotifications
-              lowBalanceStudents={lowBalanceStudents}
-              focusStudents={focusStudents || []}
-            />
-          </motion.div>
-
-          <SectionCard delay={0.22}>
-            <TasksAndRequests tasks={tasks} limit={3} />
-          </SectionCard>
-
-          <SectionCard delay={0.24}>
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          </SectionCard>
-        </div>
-      </div>
 
       {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
         <StudentQuickBrief
