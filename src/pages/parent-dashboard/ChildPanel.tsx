@@ -182,21 +182,29 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               return (
                 <div
                   key={en.id || `en-${idx}`}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-soft transition-colors duration-slow"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors duration-slow"
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="flex min-w-0 items-center gap-2 text-xs font-black text-main">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-3">
                       <span
                         className={cn(
-                          'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
+                          'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ring-1 ring-inset ring-border',
                           accent.tile,
                           accent.text,
                         )}
                       >
-                        <BookMarked size={16} />
+                        <BookMarked size={18} />
                       </span>
-                      <span className="truncate">{en.subject}</span>
-                    </p>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-black text-main">{en.subject}</p>
+                        {teacherName && (
+                          <p className="mt-0.5 flex items-center gap-1 text-[11px] font-bold text-muted">
+                            <User size={11} className={cn('shrink-0', accent.text)} />
+                            <span className="truncate">{teacherName}</span>
+                          </p>
+                        )}
+                      </div>
+                    </div>
                     {frozen ? (
                       <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2.5 py-1 text-[10px] font-bold text-muted">
                         <Snowflake size={10} /> مجمّدة
@@ -213,23 +221,20 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                     )}
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-black text-muted">المنهج</span>
-                    <span className="flex items-baseline gap-1 text-xs font-black tabular-nums text-main">
-                      {used}
-                      <span className="text-[10px] font-bold text-muted">/ {total} حصة</span>
-                    </span>
-                  </div>
-                  <div className="mt-2">
+                  <div className="mt-4">
+                    <div className="mb-1.5 flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-black text-muted">المنهج</span>
+                      <span className="text-xs font-black tabular-nums text-main">
+                        {used}
+                        <span className="text-[10px] font-bold text-muted"> / {total} حصة</span>
+                      </span>
+                    </div>
                     {frozen ? (
                       <div className="h-1.5 rounded-full bg-divider" />
                     ) : (
                       <ProgressBar value={pct} variant={accent.bar} size="sm" animate />
                     )}
                   </div>
-                  {teacherName && (
-                    <p className="mt-3 truncate text-[11px] font-bold text-muted">{teacherName}</p>
-                  )}
                 </div>
               )
             })}

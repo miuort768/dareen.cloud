@@ -111,7 +111,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
         <ol
           className={cn(
             'grid gap-3',
-            compact ? 'grid-cols-2 gap-2.5' : 'grid-cols-1 lg:grid-cols-2',
+            compact ? 'grid-cols-1 gap-2.5' : 'grid-cols-1 lg:grid-cols-2',
           )}
           role="list"
         >
@@ -122,39 +122,47 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
               <li key={item.id}>
                 <div
                   className={cn(
-                    'h-full rounded-2xl border border-s-4 border-border bg-card shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
-                    compact ? 'rounded-2xl p-3' : 'p-5',
+                    'h-full border border-s-4 border-border bg-card shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
+                    compact ? 'rounded-none p-3.5' : 'rounded-2xl p-5',
                     meta.bar,
                     item.status === 'cancelled' && 'opacity-70',
                     item.status === 'live' && 'border-s-error bg-error-soft',
                   )}
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className={cn('flex items-center', compact ? 'gap-3' : 'gap-2.5')}>
                     <span
                       className={cn(
-                        'flex shrink-0 items-center justify-center rounded-lg',
-                        compact ? 'h-8 w-8' : 'h-10 w-10 rounded-xl',
+                        'flex shrink-0 items-center justify-center',
+                        compact ? 'h-9 w-9 rounded-lg' : 'h-10 w-10 rounded-xl',
                         meta.tile,
                       )}
                       aria-hidden="true"
                     >
-                      <Icon size={compact ? 14 : 18} />
+                      <Icon size={compact ? 15 : 18} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p
-                        className={cn(
-                          'truncate font-black text-main',
-                          compact ? 'text-[11px]' : 'text-xs',
+                      <div className={cn(compact ? 'flex items-center gap-2' : 'block')}>
+                        <p
+                          className={cn(
+                            'truncate font-black text-main',
+                            compact ? 'text-sm' : 'text-xs',
+                          )}
+                        >
+                          {item.studentName}
+                        </p>
+                        {compact && (
+                          <span
+                            className={cn(
+                              'inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-black',
+                              meta.chip,
+                            )}
+                          >
+                            <Icon size={9} />
+                            {meta.label}
+                          </span>
                         )}
-                      >
-                        {item.studentName}
-                      </p>
-                      <p
-                        className={cn(
-                          'truncate font-bold text-muted',
-                          compact ? 'text-[10px]' : 'text-[11px]',
-                        )}
-                      >
+                      </div>
+                      <p className="truncate text-[11px] font-bold text-muted">
                         {item.subject}
                         {item.teacher ? ` · ${item.teacher}` : ''}
                       </p>
@@ -163,7 +171,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                       <span
                         className={cn(
                           'font-dash font-black tabular-nums leading-none text-main',
-                          compact ? 'px-2 py-1 text-sm' : 'px-2.5 py-1.5 text-base',
+                          compact ? 'px-2.5 py-1 text-sm' : 'px-2.5 py-1.5 text-base',
                         )}
                       >
                         {item.hour}
@@ -174,16 +182,17 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                     </div>
                   </div>
 
-                  <span
-                    className={cn(
-                      'mt-2 inline-flex items-center gap-1 rounded-full font-black',
-                      compact ? 'px-1.5 py-0.5 text-[9px]' : 'mt-2.5 px-2 py-0.5 text-[10px]',
-                      meta.chip,
-                    )}
-                  >
-                    <Icon size={compact ? 9 : 10} />
-                    {meta.label}
-                  </span>
+                  {!compact && (
+                    <span
+                      className={cn(
+                        'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black',
+                        meta.chip,
+                      )}
+                    >
+                      <Icon size={10} />
+                      {meta.label}
+                    </span>
+                  )}
 
                   {(item.topics || item.homework || item.notes) && (
                     <div className="mt-2 space-y-1.5">
