@@ -1,22 +1,11 @@
 import { useState } from 'react'
-import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
-import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
-import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
-import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
-import { TasksAndRequests } from '../../features/dashboard/components/TasksAndRequests'
 import { ModernAnnouncements } from '../../features/dashboard/components/ModernAnnouncements'
-import { TopAttendanceStudents } from '../../features/dashboard/components/TopAttendanceStudents'
-import { TeacherSessionTimeline } from '../../features/dashboard/components/TeacherSessionTimeline'
 import { StudentQuickBrief } from '../../features/dashboard/components/StudentQuickBrief'
 import { MonthlyReportPreview } from '../../features/dashboard/components/MonthlyReportPreview'
-import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
-import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
-import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
-import { WeekStrip } from './WeekStrip'
 import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { Session } from '../../types'
 import type { TeacherDashboardShellProps } from './types'
@@ -25,11 +14,6 @@ export const TeacherDashboardDesktop = ({
   currentUser,
   stats,
   rawSessions,
-  tasks,
-  lowBalanceStudents,
-  focusStudents,
-  timeline,
-  weekCounts,
 }: TeacherDashboardShellProps) => {
   const [briefingStudent, setBriefingStudent] = useState<{
     id?: string
@@ -49,8 +33,6 @@ export const TeacherDashboardDesktop = ({
     sessionsCompleted: number
     lastNotes: string[]
   } | null>(null)
-
-  const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
 
   return (
     <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-5 sm:px-4 md:px-6" dir="rtl">

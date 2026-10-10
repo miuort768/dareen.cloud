@@ -59,7 +59,6 @@ const StatsCarousel = ({ cards }: { cards: StatCardData[] }) => {
 
   const card = cards[index]
   if (!card) return null
-  const Icon = card.icon
   const isLast = index === count - 1
 
   return (
