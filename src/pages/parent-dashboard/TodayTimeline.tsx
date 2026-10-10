@@ -5,6 +5,8 @@ import { cn } from '../../lib/utils'
 
 interface TodayTimelineProps {
   items: TodayTimelineItem[]
+  /** نسخة مصغّرة بشبكة عمودين للعمود الجانبي على الكمبيوتر */
+  compact?: boolean
 }
 
 const STATUS_META: Record<
@@ -70,18 +72,30 @@ const Detail = ({
   </div>
 )
 
-export const TodayTimeline = ({ items }: TodayTimelineProps) => {
+export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) => {
   return (
     <section aria-label="حصص اليوم">
-      <div className="mb-4 flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
-          <CalendarCheck size={18} />
+      <div className={cn('flex items-center gap-3', compact ? 'mb-3' : 'mb-4')}>
+        <span
+          className={cn(
+            'flex shrink-0 items-center justify-center bg-primary-soft text-primary',
+            compact ? 'h-9 w-9 rounded-lg' : 'h-10 w-10 rounded-xl',
+          )}
+        >
+          <CalendarCheck size={compact ? 16 : 18} />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-black text-main">حصص اليوم</h3>
-          <p className="text-[11px] font-bold text-muted">متابعة جلسات أبنائك لهذا اليوم</p>
+          <h3 className={cn('font-black text-main', compact ? 'text-xs' : 'text-sm')}>حصص اليوم</h3>
+          <p className={cn('font-bold text-muted', compact ? 'text-[10px]' : 'text-[11px]')}>
+            متابعة جلسات أبنائك لهذا اليوم
+          </p>
         </div>
-        <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
+        <span
+          className={cn(
+            'shrink-0 rounded-full bg-primary-soft font-black tabular-nums text-primary',
+            compact ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-[11px]',
+          )}
+        >
           {items.length} {items.length === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
@@ -94,7 +108,13 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
           <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة لأبنائك</p>
         </div>
       ) : (
-        <ol className="grid grid-cols-1 gap-3 lg:grid-cols-2" role="list">
+        <ol
+          className={cn(
+            'grid gap-3',
+            compact ? 'grid-cols-2 gap-2.5' : 'grid-cols-1 lg:grid-cols-2',
+          )}
+          role="list"
+        >
           {items.map((item) => {
             const meta = STATUS_META[item.status] ?? STATUS_META.upcoming
             const Icon = meta.icon
@@ -102,31 +122,50 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
               <li key={item.id}>
                 <div
                   className={cn(
-                    'h-full rounded-3xl border border-s-4 border-border bg-card p-5 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
+                    'h-full rounded-2xl border border-s-4 border-border bg-card shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
+                    compact ? 'rounded-2xl p-3' : 'p-5',
                     meta.bar,
                     item.status === 'cancelled' && 'opacity-70',
                     item.status === 'live' && 'border-s-error bg-error-soft',
                   )}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     <span
                       className={cn(
-                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
+                        'flex shrink-0 items-center justify-center rounded-lg',
+                        compact ? 'h-8 w-8' : 'h-10 w-10 rounded-xl',
                         meta.tile,
                       )}
                       aria-hidden="true"
                     >
-                      <Icon size={18} />
+                      <Icon size={compact ? 14 : 18} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-black text-main">{item.studentName}</p>
-                      <p className="truncate text-[11px] font-bold text-muted">
+                      <p
+                        className={cn(
+                          'truncate font-black text-main',
+                          compact ? 'text-[11px]' : 'text-xs',
+                        )}
+                      >
+                        {item.studentName}
+                      </p>
+                      <p
+                        className={cn(
+                          'truncate font-bold text-muted',
+                          compact ? 'text-[10px]' : 'text-[11px]',
+                        )}
+                      >
                         {item.subject}
                         {item.teacher ? ` · ${item.teacher}` : ''}
                       </p>
                     </div>
-                    <div className="inline-flex shrink-0 flex-col items-center justify-center rounded-lg border border-border bg-surface px-2.5 py-1.5 text-center">
-                      <span className="font-dash text-base font-black tabular-nums leading-none text-main">
+                    <div className="inline-flex shrink-0 flex-col items-center justify-center rounded-lg border border-border bg-surface text-center">
+                      <span
+                        className={cn(
+                          'font-dash font-black tabular-nums leading-none text-main',
+                          compact ? 'px-2 py-1 text-sm' : 'px-2.5 py-1.5 text-base',
+                        )}
+                      >
                         {item.hour}
                       </span>
                       <span className="mt-0.5 text-[9px] font-bold text-muted">
@@ -137,16 +176,17 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
 
                   <span
                     className={cn(
-                      'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black',
+                      'mt-2 inline-flex items-center gap-1 rounded-full font-black',
+                      compact ? 'px-1.5 py-0.5 text-[9px]' : 'mt-2.5 px-2 py-0.5 text-[10px]',
                       meta.chip,
                     )}
                   >
-                    <Icon size={10} />
+                    <Icon size={compact ? 9 : 10} />
                     {meta.label}
                   </span>
 
                   {(item.topics || item.homework || item.notes) && (
-                    <div className="mt-2.5 space-y-1.5">
+                    <div className="mt-2 space-y-1.5">
                       {item.status === 'done' && item.topics && (
                         <Detail
                           icon={BookOpen}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Clock,
@@ -235,13 +235,22 @@ const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => 
             {event.time}
           </span>
         </div>
-        <p className="truncate text-[10px] font-bold leading-tight text-main">
+        <p className="truncate text-[10px] font-black leading-tight text-main">
           {event.studentName}
         </p>
-        <p className="mt-0.5 flex items-center gap-1 truncate text-[9px] text-muted">
-          <UserRound size={8} className="opacity-60" />
-          {event.teacherName || event.studentGrade}
-        </p>
+        <div className="mt-1 flex min-w-0 items-center gap-1.5">
+          <span className="flex min-w-0 items-center gap-1 truncate text-[9px] font-bold text-muted">
+            <UserRound size={8} className="opacity-60" />
+            <span className="truncate">{event.teacherName || event.studentGrade}</span>
+          </span>
+          {event.teacherName && event.studentGrade && (
+            <span
+              className={`ms-auto shrink-0 rounded-sm px-1 py-px text-[8px] font-black ${c.soft} ${c.text}`}
+            >
+              {event.studentGrade}
+            </span>
+          )}
+        </div>
       </div>
     </motion.div>
   )
@@ -279,7 +288,7 @@ const MultiCard = ({
   </motion.div>
 )
 
-const CurrentTimeLine = () => {
+const CurrentTimeLine = ({ containerHeight }: { containerHeight: number }) => {
   const [now, setNow] = useState(new Date())
   useEffect(() => {
     const interval = setInterval(() => setNow(new Date()), 60000)
@@ -291,14 +300,17 @@ const CurrentTimeLine = () => {
   const startMinutes = 8 * 60
   const endMinutes = 22 * 60
   const pct = Math.min(Math.max((totalMinutes - startMinutes) / (endMinutes - startMinutes), 0), 1)
-  if (pct <= 0 || pct >= 1) return null
+  if (pct <= 0 || pct >= 1 || containerHeight <= 0) return null
   const nowLabel = now.toLocaleTimeString('ar-EG', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
   })
   return (
-    <div className="pointer-events-none absolute inset-x-0 z-20" style={{ top: `${pct * 100}%` }}>
+    <div
+      className="pointer-events-none absolute inset-x-0 z-20"
+      style={{ top: `${(pct * containerHeight).toFixed(1)}px` }}
+    >
       <div className="flex items-center gap-1.5">
         <div className="h-2 w-2 shrink-0 rounded-full bg-error" />
         <div className="h-px flex-1 bg-error" />
@@ -329,6 +341,27 @@ export const ScheduleGrid = ({
 
   const [multiModal, setMultiModal] = useState<ScheduleEvent[] | null>(null)
 
+  const slotsRef = useRef<HTMLDivElement>(null)
+  const [slotsHeight, setSlotsHeight] = useState(0)
+  useEffect(() => {
+    const measure = () => {
+      if (slotsRef.current) setSlotsHeight(slotsRef.current.offsetHeight)
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    if (slotsRef.current) observer.observe(slotsRef.current)
+    window.addEventListener('resize', measure)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
+
+  const dayEventCounts = DAYS_OF_WEEK.reduce<Record<string, number>>((acc, day) => {
+    acc[day] = filteredEvents.filter((e) => e.day === day).length
+    return acc
+  }, {})
+
   return (
     <>
       {/* Multi-event modal */}
@@ -348,94 +381,114 @@ export const ScheduleGrid = ({
           <div className="relative min-w-[1000px]">
             {/* Sticky header row */}
             <div className="shadow-xs sticky top-0 z-30 grid grid-cols-[100px_repeat(7,1fr)] border-b border-border bg-surface">
-              <div className="sticky start-0 z-10 border-e border-border bg-surface p-3 text-[9px] font-bold text-muted" />
-              {DAYS_OF_WEEK.map((day) => (
-                <div
-                  key={day}
-                  className={`border-e border-border bg-surface p-2.5 text-center last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''}`}
-                >
-                  <div className="text-xs font-bold text-main">{day}</div>
+              <div className="sticky start-0 z-10 flex items-center justify-center gap-1 border-e border-border bg-surface p-2 text-[9px] font-bold text-muted">
+                <Clock size={9} />
+                <span>الوقت</span>
+              </div>
+              {DAYS_OF_WEEK.map((day) => {
+                const isTodayCol = isToday(day)
+                const count = dayEventCounts[day] ?? 0
+                return (
                   <div
-                    className={`mt-1 flex items-center justify-center gap-1 ${isToday(day) ? 'text-primary' : ''}`}
+                    key={day}
+                    className={`border-e border-border p-2.5 text-center last:border-e-0 ${isTodayCol ? 'border-b-0 bg-primary' : 'bg-surface'}`}
                   >
-                    {isToday(day) && (
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-2xl bg-primary" />
-                    )}
+                    <div
+                      className={`text-xs font-bold ${isTodayCol ? 'text-on-primary' : 'text-main'}`}
+                    >
+                      {day}
+                    </div>
+                    <div
+                      className={`mt-1 flex items-center justify-center gap-1 ${isTodayCol ? 'text-on-primary' : ''}`}
+                    >
+                      {count > 0 && (
+                        <span
+                          className={`min-w-4 rounded-full px-1 py-px text-[9px] font-black tabular-nums ${isTodayCol ? 'bg-white/25 text-on-primary' : 'bg-border text-main'}`}
+                        >
+                          {count}
+                        </span>
+                      )}
+                      {isTodayCol && (
+                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/70" />
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
             {/* Time slots */}
-            {TIME_SLOTS.map((slot, slotIdx) => {
-              const currentTimeSlots = filteredEvents.filter(
-                (e) => e.hour === String(slot.hour) && e.period === slot.period,
-              )
-              return (
-                <div
-                  key={`${slot.hour}-${slot.period}`}
-                  className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background'}`}
-                >
-                  {/* Time label */}
-                  <div className="sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e border-border bg-surface p-1.5">
-                    <Clock size={10} className="text-muted" />
-                    <span className="mt-0.5 text-[10px] font-bold tabular-nums text-muted">
-                      {slot.label}
-                    </span>
-                  </div>
+            <div ref={slotsRef} className="relative">
+              {TIME_SLOTS.map((slot, slotIdx) => {
+                const currentTimeSlots = filteredEvents.filter(
+                  (e) => e.hour === String(slot.hour) && e.period === slot.period,
+                )
+                return (
+                  <div
+                    key={`${slot.hour}-${slot.period}`}
+                    className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background'}`}
+                  >
+                    {/* Time label */}
+                    <div className="sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e border-border bg-surface p-1.5">
+                      <Clock size={10} className="text-muted" />
+                      <span className="mt-0.5 text-[10px] font-bold tabular-nums text-muted">
+                        {slot.label}
+                      </span>
+                    </div>
 
-                  {/* Day cells */}
-                  {DAYS_OF_WEEK.map((day) => {
-                    const dayEvents = getDayEvents(currentTimeSlots, day)
-                    const count = dayEvents.length
+                    {/* Day cells */}
+                    {DAYS_OF_WEEK.map((day) => {
+                      const dayEvents = getDayEvents(currentTimeSlots, day)
+                      const count = dayEvents.length
 
-                    return (
-                      <div
-                        key={`${day}-${slot.hour}`}
-                        className={`relative min-h-20 border-b border-e border-border p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
-                      >
-                        {count === 0 ? (
-                          <div className="flex h-full cursor-pointer flex-col items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                            <div className="flex h-6 w-6 items-center justify-center rounded-lg border border-dashed border-primary/30 bg-primary-soft">
-                              <Plus size={11} className="text-primary" />
+                      return (
+                        <div
+                          key={`${day}-${slot.hour}`}
+                          className={`relative min-h-20 border-b border-e border-border p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
+                        >
+                          {count === 0 ? (
+                            <div className="flex h-full cursor-pointer flex-col items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                              <div className="flex h-6 w-6 items-center justify-center rounded-lg border border-dashed border-primary/30 bg-primary-soft">
+                                <Plus size={11} className="text-primary" />
+                              </div>
+                              <span className="mt-1 text-[9px] text-muted">إضافة حصة</span>
                             </div>
-                            <span className="mt-1 text-[9px] text-muted">إضافة حصة</span>
-                          </div>
-                        ) : count === 1 ? (
-                          <div className="h-full p-0.5">
-                            <EventCard
-                              event={dayEvents[0]!}
-                              onSelect={() => onSelectEvent(dayEvents[0]!)}
-                            />
-                          </div>
-                        ) : /* Multiple events: show compact list if ≤2, otherwise multi-card */
-                        count <= 2 ? (
-                          <div className="h-full space-y-1 p-0.5">
-                            {dayEvents.map((event) => (
+                          ) : count === 1 ? (
+                            <div className="h-full p-0.5">
                               <EventCard
-                                key={event.id}
-                                event={event}
-                                onSelect={() => onSelectEvent(event)}
+                                event={dayEvents[0]!}
+                                onSelect={() => onSelectEvent(dayEvents[0]!)}
                               />
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="h-full p-0.5">
-                            <MultiCard
-                              events={dayEvents}
-                              onOpenModal={() => setMultiModal(dayEvents)}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-              )
-            })}
+                            </div>
+                          ) : /* Multiple events: show compact list if ≤2, otherwise multi-card */
+                          count <= 2 ? (
+                            <div className="h-full space-y-1 p-0.5">
+                              {dayEvents.map((event) => (
+                                <EventCard
+                                  key={event.id}
+                                  event={event}
+                                  onSelect={() => onSelectEvent(event)}
+                                />
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="h-full p-0.5">
+                              <MultiCard
+                                events={dayEvents}
+                                onOpenModal={() => setMultiModal(dayEvents)}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })}
 
-            {/* Current time line */}
-            <CurrentTimeLine />
+              {/* Current time line */}
+              <CurrentTimeLine containerHeight={slotsHeight} />
+            </div>
           </div>
         </div>
 

@@ -11,7 +11,7 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
   return (
     <section
       aria-label="نبض الأسبوع"
-      className="rounded-3xl border border-border bg-card p-6 shadow-soft"
+      className="rounded-2xl border border-border bg-card p-6 shadow-soft"
     >
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         {/* Featured KPI: Academic Progress */}

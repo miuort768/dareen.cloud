@@ -19,7 +19,7 @@ const getGreeting = (): string => {
   return 'مساء الخير'
 }
 
-/** هيرو ترحيبي ناعم لهوية شريك النجاح البرتقالية — تاريخ + ترحيب + حلقة الحضور + رقائق البيانات */
+/** هيرو ترحيبي ناعم لهوية شريك النجاح (Navy & Gold) — تاريخ + ترحيب + حلقة الحضور + رقائق البيانات */
 export const GreetingStrip = ({
   childCount,
   subjectCount,
@@ -37,13 +37,13 @@ export const GreetingStrip = ({
       aria-label="ترحيب"
       className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
     >
-      {/* خلفية برتقالية ناعمة + هالات زخرفية */}
+      {/* خلفية كحلية ناعمة + هالات ذهبية زخرفية */}
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light via-primary-soft to-transparent"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-primary/10 lg:-end-20 lg:h-80 lg:w-80"
+        className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-accent opacity-30 lg:-end-20 lg:h-80 lg:w-80"
         aria-hidden="true"
       />
       <div
@@ -122,7 +122,7 @@ export const GreetingStrip = ({
           </div>
         </div>
 
-        <p className="mt-2 max-w-xl text-xs font-bold leading-relaxed text-muted sm:text-sm xl:text-base">
+        <p className="mt-2 max-w-xl text-center text-xs font-bold leading-relaxed text-muted sm:text-sm md:text-start xl:text-base">
           متابعتك اليومية تصنع الفرق .. وأبناؤك في أيدٍ أمينة
         </p>
 
@@ -132,7 +132,7 @@ export const GreetingStrip = ({
             <Users size={11} />
             {childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-2.5 py-1 text-[10px] font-black text-on-accent shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
             <BookOpen size={11} />
             {subjectCount} {subjectCount === 1 ? 'مادة' : 'مواد'}
           </span>

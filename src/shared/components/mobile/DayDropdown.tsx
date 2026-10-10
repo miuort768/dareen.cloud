@@ -44,8 +44,10 @@ export const DayDropdown = ({
         aria-haspopup="listbox"
         className="flex h-11 w-full cursor-pointer items-center gap-2 rounded-2xl border border-border bg-card px-3.5 text-start shadow-button outline-none transition-all duration-normal ease-out hover:border-primary hover:shadow-button-hover focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed active:duration-fast"
       >
-        <CalendarDays size={14} className="shrink-0 text-primary" />
-        <span className="flex-1 truncate text-xs font-bold text-main">{selectedLabel}</span>
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
+          <CalendarDays size={14} />
+        </span>
+        <span className="flex-1 truncate text-xs font-black text-main">{selectedLabel}</span>
         {selectedDay !== 'all' && (
           <span className="rounded-full bg-primary-soft px-2 py-0.5 text-micro font-black tabular-nums text-primary">
             {dayCounts[selectedDay] || 0}
@@ -63,7 +65,7 @@ export const DayDropdown = ({
       {open && (
         <div
           role="listbox"
-          className="absolute inset-x-0 z-40 mt-1.5 max-h-72 overflow-y-auto rounded-2xl border border-border bg-card py-1 shadow-elevation-2"
+          className="absolute inset-x-0 z-40 mt-1.5 max-h-72 overflow-y-auto rounded-2xl border border-border bg-card py-1.5 shadow-elevation-2"
         >
           {options.map((opt) => {
             const isToday = opt.value === todayName
@@ -80,7 +82,7 @@ export const DayDropdown = ({
                 aria-selected={selected}
                 className={cn(
                   'flex h-11 w-full items-center gap-2.5 px-3.5 text-start outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus',
-                  selected ? 'bg-primary-soft text-primary' : 'text-main',
+                  selected ? 'bg-primary-soft font-black text-primary' : 'text-main hover:bg-hover',
                 )}
               >
                 {isToday && opt.value !== 'all' && (

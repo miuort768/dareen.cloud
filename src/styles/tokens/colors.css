@@ -285,39 +285,41 @@
 }
 
 .parent-scope {
-  --color-primary: 194 65 12;
-  --color-primary-deep: 154 52 18;
-  --color-primary-mid: 249 115 22;
-  --color-primary-light: 255 237 213;
-  --color-primary-h: 254 215 170;
-  --bg-primary: #c2410c;
-  --bg-primary-deep: #9a3412;
-  --bg-primary-hover: #9a3412;
-  --bg-primary-active: #7c2d12;
-  --bg-primary-soft: #fff7ed;
-  --bg-primary-light: #ffedd5;
-  --text-primary: #c2410c;
+  /* Navy & Gold — كحلي عميق نهاري مع مداد أبيض */
+  --color-primary: 30 58 138;
+  --color-primary-deep: 15 23 42;
+  --color-primary-mid: 51 65 141;
+  --color-primary-light: 224 231 255;
+  --color-primary-h: 199 210 254;
+  --bg-primary: #1e3a8a;
+  --bg-primary-deep: #0f172a;
+  --bg-primary-hover: #172554;
+  --bg-primary-active: #1e40af;
+  --bg-primary-soft: #eef2ff;
+  --bg-primary-light: #e0e7ff;
+  --text-primary: #1e3a8a;
   --text-on-primary: #ffffff;
-  --border-primary: #c2410c;
-  --ring-focus: #c2410c;
+  --border-primary: #1e3a8a;
+  --ring-focus: #1e3a8a;
 }
 
 .dark .parent-scope {
-  --color-primary: 249 115 22;
-  --color-primary-deep: 154 52 18;
-  --color-primary-mid: 249 115 22;
-  --color-primary-light: 67 20 7;
-  --color-primary-h: 124 45 18;
-  --bg-primary: #f97316;
-  --bg-primary-deep: #7c2d12;
-  --bg-primary-hover: #fdba74;
-  --bg-primary-active: #fed7aa;
-  --bg-primary-soft: #431407;
-  --bg-primary-light: #7c2d12;
-  --text-primary: #f97316;
-  --text-on-primary: #020617;
-  --border-primary: #f97316;
-  --ring-focus: #f97316;
+  /* Navy & Gold — ذهبي أساسي بمداد كحلي في الليل */
+  --color-primary: 212 175 55;
+  --color-primary-deep: 140 120 30;
+  --color-primary-mid: 226 200 120;
+  --color-primary-light: 48 40 12;
+  --color-primary-h: 74 62 18;
+  --bg-primary: #d4af37;
+  --bg-primary-deep: #8c7820;
+  --bg-primary-hover: #e4ca7a;
+  --bg-primary-active: #f0d98a;
+  --bg-primary-soft: #241e05;
+  --bg-primary-light: #3a2f08;
+  --text-primary: #d4af37;
+  --text-on-primary: #0f172a;
+  --border-primary: #d4af37;
+  --ring-focus: #d4af37;
 }
 
 .teacher-scope {

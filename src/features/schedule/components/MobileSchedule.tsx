@@ -332,7 +332,7 @@ export const MobileSchedule = () => {
               exit={{ opacity: 0, y: -8 }}
               className="mx-3 mt-2"
             >
-              <div className="flex flex-col gap-2 rounded-xl border border-success-soft bg-success-soft p-3">
+              <div className="flex flex-col gap-2 rounded-xl border border-success-soft bg-success-soft p-3 shadow-soft">
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-card text-success">
                     <Sparkles size={14} />
@@ -399,7 +399,7 @@ export const MobileSchedule = () => {
                     transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={openInAppointments}
-                    className={`cursor-pointer overflow-hidden rounded-none border border-e-[3px] border-border bg-card transition-colors duration-fast hover:border-border ${ts.bar}`}
+                    className={`cursor-pointer overflow-hidden rounded-none border border-e-[3px] border-border bg-card shadow-elevation-1 transition-all duration-fast hover:border-border hover:shadow-elevation-2 ${ts.bar}`}
                   >
                     <div className="flex items-center gap-3 p-3">
                       {/* Time gutter */}

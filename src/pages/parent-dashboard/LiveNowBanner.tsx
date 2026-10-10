@@ -16,7 +16,7 @@ export const LiveNowBanner = ({ activeTimers, childNames, formatTime }: LiveNowB
       {activeTimers.map((session) => (
         <div
           key={session.id}
-          className="relative overflow-hidden rounded-3xl border border-error-soft bg-error-soft shadow-soft transition-colors duration-slow"
+          className="relative overflow-hidden rounded-2xl border border-error-soft bg-error-soft shadow-soft transition-colors duration-slow"
           role="status"
         >
           <div

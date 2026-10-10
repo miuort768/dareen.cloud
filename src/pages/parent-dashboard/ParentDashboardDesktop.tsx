@@ -93,9 +93,6 @@ export const ParentDashboardDesktop = ({
                 </motion.div>
               </>
             )}
-            <motion.div {...fadeUp(0.2)}>
-              <TodayTimeline items={timeline} />
-            </motion.div>
           </div>
 
           <div className="space-y-5 md:col-span-1 lg:col-span-4">
@@ -120,6 +117,9 @@ export const ParentDashboardDesktop = ({
                 description="آخر الإعلانات والتنبيهات الموجهة لأولياء الأمور"
                 variant="classic"
               />
+            </motion.div>
+            <motion.div {...fadeUp(0.3)}>
+              <TodayTimeline items={timeline} compact />
             </motion.div>
           </div>
         </div>
