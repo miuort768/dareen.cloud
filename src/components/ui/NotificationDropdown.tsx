@@ -12,6 +12,7 @@ import {
   AlertCircle,
   AlertTriangle,
   Calendar,
+  Clock,
   Trash2,
   Smartphone,
 } from 'lucide-react'
@@ -87,13 +88,18 @@ export const NotificationDropdown = ({
         setIsOpen(false)
       }
     }
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleEscape)
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
     }
   }, [isOpen])
 
@@ -246,18 +252,23 @@ export const NotificationDropdown = ({
             )}
 
             {/* Header */}
-            <div className="flex flex-col gap-2.5 border-b border-border bg-surface p-3.5 md:flex-row md:items-center md:justify-between md:gap-2 md:p-4">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-on-primary">
-                  <Bell size={16} />
+            <div className="flex flex-col gap-3 border-b border-border bg-surface p-4 md:flex-row md:items-center md:justify-between md:gap-2">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-1">
+                  <Bell size={17} />
                 </div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-black text-main">الإشعارات</h3>
-                  {unreadCount > 0 && (
-                    <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error px-1.5 text-micro font-black leading-none text-on-error">
-                      {unreadCount}
-                    </span>
-                  )}
+                <div className="min-w-0">
+                  <h3 className="flex items-center gap-2 text-sm font-black text-main">
+                    الإشعارات
+                    {unreadCount > 0 && (
+                      <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error px-1.5 text-micro font-black leading-none text-on-error">
+                        {unreadCount}
+                      </span>
+                    )}
+                  </h3>
+                  <p className="mt-0.5 truncate text-[11px] font-bold text-muted">
+                    {unreadCount > 0 ? `${unreadCount} غير مقروء` : 'لا توجد إشعارات جديدة'}
+                  </p>
                 </div>
               </div>
 
@@ -288,7 +299,7 @@ export const NotificationDropdown = ({
             </div>
 
             {/* Notifications List */}
-            <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto md:max-h-96">
+            <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto md:max-h-[min(70vh,520px)]">
               {!notificationsEnabled ? (
                 <div className="flex flex-col items-center gap-3 py-10 text-center">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-warning-soft text-warning">
@@ -309,8 +320,8 @@ export const NotificationDropdown = ({
                     <div
                       key={group.id}
                       className={cn(
-                        'cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-surface',
-                        isUnread ? 'bg-info-light dark:bg-info-soft' : '',
+                        'group/notif cursor-pointer border-b border-s-2 border-border transition-colors last:border-b-0 hover:bg-hover',
+                        isUnread ? 'border-s-info bg-info-soft' : 'border-s-transparent bg-card',
                       )}
                       onClick={() => {
                         markAsRead(groupIds)
@@ -327,32 +338,30 @@ export const NotificationDropdown = ({
                         }
                       }}
                     >
-                      <div className="flex items-start gap-3 p-4">
+                      <div className="flex items-start gap-3 p-3.5 md:p-4">
                         {getIcon(n.type)}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-start justify-between gap-2">
                             <h4
                               className={cn(
-                                'text-sm leading-snug',
-                                isUnread ? 'font-bold text-main' : 'font-medium text-main',
+                                'min-w-0 text-sm leading-snug text-main',
+                                isUnread ? 'font-black' : 'font-bold',
                               )}
                             >
                               {n.title}
                             </h4>
-                            <div className="flex flex-shrink-0 items-center gap-1.5 pt-0.5">
-                              {count > 1 && (
-                                <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-soft px-1.5 text-[10px] font-black leading-none text-primary">
-                                  ×{count}
-                                </span>
-                              )}
-                              {isUnread && (
-                                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-info" />
-                              )}
-                            </div>
+                            {count > 1 && (
+                              <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-primary-soft px-1.5 text-[10px] font-black leading-none text-primary">
+                                ×{count}
+                              </span>
+                            )}
                           </div>
-                          <p className="mt-0.5 line-clamp-2 text-xs text-muted">{n.message}</p>
-                          <div className="mt-2 flex items-center justify-between">
-                            <span className="text-[10px] text-muted sm:text-micro">
+                          <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-muted">
+                            {n.message}
+                          </p>
+                          <div className="mt-2.5 flex items-center justify-between gap-2">
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-dim">
+                              <Clock size={11} />
                               {formatDistanceToNow(new Date(n.time), {
                                 addSuffix: true,
                                 locale: ar,
