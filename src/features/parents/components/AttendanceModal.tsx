@@ -71,7 +71,7 @@ export const AttendanceModal = ({
   return createPortal(
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-8"
+      className="parent-scope fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-8"
       role="dialog"
       aria-modal="true"
       aria-label="تقرير الحضور"
@@ -79,7 +79,7 @@ export const AttendanceModal = ({
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 md:duration-slow md:animate-in md:slide-in-from-bottom-8">
-        <div className="relative flex shrink-0 items-center justify-between overflow-hidden bg-success p-5 text-on-success">
+        <div className="relative flex shrink-0 items-center justify-between overflow-hidden bg-gradient-to-br from-success to-success-dark p-5 text-on-success">
           <div className="absolute end-0 top-0 -me-12 -mt-12 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
           <div className="absolute bottom-0 start-0 h-16 w-16 translate-x-8 translate-y-8 rounded-full bg-white/5 blur-lg"></div>
           <div className="relative z-10 flex items-center gap-4">
@@ -87,15 +87,15 @@ export const AttendanceModal = ({
               <TrendingUp size={20} className="text-on-success" />
             </div>
             <div className="text-start">
-              <h2 className="text-lg font-medium leading-none">{name}</h2>
-              <p className="mt-1 text-micro font-normal uppercase tracking-widest text-success">
+              <h2 className="text-lg font-black leading-none">{name}</h2>
+              <p className="mt-1 text-micro font-bold uppercase tracking-widest text-white/80">
                 تقرير نسب الحضور والانصراف لكل المواد
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="relative z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus"
+            className="relative z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
             aria-label="إغلاق"
           >
             <X size={18} />

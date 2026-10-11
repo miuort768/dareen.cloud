@@ -1,107 +1,136 @@
-import { Trophy, Star, Award, History } from 'lucide-react';
-import { cn } from '../../../lib/utils';
-import { format } from 'date-fns';
-import { ar } from 'date-fns/locale';
+import { Trophy, Star, Award, History } from 'lucide-react'
+import { cn } from '../../../lib/utils'
+import { format } from 'date-fns'
+import { ar } from 'date-fns/locale'
 
 interface Badge {
-    name: string;
-    color: string;
-    date: string;
+  name: string
+  color: string
+  date: string
 }
 
 interface PointLog {
-    id: string;
-    amount: number;
-    action: string;
-    timestamp: string;
+  id: string
+  amount: number
+  action: string
+  timestamp: string
 }
 
 interface GamificationCardProps {
-    totalPoints: number;
-    badges: string | Badge[];
-    pointLogs?: PointLog[];
+  totalPoints: number
+  badges: string | Badge[]
+  pointLogs?: PointLog[]
 }
 
-export const GamificationCard = ({ totalPoints, badges, pointLogs = [] }: GamificationCardProps) => {
-    const parsedBadges: Badge[] = typeof badges === 'string' ? JSON.parse(badges || '[]') : badges;
+export const GamificationCard = ({
+  totalPoints,
+  badges,
+  pointLogs = [],
+}: GamificationCardProps) => {
+  const parsedBadges: Badge[] = typeof badges === 'string' ? JSON.parse(badges || '[]') : badges
 
-    return (
-        <div className="space-y-3 md:space-y-4">
-            {/* Total Points Card - Compact Style */}
-                <div className="bg-primary p-3 md:p-4 relative overflow-hidden group rounded-2xl">
-                <div className="absolute top-0 start-0 w-16 h-16 bg-white/10 blur-2xl -translate-y-8 translate-x-8 transition-transform group-hover:scale-110"></div>
-                <div className="flex items-center justify-between relative z-10">
-                    <div>
-                        <p className="text-micro md:text-micro font-medium text-on-primary uppercase tracking-widest mb-0.5 opacity-80">إجمالي نقاط الإنجاز</p>
-                        <h2 className="text-xl md:text-3xl font-medium text-on-primary tracking-tight flex items-center gap-2">
-                            {totalPoints.toLocaleString()}
-                            <div className="p-0.5 md:p-1 bg-white/20 rounded">
-                                <Star size={12} className="fill-current text-warning md:w-3.5 md:h-3.5" />
-                            </div>
-                        </h2>
-                    </div>
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 flex items-center justify-center rounded-xl border border-white/20">
-                        <Trophy size={16} className="text-on-primary md:w-5 md:h-5" />
-                    </div>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                {/* Badges Collection */}
-                <div className="bg-card border border-border p-3 md:p-4 rounded-2xl">
-                    <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-muted mb-3 flex items-center gap-1.5">
-                        <Award size={12} className="text-primary" /> الأوسمة المكتسبة
-                    </h3>
-                    <div className="grid grid-cols-4 md:grid-cols-3 lg:grid-cols-4 gap-1.5">
-                        {parsedBadges.length > 0 ? parsedBadges.map((badge, idx) => (
-                            <div 
-                                key={idx} 
-                                className={cn(
-                                    "flex flex-col items-center gap-1 p-1.5 border transition-all hover:bg-surface cursor-help rounded-xl",
-                                    badge.color === 'blue' ? "bg-primary-soft border-primary-soft text-primary" :
-                                    badge.color === 'amber' ? "bg-warning-soft border-warning-soft text-warning" :
-                                    badge.color === 'emerald' ? "bg-success-soft border-success-soft text-success" :
-                                    "bg-error-soft border-error-soft text-error"
-                                )}
-                                title={`تم الحصول عليه في ${format(new Date(badge.date), 'yyyy/MM/dd')}`}
-                            >
-                                <Award size={14} strokeWidth={2.5} className="md:w-4 md:h-4" />
-                                <span className="text-micro font-medium uppercase text-center leading-none">{badge.name}</span>
-                            </div>
-                        )) : (
-                            <div className="col-span-4 py-4 text-center bg-surface border border-dashed border-border opacity-40 rounded-xl">
-                                <p className="text-micro font-medium uppercase tracking-widest">لا توجد أوسمة</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Recent Points History */}
-                <div className="bg-card border border-border p-3 md:p-4 flex flex-col rounded-2xl">
-                    <h3 className="font-medium text-micro md:text-micro uppercase tracking-widest text-muted mb-3 flex items-center gap-1.5">
-                        <History size={12} className="text-primary" /> سجل النشاط الأخير
-                    </h3>
-                    <div className="flex-1 space-y-1.5 overflow-y-auto max-h-[150px] md:max-h-[200px] custom-scrollbar ps-1">
-                        {pointLogs.length > 0 ? pointLogs.map((log) => (
-                            <div key={log.id} className="flex items-center justify-between p-2 bg-surface border border-border transition-colors hover:border-primary rounded-xl">
-                                <div className="min-w-0">
-                                    <p className="text-micro md:text-micro font-medium text-main truncate">{log.action}</p>
-                                    <p className="text-micro text-muted font-normal mt-0.5">{format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}</p>
-                                </div>
-                                <span className={cn(
-                                    "font-medium text-micro md:text-micro shrink-0 me-1.5",
-                                    log.amount > 0 ? "text-success" : "text-error"
-                                )}>
-                                    {log.amount > 0 ? '+' : ''}{log.amount}
-                                </span>
-                            </div>
-                        )) : (
-                            <p className="text-center py-6 text-micro font-normal text-muted uppercase tracking-widest">لا توجد سجلات</p>
-                        )}
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="space-y-3 md:space-y-4">
+      {/* Total Points Card - Compact Style */}
+      <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-1 md:p-4">
+        <div className="absolute start-0 top-0 h-16 w-16 -translate-y-8 translate-x-8 bg-white/10 blur-2xl transition-transform group-hover:scale-110"></div>
+        <div className="relative z-10 flex items-center justify-between">
+          <div>
+            <p className="mb-0.5 text-micro font-bold uppercase tracking-widest text-on-primary opacity-80 md:text-micro">
+              إجمالي نقاط الإنجاز
+            </p>
+            <h2 className="flex items-center gap-2 text-xl font-black tracking-tight text-on-primary md:text-3xl">
+              {totalPoints.toLocaleString()}
+              <div className="rounded bg-white/20 p-0.5 md:p-1">
+                <Star size={12} className="fill-current text-warning md:h-3.5 md:w-3.5" />
+              </div>
+            </h2>
+          </div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/20 bg-white/10 md:h-10 md:w-10">
+            <Trophy size={16} className="text-on-primary md:h-5 md:w-5" />
+          </div>
         </div>
-    );
-};
+      </div>
 
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+        {/* Badges Collection */}
+        <div className="rounded-2xl border border-border bg-card p-3 md:p-4">
+          <h3 className="mb-3 flex items-center gap-1.5 text-micro font-medium uppercase tracking-widest text-muted md:text-micro">
+            <Award size={12} className="text-primary" /> الأوسمة المكتسبة
+          </h3>
+          <div className="grid grid-cols-4 gap-1.5 md:grid-cols-3 lg:grid-cols-4">
+            {parsedBadges.length > 0 ? (
+              parsedBadges.map((badge, idx) => (
+                <div
+                  key={idx}
+                  className={cn(
+                    'flex cursor-help flex-col items-center gap-1 rounded-xl border border-white/20 p-1.5 shadow-elevation-1 ring-1 ring-inset ring-white/20 transition-all hover:brightness-110',
+                    badge.color === 'blue'
+                      ? 'bg-primary text-on-primary'
+                      : badge.color === 'amber'
+                        ? 'bg-warning text-on-warning'
+                        : badge.color === 'emerald'
+                          ? 'bg-success text-on-success'
+                          : 'bg-error text-on-error',
+                  )}
+                  title={`تم الحصول عليه في ${format(new Date(badge.date), 'yyyy/MM/dd')}`}
+                >
+                  <Award size={14} strokeWidth={2.5} className="md:h-4 md:w-4" />
+                  <span className="text-center text-micro font-bold uppercase leading-none">
+                    {badge.name}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-4 rounded-xl border border-dashed border-border bg-surface py-5 text-center">
+                <Award size={20} className="mx-auto mb-1.5 text-muted" />
+                <p className="text-micro font-bold uppercase tracking-widest text-muted">
+                  لا توجد أوسمة بعد
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Recent Points History */}
+        <div className="flex flex-col rounded-2xl border border-border bg-card p-3 md:p-4">
+          <h3 className="mb-3 flex items-center gap-1.5 text-micro font-medium uppercase tracking-widest text-muted md:text-micro">
+            <History size={12} className="text-primary" /> سجل النشاط الأخير
+          </h3>
+          <div className="custom-scrollbar max-h-[150px] flex-1 space-y-1.5 overflow-y-auto ps-1 md:max-h-[200px]">
+            {pointLogs.length > 0 ? (
+              pointLogs.map((log) => (
+                <div
+                  key={log.id}
+                  className="flex items-center justify-between rounded-xl border border-border bg-surface p-2 transition-colors hover:border-primary"
+                >
+                  <div className="min-w-0">
+                    <p className="truncate text-micro font-medium text-main md:text-micro">
+                      {log.action}
+                    </p>
+                    <p className="mt-0.5 text-micro font-normal text-muted">
+                      {format(new Date(log.timestamp), 'yyyy/MM/dd', { locale: ar })}
+                    </p>
+                  </div>
+                  <span
+                    className={cn(
+                      'me-1.5 shrink-0 text-micro font-medium md:text-micro',
+                      log.amount > 0 ? 'text-success' : 'text-error',
+                    )}
+                  >
+                    {log.amount > 0 ? '+' : ''}
+                    {log.amount}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p className="py-6 text-center text-micro font-normal uppercase tracking-widest text-muted">
+                لا توجد سجلات
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

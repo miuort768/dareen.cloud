@@ -131,8 +131,8 @@ export const ParentStudents = () => {
 
   if (isLoading)
     return (
-      <div className="min-h-full bg-background" dir="rtl">
-        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-3 sm:px-4 md:px-6 md:pt-8">
+      <div className="parent-scope min-h-full bg-background" dir="rtl">
+        <div className="mx-auto max-w-page space-y-6 pt-3 sm:px-4 md:px-6 md:pt-8">
           <Skeleton className="h-16 w-full rounded-2xl" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
@@ -148,16 +148,17 @@ export const ParentStudents = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="min-h-full bg-background"
+      className="parent-scope min-h-full bg-background"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page space-y-6 px-2.5 pt-3 sm:px-4 md:px-6 md:pt-8">
+      <div className="mx-auto max-w-page space-y-6 pt-3 sm:px-4 md:px-6 md:pt-8">
         <ParentsStudentHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredStudents.map((student) => (
+          {filteredStudents.map((student, idx) => (
             <ParentStudentCard
               key={student.id}
               student={student}
+              index={idx}
               viewingAchievements={viewingAchievements}
               onViewDates={handleViewDates}
               onViewAttendance={handleViewAttendance}

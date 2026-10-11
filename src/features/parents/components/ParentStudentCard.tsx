@@ -34,6 +34,8 @@ interface ParentPointLog {
 
 interface ParentStudentCardProps {
   student: ParentStudent
+  /** ترتيب الابن في القائمة — يحدد لون رأس البطاقة */
+  index: number
   viewingAchievements: ParentStudent | null
   onViewDates: (student: ParentStudent) => void
   onViewAttendance: (student: ParentStudent) => void
@@ -42,8 +44,17 @@ interface ParentStudentCardProps {
   pointLogs: ParentPointLog[]
 }
 
+/** تدوير لون رأس البطاقة بين الأبناء */
+const CARD_TONES = [
+  { fill: 'bg-primary', on: 'text-on-primary' },
+  { fill: 'bg-success', on: 'text-on-success' },
+  { fill: 'bg-info', on: 'text-on-info' },
+  { fill: 'bg-warning', on: 'text-on-warning' },
+] as const
+
 export const ParentStudentCard = ({
   student,
+  index,
   viewingAchievements,
   onViewDates,
   onViewAttendance,
@@ -51,6 +62,7 @@ export const ParentStudentCard = ({
   onCloseAchievements,
   pointLogs,
 }: ParentStudentCardProps) => {
+  const tone = CARD_TONES[index % CARD_TONES.length]!
   const enrollments = (student.enrollments || []) as {
     teacherName: string
     teacherFallback?: string
@@ -72,27 +84,32 @@ export const ParentStudentCard = ({
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-slow hover:border-primary/30 hover:shadow-elevation-1">
-      <div className="relative overflow-hidden bg-primary p-4 md:p-6">
+      <div className={cn('relative overflow-hidden p-4 md:p-6', tone.fill)}>
         <div className="absolute start-0 top-0 h-24 w-24 -translate-y-12 translate-x-12 rotate-45 rounded-full bg-white/10 blur-xl transition-transform group-hover:scale-110"></div>
         <div className="absolute bottom-0 end-0 h-16 w-16 -translate-x-8 translate-y-8 rounded-full bg-white/5 blur-lg"></div>
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 md:gap-4">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/20 text-on-primary backdrop-blur-sm md:h-14 md:w-14">
+            <div
+              className={cn(
+                'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/20 backdrop-blur-sm md:h-14 md:w-14',
+                tone.on,
+              )}
+            >
               <User size={20} className="md:size-7" />
             </div>
             <div className="min-w-0">
-              <h3 className="truncate text-base font-medium leading-tight text-on-primary md:text-lg">
+              <h3 className={cn('truncate text-base font-black leading-tight md:text-lg', tone.on)}>
                 {(student as { name: string }).name}
               </h3>
-              <p className="mt-0.5 text-micro font-medium uppercase tracking-widest text-primary md:text-micro">
+              <p className="mt-0.5 text-micro font-medium uppercase tracking-widest text-white/80">
                 {student.grade || 'غير محدد'}
               </p>
             </div>
           </div>
           {totalPoints > 0 && (
-            <div className="flex shrink-0 flex-col items-center gap-0.5 rounded-xl bg-warning px-1.5 py-1 text-on-warning">
+            <div className="flex shrink-0 flex-col items-center gap-0.5 rounded-xl border border-white/25 bg-white/20 px-1.5 py-1 text-white backdrop-blur-sm">
               <Star size={12} className="fill-current md:size-4" />
-              <span className="text-micro font-medium">{totalPoints}</span>
+              <span className="text-micro font-bold">{totalPoints}</span>
             </div>
           )}
         </div>
@@ -186,7 +203,7 @@ export const ParentStudentCard = ({
             onClick={() => onViewDates(student)}
             className={cn(
               FAB_SURFACE,
-              'gap-1.5 rounded-xl py-2.5 text-micro font-medium md:gap-2 md:text-micro',
+              'min-h-11 gap-1.5 rounded-xl py-2.5 text-micro font-medium md:gap-2 md:text-micro',
             )}
           >
             <Calendar size={13} className="md:size-3.5" />
@@ -194,7 +211,7 @@ export const ParentStudentCard = ({
           </button>
           <button
             onClick={() => onViewAttendance(student)}
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface py-2.5 text-micro font-medium text-main shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-surface hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] active:shadow-button-pressed md:gap-2 md:text-micro"
+            className="flex min-h-11 items-center justify-center gap-1.5 rounded-xl border border-info bg-info py-2.5 text-micro font-medium text-on-info outline-none ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:border-info-hover hover:bg-info-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
           >
             <TrendingUp size={13} className="md:size-3.5" />
             نسبة الحضور
@@ -203,10 +220,10 @@ export const ParentStudentCard = ({
         <button
           onClick={() => onViewAchievements(student)}
           className={cn(
-            'flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-micro font-medium outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:text-micro',
+            'flex min-h-11 w-full items-center justify-center gap-2 rounded-xl py-2.5 text-micro font-medium outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:text-micro',
             hasAchievements
               ? 'border border-primary/30 bg-surface text-primary'
-              : 'bg-primary text-on-primary hover:bg-primary-hover',
+              : 'border border-accent bg-accent text-on-accent hover:border-accent-hover hover:bg-accent-hover',
           )}
         >
           <Trophy size={14} />
