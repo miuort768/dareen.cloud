@@ -92,6 +92,56 @@ const teacherNameOf = (enrollment: Enrollment): string => {
   return ''
 }
 
+const pad2 = (n: number) => String(n).padStart(2, '0')
+
+const SessionCountdown = ({ hour, period }: { hour: string; period: string }) => {
+  const [timeLeft, setTimeLeft] = useState('')
+  const [isNow, setIsNow] = useState(false)
+
+  useEffect(() => {
+    const mins = to24Minutes(hour, period)
+    const target = new Date()
+    target.setHours(Math.floor(mins / 60), mins % 60, 0, 0)
+
+    const update = () => {
+      const diff = target.getTime() - Date.now()
+      if (diff <= 0) {
+        setIsNow(true)
+        setTimeLeft('00:00:00')
+        return
+      }
+      setIsNow(false)
+      const h = Math.floor(diff / 3600000)
+      const m = Math.floor((diff % 3600000) / 60000)
+      const s = Math.floor((diff % 60000) / 1000)
+      setTimeLeft(`${pad2(h)}:${pad2(m)}:${pad2(s)}`)
+    }
+
+    update()
+    const id = setInterval(update, 1000)
+    return () => clearInterval(id)
+  }, [hour, period])
+
+  return (
+    <div
+      className="flex shrink-0 items-center gap-1.5 rounded-xl bg-white/20 px-2.5 py-1.5 text-white"
+      aria-live="off"
+    >
+      {isNow ? (
+        <span className="relative flex h-2 w-2 shrink-0">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/70" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+        </span>
+      ) : (
+        <Clock size={12} className="shrink-0 text-white/80" />
+      )}
+      <span className="font-mono text-xs font-black tabular-nums leading-none tracking-wider">
+        {isNow ? 'الآن' : timeLeft || '--:--:--'}
+      </span>
+    </div>
+  )
+}
+
 export const MobileSchedule = () => {
   const currentUser = useCurrentUser()
   const navigate = useNavigate()
@@ -332,40 +382,41 @@ export const MobileSchedule = () => {
               exit={{ opacity: 0, y: -8 }}
               className="mx-3 mt-2"
             >
-              <div className="flex flex-col gap-2 rounded-xl border border-success-soft bg-success-soft p-3 shadow-soft">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-card text-success">
-                    <Sparkles size={14} />
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success to-success-hover p-3 text-white shadow-elevation-2">
+                <div className="pointer-events-none absolute -end-10 -top-12 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+                <div className="pointer-events-none absolute -bottom-12 -start-10 h-28 w-28 rounded-full bg-black/10 blur-2xl" />
+
+                <div className="relative flex items-center justify-between gap-2.5">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20 text-white">
+                      <Sparkles size={14} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-micro font-bold text-white/80">الحصة القادمة</p>
+                      <p className="truncate text-sm font-black text-white">
+                        {nextSession.studentName}
+                      </p>
+                    </div>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-micro font-bold text-success">الحصة القادمة</p>
-                    <p className="truncate text-sm font-black text-main">
-                      {nextSession.studentName}
-                    </p>
-                  </div>
+                  <SessionCountdown hour={nextSession.hour} period={nextSession.period} />
                 </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-primary-soft text-primary">
-                      <CalendarDays size={11} />
-                    </span>
-                    <span className="min-w-0 flex-1 truncate text-xs font-black text-main">
+
+                <div className="relative mt-2 grid grid-cols-3 gap-1.5">
+                  <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-white/15 px-2 py-1.5">
+                    <CalendarDays size={11} className="shrink-0 text-white/80" />
+                    <span className="min-w-0 flex-1 truncate text-xs font-black text-white">
                       {nextSession.day}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-info-soft text-info">
-                      <Clock size={11} />
-                    </span>
-                    <span className="text-xs font-black tabular-nums text-main">
+                  <div className="flex items-center gap-1.5 rounded-lg bg-white/15 px-2 py-1.5">
+                    <Clock size={11} className="shrink-0 text-white/80" />
+                    <span className="text-xs font-black tabular-nums text-white">
                       {nextSession.time}
                     </span>
                   </div>
-                  <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-success-soft text-success">
-                      <GraduationCap size={11} />
-                    </span>
-                    <span className="min-w-0 flex-1 truncate text-xs font-black text-main">
+                  <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-white/15 px-2 py-1.5">
+                    <GraduationCap size={11} className="shrink-0 text-white/80" />
+                    <span className="min-w-0 flex-1 truncate text-xs font-black text-white">
                       {nextSession.teacherName || 'غير محددة'}
                     </span>
                   </div>
@@ -382,10 +433,10 @@ export const MobileSchedule = () => {
           ) : dayEvents.length > 0 ? (
             <div className="space-y-2">
               <div className="mb-2 flex items-center justify-between px-1">
-                <span className="text-micro font-bold text-muted">
+                <span className="rounded-full bg-surface px-3 py-1 text-micro font-bold text-muted">
                   {selectedDay === 'all' ? 'كل الحصص' : `حصص ${selectedDay}`}
                 </span>
-                <span className="rounded-lg bg-surface px-2 py-0.5 text-micro font-bold tabular-nums text-muted">
+                <span className="rounded-full bg-surface px-2.5 py-1 text-micro font-bold tabular-nums text-muted">
                   {dayEvents.length}
                 </span>
               </div>

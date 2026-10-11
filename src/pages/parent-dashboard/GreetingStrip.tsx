@@ -127,7 +127,7 @@ export const GreetingStrip = ({
         </p>
 
         {/* رقائق البيانات */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-4 flex flex-wrap justify-center gap-1.5 md:justify-start">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10px] font-black text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
             <Users size={11} />
             {childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`}
