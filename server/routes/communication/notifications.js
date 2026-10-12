@@ -6,6 +6,9 @@ const ResponseHandler = require('../../utils/responseHandler');
 const logger = require('../../utils/logger');
 const { prisma } = require('../../utils/prisma');
 const { sendNotification } = require('../../services/notificationsService');
+const { NOTIFICATIONS_TTL } = require('../../services/dashboardCache');
+const cache = require('../../services/cacheService');
+const { CACHE_KEYS } = require('../../constants/cacheKeys');
 
 router.use(authMiddleware);
 
@@ -21,12 +24,22 @@ router.get('/', async (req, res) => {
             where.receiverId = req.query.receiverId;
         }
 
-        const notifications = await prisma.notification.findMany({
-            where,
-            orderBy: { time: 'desc' }
+        // The bell polls this endpoint every 3s (incl. background tabs). Serve it
+        // from cache per user so concurrent tabs dedupe; every write below
+        // invalidates the affected users' keys, keeping the list near-real-time.
+        const cacheKey = CACHE_KEYS.notifications.byUser(
+            isAdmin && req.query.receiverId ? req.query.receiverId : userId
+        );
+
+        const notifications = await cache.wrap(cacheKey, NOTIFICATIONS_TTL, async () => {
+            const rows = await prisma.notification.findMany({
+                where,
+                orderBy: { time: 'desc' }
+            });
+            return rows.map(n => ({ ...n, read: n.read === 1 }));
         });
-        const mapped = notifications.map(n => ({ ...n, read: n.read === 1 }));
-        res.json(mapped);
+
+        res.json(notifications);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch notifications');
     }
@@ -74,6 +87,11 @@ router.post('/broadcast', checkRole(['admin']), async (req, res) => {
             }).catch((err) => logger.warn('Enqueue broadcast notification failed: ' + (err.message || err)));
         });
 
+        // Broadcast intentionally does not invalidate the per-user cache: a
+        // targeted per-recipient del() would be O(N) KEYS. The NOTIFICATIONS_TTL
+        // bounds the propagation delay at one TTL (defaults 6s), well within the
+        // 3s bell poll cadence plus one cycle.
+
         res.status(201).json({ count: students.length, title, message, type });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Broadcast notification');
@@ -112,6 +130,11 @@ router.post('/', checkRole(['admin']), async (req, res) => {
             }).catch((err) => logger.warn('Enqueue notification failed: ' + (err.message || err)));
         }
 
+        // Invalidate the recipient's bell cache (and the admin's own list when it
+        // differs) so the next poll is fresh immediately.
+        if (body.receiverId) await cache.del(CACHE_KEYS.notifications.byUser(body.receiverId));
+        if (body.receiverId !== req.user.id) await cache.del(CACHE_KEYS.notifications.byUser(req.user.id));
+
         const newItem = await prisma.notification.findUnique({ where: { id } });
         if (newItem) newItem.read = newItem.read === 1;
         res.status(201).json(newItem);
@@ -136,6 +159,15 @@ router.put('/:id', async (req, res) => {
             where: { id },
             data: { read: body.read ? 1 : 0 }
         });
+
+        // Read-toggles change badge counts; refresh the affected bell caches.
+        if (notif) {
+            await cache.del(CACHE_KEYS.notifications.byUser(notif.receiverId));
+            if (req.user.role === 'admin' && notif.receiverId !== req.user.id) {
+                await cache.del(CACHE_KEYS.notifications.byUser(req.user.id));
+            }
+        }
+
         const updated = await prisma.notification.findUnique({ where: { id } });
         if (updated) updated.read = updated.read === 1;
         res.json(updated);
@@ -156,6 +188,12 @@ router.delete('/:id', async (req, res) => {
         }
 
         await prisma.notification.delete({ where: { id } });
+        if (notif) {
+            await cache.del(CACHE_KEYS.notifications.byUser(notif.receiverId));
+            if (req.user.role === 'admin' && notif.receiverId !== req.user.id) {
+                await cache.del(CACHE_KEYS.notifications.byUser(req.user.id));
+            }
+        }
         res.json({ message: 'Deleted' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete notification');
@@ -169,6 +207,10 @@ router.delete('/', async (req, res) => {
 
     try {
         await prisma.notification.deleteMany({ where: { receiverId: targetReceiver } });
+        await cache.del(CACHE_KEYS.notifications.byUser(targetReceiver));
+        if (isAdmin && targetReceiver !== userId) {
+            await cache.del(CACHE_KEYS.notifications.byUser(userId));
+        }
         res.json({ message: 'Deleted notifications for user' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete all notifications');

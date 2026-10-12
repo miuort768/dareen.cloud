@@ -5,6 +5,7 @@ const validate = require('../../middleware/validation');
 const { createStudentSchema, updateStudentSchema, updateEnrollmentScheduleSchema, updateEnrollmentNotesSchema } = require('../../utils/validators');
 const studentService = require('../../services/studentService');
 const logger = require('../../utils/logger');
+const { invalidateStudent } = require('../../services/dashboardCache');
 
 router.get('/', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
   try {
@@ -32,6 +33,7 @@ router.post('/', authMiddleware, checkRole(['admin']), validate(createStudentSch
 router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateStudentSchema), async (req, res) => {
   try {
     const student = await studentService.updateStudent(req.params.id, req.body, req.user);
+    await invalidateStudent(req.params.id);
     res.json(student);
   } catch (err) {
     if (err.code === 'P2002') {
@@ -71,6 +73,7 @@ router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
     const updated = await studentService.freezeEnrollment(req.params.studentId, req.params.enrollmentId, req.body, req.user);
+    await invalidateStudent(req.params.studentId);
     res.json(updated);
   } catch (err) {
     logger.error('Error updating freeze status', err);
@@ -81,6 +84,7 @@ router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, che
 router.patch('/:studentId/enrollments/:enrollmentId/schedule', authMiddleware, checkRole(['admin', 'teacher']), validate(updateEnrollmentScheduleSchema), async (req, res) => {
   try {
     const updated = await studentService.updateEnrollmentSchedule(req.params.studentId, req.params.enrollmentId, req.body.schedule, req.user);
+    await invalidateStudent(req.params.studentId);
     res.json(updated);
   } catch (err) {
     if (err.statusCode) {
@@ -94,6 +98,7 @@ router.patch('/:studentId/enrollments/:enrollmentId/schedule', authMiddleware, c
 router.patch('/:studentId/enrollments/:enrollmentId/notes', authMiddleware, checkRole(['admin', 'teacher']), validate(updateEnrollmentNotesSchema), async (req, res) => {
   try {
     const updated = await studentService.updateEnrollmentNotes(req.params.studentId, req.params.enrollmentId, req.body.notes, req.user);
+    await invalidateStudent(req.params.studentId);
     res.json(updated);
   } catch (err) {
     if (err.statusCode) {

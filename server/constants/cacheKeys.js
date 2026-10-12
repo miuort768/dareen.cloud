@@ -25,6 +25,18 @@ const CACHE_KEYS = {
     stats: () => 'invoices:stats',
   },
   exchangeRates: 'rates:exchange',
+  notifications: {
+    // Per-user notification list (polled every 3s by the bell dropdown).
+    byUser: (userId) => `notifications:user:${userId}`,
+  },
+  studentPortal: {
+    // Student dashboard snapshot (polled every 5s).
+    me: (studentId) => `student-portal:me:${studentId}`,
+  },
+  parentChildren: {
+    // Parent dashboard snapshot keyed by canonical phone (polled every 5s).
+    byPhone: (phone) => `parents:children:${phone}`,
+  },
 };
 
 module.exports = { CACHE_KEYS };

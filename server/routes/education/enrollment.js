@@ -6,6 +6,15 @@ const validate = require('../../middleware/validation');
 const { createEnrollmentSchema, updateEnrollmentSchema } = require('../../utils/validators');
 const enrollmentService = require('../../services/enrollmentService');
 const { prisma } = require('../../utils/prisma');
+const { invalidateStudent } = require('../../services/dashboardCache');
+
+// The update/suspend/restore/delete bodies carry no studentId, so fetch the
+// enrollment's owning student before mutating to know which dashboard caches
+// to invalidate. Non-null by id (the service below throws 404 for ghosts).
+async function getEnrollmentStudentId(id) {
+  const e = await prisma.enrollment.findUnique({ where: { id }, select: { studentId: true } });
+  return e ? { studentId: e.studentId } : {};
+}
 
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
@@ -63,6 +72,7 @@ router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
 router.post('/', authMiddleware, checkRole(['admin']), validate(createEnrollmentSchema), async (req, res) => {
   try {
     const enrollment = await enrollmentService.createEnrollment(req.body, req.user);
+    if (req.body.studentId) await invalidateStudent(req.body.studentId);
     res.status(201).json(enrollment);
   } catch (err) {
     if (err.statusCode === 400) return res.status(400).json({ error: err.message });
@@ -74,7 +84,9 @@ router.post('/', authMiddleware, checkRole(['admin']), validate(createEnrollment
 
 router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
+    const { studentId } = await getEnrollmentStudentId(req.params.id);
     const enrollment = await enrollmentService.updateEnrollment(req.params.id, req.body, req.user);
+    await invalidateStudent(studentId);
     res.json(enrollment);
   } catch (err) {
     if (err.statusCode === 404) return res.status(404).json({ error: 'Enrollment not found' });
@@ -86,7 +98,9 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
 
 router.post('/:id/suspend', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
+    const { studentId } = await getEnrollmentStudentId(req.params.id);
     const enrollment = await enrollmentService.suspendEnrollment(req.params.id, req.body, req.user);
+    await invalidateStudent(studentId);
     res.json(enrollment);
   } catch (err) {
     if (err.statusCode === 404) return res.status(404).json({ error: 'Enrollment not found' });
@@ -98,7 +112,9 @@ router.post('/:id/suspend', authMiddleware, checkRole(['admin']), async (req, re
 
 router.post('/:id/restore', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
+    const { studentId } = await getEnrollmentStudentId(req.params.id);
     const enrollment = await enrollmentService.restoreEnrollment(req.params.id, req.user);
+    await invalidateStudent(studentId);
     res.json(enrollment);
   } catch (err) {
     if (err.statusCode === 404) return res.status(404).json({ error: 'Enrollment not found' });
@@ -110,7 +126,9 @@ router.post('/:id/restore', authMiddleware, checkRole(['admin']), async (req, re
 
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
+    const { studentId } = await getEnrollmentStudentId(req.params.id);
     await enrollmentService.deleteEnrollment(req.params.id, req.user);
+    await invalidateStudent(studentId);
     res.json({ message: 'Deleted' });
   } catch (err) {
     if (err.statusCode === 404) return res.status(404).json({ error: 'Enrollment not found' });

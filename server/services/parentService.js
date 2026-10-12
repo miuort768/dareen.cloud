@@ -214,6 +214,7 @@ async function updateParent(id, data, user) {
 
   cache.del(CK.byId(id));
   cache.del(CK.list());
+  cache.del(CACHE_KEYS.parentChildren.byPhone(canonicalPhone(existing.phone)));
   await audit(user.id, user.username, AUDIT_ACTIONS.PARENT_UPDATED,
     { id }, 'parent', id);
 
@@ -236,6 +237,7 @@ async function deleteParent(id, user) {
   await deactivateAccount('parent', id);
   cache.del(CK.byId(id));
   cache.del(CK.list());
+  cache.del(CACHE_KEYS.parentChildren.byPhone(canonicalPhone(existing.phone)));
   await audit(user.id, user.username, AUDIT_ACTIONS.PARENT_DELETED,
     { id }, 'parent', id);
 }
@@ -278,6 +280,7 @@ async function restoreParent(id, user) {
 
   cache.del(CK.byId(id));
   cache.del(CK.list());
+  cache.del(CACHE_KEYS.parentChildren.byPhone(canonicalPhone(existing.phone)));
   await audit(user.id, user.username, AUDIT_ACTIONS.PARENT_UPDATED,
     { id, restored: true }, 'parent', id);
 

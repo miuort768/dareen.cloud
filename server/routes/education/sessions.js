@@ -7,6 +7,7 @@ const { authMiddleware, checkRole } = require('../../middleware/auth');
 const validate = require('../../middleware/validation');
 const { createSessionSchema, updateSessionSchema } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
+const { invalidateStudent } = require('../../services/dashboardCache');
 
 async function updateSessionCount(tx, { studentId, subject, teacherName, teacherId, delta }) {
     const enrollments = await tx.enrollment.findMany({
@@ -247,6 +248,9 @@ router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(creat
             return session;
         });
 
+        // Attendance/session changes drive the dashboards; refresh caches.
+        await invalidateStudent(body.studentId);
+
         res.status(201).json(newItem);
     } catch (err) {
         logger.error('Error adding session', err, { studentId: body.studentId });
@@ -270,7 +274,7 @@ router.patch('/:id', authMiddleware, checkRole(['admin', 'teacher']), validate(u
     keys.forEach(k => { data[k] = updates[k]; });
 
     try {
-        const existing = await prisma.session.findUnique({ where: { id }, select: { id: true, teacherId: true, teacherName: true } });
+        const existing = await prisma.session.findUnique({ where: { id }, select: { id: true, teacherId: true, teacherName: true, studentId: true } });
         if (!existing) return res.status(404).json({ error: 'Session not found' });
         if (isTeacher) {
             // Sessions may reference the account id OR the real Teacher row id.
@@ -326,6 +330,10 @@ router.patch('/:id', authMiddleware, checkRole(['admin', 'teacher']), validate(u
             return newSession;
         });
 
+        // Status flips (attendance) change enrollment counts + points on the
+        // dashboards in real time; keep the student + parent snapshots fresh.
+        if (existing.studentId) await invalidateStudent(existing.studentId);
+
         res.json(updated);
     } catch (err) {
         if (err.message === 'Session not found') return res.status(404).json({ error: err.message });
@@ -337,6 +345,7 @@ router.patch('/:id', authMiddleware, checkRole(['admin', 'teacher']), validate(u
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     const { id } = req.params;
     try {
+        const toInvalidate = await prisma.session.findUnique({ where: { id }, select: { studentId: true } });
         await prisma.$transaction(async (tx) => {
             const session = await tx.session.findUnique({ where: { id } });
             if (session) {
@@ -347,6 +356,7 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
                 await tx.session.delete({ where: { id } });
             }
         });
+        if (toInvalidate && toInvalidate.studentId) await invalidateStudent(toInvalidate.studentId);
         res.json({ message: 'Deleted' });
     } catch (err) {
         logger.error('Error deleting session', err, { id });

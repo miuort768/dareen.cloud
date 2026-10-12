@@ -3,6 +3,9 @@ const router = express.Router();
 const logger = require('../../utils/logger');
 const { authMiddleware, checkRole } = require('../../middleware/auth');
 const parentService = require('../../services/parentService');
+const { PARENT_CHILDREN_TTL } = require('../../services/dashboardCache');
+const cache = require('../../services/cacheService');
+const { CACHE_KEYS } = require('../../constants/cacheKeys');
 
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
@@ -16,7 +19,11 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 
 router.get('/my-children', authMiddleware, checkRole(['parent', 'admin']), async (req, res) => {
   try {
-    const children = await parentService.getMyChildren(req.user.phone);
+    // Parent dashboard polls every 5s; per-user cache dedupes tabs. Session and
+    // enrollment writes invalidate the affected parent's key (dashboardCache),
+    // so children changes appear near-real-time.
+    const cacheKey = CACHE_KEYS.parentChildren.byPhone(parentService.canonicalPhone(req.user.phone));
+    const children = await cache.wrap(cacheKey, PARENT_CHILDREN_TTL, () => parentService.getMyChildren(req.user.phone));
     res.json(children);
   } catch (err) {
     logger.error('Error fetching children', err);

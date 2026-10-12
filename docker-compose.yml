@@ -20,6 +20,14 @@ services:
       - FRONTEND_URL=${FRONTEND_URL:-https://dareen.cloud}
       - DB_PASSWORD=${DB_PASSWORD}
       - REDIS_URL=${REDIS_URL:-redis://:${REDIS_PASSWORD}@redis:6379}
+      # Enable the existing cacheService.wrap() sites (settings/currencies/
+      # teachers/parents/finance stats) via Redis. Reads never regress: wrap()
+      # falls back to the loader when the mode/'off' or Redis is unreachable.
+      - CACHE_MODE=redis
+      # Chain: Cloudflare -> Nginx -> app. '2' lets Express read the real client
+      # IP from X-Forwarded-For instead of the shared Cloudflare edge IP, so the
+      # rate limiter buckets real users (avoiding mass false 429s).
+      - TRUST_PROXY=2
       - PRERENDER_TOKEN=${PRERENDER_TOKEN}
     depends_on:
       postgres:
