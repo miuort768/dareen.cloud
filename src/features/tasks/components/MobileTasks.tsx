@@ -211,7 +211,7 @@ export const MobileTasks = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
                   className={cn(
-                    'relative overflow-hidden rounded-none border border-s-2 border-border bg-card p-4 shadow-elevation-1',
+                    'relative overflow-hidden rounded-none border border-e-2 border-s-2 border-border bg-card p-4 shadow-elevation-1',
                     done ? 'opacity-70' : priority.bar,
                   )}
                 >
@@ -247,7 +247,7 @@ export const MobileTasks = () => {
                     <div className="min-w-0 flex-1">
                       <p
                         className={cn(
-                          'text-sm font-bold leading-snug text-main',
+                          'text-sm font-black leading-snug text-main',
                           done && 'line-through decoration-2 opacity-60',
                         )}
                       >
@@ -339,12 +339,14 @@ export const MobileTasks = () => {
         }}
         title="مهمة جديدة"
         subtitle="أضف مهمة للفريق"
+        headerClassName="border-b-white/10 bg-primary [&_[data-slot=bst-title]]:text-on-primary [&_[data-slot=bst-desc]]:text-white/80"
+        closeClassName="rounded-full border border-white/25 bg-error text-on-error hover:bg-error-hover"
         footer={
           <button
             type="submit"
             form="mobile-task-form"
             disabled={createTask.isPending || !form.title.trim()}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-xs font-black text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
           >
             {createTask.isPending ? (
               <>

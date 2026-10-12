@@ -1,9 +1,10 @@
 import { Plus, Search, ListTodo, Clock, RefreshCcw, CheckCircle2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
-import { PageHeader, StatCard } from '../../../shared/components/ui'
+import { StatCard } from '../../../shared/components/ui'
 import type { StatCardProps } from '../../../shared/components/ui'
 import { MobilePageHeader } from '../../../shared/components/mobile/MobilePageHeader'
+import { GradientHeroCard } from '../../../shared/components/GradientHeroCard'
 import type { TaskStatus } from '../types'
 
 export type StatusFilter = 'all' | TaskStatus
@@ -24,6 +25,9 @@ const statusFilters = [
   { value: 'completed', label: 'مكتملة' },
 ]
 
+const ADD_BUTTON =
+  'flex items-center gap-1.5 rounded-full bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
+
 interface TasksStat {
   title: string
   value: number
@@ -31,9 +35,19 @@ interface TasksStat {
   variant: NonNullable<StatCardProps['variant']>
 }
 
+type Tone = 'primary' | 'warning' | 'info' | 'success'
+
+const TONE: Record<Tone, { chip: string; value: string }> = {
+  primary: { chip: 'bg-primary-soft text-primary', value: 'text-primary' },
+  warning: { chip: 'bg-warning-soft text-warning-strong', value: 'text-warning-strong' },
+  info: { chip: 'bg-info-soft text-info-strong', value: 'text-info-strong' },
+  success: { chip: 'bg-success-soft text-success-strong', value: 'text-success-strong' },
+}
+
 /**
  * Colored stat-card hero — بنفس لغة صفحة «أبنائي» (ParentsHeader):
- * MobilePageHeader على الهاتف، PageHeader على سطح المكتب، وشبكة 4 بطاقات ملونة.
+ * الهاتف: MobilePageHeader + مستطيل إحصائي واحد مدمج.
+ * الكمبيوتر: هيرو متدرج (GradientHeroCard) + شريط أدوات + شبكة 4 بطاقات.
  */
 export const TasksHeader = ({
   stats,
@@ -50,6 +64,18 @@ export const TasksHeader = ({
     { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, variant: 'success' },
   ]
 
+  const mobileStats: { title: string; value: number; icon: typeof ListTodo; tone: Tone }[] = [
+    { title: 'إجمالي المهام', value: stats.total, icon: ListTodo, tone: 'primary' },
+    { title: 'معلقة', value: stats.pending, icon: Clock, tone: 'warning' },
+    { title: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, tone: 'info' },
+    { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, tone: 'success' },
+  ]
+
+  const heroTiles = [
+    { title: 'إجمالي المهام', value: stats.total, icon: ListTodo },
+    { title: 'نسبة الإنجاز', value: `${stats.score}%`, icon: CheckCircle2 },
+  ]
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -57,18 +83,14 @@ export const TasksHeader = ({
       transition={{ duration: 0.35 }}
       className="space-y-4 md:space-y-5"
     >
-      {/* Mobile header */}
+      {/* ================= الهاتف ================= */}
       <div className="md:hidden">
         <MobilePageHeader
           title="المهام والطلبات"
           subtitle="إدارة وتكليف المهام للمعلمات"
           icon={<ListTodo size={20} />}
           action={
-            <button
-              type="button"
-              onClick={onAdd}
-              className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
-            >
+            <button type="button" onClick={onAdd} className={cn('h-11', ADD_BUTTON)}>
               <Plus size={14} />
               إضافة
             </button>
@@ -99,96 +121,127 @@ export const TasksHeader = ({
             ))}
           </select>
         </div>
+
+        {/* مستطيل إحصائي واحد مدمج (هاتف فقط) */}
+        <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border shadow-elevation-1">
+          {mobileStats.map((item) => {
+            const tone = TONE[item.tone]
+            return (
+              <div key={item.title} className="flex items-center gap-2.5 bg-card p-3">
+                <span
+                  className={cn(
+                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
+                    tone.chip,
+                  )}
+                >
+                  <item.icon size={16} />
+                </span>
+                <div className="min-w-0">
+                  <p
+                    className={cn(
+                      'font-dash text-lg font-black tabular-nums leading-none',
+                      tone.value,
+                    )}
+                  >
+                    {item.value}
+                  </p>
+                  <p className="mt-0.5 truncate text-micro font-bold text-muted">{item.title}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
 
-      {/* Desktop header */}
-      <div className="hidden md:block">
-        <PageHeader
+      {/* ================= الكمبيوتر ================= */}
+      <div className="hidden md:block md:space-y-4">
+        <GradientHeroCard
+          icon={ListTodo}
           title="المهام والطلبات"
           subtitle="إدارة وتكليف المهام للمعلمات"
-          icon={<ListTodo size={20} />}
-          meta={
-            <>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex h-10 items-center rounded-xl border border-border bg-surface px-3 text-xs font-bold tabular-nums text-main shadow-elevation-1">
-                  المهام: {stats.total}
-                </span>
-                <span className="inline-flex h-10 items-center rounded-xl bg-success px-3 text-xs font-bold tabular-nums text-on-success shadow-elevation-1">
-                  الإنجاز: {stats.score}%
-                </span>
-              </div>
-            </>
-          }
-          action={
-            <button
-              type="button"
-              onClick={onAdd}
-              className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-1 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:h-10"
-            >
-              <Plus size={14} />
-              مهمة جديدة
-            </button>
-          }
-          toolbar={
-            <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
-              <div className="relative flex-1 lg:max-w-sm">
-                <Search
-                  size={14}
-                  className="absolute start-3 top-1/2 -translate-y-1/2 text-muted"
-                />
-                <input
-                  type="text"
-                  aria-label="بحث عن مهمة"
-                  placeholder="ابحث في المهام..."
-                  value={searchTerm}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:h-10"
-                />
-              </div>
-              <div className="flex flex-wrap items-center gap-1.5">
-                {statusFilters.map((f) => {
-                  const active = filterStatus === f.value
-                  return (
-                    <button
-                      key={f.value}
-                      type="button"
-                      onClick={() => onFilterStatusChange(f.value as StatusFilter)}
-                      aria-pressed={active}
-                      className={cn(
-                        'whitespace-nowrap rounded-full px-3.5 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:py-1.5',
-                        active
-                          ? 'bg-primary text-on-primary shadow-elevation-1'
-                          : 'border border-border bg-card text-muted hover:border-primary/20 hover:text-main',
-                      )}
-                    >
-                      {f.label}
-                    </button>
-                  )
-                })}
-              </div>
+          end={
+            <div className="grid w-full grid-cols-2 gap-2 lg:w-72">
+              {heroTiles.map((tile) => (
+                <div
+                  key={tile.title}
+                  className="rounded-xl border border-white/20 bg-white/10 px-3 py-2 backdrop-blur-sm"
+                >
+                  <div className="mb-1 flex items-center gap-1.5">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-white/15">
+                      <tile.icon size={11} className="text-on-primary" />
+                    </span>
+                    <span className="truncate text-sm font-black tabular-nums leading-none text-on-primary">
+                      {tile.value}
+                    </span>
+                  </div>
+                  <p className="truncate text-micro font-medium text-white/80">{tile.title}</p>
+                </div>
+              ))}
             </div>
           }
         />
-      </div>
 
-      {/* Colored stat cards */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {cards.map((card, i) => (
-          <motion.div
-            key={card.title}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.05 * i, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <StatCard
-              title={card.title}
-              value={card.value}
-              icon={card.icon}
-              variant={card.variant}
-              className="h-full"
-            />
-          </motion.div>
-        ))}
+        {/* شريط الأدوات */}
+        <div className="rounded-2xl border border-border bg-card p-3 shadow-elevation-1 md:p-4">
+          <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+            <div className="relative flex-1 lg:max-w-sm">
+              <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+              <input
+                type="text"
+                aria-label="بحث عن مهمة"
+                placeholder="ابحث في المهام..."
+                value={searchTerm}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="h-10 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {statusFilters.map((f) => {
+                const active = filterStatus === f.value
+                return (
+                  <button
+                    key={f.value}
+                    type="button"
+                    onClick={() => onFilterStatusChange(f.value as StatusFilter)}
+                    aria-pressed={active}
+                    className={cn(
+                      'whitespace-nowrap rounded-full px-3.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      active
+                        ? 'bg-primary text-on-primary shadow-elevation-1'
+                        : 'border border-border bg-card text-muted hover:border-primary/20 hover:text-main',
+                    )}
+                  >
+                    {f.label}
+                  </button>
+                )
+              })}
+              <button type="button" onClick={onAdd} className={cn('h-10 lg:ms-auto', ADD_BUTTON)}>
+                <Plus size={14} />
+                مهمة جديدة
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* شبكة 4 بطاقات (كمبيوتر فقط) */}
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {cards.map((card, i) => (
+            <motion.div
+              key={card.title}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.05 * i, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <StatCard
+                title={card.title}
+                value={card.value}
+                icon={card.icon}
+                variant={card.variant}
+                className="h-full"
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </motion.div>
   )

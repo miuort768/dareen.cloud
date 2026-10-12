@@ -23,24 +23,22 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
     >
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
       <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-        <div className="flex items-center justify-between border-b border-primary-hover bg-primary p-5">
+        <div className="flex items-center justify-between border-b border-white/10 bg-primary p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20">
               <Plus size={16} className="text-on-primary" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-on-primary">إنشاء مهمة جديدة</h3>
-              <p className="text-micro font-bold uppercase tracking-wider text-white/90">
-                إضافة مهمة إلى القائمة
-              </p>
+              <h3 className="text-sm font-black text-on-primary">إنشاء مهمة جديدة</h3>
+              <p className="text-micro font-bold text-white/80">إضافة مهمة إلى القائمة</p>
             </div>
           </div>
           <button
             onClick={onClose}
             aria-label="إغلاق النافذة"
-            className="rounded-2xl bg-white/15 p-3 text-on-primary transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-error text-on-error shadow-elevation-1 transition-colors hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
-            <X size={22} />
+            <X size={20} />
           </button>
         </div>
 
@@ -122,7 +120,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
           <button
             type="submit"
             disabled={!data.title.trim()}
-            className="w-full rounded-full bg-primary py-3 text-xs font-bold uppercase tracking-wider text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
+            className="w-full rounded-full bg-primary py-3 text-xs font-black text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
           >
             إنشاء مهمة جديدة
           </button>

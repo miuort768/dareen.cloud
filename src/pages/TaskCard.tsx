@@ -29,10 +29,10 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
         isCompleted && 'opacity-60',
         !isCompleted &&
           (task.priority === 'high'
-            ? 'border-s-error'
+            ? 'border-e-error border-s-error'
             : task.priority === 'medium'
-              ? 'border-s-warning'
-              : 'border-s-primary'),
+              ? 'border-e-warning border-s-warning'
+              : 'border-e-primary border-s-primary'),
       )}
     >
       {!isCompleted && (
@@ -53,19 +53,17 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
             {isCompleted && <CheckCircle2 size={14} className="shrink-0 text-success" />}
             <h3
               className={cn(
-                'text-sm font-bold leading-tight text-main dark:text-inverse',
+                'text-sm font-black leading-tight text-main',
                 isCompleted && 'line-through opacity-50',
               )}
             >
               {task.title}
             </h3>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Calendar size={11} className="text-muted" />
-            <span className="text-micro font-bold uppercase tracking-wider text-muted">
-              الموعد: {task.dueDate}
-            </span>
-          </div>
+          <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+            <Calendar size={11} />
+            الموعد: {task.dueDate}
+          </span>
         </div>
         <div
           className={cn(
