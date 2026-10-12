@@ -245,43 +245,55 @@ export const MobileTasks = () => {
 
                     {/* النص */}
                     <div className="min-w-0 flex-1">
-                      <p
-                        className={cn(
-                          'text-sm font-black leading-snug text-main',
-                          done && 'line-through decoration-2 opacity-60',
-                        )}
-                      >
-                        {task.title}
-                      </p>
+                      <div className="flex items-start justify-between gap-2">
+                        <p
+                          className={cn(
+                            'min-w-0 text-sm font-black leading-snug text-main',
+                            done && 'line-through decoration-2 opacity-60',
+                          )}
+                        >
+                          {task.title}
+                        </p>
+                        <button
+                          onClick={() => handleDelete(task)}
+                          disabled={deleteTask.isPending}
+                          aria-label={`حذف المهمة: ${task.title}`}
+                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-error text-on-error shadow-elevation-1 transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                        >
+                          <Trash2 size={14} strokeWidth={1.7} />
+                        </button>
+                      </div>
                       {task.description && (
                         <p className="mt-1 line-clamp-2 text-xs font-medium leading-relaxed text-muted">
                           {task.description}
                         </p>
                       )}
 
-                      <div className="mt-2 flex items-center gap-1 overflow-hidden whitespace-nowrap">
+                      <div className="mt-2.5 flex items-center gap-1 overflow-hidden whitespace-nowrap">
                         <span
                           className={cn(
-                            'shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold',
+                            'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold',
                             priority.badge,
                           )}
                         >
+                          <priority.icon size={9} strokeWidth={2.2} />
                           {priority.label}
                         </span>
                         {!done && (
                           <span
                             className={cn(
-                              'shrink-0 rounded-full bg-surface px-1.5 py-0.5 text-[9px] font-bold',
+                              'inline-flex shrink-0 items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-[9px] font-bold',
                               statusMeta.color,
                             )}
                           >
+                            <statusMeta.icon size={9} strokeWidth={2.2} />
                             {statusMeta.label}
                           </span>
                         )}
                         {task.dueDate && (
                           <span
                             className={cn(
-                              'flex min-w-0 items-center gap-1 truncate rounded-full px-1.5 py-0.5 text-[9px] font-bold tabular-nums',
+                              'flex min-w-0 items-center gap-1 truncate rounded-full px-2 py-0.5 text-[9px] font-bold tabular-nums',
                               overdue
                                 ? 'bg-error-soft text-error'
                                 : isToday
@@ -299,16 +311,6 @@ export const MobileTasks = () => {
                         )}
                       </div>
                     </div>
-
-                    {/* حذف */}
-                    <button
-                      onClick={() => handleDelete(task)}
-                      disabled={deleteTask.isPending}
-                      aria-label={`حذف المهمة: ${task.title}`}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-error text-on-error transition-colors hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
-                    >
-                      <Trash2 size={14} strokeWidth={1.7} />
-                    </button>
                   </div>
                 </motion.article>
               )

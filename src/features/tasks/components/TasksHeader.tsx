@@ -35,15 +35,6 @@ interface TasksStat {
   variant: NonNullable<StatCardProps['variant']>
 }
 
-type Tone = 'primary' | 'warning' | 'info' | 'success'
-
-const TONE: Record<Tone, { chip: string; value: string }> = {
-  primary: { chip: 'bg-primary-soft text-primary', value: 'text-primary' },
-  warning: { chip: 'bg-warning-soft text-warning-strong', value: 'text-warning-strong' },
-  info: { chip: 'bg-info-soft text-info-strong', value: 'text-info-strong' },
-  success: { chip: 'bg-success-soft text-success-strong', value: 'text-success-strong' },
-}
-
 /**
  * Colored stat-card hero — بنفس لغة صفحة «أبنائي» (ParentsHeader):
  * الهاتف: MobilePageHeader + مستطيل إحصائي واحد مدمج.
@@ -64,11 +55,11 @@ export const TasksHeader = ({
     { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, variant: 'success' },
   ]
 
-  const mobileStats: { title: string; value: number; icon: typeof ListTodo; tone: Tone }[] = [
-    { title: 'إجمالي المهام', value: stats.total, icon: ListTodo, tone: 'primary' },
-    { title: 'معلقة', value: stats.pending, icon: Clock, tone: 'warning' },
-    { title: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, tone: 'info' },
-    { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, tone: 'success' },
+  const mobileStats: { title: string; value: number; icon: typeof ListTodo }[] = [
+    { title: 'إجمالي المهام', value: stats.total, icon: ListTodo },
+    { title: 'معلقة', value: stats.pending, icon: Clock },
+    { title: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw },
+    { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2 },
   ]
 
   const heroTiles = [
@@ -122,34 +113,21 @@ export const TasksHeader = ({
           </select>
         </div>
 
-        {/* مستطيل إحصائي واحد مدمج (هاتف فقط) */}
-        <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border shadow-elevation-1">
-          {mobileStats.map((item) => {
-            const tone = TONE[item.tone]
-            return (
-              <div key={item.title} className="flex items-center gap-2.5 bg-card p-3">
-                <span
-                  className={cn(
-                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
-                    tone.chip,
-                  )}
-                >
-                  <item.icon size={16} />
-                </span>
-                <div className="min-w-0">
-                  <p
-                    className={cn(
-                      'font-dash text-lg font-black tabular-nums leading-none',
-                      tone.value,
-                    )}
-                  >
-                    {item.value}
-                  </p>
-                  <p className="mt-0.5 truncate text-micro font-bold text-muted">{item.title}</p>
-                </div>
+        {/* مستطيل إحصائي واحد مدمج (هاتف فقط) — بلون زر الإضافة (primary) */}
+        <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/20 shadow-elevation-2">
+          {mobileStats.map((item) => (
+            <div key={item.title} className="flex items-center gap-2.5 bg-primary p-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary ring-1 ring-white/15">
+                <item.icon size={16} />
+              </span>
+              <div className="min-w-0">
+                <p className="font-dash text-lg font-black tabular-nums leading-none text-on-primary">
+                  {item.value}
+                </p>
+                <p className="mt-0.5 truncate text-micro font-bold text-white/80">{item.title}</p>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </div>
       </div>
 
