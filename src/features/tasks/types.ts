@@ -33,6 +33,10 @@ interface PriorityMeta {
   badge: string
   dot: string
   bar: string
+  /** زر الأولوية غير المحدد — تدرّج خفيف مميّز بلون الأولوية */
+  soft: string
+  /** زر الأولوية المحدد — تعبئة مشبعة بلون الأولوية */
+  solid: string
   icon: LucideIcon
 }
 
@@ -42,6 +46,8 @@ export const TASK_PRIORITY_CONFIG: Record<TaskPriority, PriorityMeta> = {
     badge: 'bg-error-soft text-error',
     dot: 'bg-error',
     bar: 'border-s-error border-e-error',
+    soft: 'border-error bg-error-soft text-error',
+    solid: 'border-error bg-error text-on-error',
     icon: ArrowUp,
   },
   medium: {
@@ -49,6 +55,9 @@ export const TASK_PRIORITY_CONFIG: Record<TaskPriority, PriorityMeta> = {
     badge: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
     dot: 'bg-warning dark:bg-primary',
     bar: 'border-s-warning border-e-warning dark:border-s-primary dark:border-e-primary',
+    soft: 'border-warning bg-warning-soft text-warning dark:border-primary dark:bg-primary-soft dark:text-primary',
+    solid:
+      'border-warning bg-warning text-on-warning dark:border-primary dark:bg-primary dark:text-on-primary',
     icon: ArrowRight,
   },
   low: {
@@ -56,6 +65,8 @@ export const TASK_PRIORITY_CONFIG: Record<TaskPriority, PriorityMeta> = {
     badge: 'bg-success-soft text-success',
     dot: 'bg-success',
     bar: 'border-s-success border-e-success',
+    soft: 'border-success bg-success-soft text-success',
+    solid: 'border-success bg-success text-on-success',
     icon: ArrowDown,
   },
 }

@@ -141,10 +141,12 @@ export const Tasks = () => {
                   className={cn(
                     'whitespace-nowrap rounded-full border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                     filterPriority === key
-                      ? key !== 'all'
-                        ? cn(TASK_PRIORITY_CONFIG[key].badge, 'border-current')
-                        : 'border-primary bg-primary-soft text-primary'
-                      : 'border-border bg-card text-muted hover:text-main',
+                      ? key === 'all'
+                        ? 'border-primary bg-primary text-on-primary shadow-elevation-2'
+                        : cn(TASK_PRIORITY_CONFIG[key].solid, 'shadow-elevation-2')
+                      : key === 'all'
+                        ? 'border-border bg-card text-muted hover:text-main'
+                        : TASK_PRIORITY_CONFIG[key].soft,
                   )}
                 >
                   {key === 'all' ? 'الكل' : TASK_PRIORITY_CONFIG[key].label}

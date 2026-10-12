@@ -404,31 +404,29 @@ export const MobileTasks = () => {
           <div className="space-y-1.5">
             <p className="text-micro font-bold uppercase tracking-wide text-muted">الأولوية</p>
             <div className="grid grid-cols-3 gap-1.5">
-              {(Object.keys(TASK_PRIORITY_CONFIG) as TaskPriority[]).map((p) => (
-                <button
-                  key={p}
-                  type="button"
-                  onClick={() => {
-                    triggerHaptic('light')
-                    setForm({ ...form, priority: p })
-                  }}
-                  aria-pressed={form.priority === p}
-                  className={cn(
-                    'flex items-center justify-center gap-1.5 rounded-2xl border py-2.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                    form.priority === p
-                      ? cn(TASK_PRIORITY_CONFIG[p].badge, 'border-current')
-                      : 'border-border text-muted hover:text-main',
-                  )}
-                >
-                  <span
+              {(Object.keys(TASK_PRIORITY_CONFIG) as TaskPriority[]).map((p) => {
+                const PriorityIcon = TASK_PRIORITY_CONFIG[p].icon
+                return (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => {
+                      triggerHaptic('light')
+                      setForm({ ...form, priority: p })
+                    }}
+                    aria-pressed={form.priority === p}
                     className={cn(
-                      'h-1.5 w-1.5 rounded-full',
-                      form.priority === p ? TASK_PRIORITY_CONFIG[p].dot : 'bg-border',
+                      'flex items-center justify-center gap-1.5 rounded-2xl border py-2.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      form.priority === p
+                        ? cn(TASK_PRIORITY_CONFIG[p].solid, 'shadow-elevation-1')
+                        : TASK_PRIORITY_CONFIG[p].soft,
                     )}
-                  />
-                  {TASK_PRIORITY_CONFIG[p].label}
-                </button>
-              ))}
+                  >
+                    <PriorityIcon size={12} strokeWidth={2.5} />
+                    {TASK_PRIORITY_CONFIG[p].label}
+                  </button>
+                )
+              })}
             </div>
           </div>
 

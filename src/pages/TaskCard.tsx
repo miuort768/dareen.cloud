@@ -84,7 +84,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
             className={cn(
               'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               task.status === 'pending'
-                ? 'bg-primary text-on-primary hover:bg-primary-hover'
+                ? 'bg-info text-on-info hover:bg-info-hover'
                 : 'bg-success text-on-success hover:bg-success-hover',
             )}
           >
@@ -94,7 +94,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
         ) : (
           <button
             onClick={() => onUpdateStatus(task.id, 'pending')}
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-micro font-bold text-muted transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="inline-flex items-center gap-1.5 rounded-full bg-warning px-3.5 py-1.5 text-micro font-bold text-on-warning transition-all hover:bg-warning-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <RefreshCcw size={12} />
             إعادة
