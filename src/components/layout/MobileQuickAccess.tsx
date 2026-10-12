@@ -29,8 +29,8 @@ interface MobileQuickAccessProps {
 const FEATURED_BY_ROLE: Record<string, string[]> = {
   admin: ['students', 'teachers', 'parents', 'finance'],
   teacher: ['attendance', 'chat', 'forum', 'teacher_payment_history'],
-  parent: ['parent_students', 'parent_announcements', 'chat', 'parent_payment_history'],
-  student: ['student_dashboard', 'forum', 'schedule', 'chat'],
+  parent: ['parent_students', 'parent_announcements', 'chat', 'tasks'],
+  student: ['student_dashboard', 'schedule', 'chat', 'tasks'],
 }
 
 const getProfileLink = (role: string) => {

@@ -132,8 +132,8 @@ router.post('/login', usernameLimiter, async (req, res) => {
                 permissions: role === 'admin'
                     ? (parsedPermissions.length > 0 ? parsedPermissions : ['*'])
                     : role === 'teacher' ? ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat']
-                    : role === 'parent' ? ['parent_dashboard', 'chat']
-                    : role === 'student' ? ['student_dashboard', 'chat']
+                    : role === 'parent' ? ['parent_dashboard', 'tasks', 'chat']
+                    : role === 'student' ? ['student_dashboard', 'tasks', 'chat']
                     : ['chat']
             }
         });
@@ -179,8 +179,8 @@ router.post('/verify', verifyLimiter, async (req, res) => {
             if (userData.role === 'admin') userData.permissions = ['*'];
             else if (userData.role === 'teacher') userData.permissions = ['dashboard', 'attendance', 'schedule', 'appointments', 'tasks', 'chat'];
             else if (userData.role === 'chat_user') userData.permissions = ['chat'];
-            else if (userData.role === 'parent') userData.permissions = ['parent_dashboard', 'chat'];
-            else if (userData.role === 'student') userData.permissions = ['student_dashboard', 'chat'];
+            else if (userData.role === 'parent') userData.permissions = ['parent_dashboard', 'tasks', 'chat'];
+            else if (userData.role === 'student') userData.permissions = ['student_dashboard', 'tasks', 'chat'];
         }
 
         if (userData.permissions && typeof userData.permissions === 'string') {

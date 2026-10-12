@@ -195,6 +195,7 @@ export const Sidebar = memo(
             'parent_students',
             'parent_announcements',
             'parent_payment_history',
+            'tasks',
           ].includes(item.id) ||
           isCommonAccess
         )
@@ -206,7 +207,7 @@ export const Sidebar = memo(
         if (item.id === 'parent_announcements') return false
         if (
           item.id === 'student_dashboard' ||
-          ['chat', 'student_invoices'].includes(item.id) ||
+          ['chat', 'student_invoices', 'tasks'].includes(item.id) ||
           isCommonAccess
         )
           return true
