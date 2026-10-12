@@ -74,7 +74,7 @@ export const AppointmentListView = ({
                 </div>
 
                 {appointments.length === 0 ? (
-                  <div className="bg-card/60 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-error-soft py-3 text-micro font-bold text-error">
+                  <div className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-error-soft bg-surface py-3 text-micro font-bold text-error">
                     <span className="h-1.5 w-1.5 rounded-full bg-error" />
                     لا توجد مواعيد في هذا اليوم
                   </div>
@@ -123,7 +123,7 @@ export const AppointmentListView = ({
                           <span
                             className={cn(
                               'mt-1 text-micro font-bold leading-none',
-                              done ? 'text-muted/70' : 'text-primary/70',
+                              done ? 'text-muted' : 'text-primary/70',
                             )}
                           >
                             {app.isPM ? 'م' : 'ص'}

@@ -1,5 +1,6 @@
-import { Search, Filter, GraduationCap, X, SlidersHorizontal } from 'lucide-react'
-import { DAYS_OF_WEEK } from '../../features/appointments/types'
+import { Search, GraduationCap, X, RotateCcw } from 'lucide-react'
+import { DayDropdown } from '../../shared/components/mobile'
+import { FilterDropdown } from '../../shared/components/ui'
 
 interface AppointmentsFiltersProps {
   searchTerm: string
@@ -9,10 +10,17 @@ interface AppointmentsFiltersProps {
   filterTeacher: string
   onTeacherChange: (v: string) => void
   uniqueTeachers: string[]
+  todayName: string
+  /** عدد الحصص لكل يوم (بلا فلترة اليوم) — لعرضه داخل قائمة الأيام */
+  dayCounts: Record<string, number>
   hasActiveFilters: boolean
   onReset: () => void
 }
 
+/**
+ * شريط فلاتر سطح المكتب — بحث + قائمة أيام مخصصة + قائمة معلمات مخصصة + إعادة تعيين.
+ * قوائم مخصصة (لا عناصر native) لتجنب صندوق المتصفح بالأبيض/الأسود في الوضع الداكن.
+ */
 export const AppointmentsFilters = ({
   searchTerm,
   onSearchChange,
@@ -21,84 +29,70 @@ export const AppointmentsFilters = ({
   filterTeacher,
   onTeacherChange,
   uniqueTeachers,
+  todayName,
+  dayCounts,
   hasActiveFilters,
   onReset,
-}: AppointmentsFiltersProps) => (
-  <div className="mb-4 rounded-3xl border border-border bg-card shadow-soft">
-    <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-      <div className="flex items-center gap-2">
-        <div className="flex h-6 w-6 items-center justify-center rounded-2xl bg-primary-soft">
-          <SlidersHorizontal size={12} className="text-primary" />
-        </div>
-        <span className="text-xs font-bold text-muted">تصفية النتائج</span>
-        {hasActiveFilters && (
-          <span className="rounded-2xl bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
-            نشط
-          </span>
-        )}
-      </div>
-      {hasActiveFilters && (
-        <button
-          onClick={onReset}
-          className="flex min-h-8 items-center gap-1 rounded-2xl bg-error px-2 text-micro font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
-        >
-          <X size={12} /> إعادة تعيين
-        </button>
-      )}
-    </div>
-    <div className="grid grid-cols-1 gap-3 p-3 md:grid-cols-3">
-      <div className="relative">
-        <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+}: AppointmentsFiltersProps) => {
+  const teacherItems = [
+    { key: 'all', label: 'كل المعلمات' },
+    ...uniqueTeachers.map((teacher) => ({ key: teacher, label: teacher })),
+  ]
+
+  return (
+    <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+      {/* البحث */}
+      <div className="relative flex-1 lg:max-w-sm">
+        <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
         <input
           type="text"
-          aria-label="بحث"
+          aria-label="بحث عن موعد"
           placeholder="ابحث باسم الطالب أو المادة..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full rounded-2xl border border-border bg-surface py-2 pe-8 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
+          className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
         />
         {searchTerm && (
           <button
+            type="button"
             onClick={() => onSearchChange('')}
-            className="absolute end-2.5 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="مسح البحث"
+            className="absolute end-3 top-1/2 flex -translate-y-1/2 items-center justify-center text-muted outline-none transition-colors hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
           >
-            <X size={11} />
+            <X size={13} />
           </button>
         )}
       </div>
-      <div className="relative">
-        <Filter size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-        <select
-          value={filterDay}
-          onChange={(e) => onDayChange(e.target.value)}
-          aria-label="تصفية حسب اليوم"
-          className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all hover:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:[color-scheme:dark]"
-        >
-          <option value="all">كل الأيام</option>
-          {DAYS_OF_WEEK.map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="relative">
-        <GraduationCap size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-        <select
+
+      {/* القوائم المخصصة */}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="flex-1 lg:w-44">
+          <DayDropdown
+            selectedDay={filterDay}
+            onSelectDay={onDayChange}
+            todayName={todayName}
+            dayCounts={dayCounts}
+          />
+        </div>
+        <FilterDropdown
           value={filterTeacher}
-          onChange={(e) => onTeacherChange(e.target.value)}
-          aria-label="تصفية حسب المعلمة"
-          className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all hover:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:[color-scheme:dark]"
-        >
-          <option value="all">كل المعلمات</option>
-          {uniqueTeachers.map((teacher) => (
-            <option key={teacher} value={teacher}>
-              {teacher}
-            </option>
-          ))}
-        </select>
+          items={teacherItems}
+          onChange={onTeacherChange}
+          icon={GraduationCap}
+          className="flex-1 lg:w-48"
+        />
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={onReset}
+            aria-label="إعادة تعيين الفلاتر"
+            className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-error px-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          >
+            <RotateCcw size={13} />
+            إعادة تعيين
+          </button>
+        )}
       </div>
     </div>
-  </div>
-)
+  )
+}

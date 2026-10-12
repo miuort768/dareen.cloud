@@ -7,23 +7,13 @@ import { DAYS_OF_WEEK, appointmentTimeSort } from '../features/appointments/type
 import type { AppointmentEvent } from '../features/appointments/types'
 import { useAppointmentsData } from '../features/appointments/hooks/useAppointments'
 import {
-  AppointmentsFilters,
+  AppointmentsHeader,
   AppointmentScheduleGrid,
   AppointmentDetailPanel,
 } from './appointments-page'
 import { Plus, Calendar, CheckCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../lib/utils'
-import { GradientHeroCard } from '../shared/components/GradientHeroCard'
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 export const Appointments = () => {
   const academyName = useAcademyName()
@@ -52,7 +42,8 @@ export const Appointments = () => {
     stats,
   } = useAppointmentsData()
 
-  const filteredAppointments = useMemo(
+  // searched = بحث + معلمة فقط (بلا فلترة يوم) — مصدر عدّادات شريط الأيام
+  const searchedAppointments = useMemo(
     () =>
       allAppointments.filter((appointment) => {
         if (completedSessionIds.includes(appointment.id)) return false
@@ -61,12 +52,27 @@ export const Appointments = () => {
           appointment.studentName.toLowerCase().includes(q) ||
           appointment.teacherName.toLowerCase().includes(q) ||
           appointment.subject.toLowerCase().includes(q)
-        const matchesDay = filterDay === 'all' || appointment.day === filterDay
         const matchesTeacher = filterTeacher === 'all' || appointment.teacherName === filterTeacher
-        return matchesSearch && matchesDay && matchesTeacher
+        return matchesSearch && matchesTeacher
       }),
-    [allAppointments, completedSessionIds, searchTerm, filterDay, filterTeacher],
+    [allAppointments, completedSessionIds, searchTerm, filterTeacher],
   )
+
+  const filteredAppointments = useMemo(
+    () =>
+      searchedAppointments.filter(
+        (appointment) => filterDay === 'all' || appointment.day === filterDay,
+      ),
+    [searchedAppointments, filterDay],
+  )
+
+  const dayCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const appointment of searchedAppointments) {
+      counts[appointment.day] = (counts[appointment.day] || 0) + 1
+    }
+    return counts
+  }, [searchedAppointments])
 
   const appointmentsByDay = useMemo(
     () =>
@@ -129,55 +135,9 @@ export const Appointments = () => {
   return (
     <div className="relative min-h-full bg-background" dir="rtl">
       <div className="hidden px-2 md:block">
-        {/* Hero */}
-        <GradientHeroCard
-          icon={Calendar}
-          title="المواعيد"
-          subtitle="جدولة ومتابعة الحصص الأكاديمية للطلاب"
-          decor={
-            <>
-              {particles.map((p) => (
-                <motion.div
-                  key={p.id}
-                  aria-hidden="true"
-                  className="pointer-events-none absolute rounded-full bg-white/10"
-                  style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-                  animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-                  transition={{
-                    duration: p.duration,
-                    repeat: Infinity,
-                    delay: p.delay,
-                    ease: 'easeInOut',
-                  }}
-                />
-              ))}
-            </>
-          }
-          end={
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm lg:ms-auto">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/80">اليوم</p>
-                <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.today}</p>
-              </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/80">المتبقي</p>
-                <p className="text-2xl font-bold tabular-nums text-on-primary">
-                  {stats.remainingToday}
-                </p>
-              </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/80">الإجمالي</p>
-                <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.total}</p>
-              </div>
-            </div>
-          }
-        />
-
         {isError ? (
           /* حالة الخطأ مع إعادة المحاولة */
-          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
+          <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
             <p className="text-sm font-bold text-main">حدث خطأ في تحميل البيانات</p>
             <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
             <button
@@ -189,28 +149,24 @@ export const Appointments = () => {
           </div>
         ) : (
           <>
-            {/* الفلاتر */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mt-6"
-            >
-              <AppointmentsFilters
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                filterDay={filterDay}
-                onDayChange={setFilterDay}
-                filterTeacher={filterTeacher}
-                onTeacherChange={setFilterTeacher}
-                uniqueTeachers={uniqueTeachers}
-                hasActiveFilters={hasActiveFilters}
-                onReset={handleResetFilters}
-              />
-            </motion.div>
+            {/* الترويسة + الإحصاءات + الفلاتر */}
+            <AppointmentsHeader
+              stats={stats}
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              filterDay={filterDay}
+              onDayChange={setFilterDay}
+              filterTeacher={filterTeacher}
+              onTeacherChange={setFilterTeacher}
+              uniqueTeachers={uniqueTeachers}
+              todayName={todayName}
+              dayCounts={dayCounts}
+              hasActiveFilters={hasActiveFilters}
+              onReset={handleResetFilters}
+            />
 
             <div
-              className={`grid gap-4 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}
+              className={`mt-4 grid gap-4 md:mt-5 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

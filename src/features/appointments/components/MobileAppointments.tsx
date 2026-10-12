@@ -132,7 +132,7 @@ export const MobileAppointments = () => {
       </div>
 
       {/* التبويبات اللاصقة */}
-      <div className="bg-background/95 sticky top-0 z-30 mt-3 pb-2 pt-2 backdrop-blur-sm">
+      <div className="sticky top-0 z-30 mt-3 border-b border-border bg-background pb-2 pt-2">
         <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
           {tabs.map((tab) => (
             <motion.button
@@ -185,7 +185,7 @@ export const MobileAppointments = () => {
         {loading && allAppointments.length === 0 ? (
           <MobileSkeleton rows={6} />
         ) : isError ? (
-          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-10 text-center">
+          <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-10 text-center">
             <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
             <p className="text-xs font-bold text-main">تعذر تحميل المواعيد</p>
             <button
