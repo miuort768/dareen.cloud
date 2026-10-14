@@ -8,7 +8,7 @@ import { confirm } from '../lib/confirmDialog'
 import { useAcademyName, useShowNotification } from '../context/AppContext'
 import { PageLoader } from '../components/ui/PageLoader'
 import type { Task, TaskPriority } from '../features/tasks/types'
-import { TASK_PRIORITY_CONFIG } from '../features/tasks/types'
+import { TASK_PRIORITY_CONFIG, TASKS_QUERY_OPTIONS } from '../features/tasks/types'
 import { useTaskMutations } from '../features/tasks/hooks/useTaskMutations'
 import { MobileTasks } from '../features/tasks/components/MobileTasks'
 import { TasksHeader } from '../features/tasks/components/TasksHeader'
@@ -54,6 +54,7 @@ export const Tasks = () => {
     queryKey: ['tasks'],
     queryFn: () => api.get<Task[]>('/tasks'),
     select: (data) => safeArray<Task>(data).map((t) => ({ ...t, status: t.status || 'pending' })),
+    ...TASKS_QUERY_OPTIONS,
   })
 
   const { createTask, updateTaskStatus, deleteTask, deleteManyTasks } = useTaskMutations()

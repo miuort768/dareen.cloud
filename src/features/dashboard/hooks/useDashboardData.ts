@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useQueries, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../../lib/api'
+import { TASKS_QUERY_OPTIONS } from '../../tasks/types'
 import type { User } from '../../../types/auth'
 import type {
   Student,
@@ -101,7 +102,7 @@ export const useDashboardData = (currentUser: User | null) => {
       {
         queryKey: ['tasks'],
         queryFn: () => api.get<DashboardTask[]>('/tasks'),
-        staleTime: 1 * 60 * 1000,
+        ...TASKS_QUERY_OPTIONS,
         enabled,
       },
       {

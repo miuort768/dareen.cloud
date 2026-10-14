@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { QueryClient } from '@tanstack/react-query'
 import './index.css'
 import './styles/tokens/index.css'
 import App from './App.tsx'
@@ -11,32 +10,8 @@ import { AppProvider } from './context/AppContext.tsx'
 
 import { HelmetProvider } from 'react-helmet-async'
 
-import { PersistQueryClientProvider, type Persister } from '@tanstack/react-query-persist-client'
-import { get, set, del } from 'idb-keyval'
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 30, // 30 minutes
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-})
-
-// Custom async persister using IndexedDB
-const persister: Persister = {
-  persistClient: async (client) => {
-    await set('react-query-cache', client)
-  },
-  restoreClient: async () => {
-    return await get('react-query-cache')
-  },
-  removeClient: async () => {
-    await del('react-query-cache')
-  },
-}
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { queryClient, persister } from './lib/queryClient'
 
 // Stale-bundle guard: after a new deploy, old chunks referenced by the loaded
 // page no longer exist. Vite emits this event on preload failure — reload once

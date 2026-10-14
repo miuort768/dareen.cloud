@@ -55,11 +55,41 @@ export const TasksHeader = ({
     { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, variant: 'success' },
   ]
 
-  const mobileStats: { title: string; value: number; icon: typeof ListTodo }[] = [
-    { title: 'إجمالي المهام', value: stats.total, icon: ListTodo },
-    { title: 'معلقة', value: stats.pending, icon: Clock },
-    { title: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw },
-    { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2 },
+  const mobileStats: {
+    title: string
+    value: number
+    icon: typeof ListTodo
+    fill: string
+    on: string
+  }[] = [
+    {
+      title: 'إجمالي المهام',
+      value: stats.total,
+      icon: ListTodo,
+      fill: 'bg-primary',
+      on: 'text-on-primary',
+    },
+    {
+      title: 'معلقة',
+      value: stats.pending,
+      icon: Clock,
+      fill: 'bg-warning',
+      on: 'text-on-warning',
+    },
+    {
+      title: 'قيد التنفيذ',
+      value: stats.inProgress,
+      icon: RefreshCcw,
+      fill: 'bg-info',
+      on: 'text-on-info',
+    },
+    {
+      title: 'تم الإنجاز',
+      value: stats.completed,
+      icon: CheckCircle2,
+      fill: 'bg-success',
+      on: 'text-on-success',
+    },
   ]
 
   const heroTiles = [
@@ -113,18 +143,27 @@ export const TasksHeader = ({
           </select>
         </div>
 
-        {/* مستطيل إحصائي واحد مدمج (هاتف فقط) — بلون زر الإضافة (primary) */}
-        <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/20 shadow-elevation-2">
+        {/* مستطيل إحصائي واحد مدمج (هاتف فقط) — أربعة ألوان متمايزة */}
+        <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border shadow-elevation-2">
           {mobileStats.map((item) => (
-            <div key={item.title} className="flex items-center gap-2.5 bg-primary p-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary ring-1 ring-white/15">
+            <div key={item.title} className={cn('flex items-center gap-2.5 p-3', item.fill)}>
+              <span
+                className={cn(
+                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-inset ring-white/15',
+                  item.on,
+                )}
+              >
                 <item.icon size={16} />
               </span>
               <div className="min-w-0">
-                <p className="font-dash text-lg font-black tabular-nums leading-none text-on-primary">
+                <p
+                  className={cn('font-dash text-lg font-black tabular-nums leading-none', item.on)}
+                >
                   {item.value}
                 </p>
-                <p className="mt-0.5 truncate text-micro font-bold text-white/80">{item.title}</p>
+                <p className={cn('mt-0.5 truncate text-micro font-bold opacity-80', item.on)}>
+                  {item.title}
+                </p>
               </div>
             </div>
           ))}

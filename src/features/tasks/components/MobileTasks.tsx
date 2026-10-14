@@ -18,7 +18,13 @@ import { cn } from '../../../lib/utils'
 import { triggerHaptic } from '../../../lib/haptics'
 import { confirm } from '../../../lib/confirmDialog'
 import { useShowNotification } from '../../../context/AppContext'
-import { TASK_PRIORITY_CONFIG, TASK_STATUS_CONFIG, type Task, type TaskPriority } from '../types'
+import {
+  TASK_PRIORITY_CONFIG,
+  TASK_STATUS_CONFIG,
+  TASKS_QUERY_OPTIONS,
+  type Task,
+  type TaskPriority,
+} from '../types'
 import { useTaskMutations } from '../hooks/useTaskMutations'
 import { TasksHeader } from './TasksHeader'
 import type { StatusFilter } from './TasksHeader'
@@ -56,6 +62,7 @@ export const MobileTasks = () => {
       const raw = await api.get<Task[]>('/tasks')
       return safeArray<Task>(raw).map((t) => ({ ...t, status: t.status || 'pending' }))
     },
+    ...TASKS_QUERY_OPTIONS,
   })
 
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({
@@ -211,12 +218,12 @@ export const MobileTasks = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
                   className={cn(
-                    'relative overflow-hidden rounded-none border border-e-2 border-s-2 border-border bg-card p-4 shadow-elevation-1',
-                    done ? 'opacity-70' : priority.bar,
+                    'overflow-hidden rounded-none border border-border bg-card shadow-elevation-1',
+                    done && 'opacity-80',
                   )}
                 >
-                  <div className="flex items-start gap-3">
-                    {/* Checkbox متحرك */}
+                  {/* المستطيل الملوّن حسب الأولوية: checkbox + العنوان */}
+                  <div className={cn('flex items-start gap-3 p-4', priority.rect)}>
                     <motion.button
                       whileTap={{ scale: 0.85 }}
                       onClick={() => toggleComplete(task)}
@@ -225,8 +232,8 @@ export const MobileTasks = () => {
                       className={cn(
                         'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                         done
-                          ? 'border-success bg-success text-on-success'
-                          : 'border-border-strong bg-transparent text-transparent hover:border-primary',
+                          ? priority.checkDone
+                          : 'border-white/70 bg-transparent text-transparent hover:border-white',
                       )}
                     >
                       <AnimatePresence>
@@ -243,73 +250,74 @@ export const MobileTasks = () => {
                       </AnimatePresence>
                     </motion.button>
 
-                    {/* النص */}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-start justify-between gap-2">
-                        <p
-                          className={cn(
-                            'min-w-0 text-sm font-black leading-snug text-main',
-                            done && 'line-through decoration-2 opacity-60',
-                          )}
-                        >
-                          {task.title}
-                        </p>
-                        <button
-                          onClick={() => handleDelete(task)}
-                          disabled={deleteTask.isPending}
-                          aria-label={`حذف المهمة: ${task.title}`}
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-error text-on-error shadow-elevation-1 transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
-                        >
-                          <Trash2 size={14} strokeWidth={1.7} />
-                        </button>
-                      </div>
-                      {task.description && (
-                        <p className="mt-1 line-clamp-2 text-xs font-medium leading-relaxed text-muted">
-                          {task.description}
-                        </p>
-                      )}
+                    <div className="flex min-w-0 flex-1 items-start justify-between gap-2">
+                      <p
+                        className={cn(
+                          'min-w-0 text-sm font-black leading-snug',
+                          done && 'line-through decoration-2 opacity-80',
+                        )}
+                      >
+                        {task.title}
+                      </p>
+                      <button
+                        onClick={() => handleDelete(task)}
+                        disabled={deleteTask.isPending}
+                        aria-label={`حذف المهمة: ${task.title}`}
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/20 text-white ring-1 ring-inset ring-white/25 transition-all duration-150 hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                      >
+                        <Trash2 size={14} strokeWidth={1.7} />
+                      </button>
+                    </div>
+                  </div>
 
-                      <div className="mt-2.5 flex items-center gap-1 overflow-hidden whitespace-nowrap">
+                  {/* القسم المحايد: الوصف + الشرائح */}
+                  <div className="px-4 pb-3.5 pt-3">
+                    {task.description && (
+                      <p className="line-clamp-2 text-xs font-medium leading-relaxed text-muted">
+                        {task.description}
+                      </p>
+                    )}
+
+                    <div className="mt-1.5 flex items-center gap-1 overflow-hidden whitespace-nowrap">
+                      <span
+                        className={cn(
+                          'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold',
+                          priority.badge,
+                        )}
+                      >
+                        <priority.icon size={9} strokeWidth={2.2} />
+                        {priority.label}
+                      </span>
+                      {!done && (
                         <span
                           className={cn(
-                            'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold',
-                            priority.badge,
+                            'inline-flex shrink-0 items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-[9px] font-bold',
+                            statusMeta.color,
                           )}
                         >
-                          <priority.icon size={9} strokeWidth={2.2} />
-                          {priority.label}
+                          <statusMeta.icon size={9} strokeWidth={2.2} />
+                          {statusMeta.label}
                         </span>
-                        {!done && (
-                          <span
-                            className={cn(
-                              'inline-flex shrink-0 items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-[9px] font-bold',
-                              statusMeta.color,
-                            )}
-                          >
-                            <statusMeta.icon size={9} strokeWidth={2.2} />
-                            {statusMeta.label}
-                          </span>
-                        )}
-                        {task.dueDate && (
-                          <span
-                            className={cn(
-                              'flex min-w-0 items-center gap-1 truncate rounded-full px-2 py-0.5 text-[9px] font-bold tabular-nums',
-                              overdue
-                                ? 'bg-error-soft text-error'
-                                : isToday
-                                  ? 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary'
-                                  : 'bg-surface text-muted',
-                            )}
-                          >
-                            <CalendarDays size={9} strokeWidth={1.7} />
-                            {new Date(`${task.dueDate}T00:00:00`).toLocaleDateString('ar-EG', {
-                              month: 'short',
-                              day: 'numeric',
-                            })}
-                            {overdue && ' · متأخرة'}
-                          </span>
-                        )}
-                      </div>
+                      )}
+                      {task.dueDate && (
+                        <span
+                          className={cn(
+                            'flex min-w-0 items-center gap-1 truncate rounded-full px-2 py-0.5 text-[9px] font-bold tabular-nums',
+                            overdue
+                              ? 'bg-error-soft text-error'
+                              : isToday
+                                ? 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary'
+                                : 'bg-surface text-muted',
+                          )}
+                        >
+                          <CalendarDays size={9} strokeWidth={1.7} />
+                          {new Date(`${task.dueDate}T00:00:00`).toLocaleDateString('ar-EG', {
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                          {overdue && ' · متأخرة'}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </motion.article>

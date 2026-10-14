@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { api } from '../lib/api'
+import { clearQueryCache } from '../lib/queryClient'
 import type { User } from '../types/auth'
 
 interface AuthState {
@@ -32,6 +33,8 @@ export const useAuthStore = create<AuthState>()(
           if (!token || !user) return false
           set({ token, currentUser: user, isAuthenticated: true, isLoading: false })
           localStorage.setItem('auth_token', token)
+          // Drop any cache from a previous session so a new account never sees stale data
+          void clearQueryCache()
 
           // Subscribe to push notifications if permission is granted
           import('../services/pushService').then(({ pushService }) => {
@@ -58,6 +61,8 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         set({ token: null, currentUser: null, isAuthenticated: false, isLoading: false })
         localStorage.removeItem('auth_token')
+        // Wipe persisted queries so the next user starts clean (no cross-account leak)
+        void clearQueryCache()
       },
 
       verifyToken: async () => {
