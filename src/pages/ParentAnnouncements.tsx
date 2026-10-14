@@ -106,7 +106,26 @@ export const ParentAnnouncements = () => {
         />
 
         <div className="relative z-10 flex flex-col gap-4 p-5 md:p-6 lg:flex-row lg:items-center lg:gap-6">
-          <div className="flex flex-col items-start gap-3 lg:flex-row lg:items-center lg:gap-4">
+          {/* موبايل فقط: النص ← الجرس (الجانب الآخر) */}
+          <div className="flex w-full items-center justify-between gap-3 lg:hidden">
+            <div className="min-w-0 flex-1">
+              <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-on-primary backdrop-blur-sm">
+                آخر إعلانات المؤسسة
+              </span>
+              <h1 className="text-sm font-black leading-tight text-on-primary md:text-2xl">
+                آخر إعلانات {academyName}
+              </h1>
+              <p className="mt-1 text-xs font-bold text-white/90">
+                تابع كل أخبار المؤسسة والفعاليات والإعلانات هنا
+              </p>
+            </div>
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-elevation-3 backdrop-blur-sm">
+              <Bell size={22} className="text-on-primary" />
+            </div>
+          </div>
+
+          {/* ديسكتوب فقط: الجرس → النص (كما هو) */}
+          <div className="hidden lg:flex lg:flex-row lg:items-center lg:gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-elevation-3 backdrop-blur-sm">
               <Bell size={22} className="text-on-primary" />
             </div>
