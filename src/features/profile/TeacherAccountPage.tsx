@@ -148,24 +148,20 @@ export const TeacherAccountPage = () => {
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="flex flex-col">
-                <div>
-                  <InfoRow label="الاسم" value={displayName} icon={User} />
-                  <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
-                  {teacher?.phone2 && (
-                    <InfoRow label="رقم إضافي" value={teacher.phone2} icon={Phone} mono />
-                  )}
-                  <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
-                </div>
-                <div>
-                  <InfoRow label="نوع الحساب" value="معلمة" icon={ShieldCheck} />
-                  <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
-                  <InfoRow
-                    label="تاريخ الانضمام"
-                    value={formatJoinDate(teacher?.createdAt) || undefined}
-                    icon={CalendarDays}
-                  />
-                </div>
+              <div className="flex flex-col gap-2.5">
+                <InfoRow label="الاسم" value={displayName} icon={User} />
+                <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
+                {teacher?.phone2 && (
+                  <InfoRow label="رقم إضافي" value={teacher.phone2} icon={Phone} mono />
+                )}
+                <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
+                <InfoRow label="نوع الحساب" value="معلمة" icon={ShieldCheck} />
+                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
+                <InfoRow
+                  label="تاريخ الانضمام"
+                  value={formatJoinDate(teacher?.createdAt) || undefined}
+                  icon={CalendarDays}
+                />
               </div>
             </SectionCard>
 

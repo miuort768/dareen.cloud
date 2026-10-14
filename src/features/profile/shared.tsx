@@ -5,7 +5,7 @@ import { AlertTriangle, BadgeCheck, Check, LogOut, MessageCircle, PencilLine } f
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../lib/utils'
-import { Skeleton } from '../../shared/components/ui'
+import { Image, Skeleton } from '../../shared/components/ui'
 import { SectionCard as BaseSectionCard } from '../../shared/components/SectionCard'
 import { confirm } from '../../lib/confirmDialog'
 import { useSettingsStore } from '../../store/settingsStore'
@@ -147,10 +147,18 @@ export const AccountHero = ({
         className="relative z-10 mx-3 -mt-8 rounded-2xl border border-border bg-card px-4 pb-4 pt-4 shadow-elevation-3 dark:border-white/[0.06] dark:bg-surface md:mx-6 md:-mt-10 md:px-5 md:pb-5 md:pt-5"
       >
         <div className="flex flex-wrap items-end gap-x-3.5 gap-y-3">
-          {/* الحرف الأول — تايل متدرّج + نقطة الحالة */}
+          {/* شعار المنصة + نقطة الحالة */}
           <div className="relative -mt-12 shrink-0 md:-mt-14">
-            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-jade to-jade-deep text-3xl font-black text-jade-on shadow-elevation-2 ring-4 ring-card md:h-24 md:w-24 md:text-4xl">
-              {(name || '?').charAt(0)}
+            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elevation-2 ring-4 ring-card md:h-24 md:w-24">
+              <Image
+                src="/dareen_logo_new.v2.webp"
+                webpSrc="/dareen_logo_new.v2.webp"
+                avifSrc="/dareen_logo_new.v2.avif"
+                alt="شعار المنصة"
+                loading="eager"
+                className="h-full w-full"
+                imgClassName="object-contain p-2.5 md:p-3"
+              />
             </div>
             <span className="absolute -bottom-1 -end-1 flex h-5 w-5 items-center justify-center rounded-full bg-success shadow-elevation-1 ring-2 ring-card">
               <Check size={11} className="text-on-success" strokeWidth={3} />
@@ -307,7 +315,7 @@ export const SectionCard = ({
   </BaseSectionCard>
 )
 
-/* ---------- صف معلومة — قائمة تعريفات هادئة ---------- */
+/* ---------- صف معلومة — بطاقة تعريف صغيرة أنيقة ---------- */
 
 interface InfoRowProps {
   label: string
@@ -320,16 +328,16 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="group flex items-center gap-3 border-b border-divider px-1.5 py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-jade-soft sm:px-2.5">
+    <div className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-2.5 transition-all duration-normal hover:border-jade-soft hover:bg-card hover:shadow-elevation-1 dark:border-white/[0.06] md:p-3">
       {Icon && (
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jade-soft text-jade ring-1 ring-jade-soft">
-          <Icon size={16} />
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-jade-soft text-jade ring-1 ring-jade-soft transition-colors duration-normal group-hover:bg-jade group-hover:text-jade-on">
+          <Icon size={17} />
         </span>
       )}
       <div className="min-w-0 flex-1">
         <p className="text-micro font-bold text-muted">{label}</p>
         {empty ? (
-          <p className="mt-0.5 text-sm font-bold text-muted">—</p>
+          <p className="mt-0.5 text-sm font-black text-muted">—</p>
         ) : (
           <p
             title={tooltip}
@@ -439,7 +447,10 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
 
 export const ProfileSkeleton = () => (
   <div className="space-y-4 md:space-y-5" aria-busy="true" aria-label="جاري تحميل الحساب">
-    <Skeleton className="h-40 w-full rounded-3xl shadow-soft md:h-44" />
+    <div className="relative">
+      <Skeleton className="h-24 w-full rounded-3xl shadow-soft md:h-32" />
+      <Skeleton className="-mt-8 h-28 w-full rounded-2xl shadow-soft md:-mt-10" />
+    </div>
     <div className="grid gap-4 lg:grid-cols-3">
       <Skeleton className="h-64 rounded-2xl shadow-soft" />
       <Skeleton className="h-64 rounded-2xl shadow-soft lg:col-span-2" />

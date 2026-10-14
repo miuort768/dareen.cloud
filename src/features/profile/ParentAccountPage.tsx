@@ -136,7 +136,9 @@ export const ParentAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="ولي أمر"
+            chipsBold
             subtitle={children.length > 0 ? `${children.length} أبناء مرتبطون بالحساب` : undefined}
+            metaChips={[`المواد: ${totalSubjects}`, `الحصص المنفذة: ${totalUsed}`]}
             quickStats={[
               { label: 'الأبناء', value: children.length, tone: 'primary', icon: Users },
               { label: 'المواد', value: totalSubjects, tone: 'info', icon: BookOpen },
@@ -158,21 +160,12 @@ export const ParentAccountPage = () => {
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="flex flex-col">
-                <div>
-                  <InfoRow label="الاسم" value={displayName} icon={User} />
-                  <InfoRow
-                    label="اسم المستخدم"
-                    value={currentUser?.username}
-                    icon={KeyRound}
-                    mono
-                  />
-                </div>
-                <div>
-                  <InfoRow label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} />
-                  <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
-                  <InfoRow label="عدد الأبناء" value={String(children.length)} icon={Users} />
-                </div>
+              <div className="flex flex-col gap-2.5">
+                <InfoRow label="الاسم" value={displayName} icon={User} />
+                <InfoRow label="اسم المستخدم" value={currentUser?.username} icon={KeyRound} mono />
+                <InfoRow label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} />
+                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
+                <InfoRow label="عدد الأبناء" value={String(children.length)} icon={Users} />
               </div>
             </SectionCard>
 

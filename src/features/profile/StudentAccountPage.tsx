@@ -152,18 +152,14 @@ export const StudentAccountPage = () => {
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="flex flex-col">
-                <div>
-                  <InfoRow label="الاسم" value={displayName} icon={User} />
-                  <InfoRow label="رقم الطالب" value={student?.studentPhone} icon={Phone} mono />
-                  {student?.parentPhone && (
-                    <InfoRow label="رقم ولي الأمر" value={student.parentPhone} icon={Users} mono />
-                  )}
-                </div>
-                <div>
-                  <InfoRow label="نوع الحساب" value="طالب" icon={ShieldCheck} />
-                  <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
-                </div>
+              <div className="flex flex-col gap-2.5">
+                <InfoRow label="الاسم" value={displayName} icon={User} />
+                <InfoRow label="رقم الطالب" value={student?.studentPhone} icon={Phone} mono />
+                {student?.parentPhone && (
+                  <InfoRow label="رقم ولي الأمر" value={student.parentPhone} icon={Users} mono />
+                )}
+                <InfoRow label="نوع الحساب" value="طالب" icon={ShieldCheck} />
+                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
               </div>
             </SectionCard>
 
