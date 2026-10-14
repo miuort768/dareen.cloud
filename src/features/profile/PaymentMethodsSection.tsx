@@ -246,7 +246,7 @@ export const PaymentMethodsSection = () => {
       {/* لا توجد طرق دفع */}
       {!loading && !fetchError && !setting && (
         <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-surface py-12 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-jade-soft ring-1 ring-jade-soft">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-jade-soft ring-1 ring-jade-soft">
             <CreditCard size={22} className="text-jade" />
           </div>
           <p className="text-sm font-black text-main">لا توجد طرق دفع</p>
@@ -313,7 +313,7 @@ export const PaymentMethodsSection = () => {
                       : setting.iban}
                 </p>
               </div>
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30">
                 {methodMeta && <methodMeta.icon size={20} className="text-on-primary" />}
               </div>
             </div>
@@ -322,7 +322,7 @@ export const PaymentMethodsSection = () => {
           <div className="overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-white/[0.06] dark:bg-surface">
             <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-3 dark:bg-card">
               <div className="flex min-w-0 items-center gap-2.5">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-jade-soft">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-jade-soft">
                   {methodMeta && <methodMeta.icon size={15} className="text-jade" />}
                 </div>
                 <div className="min-w-0">

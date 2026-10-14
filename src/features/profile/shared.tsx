@@ -48,15 +48,6 @@ const TEXT_TONE: Record<Tone, string> = {
   error: 'text-error-strong',
 }
 
-/** تعبئة صلبة — البطاقات الإحصائية الصغيرة الكاملة اللون */
-const INFO_FILL: Record<Tone, string> = {
-  primary: 'bg-jade-deep',
-  success: 'bg-success',
-  warning: 'bg-warning',
-  info: 'bg-info',
-  error: 'bg-error',
-}
-
 export const TONE_ORDER: Tone[] = ['primary', 'info', 'success', 'warning']
 
 /** رقم واتساب الدعم الفني من إعدادات المنصة (مفتاح «تواصل مع الدعم الفني») */
@@ -97,15 +88,15 @@ export const AccountHero = ({
   <motion.section
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-light via-card to-card p-4 shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
+    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-soft via-card to-card p-4 shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
   >
-    {/* توهج زمردي خفيف في الزاوية */}
+    {/* توهج نعناعي خفيف في الزاوية */}
     <div className="pointer-events-none absolute -end-12 -top-12 hidden h-44 w-44 rounded-full bg-jade-light blur-3xl dark:bg-jade-soft sm:block" />
 
     <div className="relative flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex min-w-0 items-center gap-3">
-        {/* الحرف الأول — خلية زمردية متدرجة */}
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-jade to-jade-deep text-lg font-black text-jade-on shadow-soft ring-1 ring-jade-light md:h-20 md:w-20 md:rounded-2xl md:text-3xl md:shadow-elevation-1">
+        {/* الحرف الأول — دائرة نعناعية فاتحة بالحرف الأخضر الداكن */}
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-jade-light text-xl font-black text-jade-deep shadow-soft ring-1 ring-white/70 dark:bg-jade-soft dark:ring-white/10 md:h-20 md:w-20 md:text-3xl">
           {(name || '?').charAt(0)}
         </div>
         <div className="min-w-0">
@@ -125,7 +116,7 @@ export const AccountHero = ({
                 <span
                   key={chip}
                   className={cn(
-                    'inline-flex items-center rounded-full bg-white/70 font-bold text-main ring-1 ring-inset ring-border backdrop-blur-sm dark:bg-white/[0.06] dark:text-main dark:ring-white/10',
+                    'inline-flex items-center rounded-full bg-card font-bold text-main ring-1 ring-inset ring-border dark:bg-white/[0.06] dark:text-main dark:ring-white/10',
                     chipsBold
                       ? 'px-3 py-1 text-xs sm:px-3.5 sm:py-1.5 sm:text-sm md:text-base'
                       : 'px-2.5 py-0.5 text-[9px] sm:px-3 sm:py-1 sm:text-xs',
@@ -163,7 +154,7 @@ export const AccountHero = ({
                 {Icon && (
                   <div
                     className={cn(
-                      'flex h-6 w-6 shrink-0 items-center justify-center rounded-md ring-1 sm:h-9 sm:w-9 sm:rounded-xl',
+                      'flex h-6 w-6 shrink-0 items-center justify-center rounded-full ring-1 sm:h-9 sm:w-9',
                       TILE_TONE[q.tone ?? 'primary'],
                     )}
                   >
@@ -227,23 +218,29 @@ export const SectionCard = ({
     transition="colors"
     slow
     className={cn('dark:border-white/[0.06] dark:bg-card', className)}
-    title={title}
-    icon={
-      Icon ? (
-        <div
-          className={cn(
-            'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ring-1',
-            TILE_TONE[tone],
-          )}
-        >
-          <Icon size={16} />
-        </div>
-      ) : undefined
-    }
-    description={description}
-    descClassName={descClassName}
-    action={action}
   >
+    {/* شريط العنوان — خلفية نعناعية شديدة الفتوح + أيقونة في دائرة على الجانب */}
+    <div className="mb-4 flex items-center justify-between gap-3 rounded-2xl bg-jade-soft px-3 py-2.5 dark:bg-white/[0.04]">
+      <div className="flex min-w-0 items-center gap-2.5">
+        {Icon && (
+          <div
+            className={cn(
+              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card ring-1 ring-border',
+              TEXT_TONE[tone],
+            )}
+          >
+            <Icon size={16} />
+          </div>
+        )}
+        <div className="min-w-0">
+          <h2 className="truncate text-sm font-black leading-tight text-main">{title}</h2>
+          {description && (
+            <p className={cn('mt-0.5 text-micro text-muted', descClassName)}>{description}</p>
+          )}
+        </div>
+      </div>
+      {action}
+    </div>
     {children}
   </BaseSectionCard>
 )
@@ -261,9 +258,9 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="group flex items-center gap-3 rounded-xl px-1.5 py-2 transition-colors duration-normal hover:bg-hover sm:px-2.5">
+    <div className="group flex items-center gap-3 border-b border-divider px-1.5 py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-hover sm:px-2.5">
       {Icon && (
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface text-jade ring-1 ring-inset ring-border">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jade-light text-jade ring-1 ring-jade-soft">
           <Icon size={16} />
         </span>
       )}
@@ -297,19 +294,19 @@ interface InfoTileProps {
 }
 
 export const InfoTile = ({ label, value, icon: Icon, tone = 'primary' }: InfoTileProps) => (
-  <div
-    className={cn(
-      'relative overflow-hidden rounded-2xl p-4 text-center shadow-soft transition-colors duration-slow',
-      INFO_FILL[tone],
-    )}
-  >
-    <div className="mx-auto mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm">
-      <Icon size={16} />
+  <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-soft transition-colors duration-slow dark:border-white/[0.06]">
+    <div
+      className={cn(
+        'mx-auto mb-2.5 flex h-11 w-11 items-center justify-center rounded-full ring-1',
+        TILE_TONE[tone],
+      )}
+    >
+      <Icon size={17} />
     </div>
-    <p className="truncate font-dash text-2xl font-black tabular-nums leading-none text-white drop-shadow-[0_1px_2px_rgb(0_0_0/0.15)]">
+    <p className="truncate font-dash text-2xl font-black tabular-nums leading-none text-main">
       {value}
     </p>
-    <p className="mt-1.5 text-micro font-bold text-white/80">{label}</p>
+    <p className="mt-1.5 text-micro font-bold text-muted">{label}</p>
   </div>
 )
 

@@ -204,7 +204,7 @@ export const ParentAccountPage = () => {
                         >
                           <div className="mb-2.5 flex items-center gap-2.5">
                             <div
-                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-1 ${TILE_TONE[tone]}`}
+                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ring-1 ${TILE_TONE[tone]}`}
                             >
                               {(child.name || '?').charAt(0)}
                             </div>
@@ -237,8 +237,8 @@ export const ParentAccountPage = () => {
                     })}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface py-10 text-center">
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-jade-soft">
+                  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-10 text-center">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-jade-soft">
                       <Users size={20} className="text-jade" />
                     </div>
                     <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطون بالحساب</p>

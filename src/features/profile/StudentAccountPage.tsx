@@ -220,13 +220,13 @@ export const StudentAccountPage = () => {
                       return (
                         <div
                           key={`${en.subject}-${i}`}
-                          className="rounded-xl border border-border bg-surface p-3 dark:border-white/[0.06]"
+                          className="rounded-2xl border border-border bg-card p-3 dark:border-white/[0.06]"
                         >
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex min-w-0 items-center gap-2.5">
                               <div
                                 className={
-                                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1 ' +
+                                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-full ring-1 ' +
                                   TILE_TONE[tone]
                                 }
                               >
@@ -271,10 +271,10 @@ export const StudentAccountPage = () => {
                     {upcoming.map((s) => (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-3 dark:border-white/[0.06]"
+                        className="flex items-center justify-between gap-2 rounded-2xl border border-border bg-card p-3 dark:border-white/[0.06]"
                       >
                         <div className="flex min-w-0 items-center gap-2.5">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-info-soft text-info-strong ring-1 ring-info-soft">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-info-soft text-info-strong ring-1 ring-info-soft">
                             <Clock size={13} />
                           </div>
                           <div className="min-w-0">

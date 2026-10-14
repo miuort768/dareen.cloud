@@ -144,30 +144,34 @@ export const TeacherAccountPage = () => {
               </div>
 
               {/* مؤشرات الحساب — الحصص والربح الحالي */}
-              <div className="mt-4 grid grid-cols-2 gap-2 border-t border-divider pt-4">
-                <div className="rounded-xl border border-border bg-surface p-4 dark:border-white/[0.06]">
-                  <p className="flex items-center gap-1.5 text-lg font-black leading-none text-success-strong">
-                    <CalendarCheck size={15} className="shrink-0" />
-                    {statsLoading ? (
-                      '—'
-                    ) : (
-                      <span className="font-dash tabular-nums">{completedCount}</span>
-                    )}
-                  </p>
-                  <p className="mt-1.5 text-micro font-bold text-muted">عدد الحصص المنفذة</p>
+              <div className="mt-4 grid grid-cols-2 gap-2.5 border-t border-divider pt-4">
+                <div className="rounded-2xl border border-border bg-card p-4 dark:border-white/[0.06]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-success-soft text-success-strong ring-1 ring-success-soft">
+                      <CalendarCheck size={16} />
+                    </span>
+                    <p className="font-dash text-lg font-black tabular-nums leading-none text-main">
+                      {statsLoading ? '—' : completedCount}
+                    </p>
+                  </div>
+                  <p className="mt-2 text-micro font-bold text-muted">عدد الحصص المنفذة</p>
                 </div>
-                <div className="rounded-xl border border-border bg-surface p-4 dark:border-white/[0.06]">
-                  <p className="flex items-center gap-1.5 text-lg font-black leading-none text-jade">
-                    <Wallet size={15} className="shrink-0" />
-                    {statsLoading ? (
-                      '—'
-                    ) : (
-                      <span className="font-dash tabular-nums">
-                        {profit} {symbol}
-                      </span>
-                    )}
-                  </p>
-                  <p className="mt-1.5 text-micro font-bold text-muted">الربح الحالي</p>
+                <div className="rounded-2xl border border-border bg-card p-4 dark:border-white/[0.06]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-jade-soft text-jade ring-1 ring-jade-soft">
+                      <Wallet size={16} />
+                    </span>
+                    <p className="font-dash text-lg font-black tabular-nums leading-none text-main">
+                      {statsLoading ? (
+                        '—'
+                      ) : (
+                        <>
+                          {profit} {symbol}
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <p className="mt-2 text-micro font-bold text-muted">الربح الحالي</p>
                 </div>
               </div>
             </SectionCard>
@@ -217,10 +221,10 @@ export const TeacherAccountPage = () => {
                 </div>
 
                 {/* الرتبة والتقدم — من نظام الرتب الموحد */}
-                <div className="mt-4 rounded-2xl border border-border bg-surface p-4 dark:border-white/[0.06]">
+                <div className="mt-4 rounded-2xl border border-border bg-card p-4 dark:border-white/[0.06]">
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <span className="flex items-center gap-2.5">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-jade-soft ring-1 ring-jade-soft">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jade-soft ring-1 ring-jade-soft">
                         <RankIcon size={16} className="text-jade" />
                       </span>
                       <span className="min-w-0">
