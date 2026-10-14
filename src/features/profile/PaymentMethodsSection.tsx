@@ -319,7 +319,7 @@ export const PaymentMethodsSection = () => {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-white/[0.06] dark:bg-surface">
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 dark:border-white/[0.06] dark:bg-surface">
             <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-3 dark:bg-card">
               <div className="flex min-w-0 items-center gap-2.5">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-jade-soft">
@@ -327,7 +327,7 @@ export const PaymentMethodsSection = () => {
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-xs font-bold text-main">{methodMeta?.label}</p>
-                  <span className="mt-0.5 flex w-fit items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success-strong">
+                  <span className="mt-0.5 flex w-fit items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-micro font-bold text-success-strong">
                     <BadgeCheck size={10} />
                     طريقة الاستلام الرئيسية
                   </span>
@@ -337,7 +337,7 @@ export const PaymentMethodsSection = () => {
                 <button
                   onClick={openEdit}
                   aria-label="تعديل طريقة الدفع"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-jade hover:text-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted transition-colors hover:border-jade hover:text-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <PencilLine size={14} />
                 </button>
@@ -345,7 +345,7 @@ export const PaymentMethodsSection = () => {
                   onClick={handleDelete}
                   disabled={deleting}
                   aria-label="حذف طريقة الدفع"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                 >
                   {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                 </button>

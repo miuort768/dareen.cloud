@@ -258,9 +258,12 @@ export const StudentAccountPage = () => {
                     })}
                   </div>
                 ) : (
-                  <p className="py-6 text-center text-xs font-bold text-muted">
-                    لا توجد مواد مسجلة
-                  </p>
+                  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-9 text-center">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-jade-soft">
+                      <BookOpen size={20} className="text-jade" />
+                    </div>
+                    <p className="text-xs font-bold text-muted">لا توجد مواد مسجلة</p>
+                  </div>
                 )}
               </SectionCard>
 
@@ -292,9 +295,14 @@ export const StudentAccountPage = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="py-6 text-center text-xs font-bold text-muted">
-                    لا توجد جلسات قادمة مجدولة حاليًا
-                  </p>
+                  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-9 text-center">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-info-soft">
+                      <CalendarDays size={20} className="text-info-strong" />
+                    </div>
+                    <p className="text-xs font-bold text-muted">
+                      لا توجد جلسات قادمة مجدولة حاليًا
+                    </p>
+                  </div>
                 )}
               </SectionCard>
             </div>

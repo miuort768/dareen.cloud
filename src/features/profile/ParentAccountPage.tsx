@@ -256,7 +256,7 @@ export const ParentAccountPage = () => {
                     {activity.slice(0, 8).map((log, i) => (
                       <div
                         key={`${log.studentId}-${log.timestamp}-${i}`}
-                        className="flex items-center justify-between gap-3 border-b border-divider py-2 last:border-b-0"
+                        className="flex items-center justify-between gap-3 border-b border-divider px-1.5 py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-jade-soft sm:px-2.5"
                       >
                         <div className="min-w-0">
                           <p className="truncate text-xs font-bold text-main">
@@ -270,7 +270,7 @@ export const ParentAccountPage = () => {
                         </div>
                         {(log.amount || 0) !== 0 && (
                           <span
-                            className={`shrink-0 rounded-md px-1.5 py-0.5 text-micro font-bold tabular-nums ${
+                            className={`shrink-0 rounded-full px-2 py-0.5 text-micro font-bold tabular-nums ${
                               (log.amount || 0) > 0
                                 ? 'bg-success-soft text-success-strong'
                                 : 'bg-error-soft text-error-strong'

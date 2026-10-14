@@ -88,7 +88,7 @@ export const AccountHero = ({
   <motion.section
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-soft via-card to-card p-4 shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
+    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-soft via-card to-card p-4 shadow-elevation-1 transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
   >
     {/* توهج نعناعي خفيف في الزاوية */}
     <div className="pointer-events-none absolute -end-12 -top-12 hidden h-44 w-44 rounded-full bg-jade-light blur-3xl dark:bg-jade-soft sm:block" />
@@ -96,7 +96,7 @@ export const AccountHero = ({
     <div className="relative flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex min-w-0 items-center gap-3">
         {/* الحرف الأول — دائرة نعناعية فاتحة بالحرف الأخضر الداكن */}
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-jade-light text-xl font-black text-jade-deep shadow-soft ring-1 ring-white/70 dark:bg-jade-soft dark:ring-white/10 md:h-20 md:w-20 md:text-3xl">
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-jade-light text-xl font-black text-jade-deep shadow-[0_10px_24px_rgb(10_123_112/0.18)] ring-2 ring-card dark:bg-jade-soft dark:shadow-[0_10px_24px_rgb(23_160_144/0.22)] dark:ring-white/10 md:h-20 md:w-20 md:text-3xl">
           {(name || '?').charAt(0)}
         </div>
         <div className="min-w-0">
@@ -104,7 +104,7 @@ export const AccountHero = ({
             <h1 className="min-w-0 break-words text-lg font-black leading-snug text-main md:text-2xl lg:text-3xl">
               {name}
             </h1>
-            <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-1 text-[9px] font-bold text-jade-on shadow-[0_4px_12px_rgb(10_123_112/0.3)] dark:shadow-[0_4px_12px_rgb(23_160_144/0.25)] md:px-2.5 md:text-micro">
+            <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-1 text-[9px] font-bold text-jade-on shadow-[0_4px_12px_rgb(10_123_112/0.3)] ring-1 ring-white/20 dark:shadow-[0_4px_12px_rgb(23_160_144/0.25)] md:px-2.5 md:text-micro">
               <BadgeCheck size={10} />
               {roleLabel}
             </span>
@@ -142,13 +142,13 @@ export const AccountHero = ({
 
     {/* بطاقات المؤشرات — عائمة بظلال ناعمة + رقاقات ملوّنة + أرقام كبيرة */}
     {quickStats && quickStats.length > 0 && (
-      <div className="relative mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:grid-cols-4 sm:gap-3">
+      <div className="relative mt-4 grid grid-cols-2 gap-2 border-t border-divider pt-4 sm:mt-6 sm:grid-cols-4 sm:gap-3 sm:pt-5">
         {quickStats.map((q) => {
           const Icon = q.icon
           return (
             <div
               key={q.label}
-              className="rounded-xl border border-border bg-card px-2.5 py-2 shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:bg-card sm:rounded-2xl sm:px-5 sm:py-4"
+              className="rounded-xl border border-border bg-card px-2.5 py-2 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:shadow-elevation-1 dark:border-white/[0.06] dark:bg-card sm:rounded-2xl sm:px-5 sm:py-4"
             >
               <div className="flex items-center gap-1.5 sm:gap-2.5">
                 {Icon && (
@@ -164,7 +164,7 @@ export const AccountHero = ({
                 )}
                 <p
                   className={cn(
-                    'min-w-0 truncate font-dash text-sm font-black tabular-nums leading-none sm:text-lg',
+                    'min-w-0 truncate font-dash text-base font-black tabular-nums leading-none sm:text-xl',
                     TEXT_TONE[q.tone ?? 'primary'],
                   )}
                 >
@@ -225,7 +225,7 @@ export const SectionCard = ({
         {Icon && (
           <div
             className={cn(
-              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card ring-1 ring-border',
+              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card shadow-soft ring-1 ring-border',
               TEXT_TONE[tone],
             )}
           >
@@ -258,9 +258,9 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="group flex items-center gap-3 border-b border-divider px-1.5 py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-hover sm:px-2.5">
+    <div className="group flex items-center gap-3 border-b border-divider px-1.5 py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-jade-soft sm:px-2.5">
       {Icon && (
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jade-light text-jade ring-1 ring-jade-soft">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jade-soft text-jade ring-1 ring-jade-soft">
           <Icon size={16} />
         </span>
       )}
@@ -294,14 +294,14 @@ interface InfoTileProps {
 }
 
 export const InfoTile = ({ label, value, icon: Icon, tone = 'primary' }: InfoTileProps) => (
-  <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-soft transition-colors duration-slow dark:border-white/[0.06]">
+  <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:shadow-elevation-1 dark:border-white/[0.06]">
     <div
       className={cn(
-        'mx-auto mb-2.5 flex h-11 w-11 items-center justify-center rounded-full ring-1',
+        'mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-full ring-1',
         TILE_TONE[tone],
       )}
     >
-      <Icon size={17} />
+      <Icon size={18} />
     </div>
     <p className="truncate font-dash text-2xl font-black tabular-nums leading-none text-main">
       {value}
