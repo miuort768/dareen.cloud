@@ -16,7 +16,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { cn } from '../../lib/utils'
 import { buildThreadedComments, POST_TYPE_META, resolvePostType } from '../../features/forum/types'
-import type { Post } from '../../features/forum/types'
+import type { Comment, Post } from '../../features/forum/types'
 
 interface ForumPostCardProps {
   post: Post
@@ -39,6 +39,7 @@ interface ForumPostCardProps {
   commentTexts: Record<string, string>
   setCommentTexts: (fn: (prev: Record<string, string>) => Record<string, string>) => void
   viewingComments: Record<string, boolean>
+  comments: Comment[]
 }
 
 const roleLabel = (role?: string) =>
@@ -89,6 +90,7 @@ export const ForumPostCard = ({
   commentTexts,
   setCommentTexts,
   viewingComments,
+  comments,
 }: ForumPostCardProps) => {
   const [isEditingPost, setIsEditingPost] = useState(false)
   const [editPostContent, setEditPostContent] = useState(post.content)
@@ -328,264 +330,260 @@ export const ForumPostCard = ({
       {viewingComments[post.id] && (
         <div className="border-t border-border bg-surface p-4 md:p-5">
           <div className="space-y-1">
-            {buildThreadedComments(Array.isArray(post.comments) ? post.comments : []).map(
-              (node) => {
-                const commentAuthorName = formatDisplayName(
-                  node.comment.authorName,
-                  node.comment.authorRole,
-                )
-                return (
-                  <div key={node.comment.id} className="group/comment">
-                    <div className="flex gap-3 rounded-2xl p-3 transition-colors duration-fast hover:bg-card">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
-                        {(commentAuthorName[0] || '').toUpperCase()}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="mb-1 flex items-center gap-2">
-                          <h5 className="text-xs font-bold text-main">{commentAuthorName}</h5>
-                          {node.comment.authorRole === 'admin' && (
-                            <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
-                              إدارة
-                            </span>
-                          )}
-                          {node.comment.authorRole === 'teacher' && (
-                            <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
-                              معلمة
-                            </span>
-                          )}
-                          {node.comment.authorRole === 'student' && (
-                            <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
-                              طالب
-                            </span>
-                          )}
-                          {(node.comment.authorRole === 'parent' ||
-                            (node.comment.authorRole as string) === 'ولي أمر') && (
-                            <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
-                              شريك النجاح
-                            </span>
-                          )}
-                          <span className="text-micro text-muted">
-                            {node.comment.created_at
-                              ? formatDistanceToNow(
-                                  new Date(node.comment.created_at) > new Date()
-                                    ? new Date()
-                                    : new Date(node.comment.created_at),
-                                  { addSuffix: true, locale: ar },
-                                )
-                              : ''}
+            {buildThreadedComments(Array.isArray(comments) ? comments : []).map((node) => {
+              const commentAuthorName = formatDisplayName(
+                node.comment.authorName,
+                node.comment.authorRole,
+              )
+              return (
+                <div key={node.comment.id} className="group/comment">
+                  <div className="flex gap-3 rounded-2xl p-3 transition-colors duration-fast hover:bg-card">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
+                      {(commentAuthorName[0] || '').toUpperCase()}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-1 flex items-center gap-2">
+                        <h5 className="text-xs font-bold text-main">{commentAuthorName}</h5>
+                        {node.comment.authorRole === 'admin' && (
+                          <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
+                            إدارة
                           </span>
-                        </div>
-
-                        {/* Comment Content or Admin Edit Comment Form */}
-                        {editingCommentId === node.comment.id ? (
-                          <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
-                            <input
-                              type="text"
-                              aria-label="تعديل التعليق"
-                              value={editCommentText}
-                              onChange={(e) => setEditCommentText(e.target.value)}
-                              className="w-full rounded-md border border-border bg-surface p-2 text-xs text-main outline-none focus:border-primary"
-                            />
-                            <div className="flex justify-end gap-1.5">
-                              <button
-                                onClick={() => setEditingCommentId(null)}
-                                className="rounded px-2 py-1 text-micro text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
-                              >
-                                إلغاء
-                              </button>
-                              <button
-                                onClick={() => handleSaveCommentEdit(node.comment.id)}
-                                className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
-                              >
-                                حفظ
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <p className="text-xs leading-relaxed text-main">
-                            {node.comment.content}
-                          </p>
                         )}
+                        {node.comment.authorRole === 'teacher' && (
+                          <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
+                            معلمة
+                          </span>
+                        )}
+                        {node.comment.authorRole === 'student' && (
+                          <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
+                            طالب
+                          </span>
+                        )}
+                        {(node.comment.authorRole === 'parent' ||
+                          (node.comment.authorRole as string) === 'ولي أمر') && (
+                          <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
+                            شريك النجاح
+                          </span>
+                        )}
+                        <span className="text-micro text-muted">
+                          {node.comment.created_at
+                            ? formatDistanceToNow(
+                                new Date(node.comment.created_at) > new Date()
+                                  ? new Date()
+                                  : new Date(node.comment.created_at),
+                                { addSuffix: true, locale: ar },
+                              )
+                            : ''}
+                        </span>
+                      </div>
 
-                        <div className="mt-2 flex items-center gap-1">
+                      {/* Comment Content or Admin Edit Comment Form */}
+                      {editingCommentId === node.comment.id ? (
+                        <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
+                          <input
+                            type="text"
+                            aria-label="تعديل التعليق"
+                            value={editCommentText}
+                            onChange={(e) => setEditCommentText(e.target.value)}
+                            className="w-full rounded-md border border-border bg-surface p-2 text-xs text-main outline-none focus:border-primary"
+                          />
+                          <div className="flex justify-end gap-1.5">
+                            <button
+                              onClick={() => setEditingCommentId(null)}
+                              className="rounded px-2 py-1 text-micro text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+                            >
+                              إلغاء
+                            </button>
+                            <button
+                              onClick={() => handleSaveCommentEdit(node.comment.id)}
+                              className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                            >
+                              حفظ
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="text-xs leading-relaxed text-main">{node.comment.content}</p>
+                      )}
+
+                      <div className="mt-2 flex items-center gap-1">
+                        <button
+                          onClick={() => {
+                            const currentText = commentTexts[post.id] || ''
+                            setCommentTexts((prev) => ({
+                              ...prev,
+                              [post.id]: `@${node.comment.authorName} ${currentText}`,
+                            }))
+                            document.getElementById(`comment-input-${post.id}`)?.focus()
+                          }}
+                          className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                        >
+                          <CornerDownLeft size={11} />
+                          رد
+                        </button>
+
+                        {/* Admin only: Edit Comment */}
+                        {isAdmin && (
                           <button
                             onClick={() => {
-                              const currentText = commentTexts[post.id] || ''
-                              setCommentTexts((prev) => ({
-                                ...prev,
-                                [post.id]: `@${node.comment.authorName} ${currentText}`,
-                              }))
-                              document.getElementById(`comment-input-${post.id}`)?.focus()
+                              setEditingCommentId(node.comment.id)
+                              setEditCommentText(node.comment.content)
                             }}
                             className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                            aria-label="تعديل التعليق"
+                            title="تعديل التعليق (خاص بالمدير)"
                           >
-                            <CornerDownLeft size={11} />
-                            رد
+                            <Edit3 size={10} />
+                            تعديل
                           </button>
+                        )}
 
-                          {/* Admin only: Edit Comment */}
-                          {isAdmin && (
-                            <button
-                              onClick={() => {
-                                setEditingCommentId(node.comment.id)
-                                setEditCommentText(node.comment.content)
-                              }}
-                              className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
-                              aria-label="تعديل التعليق"
-                              title="تعديل التعليق (خاص بالمدير)"
-                            >
-                              <Edit3 size={10} />
-                              تعديل
-                            </button>
-                          )}
-
-                          {(isAdmin || currentUserId === node.comment.authorId) && (
-                            <button
-                              onClick={() => onDeleteComment(post.id, node.comment.id)}
-                              className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
-                            >
-                              <Trash2 size={10} />
-                              حذف
-                            </button>
-                          )}
-                        </div>
+                        {(isAdmin || currentUserId === node.comment.authorId) && (
+                          <button
+                            onClick={() => onDeleteComment(post.id, node.comment.id)}
+                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                          >
+                            <Trash2 size={10} />
+                            حذف
+                          </button>
+                        )}
                       </div>
                     </div>
+                  </div>
 
-                    {/* Replies Thread */}
-                    {node.replies.length > 0 && (
-                      <div className="me-0 ms-6 border-e-2 border-primary/20 ps-4">
-                        {node.replies.map((replyNode) => {
-                          const replyAuthorName = formatDisplayName(
-                            replyNode.comment.authorName,
-                            replyNode.comment.authorRole,
-                          )
-                          return (
-                            <div
-                              key={replyNode.comment.id}
-                              className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-fast hover:bg-card"
-                            >
-                              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-bold text-primary">
-                                {(replyAuthorName[0] || '').toUpperCase()}
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <div className="mb-0.5 flex items-center gap-2">
-                                  <h5 className="text-xs font-bold text-main">{replyAuthorName}</h5>
-                                  {replyNode.comment.authorRole === 'admin' && (
-                                    <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
-                                      إدارة
-                                    </span>
-                                  )}
-                                  {replyNode.comment.authorRole === 'teacher' && (
-                                    <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
-                                      معلمة
-                                    </span>
-                                  )}
-                                  {replyNode.comment.authorRole === 'student' && (
-                                    <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
-                                      طالب
-                                    </span>
-                                  )}
-                                  {(replyNode.comment.authorRole === 'parent' ||
-                                    (replyNode.comment.authorRole as string) === 'ولي أمر') && (
-                                    <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
-                                      شريك النجاح
-                                    </span>
-                                  )}
-                                  <span className="text-micro text-muted">
-                                    {replyNode.comment.created_at
-                                      ? formatDistanceToNow(
-                                          new Date(replyNode.comment.created_at) > new Date()
-                                            ? new Date()
-                                            : new Date(replyNode.comment.created_at),
-                                          { addSuffix: true, locale: ar },
-                                        )
-                                      : ''}
+                  {/* Replies Thread */}
+                  {node.replies.length > 0 && (
+                    <div className="me-0 ms-6 border-e-2 border-primary/20 ps-4">
+                      {node.replies.map((replyNode) => {
+                        const replyAuthorName = formatDisplayName(
+                          replyNode.comment.authorName,
+                          replyNode.comment.authorRole,
+                        )
+                        return (
+                          <div
+                            key={replyNode.comment.id}
+                            className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-fast hover:bg-card"
+                          >
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-bold text-primary">
+                              {(replyAuthorName[0] || '').toUpperCase()}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="mb-0.5 flex items-center gap-2">
+                                <h5 className="text-xs font-bold text-main">{replyAuthorName}</h5>
+                                {replyNode.comment.authorRole === 'admin' && (
+                                  <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
+                                    إدارة
                                   </span>
-                                </div>
-
-                                {editingCommentId === replyNode.comment.id ? (
-                                  <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
-                                    <input
-                                      type="text"
-                                      aria-label="تعديل التعليق"
-                                      value={editCommentText}
-                                      onChange={(e) => setEditCommentText(e.target.value)}
-                                      className="w-full rounded-md border border-border bg-surface p-2 text-xs text-main outline-none focus:border-primary"
-                                    />
-                                    <div className="flex justify-end gap-1.5">
-                                      <button
-                                        onClick={() => setEditingCommentId(null)}
-                                        className="rounded px-2 py-1 text-micro text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
-                                      >
-                                        إلغاء
-                                      </button>
-                                      <button
-                                        onClick={() => handleSaveCommentEdit(replyNode.comment.id)}
-                                        className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
-                                      >
-                                        حفظ
-                                      </button>
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <p className="text-xs leading-relaxed text-main">
-                                    {replyNode.comment.content}
-                                  </p>
                                 )}
+                                {replyNode.comment.authorRole === 'teacher' && (
+                                  <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
+                                    معلمة
+                                  </span>
+                                )}
+                                {replyNode.comment.authorRole === 'student' && (
+                                  <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
+                                    طالب
+                                  </span>
+                                )}
+                                {(replyNode.comment.authorRole === 'parent' ||
+                                  (replyNode.comment.authorRole as string) === 'ولي أمر') && (
+                                  <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
+                                    شريك النجاح
+                                  </span>
+                                )}
+                                <span className="text-micro text-muted">
+                                  {replyNode.comment.created_at
+                                    ? formatDistanceToNow(
+                                        new Date(replyNode.comment.created_at) > new Date()
+                                          ? new Date()
+                                          : new Date(replyNode.comment.created_at),
+                                        { addSuffix: true, locale: ar },
+                                      )
+                                    : ''}
+                                </span>
+                              </div>
 
-                                <div className="mt-1.5 flex items-center gap-1">
+                              {editingCommentId === replyNode.comment.id ? (
+                                <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
+                                  <input
+                                    type="text"
+                                    aria-label="تعديل التعليق"
+                                    value={editCommentText}
+                                    onChange={(e) => setEditCommentText(e.target.value)}
+                                    className="w-full rounded-md border border-border bg-surface p-2 text-xs text-main outline-none focus:border-primary"
+                                  />
+                                  <div className="flex justify-end gap-1.5">
+                                    <button
+                                      onClick={() => setEditingCommentId(null)}
+                                      className="rounded px-2 py-1 text-micro text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+                                    >
+                                      إلغاء
+                                    </button>
+                                    <button
+                                      onClick={() => handleSaveCommentEdit(replyNode.comment.id)}
+                                      className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                                    >
+                                      حفظ
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <p className="text-xs leading-relaxed text-main">
+                                  {replyNode.comment.content}
+                                </p>
+                              )}
+
+                              <div className="mt-1.5 flex items-center gap-1">
+                                <button
+                                  onClick={() => {
+                                    const currentText = commentTexts[post.id] || ''
+                                    setCommentTexts((prev) => ({
+                                      ...prev,
+                                      [post.id]: `@${replyNode.comment.authorName} ${currentText}`,
+                                    }))
+                                    document.getElementById(`comment-input-${post.id}`)?.focus()
+                                  }}
+                                  className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                                >
+                                  <CornerDownLeft size={9} />
+                                  رد
+                                </button>
+
+                                {/* Admin only: Edit Reply Comment */}
+                                {isAdmin && (
                                   <button
                                     onClick={() => {
-                                      const currentText = commentTexts[post.id] || ''
-                                      setCommentTexts((prev) => ({
-                                        ...prev,
-                                        [post.id]: `@${replyNode.comment.authorName} ${currentText}`,
-                                      }))
-                                      document.getElementById(`comment-input-${post.id}`)?.focus()
+                                      setEditingCommentId(replyNode.comment.id)
+                                      setEditCommentText(replyNode.comment.content)
                                     }}
                                     className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                                    aria-label="تعديل الرد"
+                                    title="تعديل التعليق (خاص بالمدير)"
                                   >
-                                    <CornerDownLeft size={9} />
-                                    رد
+                                    <Edit3 size={9} />
+                                    تعديل
                                   </button>
+                                )}
 
-                                  {/* Admin only: Edit Reply Comment */}
-                                  {isAdmin && (
-                                    <button
-                                      onClick={() => {
-                                        setEditingCommentId(replyNode.comment.id)
-                                        setEditCommentText(replyNode.comment.content)
-                                      }}
-                                      className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
-                                      aria-label="تعديل الرد"
-                                      title="تعديل التعليق (خاص بالمدير)"
-                                    >
-                                      <Edit3 size={9} />
-                                      تعديل
-                                    </button>
-                                  )}
-
-                                  {(isAdmin || currentUserId === replyNode.comment.authorId) && (
-                                    <button
-                                      onClick={() => onDeleteComment(post.id, replyNode.comment.id)}
-                                      className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
-                                    >
-                                      <Trash2 size={9} />
-                                      حذف
-                                    </button>
-                                  )}
-                                </div>
+                                {(isAdmin || currentUserId === replyNode.comment.authorId) && (
+                                  <button
+                                    onClick={() => onDeleteComment(post.id, replyNode.comment.id)}
+                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                                  >
+                                    <Trash2 size={9} />
+                                    حذف
+                                  </button>
+                                )}
                               </div>
                             </div>
-                          )
-                        })}
-                      </div>
-                    )}
-                  </div>
-                )
-              },
-            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
 
           <div className="mt-3 flex items-center gap-3 border-t border-border pt-3">

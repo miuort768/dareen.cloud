@@ -54,8 +54,8 @@ export const ForumHeader = ({ searchTerm, onSearchChange }: ForumHeaderProps) =>
           </div>
         </div>
 
-        {/* حقل البحث */}
-        <div className="relative">
+        {/* حقل البحث — للديسكتوب فقط (مخفي على الموبايل) */}
+        <div className="relative hidden md:block">
           <Search
             size={14}
             className="pointer-events-none absolute start-3.5 top-1/2 -translate-y-1/2 text-white/60"

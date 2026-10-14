@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle } from 'lucide-react'
+import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle, ArrowUpDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 
@@ -21,6 +21,40 @@ const SORT_OPTIONS: { value: SortMode; label: string }[] = [
   { value: 'most_liked', label: 'الأكثر إعجاباً' },
   { value: 'most_commented', label: 'الأكثر تعليقاً' },
 ]
+
+/** لون مميز لكل وضع فرز — ألوان الحالة ثابتة فلا تتأثر بهوية الدور */
+const SORT_TONE: Record<SortMode, string> = {
+  latest: 'border-primary bg-primary text-on-primary',
+  most_liked: 'border-success bg-success text-on-success',
+  most_commented: 'border-info bg-info text-on-info',
+}
+
+/** حالة عدم التحديد المتناسقة مع لون كل وضع فرز */
+const SORT_TONE_IDLE: Record<SortMode, string> = {
+  latest: 'hover:border-primary/30 hover:bg-primary-soft hover:text-primary',
+  most_liked: 'hover:border-success-soft hover:bg-success-soft hover:text-success',
+  most_commented: 'hover:border-info-soft hover:bg-info-soft hover:text-info',
+}
+
+/** ألوان شريط تنبيه الفرز لكل وضع (لا يشمل "الأحدث" لأن الشريط يظهر عنده فقط) */
+const SORT_BANNER: Record<Exclude<SortMode, 'latest'>, { box: string; reset: string }> = {
+  most_liked: {
+    box: 'border-success-soft bg-success-soft text-success',
+    reset: 'bg-success text-on-success hover:bg-success-hover',
+  },
+  most_commented: {
+    box: 'border-info-soft bg-info-soft text-info',
+    reset: 'bg-info text-on-info hover:bg-info-hover',
+  },
+}
+
+/** سطح زر عائم ملوّن (يقلّد FAB_SURFACE بلون الحالة) */
+const FAB_TONE: Record<'primary' | 'success' | 'info', string> = {
+  primary: FAB_SURFACE,
+  success:
+    'inline-flex items-center justify-center border border-success bg-success text-on-success ring-1 ring-inset ring-white/10 shadow-button transition-all duration-normal ease-out hover:bg-success-hover hover:shadow-button-hover active:scale-[0.985] active:shadow-button-pressed active:duration-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+  info: 'inline-flex items-center justify-center border border-info bg-info text-on-info ring-1 ring-inset ring-white/10 shadow-button transition-all duration-normal ease-out hover:bg-info-hover hover:shadow-button-hover active:scale-[0.985] active:shadow-button-pressed active:duration-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+}
 
 export const Forum = () => {
   const academyName = useAcademyName()
@@ -46,6 +80,8 @@ export const Forum = () => {
   const [newPostContent, setNewPostContent] = useState('')
   const [commentTexts, setCommentTexts] = useState<Record<string, string>>({})
   const [viewingComments, setViewingComments] = useState<Record<string, boolean>>({})
+  // مخزن منفصل للتعليقات — لا يتأثر بإعادة جلب المنشورات كل 15 ثانية
+  const [commentsByPost, setCommentsByPost] = useState<Record<string, Comment[]>>({})
   const toggleCooldownRef = useRef<Record<string, number>>({})
   const [showMenuPostId, setShowMenuPostId] = useState<string | null>(null)
 
@@ -120,9 +156,7 @@ export const Forum = () => {
     if (!viewingComments[postId]) {
       try {
         const data = await api.get<Comment[]>(`/forum/${postId}/comments`)
-        queryClient.setQueryData(['forum'], (old: Post[] = []) =>
-          old.map((p: Post) => (p.id === postId ? { ...p, comments: data } : p)),
-        )
+        setCommentsByPost((prev) => ({ ...prev, [postId]: data }))
       } catch (e) {
         console.error(e)
         showNotification('فشل تحميل التعليقات', 'error')
@@ -144,11 +178,13 @@ export const Forum = () => {
       } else {
         showNotification('تم إضافة التعليق', 'success')
       }
-      queryClient.invalidateQueries({ queryKey: ['forum'] })
-      // Instantly fetch updated comments for this post without blocking loops
+      // اجلب التعليقات المحدثة إلى المخزن المنفصل (لا يتأثر بجلب المنشورات)
       const updatedComments = await api.get<Comment[]>(`/forum/${postId}/comments`)
+      setCommentsByPost((prev) => ({ ...prev, [postId]: updatedComments }))
       queryClient.setQueryData(['forum'], (old: Post[] = []) =>
-        old.map((p: Post) => (p.id === postId ? { ...p, comments: updatedComments } : p)),
+        old.map((p: Post) =>
+          p.id === postId ? { ...p, commentCount: updatedComments.length } : p,
+        ),
       )
     } catch (e) {
       console.error(e)
@@ -156,12 +192,16 @@ export const Forum = () => {
     }
   }
 
-  const handleDeleteComment = async (_postId: string, commentId: string) => {
+  const handleDeleteComment = async (postId: string, commentId: string) => {
     if (!(await confirm('هل أنت متأكد من حذف هذا التعليق؟'))) return
     try {
       await api.delete(`/forum/comments/${commentId}`)
       showNotification('تم حذف التعليق', 'success')
-      queryClient.invalidateQueries({ queryKey: ['forum'] })
+      const updated = await api.get<Comment[]>(`/forum/${postId}/comments`)
+      setCommentsByPost((prev) => ({ ...prev, [postId]: updated }))
+      queryClient.setQueryData(['forum'], (old: Post[] = []) =>
+        old.map((p: Post) => (p.id === postId ? { ...p, commentCount: updated.length } : p)),
+      )
     } catch (e) {
       console.error(e)
       showNotification('فشل الحذف', 'error')
@@ -197,7 +237,14 @@ export const Forum = () => {
     try {
       await api.patch(`/forum/comments/${commentId}`, { content: newContent })
       showNotification('تم تعديل التعليق بنجاح', 'success')
-      queryClient.invalidateQueries({ queryKey: ['forum'] })
+      const found = Object.entries(commentsByPost).find(([, list]) =>
+        list.some((c) => c.id === commentId),
+      )
+      if (found) {
+        const [postId] = found
+        const updated = await api.get<Comment[]>(`/forum/${postId}/comments`)
+        setCommentsByPost((prev) => ({ ...prev, [postId]: updated }))
+      }
     } catch (e) {
       console.error(e)
       showNotification('فشل تعديل التعليق', 'error')
@@ -253,24 +300,28 @@ export const Forum = () => {
     () => [
       {
         label: 'إجمالي المنشورات',
+        short: 'منشورات',
         value: posts.length,
         icon: MessageSquare,
         iconBg: 'bg-primary text-on-primary',
       },
       {
         label: 'إجمالي الإعجابات',
+        short: 'إعجابات',
         value: totalUpvotes,
         icon: ThumbsUp,
         iconBg: 'bg-success text-on-success',
       },
       {
         label: 'التعليقات',
+        short: 'تعليقات',
         value: totalComments,
         icon: MessageCircle,
         iconBg: 'bg-warning text-on-warning',
       },
       {
         label: 'المشاركون',
+        short: 'مشاركون',
         value: totalParticipants,
         icon: Users,
         iconBg: 'bg-info text-on-info',
@@ -284,6 +335,7 @@ export const Forum = () => {
       {
         icon: Plus,
         label: 'منشور جديد',
+        tone: 'primary' as const,
         onClick: () => {
           document.querySelector<HTMLTextAreaElement>('[data-create-post] textarea')?.focus()
         },
@@ -291,6 +343,7 @@ export const Forum = () => {
       {
         icon: ThumbsUp,
         label: 'الأكثر إعجاباً',
+        tone: 'success' as const,
         onClick: () => {
           setSortMode('most_liked')
           showNotification('تم فرز المنشورات حسب الأكثر إعجاباً', 'info')
@@ -299,6 +352,7 @@ export const Forum = () => {
       {
         icon: MessageCircle,
         label: 'الأكثر تعليقاً',
+        tone: 'info' as const,
         onClick: () => {
           setSortMode('most_commented')
           showNotification('تم فرز المنشورات حسب الأكثر تعليقاً', 'info')
@@ -310,7 +364,7 @@ export const Forum = () => {
 
   return (
     <div
-      className="relative min-h-full overflow-x-hidden bg-background pb-8 font-sans md:pb-12"
+      className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans md:pb-28"
       dir="rtl"
     >
       {/* هيرو عريض — خارج العمود */}
@@ -325,28 +379,30 @@ export const Forum = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {kpiCards.map((kpi, i) => {
+          <div className="grid grid-cols-4 divide-x divide-x-reverse divide-border overflow-hidden rounded-3xl border border-border bg-card shadow-soft dark:bg-surface">
+            {kpiCards.map((kpi) => {
               const Icon = kpi.icon
               return (
-                <motion.div
+                <div
                   key={kpi.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + i * 0.06 }}
-                  whileHover={{ y: -2 }}
-                  className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-soft dark:bg-surface"
+                  className="flex flex-col items-center justify-center gap-2 px-1.5 py-4 text-center transition-colors hover:bg-surface md:flex-row md:gap-3 md:px-4"
                 >
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-xl p-2.5', kpi.iconBg)}>
-                      <Icon size={17} />
-                    </div>
+                  <div
+                    className={cn(
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl md:h-9 md:w-9',
+                      kpi.iconBg,
+                    )}
+                  >
+                    <Icon size={15} />
                   </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="font-dash text-2xl font-black tabular-nums text-main">
-                    {kpi.value}
-                  </p>
-                </motion.div>
+                  <div className="min-w-0">
+                    <p className="font-dash text-lg font-black tabular-nums leading-none text-main md:text-2xl">
+                      {kpi.value}
+                    </p>
+                    <p className="mt-1 hidden text-xs text-muted sm:block">{kpi.label}</p>
+                    <p className="mt-1 text-[10px] font-medium text-muted sm:hidden">{kpi.short}</p>
+                  </div>
+                </div>
               )
             })}
           </div>
@@ -366,8 +422,8 @@ export const Forum = () => {
               className={cn(
                 'flex-1 rounded-full border px-2 py-1.5 text-micro font-bold outline-none transition-all duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                 sortMode === opt.value
-                  ? 'border-primary bg-primary text-on-primary shadow-soft'
-                  : 'border-border bg-card text-muted hover:border-primary/30 hover:bg-primary-soft hover:text-primary',
+                  ? cn(SORT_TONE[opt.value], 'shadow-soft')
+                  : cn('border-border bg-card text-muted', SORT_TONE_IDLE[opt.value]),
               )}
             >
               {opt.label}
@@ -378,23 +434,30 @@ export const Forum = () => {
         {/* Sort indicator banner */}
         {sortMode !== 'latest' && (
           <div
-            className={
-              'mb-3 flex items-center justify-between rounded-2xl border border-primary/20 bg-primary-soft p-3 text-xs font-bold text-primary'
-            }
+            className={cn(
+              'mb-3 flex items-center justify-between gap-2 rounded-2xl border p-3 text-xs font-bold',
+              SORT_BANNER[sortMode].box,
+            )}
           >
-            <span>
-              يتم الآن عرض المنشورات بحسب: {SORT_OPTIONS.find((o) => o.value === sortMode)?.label}
+            <span className="flex min-w-0 items-center gap-2">
+              <ArrowUpDown size={15} className="shrink-0" />
+              <span className="truncate">
+                يتم الآن عرض المنشورات بحسب: {SORT_OPTIONS.find((o) => o.value === sortMode)?.label}
+              </span>
             </span>
             <button
               onClick={() => setSortMode('latest')}
-              className="rounded-full bg-primary px-3 py-1 text-micro text-on-primary outline-none transition-all duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+              className={cn(
+                'shrink-0 rounded-full px-3 py-1 text-micro outline-none transition-all duration-fast focus-visible:ring-2 focus-visible:ring-focus',
+                SORT_BANNER[sortMode].reset,
+              )}
             >
               إعادة تعيين الفرز
             </button>
           </div>
         )}
 
-        <div className="space-y-6" data-create-post>
+        <div className="space-y-3 md:space-y-4" data-create-post>
           <ForumCreatePost
             newPostContent={newPostContent}
             setNewPostContent={setNewPostContent}
@@ -425,7 +488,7 @@ export const Forum = () => {
               className="rounded-3xl border-2 border-dashed border-border bg-card p-6 md:p-16"
             />
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-4">
               {sortedPosts.map((post: Post) => {
                 const isLiked =
                   Array.isArray(post.upvotes) && post.upvotes.includes(currentUser?.id || '')
@@ -463,6 +526,9 @@ export const Forum = () => {
                     commentTexts={commentTexts}
                     setCommentTexts={setCommentTexts}
                     viewingComments={viewingComments}
+                    comments={
+                      commentsByPost[post.id] ?? (Array.isArray(post.comments) ? post.comments : [])
+                    }
                   />
                 )
               })}
@@ -493,7 +559,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className={cn(FAB_SURFACE, 'h-12 w-12 rounded-full')}
+                  className={cn(FAB_TONE[action.tone], 'h-12 w-12 rounded-full')}
                 >
                   <action.icon size={20} />
                 </button>
