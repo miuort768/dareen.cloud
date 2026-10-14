@@ -27,8 +27,8 @@ import {
   formatJoinDate,
   useSupportWhatsappNumber,
   TONE_ORDER,
+  TILE_TONE,
 } from './shared'
-import type { Tone } from './shared'
 import { ProgressBar } from '../../shared/components/ui'
 
 interface ChildEnrollment {
@@ -62,14 +62,6 @@ const childProgress = (child: Child): number => {
   if (total === 0) return 0
   const used = ens.reduce((s, e) => s + (e.sessionsUsed || 0), 0)
   return Math.round((used / total) * 100)
-}
-
-const TONE_BG: Record<Tone, string> = {
-  primary: 'bg-jade-soft text-jade ring-jade-soft',
-  success: 'bg-success-soft text-success-strong ring-success-soft',
-  warning: 'bg-warning-soft text-warning-strong ring-warning-soft',
-  info: 'bg-info-soft text-info-strong ring-info-soft',
-  error: 'bg-error-soft text-error-strong ring-error-soft',
 }
 
 export const ParentAccountPage = () => {
@@ -157,140 +149,144 @@ export const ParentAccountPage = () => {
             ]}
           />
 
-          {/* المعلومات الأساسية */}
-          <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-            <div className="flex flex-col">
-              <div>
-                <InfoRow label="الاسم" value={displayName} icon={User} />
-                <InfoRow label="اسم المستخدم" value={currentUser?.username} icon={KeyRound} mono />
-              </div>
-              <div>
-                <InfoRow label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} />
-                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
-                <InfoRow label="عدد الأبناء" value={String(children.length)} icon={Users} />
-              </div>
-            </div>
-          </SectionCard>
-
-          {/* أبنائي — بدون غلاف خارجي */}
-          <section aria-label="أبنائي">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-jade-soft ring-1 ring-jade-soft">
-                  <Users size={16} className="text-jade" />
+          <div className="grid gap-4 lg:grid-cols-3">
+            {/* المعلومات الأساسية */}
+            <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
+              <div className="flex flex-col">
+                <div>
+                  <InfoRow label="الاسم" value={displayName} icon={User} />
+                  <InfoRow
+                    label="اسم المستخدم"
+                    value={currentUser?.username}
+                    icon={KeyRound}
+                    mono
+                  />
                 </div>
                 <div>
-                  <h2 className="text-sm font-black leading-tight text-main">أبنائي</h2>
-                  <p className="mt-0.5 text-micro text-muted">الطلاب المرتبطون بحسابك</p>
+                  <InfoRow label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} />
+                  <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
+                  <InfoRow label="عدد الأبناء" value={String(children.length)} icon={Users} />
                 </div>
-              </div>
-              <button
-                onClick={() => navigate('/parent-students')}
-                className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-jade-deep px-3 py-1.5 text-micro font-bold text-jade-on transition-colors hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-              >
-                متابعة التفاصيل <ArrowLeft size={11} />
-              </button>
-            </div>
-
-            {children.length > 0 ? (
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {children.map((child, idx) => {
-                  const tone = TONE_ORDER[idx % TONE_ORDER.length] ?? 'primary'
-                  const pct = childProgress(child)
-                  return (
-                    <motion.button
-                      key={child.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.05 * idx }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => navigate('/parent-students')}
-                      className="rounded-2xl border border-border bg-card p-3.5 text-start shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface"
-                      aria-label={`عرض تفاصيل ${child.name}`}
-                    >
-                      <div className="mb-2.5 flex items-center gap-2.5">
-                        <div
-                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-1 ${TONE_BG[tone]}`}
-                        >
-                          {(child.name || '?').charAt(0)}
-                        </div>
-                        <div className="min-w-0">
-                          <p className="truncate text-xs font-bold text-main">{child.name}</p>
-                          <p className="text-micro text-muted">{child.grade || '—'}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1">
-                          <ProgressBar value={pct} variant="attendance" />
-                        </div>
-                        <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
-                          {pct}%
-                        </span>
-                      </div>
-                      <div className="mt-2 flex items-center justify-between text-micro font-bold text-muted">
-                        <span className="flex items-center gap-1">
-                          <BookOpen size={9} /> {(child.enrollments || []).length} مواد
-                        </span>
-                        <span className="flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
-                          <span className="h-1 w-1 animate-pulse rounded-full bg-current" /> نشط
-                        </span>
-                      </div>
-                      {(child.totalPoints || 0) > 0 && (
-                        <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-jade">
-                          <GraduationCap size={9} /> {child.totalPoints} نقطة
-                        </p>
-                      )}
-                    </motion.button>
-                  )
-                })}
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface py-10 text-center">
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-jade-soft">
-                  <Users size={20} className="text-jade" />
-                </div>
-                <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطون بالحساب</p>
-                <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
-                  سيظهر الأبناء هنا بعد ربط حسابهم برقم جوالك في المنصة.
-                </p>
-              </div>
-            )}
-          </section>
-
-          {/* آخر النشاطات — بيانات حقيقية من سجل النقاط */}
-          {activity.length > 0 && (
-            <SectionCard title="آخر نشاطات الأبناء" icon={Activity} tone="info" delay={0.2}>
-              <div className="space-y-1">
-                {activity.slice(0, 8).map((log, i) => (
-                  <div
-                    key={`${log.studentId}-${log.timestamp}-${i}`}
-                    className="flex items-center justify-between gap-3 border-b border-divider py-2 last:border-b-0"
-                  >
-                    <div className="min-w-0">
-                      <p className="truncate text-xs font-bold text-main">{log.action || 'نشاط'}</p>
-                      <p className="text-micro text-muted">
-                        {[log.studentName, formatJoinDate(log.timestamp)]
-                          .filter(Boolean)
-                          .join(' · ')}
-                      </p>
-                    </div>
-                    {(log.amount || 0) !== 0 && (
-                      <span
-                        className={`shrink-0 rounded-md px-1.5 py-0.5 text-micro font-bold tabular-nums ${
-                          (log.amount || 0) > 0
-                            ? 'bg-success-soft text-success-strong'
-                            : 'bg-error-soft text-error-strong'
-                        }`}
-                      >
-                        {(log.amount || 0) > 0 ? '+' : ''}
-                        {log.amount}
-                      </span>
-                    )}
-                  </div>
-                ))}
               </div>
             </SectionCard>
-          )}
+
+            <div className="space-y-4 lg:col-span-2">
+              {/* أبنائي */}
+              <SectionCard
+                title="أبنائي"
+                icon={Users}
+                description="الطلاب المرتبطون بحسابك"
+                delay={0.15}
+                action={
+                  <button
+                    onClick={() => navigate('/parent-students')}
+                    className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-jade-deep px-3 py-1.5 text-micro font-bold text-jade-on transition-colors hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  >
+                    متابعة التفاصيل <ArrowLeft size={11} />
+                  </button>
+                }
+              >
+                {children.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {children.map((child, idx) => {
+                      const tone = TONE_ORDER[idx % TONE_ORDER.length] ?? 'primary'
+                      const pct = childProgress(child)
+                      return (
+                        <motion.button
+                          key={child.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.05 * idx }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => navigate('/parent-students')}
+                          className="rounded-2xl border border-border bg-card p-3.5 text-start shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface"
+                          aria-label={`عرض تفاصيل ${child.name}`}
+                        >
+                          <div className="mb-2.5 flex items-center gap-2.5">
+                            <div
+                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-1 ${TILE_TONE[tone]}`}
+                            >
+                              {(child.name || '?').charAt(0)}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="truncate text-xs font-bold text-main">{child.name}</p>
+                              <p className="text-micro text-muted">{child.grade || '—'}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1">
+                              <ProgressBar value={pct} variant="attendance" />
+                            </div>
+                            <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
+                              {pct}%
+                            </span>
+                          </div>
+                          <div className="mt-2 flex items-center justify-between text-micro font-bold text-muted">
+                            <span className="flex items-center gap-1">
+                              <BookOpen size={9} /> {(child.enrollments || []).length} مواد
+                            </span>
+                            <StatusBadge />
+                          </div>
+                          {(child.totalPoints || 0) > 0 && (
+                            <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-jade">
+                              <GraduationCap size={9} /> {child.totalPoints} نقطة
+                            </p>
+                          )}
+                        </motion.button>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface py-10 text-center">
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-jade-soft">
+                      <Users size={20} className="text-jade" />
+                    </div>
+                    <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطون بالحساب</p>
+                    <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
+                      سيظهر الأبناء هنا بعد ربط حسابهم برقم جوالك في المنصة.
+                    </p>
+                  </div>
+                )}
+              </SectionCard>
+
+              {/* آخر النشاطات — بيانات حقيقية من سجل النقاط */}
+              {activity.length > 0 && (
+                <SectionCard title="آخر نشاطات الأبناء" icon={Activity} tone="info" delay={0.2}>
+                  <div className="space-y-1">
+                    {activity.slice(0, 8).map((log, i) => (
+                      <div
+                        key={`${log.studentId}-${log.timestamp}-${i}`}
+                        className="flex items-center justify-between gap-3 border-b border-divider py-2 last:border-b-0"
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate text-xs font-bold text-main">
+                            {log.action || 'نشاط'}
+                          </p>
+                          <p className="text-micro text-muted">
+                            {[log.studentName, formatJoinDate(log.timestamp)]
+                              .filter(Boolean)
+                              .join(' · ')}
+                          </p>
+                        </div>
+                        {(log.amount || 0) !== 0 && (
+                          <span
+                            className={`shrink-0 rounded-md px-1.5 py-0.5 text-micro font-bold tabular-nums ${
+                              (log.amount || 0) > 0
+                                ? 'bg-success-soft text-success-strong'
+                                : 'bg-error-soft text-error-strong'
+                            }`}
+                          >
+                            {(log.amount || 0) > 0 ? '+' : ''}
+                            {log.amount}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </SectionCard>
+              )}
+            </div>
+          </div>
 
           <AccountActions onLogoutStore={logout} supportPhone={supportPhone} />
         </div>
