@@ -160,8 +160,13 @@ export const AccountHero = ({
                 imgClassName="object-contain p-2.5 md:p-3"
               />
             </div>
-            <span className="absolute -bottom-1 -end-1 flex h-5 w-5 items-center justify-center rounded-full bg-success shadow-elevation-1 ring-2 ring-card">
-              <Check size={11} className="text-on-success" strokeWidth={3} />
+            {/* شارة التوثيق — علامة تحقق مثل علامة فيسبوك */}
+            <span
+              title="حساب موثّق"
+              aria-label="حساب موثّق"
+              className="absolute -bottom-1.5 -end-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-success to-success-hover text-on-success shadow-elevation-2 ring-2 ring-card md:h-7 md:w-7"
+            >
+              <Check size={14} strokeWidth={3.5} />
             </span>
           </div>
 
@@ -217,36 +222,39 @@ export const AccountHero = ({
       </motion.div>
     </div>
 
-    {/* بطاقات المؤشرات — متدرّجة ملوّنة بارزة (هوية جريئة) */}
+    {/* المؤشرات — مربّع واحد يجمع الإحصاءات (خلايا مفصولة بفواصل رفيعة) */}
     {quickStats && quickStats.length > 0 && (
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
-        {quickStats.map((q) => {
-          const Icon = q.icon
-          return (
-            <div
-              key={q.label}
-              className={cn(
-                'relative overflow-hidden rounded-2xl p-3.5 shadow-elevation-2 ring-1 ring-white/10 transition-transform duration-slow hover:-translate-y-1 sm:p-4',
-                SOLID_GRADIENT[q.tone ?? 'primary'],
-              )}
-            >
-              <div className="pointer-events-none absolute -end-6 -top-6 h-16 w-16 rounded-full bg-white/10 blur-xl" />
-              <div className="relative flex items-center gap-2">
+      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 dark:border-white/[0.06] dark:bg-surface">
+        <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-4">
+          {quickStats.map((q) => {
+            const Icon = q.icon
+            return (
+              <div
+                key={q.label}
+                className="flex items-center gap-2.5 bg-card p-3 transition-colors duration-normal hover:bg-jade-soft dark:bg-surface sm:p-3.5"
+              >
                 {Icon && (
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/25 sm:h-10 sm:w-10">
-                    <Icon size={16} />
+                  <span
+                    className={cn(
+                      'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
+                      SOLID_FILL[q.tone ?? 'primary'],
+                    )}
+                  >
+                    <Icon size={17} />
                   </span>
                 )}
-                <p className="min-w-0 truncate font-dash text-xl font-black tabular-nums leading-none sm:text-2xl md:text-3xl">
-                  {q.value}
-                </p>
+                <div className="min-w-0">
+                  <p className="truncate font-dash text-xl font-black tabular-nums leading-none text-main sm:text-2xl">
+                    {q.value}
+                  </p>
+                  <p className="mt-1 truncate text-[9px] font-bold text-muted sm:text-micro">
+                    {q.label}
+                  </p>
+                </div>
               </div>
-              <p className="relative mt-2 text-[9px] font-bold opacity-80 sm:text-micro">
-                {q.label}
-              </p>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     )}
   </>
@@ -266,6 +274,8 @@ interface SectionCardProps {
   delay?: number
   /** لون أيقونة القسم (افتراضي زمردي jade) */
   tone?: Tone
+  /** عند تمريره يصبح رأس القسم شريطًا ملوّنًا مصمتًا */
+  headerTone?: Tone
 }
 
 export const SectionCard = ({
@@ -278,6 +288,7 @@ export const SectionCard = ({
   className,
   delay = 0,
   tone = 'primary',
+  headerTone,
 }: SectionCardProps) => (
   <BaseSectionCard
     animated
@@ -289,28 +300,53 @@ export const SectionCard = ({
     slow
     className={cn('dark:border-white/[0.06] dark:bg-card', className)}
   >
-    {/* شريط العنوان — أيقونة مصمتة ملوّنة + عنوان قوي */}
-    <div className="mb-4 flex items-center justify-between gap-3 border-b border-divider pb-3">
-      <div className="flex min-w-0 items-center gap-2.5">
-        {Icon && (
-          <div
-            className={cn(
-              'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
-              SOLID_FILL[tone],
-            )}
-          >
-            <Icon size={18} />
-          </div>
+    {headerTone ? (
+      /* رأس ملوّن — شريط مصمت بلون القسم */
+      <div
+        className={cn(
+          'mb-4 flex items-center justify-between gap-3 rounded-2xl px-3 py-2.5 shadow-elevation-1',
+          SOLID_FILL[headerTone],
         )}
-        <div className="min-w-0">
-          <h2 className="truncate text-sm font-black leading-tight text-main">{title}</h2>
-          {description && (
-            <p className={cn('mt-0.5 text-micro text-muted', descClassName)}>{description}</p>
+      >
+        <div className="flex min-w-0 items-center gap-2.5">
+          {Icon && (
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/25">
+              <Icon size={18} />
+            </div>
           )}
+          <div className="min-w-0">
+            <h2 className="truncate text-sm font-black leading-tight">{title}</h2>
+            {description && (
+              <p className={cn('mt-0.5 text-micro opacity-80', descClassName)}>{description}</p>
+            )}
+          </div>
         </div>
+        {action}
       </div>
-      {action}
-    </div>
+    ) : (
+      /* رأس عادي — أيقونة مصمتة ملوّنة + عنوان قوي */
+      <div className="mb-4 flex items-center justify-between gap-3 border-b border-divider pb-3">
+        <div className="flex min-w-0 items-center gap-2.5">
+          {Icon && (
+            <div
+              className={cn(
+                'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
+                SOLID_FILL[tone],
+              )}
+            >
+              <Icon size={18} />
+            </div>
+          )}
+          <div className="min-w-0">
+            <h2 className="truncate text-sm font-black leading-tight text-main">{title}</h2>
+            {description && (
+              <p className={cn('mt-0.5 text-micro text-muted', descClassName)}>{description}</p>
+            )}
+          </div>
+        </div>
+        {action}
+      </div>
+    )}
     {children}
   </BaseSectionCard>
 )
@@ -328,10 +364,10 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-2.5 transition-all duration-normal hover:border-jade-soft hover:bg-card hover:shadow-elevation-1 dark:border-white/[0.06] md:p-3">
+    <div className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-3 transition-all duration-normal hover:-translate-y-0.5 hover:border-jade-soft hover:bg-card hover:shadow-elevation-1 dark:border-white/[0.06] md:p-3.5">
       {Icon && (
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-jade-soft text-jade ring-1 ring-jade-soft transition-colors duration-normal group-hover:bg-jade group-hover:text-jade-on">
-          <Icon size={17} />
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1 transition-transform duration-normal group-hover:scale-105">
+          <Icon size={18} />
         </span>
       )}
       <div className="min-w-0 flex-1">

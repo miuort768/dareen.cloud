@@ -174,12 +174,14 @@ export const ParentAccountPage = () => {
               <SectionCard
                 title="أبنائي"
                 icon={Users}
+                headerTone="primary"
                 description="الطلاب المرتبطون بحسابك"
+                descClassName="text-[8px] sm:text-micro"
                 delay={0.15}
                 action={
                   <button
                     onClick={() => navigate('/parent-students')}
-                    className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-jade-deep px-3 py-1.5 text-micro font-bold text-jade-on transition-colors hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-white/20 px-3 py-1.5 text-micro font-bold text-jade-on ring-1 ring-white/25 transition-colors hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     متابعة التفاصيل <ArrowLeft size={11} />
                   </button>
@@ -215,7 +217,7 @@ export const ParentAccountPage = () => {
                             </div>
                             <div className="flex items-center gap-2">
                               <div className="flex-1">
-                                <ProgressBar value={pct} variant="attendance" />
+                                <ProgressBar value={pct} variant="jade" />
                               </div>
                               <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
                                 {pct}%
