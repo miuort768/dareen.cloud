@@ -11,37 +11,22 @@ interface InfoCellProps {
   label: string
   value: string | null | undefined
   toneClassName: string
-  bigValue?: boolean
   children?: React.ReactNode
 }
 
-const InfoCell = ({
-  icon: Icon,
-  label,
-  value,
-  toneClassName,
-  bigValue = false,
-  children,
-}: InfoCellProps) => (
+const InfoCell = ({ icon: Icon, label, value, toneClassName, children }: InfoCellProps) => (
   <div className="flex items-start gap-2.5 rounded-2xl border border-border bg-card p-3">
     <div
       className={cn(
-        'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface',
+        'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface ring-1 ring-border',
         toneClassName,
       )}
     >
-      <Icon size={14} strokeWidth={1.7} />
+      <Icon size={15} strokeWidth={1.7} />
     </div>
     <div className="min-w-0 flex-1">
       <p className="text-micro font-bold text-muted">{label}</p>
-      <p
-        className={cn(
-          'mt-0.5 truncate font-bold text-main',
-          bigValue ? 'font-dash text-lg font-black' : 'text-sm',
-        )}
-      >
-        {value}
-      </p>
+      <p className="mt-0.5 truncate text-sm font-bold text-main">{value}</p>
       {children}
     </div>
   </div>
@@ -55,7 +40,7 @@ export const AppointmentDetailBody = ({ appointment }: AppointmentDetailBodyProp
     <div className="space-y-2.5">
       {/* بطاقة الطالب البارزة */}
       <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface text-lg font-black text-primary ring-1 ring-border">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-deep text-lg font-black text-on-primary shadow-elevation-1">
           {initial}
         </div>
         <div className="min-w-0 flex-1">
@@ -63,28 +48,37 @@ export const AppointmentDetailBody = ({ appointment }: AppointmentDetailBodyProp
             {appointment.studentName}
           </p>
           {appointment.studentGrade && (
-            <span className="mt-1 inline-block rounded-md bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+            <span className="mt-1 inline-block rounded-lg bg-surface px-2 py-0.5 text-micro font-bold text-muted ring-1 ring-border">
               {appointment.studentGrade}
             </span>
           )}
         </div>
       </div>
 
-      {/* شبكة البيانات */}
-      <div className="grid grid-cols-2 gap-2">
-        <InfoCell
-          icon={Clock}
-          label="الوقت"
-          value={appointment.time}
-          toneClassName="text-primary"
-          bigValue
-        />
-        <InfoCell
-          icon={CalendarDays}
-          label="اليوم"
-          value={appointment.day}
-          toneClassName="text-primary"
-        />
+      {/* شريط الموعد: اليوم + الوقت */}
+      <div className="flex items-stretch gap-2.5">
+        <div className="flex flex-1 items-center gap-2.5 rounded-2xl border border-primary/20 bg-primary-soft p-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card text-primary ring-1 ring-primary/10">
+            <CalendarDays size={15} strokeWidth={1.7} />
+          </div>
+          <div className="min-w-0">
+            <p className="text-micro font-bold text-muted">اليوم</p>
+            <p className="truncate text-sm font-black text-main">{appointment.day}</p>
+          </div>
+        </div>
+        <div className="flex flex-1 items-center gap-2.5 rounded-2xl border border-primary/20 bg-primary-soft p-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card text-primary ring-1 ring-primary/10">
+            <Clock size={15} strokeWidth={1.7} />
+          </div>
+          <div className="min-w-0">
+            <p className="text-micro font-bold text-muted">الوقت</p>
+            <p className="truncate font-dash text-base font-black text-main">{appointment.time}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* المعلمة + المادة */}
+      <div className="grid grid-cols-2 gap-2.5">
         <InfoCell
           icon={ShieldCheck}
           label="المعلمة"

@@ -108,8 +108,8 @@ export const AppointmentListView = ({
                         {/* خانة الوقت */}
                         <div
                           className={cn(
-                            'flex w-14 shrink-0 flex-col items-center justify-center rounded-2xl py-2',
-                            done ? 'bg-surface' : 'bg-primary-soft',
+                            'flex w-14 shrink-0 flex-col items-center justify-center rounded-2xl py-2 ring-1',
+                            done ? 'bg-surface ring-border' : 'bg-primary-soft ring-primary/10',
                           )}
                         >
                           <span
@@ -142,18 +142,18 @@ export const AppointmentListView = ({
                               {app.studentName}
                             </p>
                             {app.studentGrade && (
-                              <span className="shrink-0 rounded-md bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
+                              <span className="shrink-0 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-bold text-muted ring-1 ring-border">
                                 {app.studentGrade}
                               </span>
                             )}
                           </div>
                           <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                            <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
+                            <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
                               <BookOpen size={10} className="shrink-0" strokeWidth={1.7} />
                               <span className="truncate">{app.subject}</span>
                             </span>
                             {app.teacherName && (
-                              <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-surface px-1.5 py-0.5 text-micro font-bold text-info">
+                              <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-bold text-info ring-1 ring-border">
                                 <ShieldCheck size={10} className="shrink-0" strokeWidth={1.7} />
                                 <span className="truncate">{app.teacherName}</span>
                               </span>

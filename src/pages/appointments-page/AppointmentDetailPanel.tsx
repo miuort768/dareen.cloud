@@ -22,7 +22,7 @@ export const AppointmentDetailPanel = ({
         exit={{ opacity: 0, x: 30 }}
         className="sticky top-4 h-fit overflow-hidden rounded-2xl border border-border bg-card"
       >
-        <div className="flex items-center justify-between rounded-2xl bg-error px-4 py-3 text-on-error">
+        <div className="flex items-center justify-between bg-error px-4 py-3 text-on-error">
           <div>
             <p className="text-micro font-bold text-white/80">تفاصيل الموعد</p>
             <h3 className="text-base font-bold">{appointment.day}</h3>

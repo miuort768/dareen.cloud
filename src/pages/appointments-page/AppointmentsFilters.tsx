@@ -50,7 +50,7 @@ export const AppointmentsFilters = ({
           placeholder="ابحث باسم الطالب أو المادة..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+          className="h-11 w-full rounded-2xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
         />
         {searchTerm && (
           <button
@@ -86,7 +86,7 @@ export const AppointmentsFilters = ({
             type="button"
             onClick={onReset}
             aria-label="إعادة تعيين الفلاتر"
-            className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-error px-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-11 shrink-0 items-center justify-center gap-1.5 rounded-2xl bg-error px-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <RotateCcw size={13} />
             إعادة تعيين

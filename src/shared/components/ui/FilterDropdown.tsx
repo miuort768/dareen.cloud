@@ -72,7 +72,7 @@ export const FilterDropdown = ({
       {open && (
         <div
           role="listbox"
-          className="absolute inset-x-0 z-50 mt-1.5 max-h-72 overflow-y-auto rounded-2xl border border-border bg-card py-1 shadow-elevation-2"
+          className="absolute inset-x-0 z-50 mt-1.5 rounded-2xl border border-border bg-card py-1 shadow-elevation-2"
         >
           {items.map((item) => {
             const isActive = item.key === value

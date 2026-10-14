@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { CalendarClock, CheckCircle2, CalendarDays, ListChecks } from 'lucide-react'
 import { fadeUpStatic } from '../../../../shared/animations/fadeUp'
-import { cn } from '../../../../lib/utils'
 
 const RING_RADIUS = 30
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
@@ -103,25 +102,21 @@ export const AppointmentsHero = ({
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5 text-white/85">
+            <div className="flex items-center gap-1.5 text-white/90">
               <CalendarClock size={12} strokeWidth={1.7} />
               <p className="text-xs font-bold">{todayName}</p>
             </div>
             <p className="mt-0.5 text-micro font-bold text-white/90">
               بقي {remainingToday} من {todayTotal} حصة
             </p>
-            <div className="mt-2 grid grid-cols-3 gap-1.5">
+            <div className="mt-2.5 grid grid-cols-3 gap-2">
               {chips.map((chip) => (
                 <div
                   key={chip.label}
-                  className="rounded-2xl bg-white/10 px-1 py-1.5 text-center backdrop-blur-sm"
+                  className="rounded-2xl bg-white/10 px-1 py-2 text-center ring-1 ring-white/15 backdrop-blur-sm"
                 >
-                  <p className="flex items-center justify-center gap-0.5 text-sm font-bold tabular-nums leading-none text-on-primary">
-                    <chip.icon
-                      size={10}
-                      strokeWidth={2}
-                      className={cn(chip.label === 'مكتملة' && 'opacity-80')}
-                    />
+                  <p className="flex items-center justify-center gap-1 text-sm font-black tabular-nums leading-none text-on-primary">
+                    <chip.icon size={11} strokeWidth={2} />
                     {chip.value}
                   </p>
                   <p className="mt-1 text-micro font-bold text-white/90">{chip.label}</p>

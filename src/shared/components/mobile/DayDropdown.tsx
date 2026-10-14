@@ -65,7 +65,7 @@ export const DayDropdown = ({
       {open && (
         <div
           role="listbox"
-          className="absolute inset-x-0 z-40 mt-1.5 max-h-72 overflow-y-auto rounded-2xl border border-border bg-card py-1.5 shadow-elevation-2"
+          className="absolute inset-x-0 z-40 mt-1.5 rounded-2xl border border-border bg-card py-1.5 shadow-elevation-2"
         >
           {options.map((opt) => {
             const isToday = opt.value === todayName

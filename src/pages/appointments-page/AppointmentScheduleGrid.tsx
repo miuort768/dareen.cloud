@@ -177,9 +177,9 @@ export const AppointmentScheduleGrid = ({
                       className="flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-hover focus-visible:bg-hover focus-visible:outline-none"
                     >
                       {/* Time chip */}
-                      <div className="flex h-11 w-14 shrink-0 flex-col items-center justify-center rounded-2xl bg-primary-soft">
-                        <Clock size={10} className="mb-0.5 text-primary" />
-                        <span className="text-micro font-black tabular-nums text-primary">
+                      <div className="flex h-12 w-16 shrink-0 flex-col items-center justify-center gap-0.5 rounded-2xl bg-primary-soft ring-1 ring-primary/10">
+                        <Clock size={11} className="text-primary" />
+                        <span className="text-xs font-black tabular-nums text-primary">
                           {app.time}
                         </span>
                       </div>
@@ -190,16 +190,18 @@ export const AppointmentScheduleGrid = ({
                           <p className="truncate text-base font-black text-main">
                             {app.studentName}
                           </p>
-                          <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-primary-soft px-2 py-0.5 text-sm font-bold text-primary">
+                          <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-primary-soft px-2 py-0.5 text-sm font-bold text-primary">
                             <BookOpen size={12} className="shrink-0" strokeWidth={1.7} />
                             <span className="truncate">{app.subject}</span>
                           </span>
-                          <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-surface px-2 py-0.5 text-sm font-bold text-info">
+                          <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-surface px-2 py-0.5 text-sm font-bold text-info ring-1 ring-border">
                             <ShieldCheck size={12} className="shrink-0" strokeWidth={1.7} />
                             <span className="truncate">{app.teacherName || 'غير محددة'}</span>
                           </span>
                           {app.studentGrade && (
-                            <span className="text-sm font-bold text-muted">{app.studentGrade}</span>
+                            <span className="rounded-lg bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+                              {app.studentGrade}
+                            </span>
                           )}
                         </div>
                       </div>
