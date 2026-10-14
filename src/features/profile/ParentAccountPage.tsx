@@ -27,7 +27,8 @@ import {
   formatJoinDate,
   useSupportWhatsappNumber,
   TONE_ORDER,
-  TILE_TONE,
+  SOLID_FILL,
+  ACCENT_BAR,
 } from './shared'
 import { ProgressBar } from '../../shared/components/ui'
 
@@ -113,6 +114,11 @@ export const ParentAccountPage = () => {
     (s, c) => s + (c.enrollments || []).reduce((x, e) => x + (e.sessionsTotal || 0), 0),
     0,
   )
+  const totalUsed = children.reduce(
+    (s, c) => s + (c.enrollments || []).reduce((x, e) => x + (e.sessionsUsed || 0), 0),
+    0,
+  )
+  const overallProgress = totalSessions > 0 ? Math.round((totalUsed / totalSessions) * 100) : 0
 
   if (isLoading)
     return (
@@ -187,54 +193,75 @@ export const ParentAccountPage = () => {
                 }
               >
                 {children.length > 0 ? (
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {children.map((child, idx) => {
-                      const tone = TONE_ORDER[idx % TONE_ORDER.length] ?? 'primary'
-                      const pct = childProgress(child)
-                      return (
-                        <motion.button
-                          key={child.id}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.05 * idx }}
-                          whileTap={{ scale: 0.98 }}
-                          onClick={() => navigate('/parent-students')}
-                          className="rounded-2xl border border-border bg-card p-3.5 text-start shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface"
-                          aria-label={`عرض تفاصيل ${child.name}`}
-                        >
-                          <div className="mb-2.5 flex items-center gap-2.5">
-                            <div
-                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ring-1 ${TILE_TONE[tone]}`}
-                            >
-                              {(child.name || '?').charAt(0)}
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      {children.map((child, idx) => {
+                        const tone = TONE_ORDER[idx % TONE_ORDER.length] ?? 'primary'
+                        const pct = childProgress(child)
+                        return (
+                          <motion.button
+                            key={child.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.05 * idx }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => navigate('/parent-students')}
+                            className={`rounded-2xl border border-s-4 border-border bg-card p-3.5 text-start shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface ${ACCENT_BAR[tone]}`}
+                            aria-label={`عرض تفاصيل ${child.name}`}
+                          >
+                            <div className="mb-2.5 flex items-center gap-2.5">
+                              <div
+                                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-base font-black shadow-elevation-1 ${SOLID_FILL[tone]}`}
+                              >
+                                {(child.name || '?').charAt(0)}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="truncate text-xs font-bold text-main">{child.name}</p>
+                                <p className="text-micro text-muted">{child.grade || '—'}</p>
+                              </div>
                             </div>
-                            <div className="min-w-0">
-                              <p className="truncate text-xs font-bold text-main">{child.name}</p>
-                              <p className="text-micro text-muted">{child.grade || '—'}</p>
+                            <div className="flex items-center gap-2">
+                              <div className="flex-1">
+                                <ProgressBar value={pct} variant="attendance" />
+                              </div>
+                              <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
+                                {pct}%
+                              </span>
                             </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="flex-1">
-                              <ProgressBar value={pct} variant="attendance" />
+                            <div className="mt-2 flex items-center justify-between text-micro font-bold text-muted">
+                              <span className="flex items-center gap-1">
+                                <BookOpen size={9} /> {(child.enrollments || []).length} مواد
+                              </span>
+                              <StatusBadge />
                             </div>
-                            <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
-                              {pct}%
-                            </span>
-                          </div>
-                          <div className="mt-2 flex items-center justify-between text-micro font-bold text-muted">
-                            <span className="flex items-center gap-1">
-                              <BookOpen size={9} /> {(child.enrollments || []).length} مواد
-                            </span>
-                            <StatusBadge />
-                          </div>
-                          {(child.totalPoints || 0) > 0 && (
-                            <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-jade">
-                              <GraduationCap size={9} /> {child.totalPoints} نقطة
-                            </p>
-                          )}
-                        </motion.button>
-                      )
-                    })}
+                            {(child.totalPoints || 0) > 0 && (
+                              <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-jade">
+                                <GraduationCap size={9} /> {child.totalPoints} نقطة
+                              </p>
+                            )}
+                          </motion.button>
+                        )
+                      })}
+                    </div>
+
+                    {/* التقدم العام — شريط زمردي ملوّن يجمع أبناء الحساب */}
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2">
+                      <div className="pointer-events-none absolute -end-8 -top-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+                      <div className="relative mb-2 flex items-center justify-between gap-2">
+                        <span className="flex items-center gap-2 text-micro font-bold text-jade-on opacity-90">
+                          <Activity size={13} /> التقدم العام للأبناء
+                        </span>
+                        <span className="font-dash text-sm font-black tabular-nums text-jade-on">
+                          {overallProgress}%
+                        </span>
+                      </div>
+                      <ProgressBar value={overallProgress} variant="jade" size="lg" />
+                      <p className="relative mt-2 text-micro text-jade-on opacity-80">
+                        <span className="font-dash font-black tabular-nums">{totalUsed}</span> من{' '}
+                        <span className="font-dash font-black tabular-nums">{totalSessions}</span>{' '}
+                        حصة عبر كل الأبناء
+                      </p>
+                    </div>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-10 text-center">

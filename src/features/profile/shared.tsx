@@ -48,6 +48,15 @@ export const SOLID_FILL: Record<Tone, string> = {
   error: 'bg-error text-on-error',
 }
 
+/** شريط لوني جانبي في اتجاه البداية (RTL) لكل نغمة — يوضع مع border-s-4 */
+export const ACCENT_BAR: Record<Tone, string> = {
+  primary: 'border-s-jade',
+  success: 'border-s-success',
+  warning: 'border-s-warning',
+  info: 'border-s-info',
+  error: 'border-s-error',
+}
+
 export const TONE_ORDER: Tone[] = ['primary', 'info', 'success', 'warning']
 
 /** رقم واتساب الدعم الفني من إعدادات المنصة (مفتاح «تواصل مع الدعم الفني») */
