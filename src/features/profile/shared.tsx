@@ -39,13 +39,13 @@ export const TILE_TONE: Record<Tone, string> = {
   error: 'bg-error-soft text-error-strong ring-error-soft',
 }
 
-/** لون رقم فقط (لا خلفية) — التلوين المحدث بدون فوضى */
-const TEXT_TONE: Record<Tone, string> = {
-  primary: 'text-jade',
-  success: 'text-success-strong',
-  warning: 'text-warning-strong',
-  info: 'text-info-strong',
-  error: 'text-error-strong',
+/** تعبئة مصمتة ملوّنة (هوية جريئة) — للبطاقات والأيقونات البارزة + نص on-* لكل لون */
+export const SOLID_FILL: Record<Tone, string> = {
+  primary: 'bg-jade text-jade-on',
+  success: 'bg-success text-on-success',
+  warning: 'bg-warning text-on-warning',
+  info: 'bg-info text-on-info',
+  error: 'bg-error text-on-error',
 }
 
 export const TONE_ORDER: Tone[] = ['primary', 'info', 'success', 'warning']
@@ -85,101 +85,112 @@ export const AccountHero = ({
   quickStats,
   onEdit,
 }: AccountHeroProps) => (
-  <motion.section
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-jade-soft via-card to-card p-4 shadow-elevation-1 transition-colors duration-slow dark:border-white/[0.06] dark:from-jade-soft dark:via-card dark:to-card sm:p-5 md:p-8"
-  >
-    {/* توهج نعناعي خفيف في الزاوية */}
-    <div className="pointer-events-none absolute -end-12 -top-12 hidden h-44 w-44 rounded-full bg-jade-light blur-3xl dark:bg-jade-soft sm:block" />
-
-    <div className="relative flex flex-col gap-4 sm:gap-5 lg:flex-row lg:items-center lg:justify-between">
-      <div className="flex min-w-0 items-center gap-3">
-        {/* الحرف الأول — دائرة نعناعية فاتحة بالحرف الأخضر الداكن */}
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-jade-light text-xl font-black text-jade-deep shadow-[0_10px_24px_rgb(10_123_112/0.18)] ring-2 ring-card dark:bg-jade-soft dark:shadow-[0_10px_24px_rgb(23_160_144/0.22)] dark:ring-white/10 md:h-20 md:w-20 md:text-3xl">
-          {(name || '?').charAt(0)}
-        </div>
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h1 className="min-w-0 break-words text-lg font-black leading-snug text-main md:text-2xl lg:text-3xl">
-              {name}
-            </h1>
-            <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-1 text-[9px] font-bold text-jade-on shadow-[0_4px_12px_rgb(10_123_112/0.3)] ring-1 ring-white/20 dark:shadow-[0_4px_12px_rgb(23_160_144/0.25)] md:px-2.5 md:text-micro">
-              <BadgeCheck size={10} />
-              {roleLabel}
-            </span>
-          </div>
-          {subtitle && <p className="mt-1 text-xs font-bold text-muted">{subtitle}</p>}
-          {metaChips && metaChips.length > 0 && (
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {metaChips.map((chip) => (
-                <span
-                  key={chip}
-                  className={cn(
-                    'inline-flex items-center rounded-full bg-card font-bold text-main ring-1 ring-inset ring-border dark:bg-white/[0.06] dark:text-main dark:ring-white/10',
-                    chipsBold
-                      ? 'px-3 py-1 text-xs sm:px-3.5 sm:py-1.5 sm:text-sm md:text-base'
-                      : 'px-2.5 py-0.5 text-[9px] sm:px-3 sm:py-1 sm:text-xs',
-                  )}
-                >
-                  {chip}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+  <>
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2 sm:p-5 md:p-8"
+    >
+      {/* نسيج نقطي خفيف */}
+      <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
+        <svg width="100%" height="100%">
+          <defs>
+            <pattern
+              id="account-hero-dots"
+              x="0"
+              y="0"
+              width="22"
+              height="22"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="2" cy="2" r="1" fill="white" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#account-hero-dots)" />
+        </svg>
       </div>
+      <div className="pointer-events-none absolute -end-16 -top-16 h-52 w-52 rounded-full bg-white/10 blur-3xl" />
 
-      {onEdit && (
-        <button
-          onClick={onEdit}
-          className="flex min-h-10 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2 text-[9px] font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:min-h-11 md:px-5 md:py-2.5 md:text-xs"
-        >
-          <PencilLine size={13} /> تعديل البيانات
-        </button>
-      )}
-    </div>
+      <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
+          {/* الحرف الأول — مربّع زجاجي فاتح بحرف بلون الهوية */}
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-xl font-black text-jade-on ring-2 ring-white/30 backdrop-blur-sm md:h-20 md:w-20 md:rounded-3xl md:text-3xl">
+            {(name || '?').charAt(0)}
+          </div>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="min-w-0 break-words text-xl font-black leading-snug text-jade-on md:text-2xl lg:text-3xl">
+                {name}
+              </h1>
+              <span className="flex items-center gap-1 rounded-full bg-white/20 px-2 py-1 text-[9px] font-bold text-jade-on ring-1 ring-white/30 backdrop-blur-sm md:px-2.5 md:text-micro">
+                <BadgeCheck size={10} />
+                {roleLabel}
+              </span>
+            </div>
+            {subtitle && (
+              <p className="mt-1 text-xs font-bold text-jade-on opacity-80">{subtitle}</p>
+            )}
+            {metaChips && metaChips.length > 0 && (
+              <div className="mt-2.5 flex flex-wrap gap-2">
+                {metaChips.map((chip) => (
+                  <span
+                    key={chip}
+                    className={cn(
+                      'inline-flex items-center rounded-full bg-white/15 font-bold text-jade-on ring-1 ring-inset ring-white/25 backdrop-blur-sm',
+                      chipsBold
+                        ? 'px-3 py-1 text-xs sm:px-3.5 sm:py-1.5 sm:text-sm md:text-base'
+                        : 'px-2.5 py-0.5 text-[9px] sm:px-3 sm:py-1 sm:text-xs',
+                    )}
+                  >
+                    {chip}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
-    {/* بطاقات المؤشرات — عائمة بظلال ناعمة + رقاقات ملوّنة + أرقام كبيرة */}
+        {onEdit && (
+          <button
+            onClick={onEdit}
+            className="flex min-h-10 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-on px-4 py-2 text-[9px] font-bold text-jade-deep shadow-elevation-1 transition-all hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 active:scale-[0.97] md:min-h-11 md:px-5 md:py-2.5 md:text-xs"
+          >
+            <PencilLine size={13} /> تعديل البيانات
+          </button>
+        )}
+      </div>
+    </motion.section>
+
+    {/* بطاقات المؤشرات — مصمتة ملوّنة بارزة (هوية جريئة) */}
     {quickStats && quickStats.length > 0 && (
-      <div className="relative mt-4 grid grid-cols-2 gap-2 border-t border-divider pt-4 sm:mt-6 sm:grid-cols-4 sm:gap-3 sm:pt-5">
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
         {quickStats.map((q) => {
           const Icon = q.icon
           return (
             <div
               key={q.label}
-              className="rounded-xl border border-border bg-card px-2.5 py-2 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:shadow-elevation-1 dark:border-white/[0.06] dark:bg-card sm:rounded-2xl sm:px-5 sm:py-4"
+              className={cn(
+                'relative overflow-hidden rounded-2xl p-3 shadow-elevation-1 transition-transform duration-slow hover:-translate-y-0.5 sm:p-4',
+                SOLID_FILL[q.tone ?? 'primary'],
+              )}
             >
-              <div className="flex items-center gap-1.5 sm:gap-2.5">
+              <div className="flex items-center gap-2">
                 {Icon && (
-                  <div
-                    className={cn(
-                      'flex h-6 w-6 shrink-0 items-center justify-center rounded-full ring-1 sm:h-9 sm:w-9',
-                      TILE_TONE[q.tone ?? 'primary'],
-                    )}
-                  >
-                    <Icon size={12} className="sm:hidden" />
-                    <Icon size={16} className="hidden sm:block" />
-                  </div>
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/25 sm:h-9 sm:w-9">
+                    <Icon size={15} />
+                  </span>
                 )}
-                <p
-                  className={cn(
-                    'min-w-0 truncate font-dash text-base font-black tabular-nums leading-none sm:text-xl',
-                    TEXT_TONE[q.tone ?? 'primary'],
-                  )}
-                >
+                <p className="min-w-0 truncate font-dash text-lg font-black tabular-nums leading-none sm:text-2xl">
                   {q.value}
                 </p>
               </div>
-              <p className="mt-1 text-[8px] font-bold text-muted sm:mt-2 sm:text-micro">
-                {q.label}
-              </p>
+              <p className="mt-2 text-[9px] font-bold opacity-80 sm:text-micro">{q.label}</p>
             </div>
           )
         })}
       </div>
     )}
-  </motion.section>
+  </>
 )
 
 /* ---------- بطاقة قسم بعنوان ---------- */
@@ -219,17 +230,17 @@ export const SectionCard = ({
     slow
     className={cn('dark:border-white/[0.06] dark:bg-card', className)}
   >
-    {/* شريط العنوان — خلفية نعناعية شديدة الفتوح + أيقونة في دائرة على الجانب */}
-    <div className="mb-4 flex items-center justify-between gap-3 rounded-2xl bg-jade-soft px-3 py-2.5 dark:bg-white/[0.04]">
+    {/* شريط العنوان — أيقونة مصمتة ملوّنة + عنوان قوي */}
+    <div className="mb-4 flex items-center justify-between gap-3 border-b border-divider pb-3">
       <div className="flex min-w-0 items-center gap-2.5">
         {Icon && (
           <div
             className={cn(
-              'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-card shadow-soft ring-1 ring-border',
-              TEXT_TONE[tone],
+              'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
+              SOLID_FILL[tone],
             )}
           >
-            <Icon size={16} />
+            <Icon size={18} />
           </div>
         )}
         <div className="min-w-0">
@@ -294,19 +305,17 @@ interface InfoTileProps {
 }
 
 export const InfoTile = ({ label, value, icon: Icon, tone = 'primary' }: InfoTileProps) => (
-  <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:border-jade hover:shadow-elevation-1 dark:border-white/[0.06]">
-    <div
-      className={cn(
-        'mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-full ring-1',
-        TILE_TONE[tone],
-      )}
-    >
+  <div
+    className={cn(
+      'relative overflow-hidden rounded-2xl p-4 text-center shadow-elevation-1 transition-transform duration-slow hover:-translate-y-0.5',
+      SOLID_FILL[tone],
+    )}
+  >
+    <div className="mx-auto mb-2.5 flex h-11 w-11 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/25">
       <Icon size={18} />
     </div>
-    <p className="truncate font-dash text-2xl font-black tabular-nums leading-none text-main">
-      {value}
-    </p>
-    <p className="mt-1.5 text-micro font-bold text-muted">{label}</p>
+    <p className="truncate font-dash text-2xl font-black tabular-nums leading-none">{value}</p>
+    <p className="mt-1.5 text-micro font-bold opacity-80">{label}</p>
   </div>
 )
 

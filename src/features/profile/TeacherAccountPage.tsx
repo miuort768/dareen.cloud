@@ -118,6 +118,31 @@ export const TeacherAccountPage = () => {
                 ? `سعر الحصة ${teacher.price} ${symbol}`
                 : 'سعر الحصة غير محدد',
             ]}
+            quickStats={[
+              {
+                label: 'النقاط',
+                value: <span className="font-dash tabular-nums">{points}</span>,
+                tone: 'warning',
+                icon: Award,
+              },
+              { label: 'الرتبة', value: rank.name, tone: 'info', icon: RankIcon },
+              {
+                label: 'الحصص المنفذة',
+                value: statsLoading ? '—' : completedCount,
+                tone: 'success',
+                icon: CalendarCheck,
+              },
+              {
+                label: 'الربح الحالي',
+                value: (
+                  <span className="font-dash tabular-nums">
+                    {statsLoading ? '—' : `${profit} ${symbol}`}
+                  </span>
+                ),
+                tone: 'primary',
+                icon: Wallet,
+              },
+            ]}
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
@@ -140,38 +165,6 @@ export const TeacherAccountPage = () => {
                     value={formatJoinDate(teacher?.createdAt) || undefined}
                     icon={CalendarDays}
                   />
-                </div>
-              </div>
-
-              {/* مؤشرات الحساب — الحصص والربح الحالي */}
-              <div className="mt-4 grid grid-cols-2 gap-2.5 border-t border-divider pt-4">
-                <div className="rounded-2xl border border-border bg-card p-4 dark:border-white/[0.06]">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-success-soft text-success-strong ring-1 ring-success-soft">
-                      <CalendarCheck size={16} />
-                    </span>
-                    <p className="font-dash text-lg font-black tabular-nums leading-none text-main">
-                      {statsLoading ? '—' : completedCount}
-                    </p>
-                  </div>
-                  <p className="mt-2 text-micro font-bold text-muted">عدد الحصص المنفذة</p>
-                </div>
-                <div className="rounded-2xl border border-border bg-card p-4 dark:border-white/[0.06]">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-jade-soft text-jade ring-1 ring-jade-soft">
-                      <Wallet size={16} />
-                    </span>
-                    <p className="font-dash text-lg font-black tabular-nums leading-none text-main">
-                      {statsLoading ? (
-                        '—'
-                      ) : (
-                        <>
-                          {profit} {symbol}
-                        </>
-                      )}
-                    </p>
-                  </div>
-                  <p className="mt-2 text-micro font-bold text-muted">الربح الحالي</p>
                 </div>
               </div>
             </SectionCard>
@@ -221,34 +214,35 @@ export const TeacherAccountPage = () => {
                 </div>
 
                 {/* الرتبة والتقدم — من نظام الرتب الموحد */}
-                <div className="mt-4 rounded-2xl border border-border bg-card p-4 dark:border-white/[0.06]">
-                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <div className="relative mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2">
+                  <div className="pointer-events-none absolute -end-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+                  <div className="relative mb-3 flex flex-wrap items-center justify-between gap-2">
                     <span className="flex items-center gap-2.5">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-jade-soft ring-1 ring-jade-soft">
-                        <RankIcon size={16} className="text-jade" />
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/30">
+                        <RankIcon size={16} className="text-jade-on" />
                       </span>
                       <span className="min-w-0">
-                        <span className="block text-micro text-muted">الرتبة الحالية</span>
-                        <span className="block truncate text-sm font-black leading-tight text-main">
+                        <span className="block text-micro text-jade-on opacity-80">
+                          الرتبة الحالية
+                        </span>
+                        <span className="block truncate text-sm font-black leading-tight text-jade-on">
                           {rank.name}
                         </span>
                       </span>
                     </span>
                     {nextRank && (
-                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-jade-soft px-2.5 py-1.5 text-micro font-bold text-jade">
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-1.5 text-micro font-bold text-jade-on ring-1 ring-white/25">
                         <TrendingUp size={11} />
                         التالية: {nextRank.name}
                       </span>
                     )}
                   </div>
                   <ProgressBar value={rankProgress} variant="jade" size="lg" />
-                  <p className="mt-2 text-micro text-muted">
+                  <p className="relative mt-2 text-micro text-jade-on opacity-80">
                     {nextRank ? (
                       <>
                         تحتاج{' '}
-                        <span className="font-dash font-black tabular-nums text-jade">
-                          {pointsNeeded}
-                        </span>{' '}
+                        <span className="font-dash font-black tabular-nums">{pointsNeeded}</span>{' '}
                         نقطة للوصول إلى «{nextRank.name}»
                       </>
                     ) : (
