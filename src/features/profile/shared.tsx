@@ -354,21 +354,21 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="group flex items-center gap-3 rounded-xl border border-divider bg-card p-3 transition-all duration-normal hover:bg-card dark:border-white/[0.06] md:p-3.5">
+    <div className="flex items-center gap-3 border-b border-divider py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-surface sm:py-3">
       {Icon && (
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-jade-deep text-jade-on shadow-elevation-1">
-          <Icon size={18} />
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-jade-soft text-jade ring-1 ring-jade-soft sm:h-10 sm:w-10 sm:rounded-xl">
+          <Icon size={16} />
         </span>
       )}
       <div className="min-w-0 flex-1">
         <p className="text-micro font-bold text-muted">{label}</p>
         {empty ? (
-          <p className="mt-0.5 text-sm font-black text-muted">—</p>
+          <p className="mt-0.5 text-xs font-bold text-muted sm:text-sm">—</p>
         ) : (
           <p
             title={tooltip}
             className={cn(
-              'mt-0.5 min-w-0 break-words text-sm font-black leading-snug text-main sm:text-base',
+              'mt-0.5 min-w-0 break-words text-xs font-bold leading-snug text-main sm:text-sm',
               mono && 'font-mono tabular-nums',
             )}
           >
