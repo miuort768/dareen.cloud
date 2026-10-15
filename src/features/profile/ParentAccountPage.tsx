@@ -201,7 +201,7 @@ export const ParentAccountPage = () => {
                             transition={{ delay: 0.05 * idx }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => navigate('/parent-students')}
-                            className={`rounded-2xl border border-s-4 border-border bg-card p-3.5 text-start shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface ${ACCENT_BAR[tone]}`}
+                            className={`rounded-none border border-s-4 border-border bg-card p-3.5 text-start shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface ${ACCENT_BAR[tone]}`}
                             aria-label={`عرض تفاصيل ${child.name}`}
                           >
                             <div className="mb-2.5 flex items-center gap-2.5">
@@ -240,7 +240,7 @@ export const ParentAccountPage = () => {
                     </div>
 
                     {/* التقدم العام — شريط زمردي ملوّن يجمع أبناء الحساب */}
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2">
+                    <div className="ring-jade/40 relative overflow-hidden rounded-none bg-jade-deep p-4 shadow-elevation-1 ring-1">
                       <div className="pointer-events-none absolute -end-8 -top-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
                       <div className="relative mb-2 flex items-center justify-between gap-2">
                         <span className="flex items-center gap-2 text-micro font-bold text-jade-on opacity-90">

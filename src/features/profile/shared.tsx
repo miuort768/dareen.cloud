@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { ReactNode } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import { AlertTriangle, BadgeCheck, Check, LogOut, MessageCircle, PencilLine } from 'lucide-react'
+import { AlertTriangle, BadgeCheck, LogOut, MessageCircle, PencilLine } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../lib/utils'
@@ -160,14 +160,6 @@ export const AccountHero = ({
                 imgClassName="object-contain p-2.5 md:p-3"
               />
             </div>
-            {/* شارة التوثيق — علامة تحقق مثل علامة فيسبوك */}
-            <span
-              title="حساب موثّق"
-              aria-label="حساب موثّق"
-              className="absolute -bottom-1.5 -end-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-success to-success-hover text-on-success shadow-elevation-2 ring-2 ring-card md:h-7 md:w-7"
-            >
-              <Check size={14} strokeWidth={3.5} />
-            </span>
           </div>
 
           <div className="min-w-0 flex-1 pb-0.5">
@@ -231,23 +223,21 @@ export const AccountHero = ({
             return (
               <div
                 key={q.label}
-                className="flex items-center gap-2.5 bg-card p-3 transition-colors duration-normal hover:bg-jade-soft dark:bg-surface sm:p-3.5"
+                className={cn(
+                  'flex items-center gap-2.5 p-3 transition-all duration-normal hover:-translate-y-0.5 hover:brightness-110 sm:p-3.5',
+                  SOLID_FILL[q.tone ?? 'primary'],
+                )}
               >
                 {Icon && (
-                  <span
-                    className={cn(
-                      'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
-                      SOLID_FILL[q.tone ?? 'primary'],
-                    )}
-                  >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 shadow-elevation-1 ring-1 ring-white/25">
                     <Icon size={17} />
                   </span>
                 )}
                 <div className="min-w-0">
-                  <p className="truncate font-dash text-xl font-black tabular-nums leading-none text-main sm:text-2xl">
+                  <p className="truncate font-dash text-xl font-black tabular-nums leading-none text-inherit sm:text-2xl">
                     {q.value}
                   </p>
-                  <p className="mt-1 truncate text-[9px] font-bold text-muted sm:text-micro">
+                  <p className="mt-1 truncate text-[9px] font-bold text-inherit opacity-80 sm:text-micro">
                     {q.label}
                   </p>
                 </div>
@@ -364,9 +354,9 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-3 transition-all duration-normal hover:-translate-y-0.5 hover:border-jade-soft hover:bg-card hover:shadow-elevation-1 dark:border-white/[0.06] md:p-3.5">
+    <div className="group flex items-center gap-3 rounded-xl border border-divider bg-card p-3 transition-all duration-normal hover:bg-card dark:border-white/[0.06] md:p-3.5">
       {Icon && (
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1 transition-transform duration-normal group-hover:scale-105">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-jade-deep text-jade-on shadow-elevation-1">
           <Icon size={18} />
         </span>
       )}
@@ -456,26 +446,24 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
     navigate('/login')
   }
   return (
-    <SectionCard title="الحساب" icon={LogOut} tone="error" delay={0.25}>
-      <div className="space-y-2.5">
-        {supportPhone && (
-          <a
-            href={`https://wa.me/${supportPhone}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
-          >
-            <MessageCircle size={14} /> تواصل مع الدعم الفني
-          </a>
-        )}
-        <button
-          onClick={handleLogout}
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-bold text-on-error shadow-soft transition-all hover:-translate-y-0.5 hover:bg-error-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+    <div className="space-y-2.5">
+      {supportPhone && (
+        <a
+          href={`https://wa.me/${supportPhone}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
-          <LogOut size={14} /> تسجيل الخروج
-        </button>
-      </div>
-    </SectionCard>
+          <MessageCircle size={14} /> تواصل مع الدعم الفني
+        </a>
+      )}
+      <button
+        onClick={handleLogout}
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-bold text-on-error shadow-soft transition-all hover:-translate-y-0.5 hover:bg-error-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+      >
+        <LogOut size={14} /> تسجيل الخروج
+      </button>
+    </div>
   )
 }
 
