@@ -76,13 +76,21 @@ export const TeacherDashboardMobile = ({
       />
 
       <div className="mx-auto max-w-page space-y-5 pt-4 sm:px-4">
-        <GreetingStrip
-          name={currentUser?.name || currentUser?.username || 'المعلمة'}
-          studentsCount={stats.studentsCount}
-          todayCount={stats.todaySessions}
-          monthCompleted={stats.monthCompletedSessions}
-          monthTotal={stats.monthTotalSessions}
-        />
+        <div className="space-y-4">
+          <GreetingStrip
+            name={currentUser?.name || currentUser?.username || 'المعلمة'}
+            studentsCount={stats.studentsCount}
+            todayCount={stats.todaySessions}
+            monthCompleted={stats.monthCompletedSessions}
+            monthTotal={stats.monthTotalSessions}
+          />
+
+          <TeacherAchievements
+            stats={stats}
+            lowBalanceStudents={lowBalanceStudents}
+            isTeacher={true}
+          />
+        </div>
 
         <ModernAnnouncements />
 
@@ -112,14 +120,6 @@ export const TeacherDashboardMobile = ({
 
         <SectionCard>
           <TasksAndRequests tasks={tasks} limit={3} />
-        </SectionCard>
-
-        <SectionCard>
-          <TeacherAchievements
-            stats={stats}
-            lowBalanceStudents={lowBalanceStudents}
-            isTeacher={true}
-          />
         </SectionCard>
 
         <WeekStrip counts={weekCounts} />

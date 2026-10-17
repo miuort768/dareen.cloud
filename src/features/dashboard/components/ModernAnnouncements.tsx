@@ -122,7 +122,7 @@ export const ModernAnnouncements = () => {
 
   return (
     <div
-      className="overflow-hidden rounded-t-xl border border-border bg-card font-dash dark:border-primary/20 dark:bg-card"
+      className="overflow-hidden rounded-2xl border border-border bg-card font-dash shadow-elevation-1 dark:border-primary/20 dark:bg-card"
       dir="rtl"
     >
       {/* الرأس: النوع + العداد + التنقل */}

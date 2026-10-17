@@ -106,16 +106,16 @@ export const SmartNotifications = ({
         }
       />
 
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-3">
         {alerts.map((alert, i) => (
           <div
             key={`alert-${i}`}
             className={cn(
-              'flex items-start gap-3 rounded-xl p-4 transition-colors duration-normal hover:brightness-110',
+              'flex items-start gap-3 rounded-2xl p-3.5 transition-colors duration-normal hover:brightness-110',
               alert.bg,
             )}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/15">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/25">
               <alert.icon size={17} className="text-white" />
             </div>
             <div className="min-w-0 flex-1">

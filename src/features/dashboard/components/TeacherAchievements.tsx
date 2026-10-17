@@ -3,7 +3,6 @@ import { CURRENCY_SYMBOL } from '../../../config/constants'
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types'
 import { getRankByPoints, getNextRank, TEACHER_RANKS } from '../../../shared/utils/ranks'
 import { RankBadge } from '../../../shared/components/RankBadge'
-import { DashboardSectionHead } from './DashboardSectionHead'
 
 interface TeacherAchievementsProps {
   stats: Stats
@@ -35,16 +34,29 @@ export const TeacherAchievements = ({
     : 100
 
   return (
-    <div>
-      <DashboardSectionHead
-        icon={Star}
-        tone="warning"
-        title={isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
-        afterTitle={isTeacher ? <RankBadge rank={rank} size="sm" /> : null}
-      />
+    <div className="flex h-full flex-col rounded-2xl border border-primary/20 bg-card p-4 shadow-elevation-1 lg:p-5">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <div
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-warning-soft text-warning-strong"
+            aria-hidden="true"
+          >
+            <Star size={16} />
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-black text-main">
+              {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
+            </p>
+            <p className="text-[11px] text-muted">
+              {isTeacher ? 'رتبتك وتقدمك هذا الشهر' : 'ملخص التحصيل'}
+            </p>
+          </div>
+        </div>
+        {isTeacher && <RankBadge rank={rank} size="sm" />}
+      </div>
 
       {isTeacher && next && (
-        <div className="mb-4 rounded-xl border border-border bg-surface p-3.5">
+        <div className="mb-3 rounded-xl border border-border bg-surface p-3">
           <div className="mb-2 flex items-center justify-between">
             <span className="flex items-center gap-1.5 text-[11px] font-bold text-main">
               <Zap size={11} className="text-warning-strong" />
@@ -68,15 +80,15 @@ export const TeacherAchievements = ({
         </div>
       )}
 
-      <div className="mb-4 overflow-hidden rounded-xl bg-primary p-4">
-        <div className="mb-1.5 flex items-center gap-1.5">
+      <div className="overflow-hidden rounded-xl bg-primary p-3.5">
+        <div className="mb-1 flex items-center gap-1.5">
           <TrendingUp size={12} className="text-on-primary opacity-70" />
           <span className="text-[11px] font-bold text-on-primary opacity-70">
             {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
           </span>
         </div>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-black tabular-nums text-on-primary">
+          <span className="text-xl font-black tabular-nums text-on-primary lg:text-2xl">
             {isTeacher
               ? (stats.monthNetProfit || 0).toLocaleString('ar-EG')
               : stats.expectedCollection.toLocaleString('ar-EG')}
@@ -87,7 +99,7 @@ export const TeacherAchievements = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="mt-3 grid grid-cols-2 gap-2.5 lg:mt-auto lg:pt-3">
         <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-error-soft">
             <AlertCircle size={15} className="text-error-strong" />

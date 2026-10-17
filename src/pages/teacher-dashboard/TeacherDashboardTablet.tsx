@@ -56,14 +56,23 @@ export const TeacherDashboardTablet = ({
   return (
     <div className="min-h-full bg-background transition-colors duration-500" dir="rtl">
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-4 sm:px-4 md:px-5">
-        <motion.div {...fadeUp(0)}>
-          <GreetingStrip
-            name={currentUser?.name || currentUser?.username || 'المعلمة'}
-            studentsCount={stats.studentsCount}
-            todayCount={stats.todaySessions}
-            monthCompleted={stats.monthCompletedSessions}
-            monthTotal={stats.monthTotalSessions}
-          />
+        <motion.div {...fadeUp(0)} className="grid grid-cols-1 gap-5 md:grid-cols-5">
+          <div className="md:col-span-3">
+            <GreetingStrip
+              name={currentUser?.name || currentUser?.username || 'المعلمة'}
+              studentsCount={stats.studentsCount}
+              todayCount={stats.todaySessions}
+              monthCompleted={stats.monthCompletedSessions}
+              monthTotal={stats.monthTotalSessions}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <TeacherAchievements
+              stats={stats}
+              lowBalanceStudents={lowBalanceStudents}
+              isTeacher={true}
+            />
+          </div>
         </motion.div>
 
         <motion.div {...fadeUp(0.02)} id="announcements-section" className="scroll-mt-32">
@@ -109,18 +118,9 @@ export const TeacherDashboardTablet = ({
           <WeekStrip counts={weekCounts} />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          <SectionCard delay={0.16}>
-            <TasksAndRequests tasks={tasks} limit={3} />
-          </SectionCard>
-          <SectionCard delay={0.18}>
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          </SectionCard>
-        </div>
+        <SectionCard delay={0.16}>
+          <TasksAndRequests tasks={tasks} limit={3} />
+        </SectionCard>
 
         {timeline.length > 0 && (
           <SectionCard delay={0.2}>
