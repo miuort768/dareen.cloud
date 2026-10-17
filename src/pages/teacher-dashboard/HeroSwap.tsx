@@ -1,5 +1,5 @@
 ﻿import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface HeroSwapProps {
   first: ReactNode
@@ -11,7 +11,7 @@ interface HeroSwapProps {
 
 /**
  * مستطيل واحد يعرض أحد العنصرين في كل مرة بعرض كامل وبنفس الأبعاد.
- * يتبادلان مكانهما بانزلاق أفقي متبادل + شبح خفيف، ويستندان على نفس الارتفاع.
+ * كلا المستطيلين مثبتان دائماً في نفس الخليّة (grid-cell) لضمان تساوي الارتفاع.
  * يحترم prefers-reduced-motion ويوقف التبديل عند التمرير/التركيز.
  */
 export const HeroSwap = ({
@@ -46,24 +46,7 @@ export const HeroSwap = ({
     return () => window.clearInterval(timer)
   }, [intervalMs, isPaused, slides.length])
 
-  const prevActive = prevActiveRef.current
-  const direction = active > prevActive ? 1 : active < prevActive ? -1 : 0
-  const slideDir = direction === 0 ? (active === 0 ? -1 : 1) : direction
-
-  const variants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 16 : -16,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -16 : 16,
-      opacity: 0,
-    }),
-  }
+  const direction = active >= prevActiveRef.current ? 1 : -1
 
   const goTo = (index: number) => {
     if (index === active) return
@@ -79,21 +62,27 @@ export const HeroSwap = ({
       onBlur={() => setIsPaused(false)}
     >
       <div className="grid grid-cols-1">
-        <AnimatePresence initial={false} custom={slideDir}>
-          <motion.div
-            key={active}
-            custom={slideDir}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ type: 'spring', stiffness: 260, damping: 28, mass: 0.92 }}
-            className="col-start-1 row-start-1 h-full w-full will-change-transform"
-            aria-live="polite"
-          >
-            <div className="h-full">{slides[active]}</div>
-          </motion.div>
-        </AnimatePresence>
+        {slides.map((slide, i) => {
+          const isActive = i === active
+
+          return (
+            <motion.div
+              key={i}
+              animate={{
+                x: isActive ? 0 : direction > 0 ? -24 : 24,
+                opacity: isActive ? 1 : 0,
+              }}
+              transition={{ type: 'spring', stiffness: 300, damping: 32 }}
+              className={`col-start-1 row-start-1 h-full w-full will-change-transform ${
+                isActive ? 'z-10' : 'z-0'
+              }`}
+              style={{ pointerEvents: isActive ? 'auto' : 'none' }}
+              aria-hidden={!isActive}
+            >
+              {slide}
+            </motion.div>
+          )
+        })}
       </div>
 
       {showDots && slides.length > 1 && (
