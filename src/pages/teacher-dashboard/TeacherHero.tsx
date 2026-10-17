@@ -80,27 +80,27 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
         aria-hidden="true"
       />
 
-      <div className="relative z-10 flex flex-col gap-5 p-5 sm:p-6">
-        <div className="grid gap-5 lg:grid-cols-2">
-          <div className="flex flex-col justify-between gap-4">
-            <div className="flex flex-wrap items-start justify-between gap-4">
+      <div className="relative z-10 flex flex-col gap-3.5 p-4 sm:gap-5 sm:p-6">
+        <div className="grid gap-4 lg:grid-cols-2 lg:gap-5">
+          <div className="flex flex-col justify-between gap-3">
+            <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
                   <UserRound size={13} className="text-primary" />
                   <span className="font-dash">{today}</span>
                 </p>
 
-                <h1 className="mt-3 text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
+                <h1 className="mt-2 text-lg font-black leading-tight text-main md:text-2xl xl:text-3xl">
                   {getGreeting()}، {firstName}
                 </h1>
 
-                <p className="mt-1 text-[11px] font-bold text-muted xl:text-xs">
+                <p className="mt-0.5 text-[11px] font-bold text-muted xl:text-xs">
                   ملخص يومك التعليمي في مكان واحد
                 </p>
               </div>
 
               <div
-                className="flex shrink-0 flex-col items-center gap-1.5"
+                className="flex shrink-0 flex-col items-center gap-1"
                 aria-label={`إنجاز حصص الشهر ${percent} بالمئة`}
               >
                 <div className="relative flex items-center justify-center">
@@ -108,7 +108,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                     width={RING_SIZE}
                     height={RING_SIZE}
                     viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
-                    className="lg:h-20 lg:w-20"
+                    className="h-12 w-12 sm:h-14 sm:w-14 lg:h-20 lg:w-20"
                   >
                     <circle
                       cx={RING_SIZE / 2}
@@ -139,9 +139,9 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                     <CountUp
                       value={percent}
                       format={(n) => `${Math.round(n)}`}
-                      className="font-dash text-base font-black tabular-nums leading-none text-primary lg:text-xl lg:leading-none"
+                      className="font-dash text-sm font-black tabular-nums leading-none text-primary sm:text-base lg:text-xl lg:leading-none"
                     />
-                    <span className="text-[11px] font-black leading-none text-primary lg:text-xs">
+                    <span className="text-[10px] font-black leading-none text-primary sm:text-xs">
                       %
                     </span>
                   </span>
@@ -152,16 +152,16 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-1.5">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10px] font-black text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
+            <div className="flex flex-wrap gap-1">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2 py-1 text-[10px] font-black text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
                 <Users size={11} />
                 {stats.studentsCount === 1 ? 'طالب واحد' : `${stats.studentsCount} طلاب`}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
                 <CalendarDays size={11} />
                 {stats.todaySessions > 0 ? `${stats.todaySessions} حصص اليوم` : 'لا حصص اليوم'}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
                 <CheckCircle2 size={11} />
                 {showRing
                   ? `${stats.monthCompletedSessions} من ${stats.monthTotalSessions}`
@@ -170,14 +170,14 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="flex flex-col justify-between gap-4 lg:border-s lg:border-divider lg:ps-5">
+          <div className="flex flex-col justify-between gap-3 lg:gap-4 lg:border-s lg:border-divider lg:ps-5">
             <div className="flex items-center justify-between gap-2">
-              <div className="flex min-w-0 items-center gap-2.5">
+              <div className="flex min-w-0 items-center gap-2">
                 <div
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning text-on-warning shadow-elevation-1"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-warning text-on-warning shadow-elevation-1 sm:h-10 sm:w-10"
                   aria-hidden="true"
                 >
-                  <Star size={18} fill="currentColor" />
+                  <Star size={16} fill="currentColor" />
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-black text-main">إنجازاتك التعليمية</p>
@@ -188,8 +188,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
 
             {next && (
-              <div className="bg-surface/60 rounded-xl border border-border p-3.5 dark:bg-surface">
-                <div className="mb-2.5 flex items-center justify-between">
+              <div className="bg-surface/60 rounded-xl border border-border p-3 dark:bg-surface sm:p-3.5">
+                <div className="mb-2 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-xs font-bold text-main">
                     <Zap size={12} className="text-warning-strong" />
                     <CountUp value={points} className="font-dash tabular-nums text-primary" />
@@ -221,8 +221,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-elevation-1 shadow-primary/15">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-2.5">
+          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-1 shadow-primary/15 sm:p-4">
             <div className="mb-1.5 flex items-center gap-1.5">
               <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/20">
                 <TrendingUp size={12} className="text-white" />
@@ -240,9 +240,9 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="bg-surface/60 flex items-center gap-3 rounded-xl border border-border p-3 dark:bg-surface">
-            <div className="ring-error/10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-error-soft ring-1">
-              <AlertCircle size={18} className="text-error-strong" />
+          <div className="bg-surface/60 flex items-center gap-2.5 rounded-xl border border-border p-3 dark:bg-surface">
+            <div className="ring-error/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error-soft ring-1">
+              <AlertCircle size={17} className="text-error-strong" />
             </div>
             <div>
               <span className="font-dash text-xl font-black tabular-nums leading-none text-main">
@@ -252,9 +252,9 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="bg-surface/60 flex items-center gap-3 rounded-xl border border-border p-3 dark:bg-surface">
-            <div className="ring-warning/10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-warning-soft ring-1">
-              <Clock size={18} className="text-warning-strong" />
+          <div className="bg-surface/60 flex items-center gap-2.5 rounded-xl border border-border p-3 dark:bg-surface">
+            <div className="ring-warning/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft ring-1">
+              <Clock size={17} className="text-warning-strong" />
             </div>
             <div>
               <span className="font-dash text-xl font-black tabular-nums leading-none text-main">

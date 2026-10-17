@@ -106,23 +106,25 @@ export const SmartNotifications = ({
         }
       />
 
-      <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid auto-rows-fr grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-1">
         {alerts.map((alert, i) => (
           <div
             key={`alert-${i}`}
             className={cn(
-              'flex items-start gap-3 rounded-2xl p-3.5 transition-colors duration-normal hover:brightness-110',
+              'flex h-full items-start justify-between gap-3 rounded-2xl p-3.5 transition-all duration-normal hover:shadow-elevation-1',
               alert.bg,
             )}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/25">
-              <alert.icon size={17} className="text-white" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className={cn('mb-1 text-sm font-black', alert.on)}>{alert.title}</p>
-              <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-white/80">
-                {alert.desc}
-              </p>
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/25">
+                <alert.icon size={17} className="text-white" />
+              </div>
+              <div className="min-w-0">
+                <p className={cn('mb-1 text-sm font-black', alert.on)}>{alert.title}</p>
+                <p className="line-clamp-3 text-[11px] font-medium leading-relaxed text-white/80">
+                  {alert.desc}
+                </p>
+              </div>
             </div>
           </div>
         ))}

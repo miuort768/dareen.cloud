@@ -126,16 +126,23 @@ export const ModernAnnouncements = () => {
       dir="rtl"
     >
       {/* الرأس: النوع + العداد + التنقل */}
-      <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-2.5">
-        <span
-          className={cn(
-            'flex items-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-micro font-bold',
-            type.badge,
+      <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-2 dark:bg-card">
+        <div className="flex min-w-0 items-center gap-2">
+          <span
+            className={cn(
+              'flex items-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-micro font-bold',
+              type.badge,
+            )}
+          >
+            <TypeIcon size={12} />
+            <span className="truncate">{type.label}</span>
+          </span>
+          {announcements.length > 1 && (
+            <span className="shrink-0 rounded-md bg-primary-soft px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-primary">
+              {currentIndex + 1} / {announcements.length}
+            </span>
           )}
-        >
-          <TypeIcon size={12} />
-          {type.label}
-        </span>
+        </div>
 
         <div className="flex items-center gap-1.5">
           {announcements.length > 1 && (
@@ -172,26 +179,47 @@ export const ModernAnnouncements = () => {
         type="button"
         onClick={() => setAckTarget(current)}
         aria-haspopup="dialog"
-        className="block w-full cursor-pointer p-5 text-start transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
+        className="group relative block w-full cursor-pointer p-5 text-start transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
       >
-        <div key={current.id}>
-          <Badge
-            variant="outline"
-            className={cn('h-5 rounded-lg border px-2 text-micro', type.badge)}
+        <div key={current.id} className="flex items-start gap-3">
+          <div
+            className={cn(
+              'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
+              type.iconBg,
+            )}
           >
-            {current.date}
-          </Badge>
-          <h4 className="mb-1 mt-2 text-xs font-bold leading-tight text-main">{current.title}</h4>
-          <p className="line-clamp-2 text-micro leading-relaxed text-muted">{current.content}</p>
+            <TypeIcon size={17} className={type.iconText} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h4 className="truncate text-sm font-black leading-tight text-main">
+                {current.title}
+              </h4>
+              <Badge
+                variant="outline"
+                className={cn(
+                  'h-5 shrink-0 rounded-lg border px-1.5 text-[10px] font-bold',
+                  type.badge,
+                )}
+              >
+                {current.date}
+              </Badge>
+            </div>
+            <p className="mt-1.5 line-clamp-2 text-[11px] leading-relaxed text-muted">
+              {current.content}
+            </p>
+          </div>
         </div>
       </button>
 
-      {/* شريط التقدم */}
-      <div className="relative h-1.5 w-full rounded-full bg-surface dark:bg-hover">
-        <div
-          className="absolute start-0 top-0 h-full rounded-full bg-gradient-to-r from-primary via-primary-deep to-primary-hover transition-all duration-500"
-          style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
-        />
+      {/* شريط التقدم تحت أزرار التنقل / صف الرأس فعلياً — نضعه مباشرة تحت المحتوى؟ لا. حسب الطلب: تحت أزرار التنقل. أفضل موضع: بعد النافذة أو قبلها؛ لكن الرأس هو الذي يحتوي الأزرار. لذا نضع شريط التقدم بالعرض متساوي مع المحتوى داخل البطانة بدل خارجها. */}
+      <div className="border-t border-border px-5 pb-1.5 pt-1.5">
+        <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-surface dark:bg-hover">
+          <div
+            className="absolute start-0 top-0 h-full rounded-full bg-gradient-to-r from-primary via-primary-deep to-primary-hover transition-all duration-500"
+            style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
+          />
+        </div>
       </div>
 
       {/* نافذة تأكيد القراءة — مثبتة على الإعلان المفتوح */}
