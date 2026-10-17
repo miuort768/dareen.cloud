@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
@@ -59,9 +59,6 @@ export const TeacherDashboardTablet = ({
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-4 sm:px-4 md:px-5">
         <motion.div {...fadeUp(0)}>
           <HeroSwap
-            className="grid grid-cols-1 gap-5 md:grid-cols-5"
-            firstClassName="md:col-span-3"
-            secondClassName="md:col-span-2"
             first={
               <GreetingStrip
                 name={currentUser?.name || currentUser?.username || 'المعلمة'}

@@ -41,7 +41,7 @@ export const GreetingStrip = ({
   return (
     <section
       aria-label="ترحيب"
-      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
+      className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light via-primary-soft to-transparent"
@@ -56,7 +56,7 @@ export const GreetingStrip = ({
         aria-hidden="true"
       />
 
-      <div className="relative z-10 p-5 sm:p-6">
+      <div className="relative z-10 flex flex-1 flex-col justify-between p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
