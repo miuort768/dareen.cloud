@@ -17,6 +17,7 @@ import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
+import { HeroSwap } from './HeroSwap'
 import { WeekStrip } from './WeekStrip'
 import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { TeacherDashboardShellProps } from './types'
@@ -56,23 +57,28 @@ export const TeacherDashboardTablet = ({
   return (
     <div className="min-h-full bg-background transition-colors duration-500" dir="rtl">
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-4 sm:px-4 md:px-5">
-        <motion.div {...fadeUp(0)} className="grid grid-cols-1 gap-5 md:grid-cols-5">
-          <div className="md:col-span-3">
-            <GreetingStrip
-              name={currentUser?.name || currentUser?.username || 'المعلمة'}
-              studentsCount={stats.studentsCount}
-              todayCount={stats.todaySessions}
-              monthCompleted={stats.monthCompletedSessions}
-              monthTotal={stats.monthTotalSessions}
-            />
-          </div>
-          <div className="md:col-span-2">
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          </div>
+        <motion.div {...fadeUp(0)}>
+          <HeroSwap
+            className="grid grid-cols-1 gap-5 md:grid-cols-5"
+            firstClassName="md:col-span-3"
+            secondClassName="md:col-span-2"
+            first={
+              <GreetingStrip
+                name={currentUser?.name || currentUser?.username || 'المعلمة'}
+                studentsCount={stats.studentsCount}
+                todayCount={stats.todaySessions}
+                monthCompleted={stats.monthCompletedSessions}
+                monthTotal={stats.monthTotalSessions}
+              />
+            }
+            second={
+              <TeacherAchievements
+                stats={stats}
+                lowBalanceStudents={lowBalanceStudents}
+                isTeacher={true}
+              />
+            }
+          />
         </motion.div>
 
         <motion.div {...fadeUp(0.02)} id="announcements-section" className="scroll-mt-32">

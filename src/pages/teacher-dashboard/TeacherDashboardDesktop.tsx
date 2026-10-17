@@ -17,6 +17,7 @@ import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
+import { HeroSwap } from './HeroSwap'
 import { WeekStrip } from './WeekStrip'
 import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { Session } from '../../types'
@@ -55,23 +56,27 @@ export const TeacherDashboardDesktop = ({
 
   return (
     <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-5 sm:px-4 md:px-6" dir="rtl">
-      <motion.div {...fadeUp(0)} className="grid grid-cols-1 gap-5 lg:grid-cols-5">
-        <div className="lg:col-span-3">
-          <GreetingStrip
-            name={currentUser?.name || currentUser?.username || 'المعلمة'}
-            studentsCount={stats.studentsCount}
-            todayCount={stats.todaySessions}
-            monthCompleted={stats.monthCompletedSessions}
-            monthTotal={stats.monthTotalSessions}
-          />
-        </div>
-        <div className="lg:col-span-2">
-          <TeacherAchievements
-            stats={stats}
-            lowBalanceStudents={lowBalanceStudents}
-            isTeacher={true}
-          />
-        </div>
+      <motion.div {...fadeUp(0)}>
+        <HeroSwap
+          firstClassName="lg:col-span-3"
+          secondClassName="lg:col-span-2"
+          first={
+            <GreetingStrip
+              name={currentUser?.name || currentUser?.username || 'المعلمة'}
+              studentsCount={stats.studentsCount}
+              todayCount={stats.todaySessions}
+              monthCompleted={stats.monthCompletedSessions}
+              monthTotal={stats.monthTotalSessions}
+            />
+          }
+          second={
+            <TeacherAchievements
+              stats={stats}
+              lowBalanceStudents={lowBalanceStudents}
+              isTeacher={true}
+            />
+          }
+        />
       </motion.div>
 
       <motion.div {...fadeUp(0.02)} id="announcements-section" className="scroll-mt-32">
