@@ -5,7 +5,6 @@ import { fadeUp } from '../../shared/animations/fadeUp'
 import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
-import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
 import { TasksAndRequests } from '../../features/dashboard/components/TasksAndRequests'
 import { ModernAnnouncements } from '../../features/dashboard/components/ModernAnnouncements'
 import { TopAttendanceStudents } from '../../features/dashboard/components/TopAttendanceStudents'
@@ -16,8 +15,7 @@ import { NextSessionHero } from '../../features/dashboard/components/NextSession
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
-import { GreetingStrip } from './GreetingStrip'
-import { HeroSwap } from './HeroSwap'
+import { TeacherHero } from './TeacherHero'
 import { WeekStrip } from './WeekStrip'
 import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { Session } from '../../types'
@@ -57,23 +55,10 @@ export const TeacherDashboardDesktop = ({
   return (
     <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-5 sm:px-4 md:px-6" dir="rtl">
       <motion.div {...fadeUp(0)}>
-        <HeroSwap
-          first={
-            <GreetingStrip
-              name={currentUser?.name || currentUser?.username || 'المعلمة'}
-              studentsCount={stats.studentsCount}
-              todayCount={stats.todaySessions}
-              monthCompleted={stats.monthCompletedSessions}
-              monthTotal={stats.monthTotalSessions}
-            />
-          }
-          second={
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          }
+        <TeacherHero
+          name={currentUser?.name || currentUser?.username || 'المعلمة'}
+          stats={stats}
+          lowBalanceStudents={lowBalanceStudents}
         />
       </motion.div>
 

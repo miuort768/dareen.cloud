@@ -6,14 +6,12 @@ import { DashboardSectionCard as SectionCard } from '../../shared/components/Das
 import { MobilePageHeader } from '../../shared/components/mobile/MobilePageHeader'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
-import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
 import { ModernAnnouncements } from '../../features/dashboard/components/ModernAnnouncements'
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { TasksAndRequests } from '../../features/dashboard/components/TasksAndRequests'
-import { GreetingStrip } from './GreetingStrip'
-import { HeroSwap } from './HeroSwap'
+import { TeacherHero } from './TeacherHero'
 import { WeekStrip } from './WeekStrip'
 import type { TeacherDashboardMobileProps } from './types'
 
@@ -77,23 +75,10 @@ export const TeacherDashboardMobile = ({
       />
 
       <div className="mx-auto max-w-page space-y-5 pt-4 sm:px-4">
-        <HeroSwap
-          first={
-            <GreetingStrip
-              name={currentUser?.name || currentUser?.username || 'المعلمة'}
-              studentsCount={stats.studentsCount}
-              todayCount={stats.todaySessions}
-              monthCompleted={stats.monthCompletedSessions}
-              monthTotal={stats.monthTotalSessions}
-            />
-          }
-          second={
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          }
+        <TeacherHero
+          name={currentUser?.name || currentUser?.username || 'المعلمة'}
+          stats={stats}
+          lowBalanceStudents={lowBalanceStudents}
         />
 
         <ModernAnnouncements />
