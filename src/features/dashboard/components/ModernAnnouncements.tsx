@@ -122,11 +122,19 @@ export const ModernAnnouncements = () => {
 
   return (
     <div
-      className="overflow-hidden rounded-2xl border border-border bg-card font-dash shadow-elevation-1 dark:border-primary/20 dark:bg-card"
+      className={cn(
+        'overflow-hidden rounded-2xl border border-border bg-card font-dash shadow-elevation-1 dark:border-primary/20 dark:bg-card',
+        current.type === 'urgent' && 'border-s-4 border-s-error',
+        current.type === 'holiday' && 'border-s-4 border-s-warning',
+        current.type === 'event' && 'border-s-4 border-s-info',
+      )}
       dir="rtl"
     >
       {/* الرأس: النوع + العداد + التنقل */}
-      <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-2 dark:bg-card">
+      <div
+        className="flex items-center justify-between gap-2 border-b border-border px-4 py-2"
+        style={{ backgroundColor: type.cssVar.bg }}
+      >
         <div className="flex min-w-0 items-center gap-2">
           <span
             className={cn(

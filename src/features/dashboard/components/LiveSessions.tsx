@@ -245,7 +245,7 @@ export const LiveSessions = () => {
           {sessions.map((session) => (
             <div
               key={session.id}
-              className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-elevation-2 hover:shadow-primary/5 dark:border-primary/15 dark:hover:border-primary/25"
+              className="group overflow-hidden rounded-none border border-border bg-card transition-all hover:shadow-elevation-2 hover:shadow-primary/5 dark:border-primary/15 dark:hover:border-primary/25"
             >
               {/* Live indicator bar */}
               <div className="h-0.5 bg-gradient-to-l from-success via-success to-transparent" />
@@ -253,7 +253,7 @@ export const LiveSessions = () => {
               <div className="flex items-center gap-3 p-4">
                 {/* Live pulse icon */}
                 <div className="relative shrink-0">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-none border border-success-soft bg-success-soft dark:bg-success-soft">
                     <Radio size={15} className="text-success" />
                   </div>
                   <span className="absolute -start-0.5 -top-0.5 h-3 w-3">
@@ -263,7 +263,7 @@ export const LiveSessions = () => {
                 </div>
 
                 {/* Info */}
-                <div className="min-w-0 flex-1">
+                <div className="min-w-0 flex-1 rounded-none border-s-4 border-s-success bg-surface px-3 py-2 dark:bg-surface">
                   <h4 className="text-sm font-bold text-main">{session.title}</h4>
                   <div className="mt-1 flex items-center gap-2 text-[11px] text-muted">
                     <span className="flex items-center gap-1">
@@ -285,7 +285,7 @@ export const LiveSessions = () => {
                 </div>
 
                 {/* Provider badge */}
-                <div className="hidden items-center gap-1.5 rounded-lg bg-surface px-2.5 py-1 dark:bg-hover sm:flex">
+                <div className="hidden items-center gap-1.5 rounded-none border border-border bg-surface px-2.5 py-1 dark:border-primary/15 dark:bg-hover sm:flex">
                   <span
                     className={cn(
                       'h-1.5 w-1.5 rounded-full',
@@ -303,7 +303,7 @@ export const LiveSessions = () => {
                     href={session.meetingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex min-h-9 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                    className="flex min-h-9 items-center gap-1.5 rounded-none bg-primary px-3.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                   >
                     <ExternalLink size={12} />
                     انضم
@@ -311,7 +311,7 @@ export const LiveSessions = () => {
 
                   <button
                     onClick={() => copyLink(session.meetingUrl || '', session.id)}
-                    className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-primary-soft hover:text-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-primary/15 dark:hover:bg-primary/10"
+                    className="flex min-h-9 min-w-9 items-center justify-center rounded-none border border-border text-muted shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-primary-soft hover:text-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-primary/15 dark:hover:bg-primary/10"
                     title="نسخ الرابط"
                     aria-label="نسخ رابط الحصة"
                   >
@@ -325,7 +325,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => openEditDialog(session)}
-                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-primary-soft hover:text-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-primary/15 dark:hover:bg-primary/10"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-none border border-border text-muted shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/30 hover:bg-primary-soft hover:text-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-primary/15 dark:hover:bg-primary/10"
                       title="تعديل الرابط"
                       aria-label="تعديل رابط الحصة"
                     >
@@ -336,7 +336,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => endSession(session.id)}
-                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-error shadow-button outline-none transition-all duration-normal ease-out hover:border-error-soft hover:bg-error-soft hover:text-error hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-error-soft"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-none border border-border text-error shadow-button outline-none transition-all duration-normal ease-out hover:border-error-soft hover:bg-error-soft hover:text-error hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed dark:border-error-soft"
                       title="إنهاء الحصة"
                       aria-label="إنهاء الحصة"
                     >

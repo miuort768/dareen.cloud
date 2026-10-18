@@ -34,7 +34,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   return (
     <section
       aria-label="حمل الأسبوع القادم"
-      className="flex h-full flex-col rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow hover:shadow-elevation-2"
+      className="flex h-full flex-col bg-card p-5 transition-colors duration-slow"
     >
       <div className="mb-5 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -43,9 +43,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
           </div>
           <div className="flex flex-col">
             <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
-            <p className="mt-0.5 text-[10px] font-bold text-muted">
-              توزيع الحصص على الأيام السبع
-            </p>
+            <p className="mt-0.5 text-[10px] font-bold text-muted">توزيع الحصص على الأيام السبع</p>
           </div>
         </div>
         <span className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-black tabular-nums text-on-primary shadow-elevation-1">
@@ -54,7 +52,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
         </span>
       </div>
 
-      <div className="grid flex-1 grid-cols-7 gap-2">
+      <div className="grid flex-1 grid-cols-7 gap-px overflow-hidden rounded-none border border-border bg-border">
         {ordered.map((day) => (
           <div
             key={day.label}
@@ -64,30 +62,22 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
                 : `${day.label}: لا حصص`
             }
             className={cn(
-              'group flex flex-col items-center gap-2 rounded-xl border px-1 py-2 transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
-              day.isToday
-                ? 'border-primary bg-gradient-to-b from-primary-light via-primary-soft to-transparent'
-                : day.count > 0
-                  ? 'border-border bg-surface'
-                  : 'border-border bg-card',
+              'group flex flex-col items-center justify-between bg-card p-2 transition-colors hover:bg-surface',
+              day.isToday && 'border-t-2 border-t-primary bg-primary-soft',
             )}
           >
             <span
-              className={cn(
-                'text-[10px] font-black',
-                day.isToday ? 'text-primary' : 'text-muted',
-              )}
+              className={cn('text-[10px] font-black', day.isToday ? 'text-primary' : 'text-muted')}
             >
               {day.label}
             </span>
 
-            <div className="flex h-24 w-full items-end justify-center">
+            <div className="mt-1.5 flex h-10 w-full items-end overflow-hidden bg-surface">
               <div
                 style={{ height: `${day.barPct}%` }}
                 className={cn(
-                  'w-full max-w-[12px] rounded-full transition-all duration-500',
-                  day.isToday ? 'bg-primary shadow-soft' : day.count > 0 ? 'bg-info' : 'bg-border',
-                  day.isToday && 'min-h-[10px]',
+                  'w-full bg-primary transition-all duration-500',
+                  day.isToday && 'min-h-[8px]',
                 )}
               />
             </div>
