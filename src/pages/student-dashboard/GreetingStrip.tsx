@@ -43,11 +43,19 @@ export const GreetingStrip = ({
   return (
     <section
       aria-label="ترحيب"
-      className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft"
+      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
     >
-      {/* خلفية خضراء ناعمة + هالات زخرفية */}
+      {/* خلفية بلون الدور الناعم + حلقات زخرفية */}
       <div
-        className="via-primary/3 pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light via-primary-soft to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-primary/10 lg:-end-20 lg:h-80 lg:w-80"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -end-4 -top-8 h-28 w-28 rounded-full border border-primary/10 bg-primary/5 lg:-end-10 lg:h-40 lg:w-40"
         aria-hidden="true"
       />
 

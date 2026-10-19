@@ -247,113 +247,147 @@
   --jade-on: #032b26;
 }
 
-/* Scopes using the new solid base values */
-.student-scope {
-  --color-primary: 22 163 74;
-  --color-primary-deep: 21 128 61;
-  --color-primary-mid: 34 197 94;
-  --color-primary-light: 220 252 231;
-  --color-primary-h: 187 247 208;
-  --bg-primary: #16a34a;
-  --bg-primary-deep: #166534;
-  --bg-primary-hover: #15803d;
-  --bg-primary-active: #166534;
-  --bg-primary-soft: #f0fdf4;
-  --bg-primary-light: #dcfce7;
-  --text-primary: #16a34a;
-  --text-on-primary: #ffffff;
-  --border-primary: #16a34a;
-  --ring-focus: #16a34a;
-}
-
-.dark .student-scope {
-  --color-primary: 74 222 128;
-  --color-primary-deep: 21 128 61;
-  --color-primary-mid: 34 197 94;
-  --color-primary-light: 5 46 22;
-  --color-primary-h: 20 83 45;
-  --bg-primary: #4ade80;
-  --bg-primary-deep: #14532d;
-  --bg-primary-hover: #86efac;
-  --bg-primary-active: #bbf7d0;
-  --bg-primary-soft: #052e16;
-  --bg-primary-light: #14532d;
-  --text-primary: #4ade80;
-  --text-on-primary: #020617;
-  --border-primary: #4ade80;
-  --ring-focus: #4ade80;
-}
-
-.parent-scope {
-  /* Navy & Gold — كحلي عميق نهاري مع مداد أبيض */
-  --color-primary: 30 58 138;
-  --color-primary-deep: 15 23 42;
-  --color-primary-mid: 51 65 141;
-  --color-primary-light: 224 231 255;
-  --color-primary-h: 199 210 254;
-  --bg-primary: #1e3a8a;
-  --bg-primary-deep: #0f172a;
-  --bg-primary-hover: #172554;
-  --bg-primary-active: #1e40af;
-  --bg-primary-soft: #eef2ff;
-  --bg-primary-light: #e0e7ff;
-  --text-primary: #1e3a8a;
-  --text-on-primary: #ffffff;
-  --border-primary: #1e3a8a;
-  --ring-focus: #1e3a8a;
-}
-
-.dark .parent-scope {
-  /* Navy & Gold — ذهبي أساسي بمداد كحلي في الليل */
-  --color-primary: 212 175 55;
-  --color-primary-deep: 140 120 30;
-  --color-primary-mid: 226 200 120;
-  --color-primary-light: 48 40 12;
-  --color-primary-h: 74 62 18;
-  --bg-primary: #d4af37;
-  --bg-primary-deep: #8c7820;
-  --bg-primary-hover: #e4ca7a;
-  --bg-primary-active: #f0d98a;
-  --bg-primary-soft: #241e05;
-  --bg-primary-light: #3a2f08;
-  --text-primary: #d4af37;
-  --text-on-primary: #0f172a;
-  --border-primary: #d4af37;
-  --ring-focus: #d4af37;
-}
-
-.teacher-scope {
-  --color-primary: 124 58 237;
+/* عائلات الأدوار — جواهر ملكية: إدارة بنفسجي · معلم أزرق · طالب زمردي · ولي أمر عنبري */
+.admin-scope {
+  --color-primary: 109 40 217;
   --color-primary-deep: 76 29 149;
-  --color-primary-mid: 139 92 246;
+  --color-primary-mid: 124 58 237;
   --color-primary-light: 237 233 254;
   --color-primary-h: 221 214 254;
-  --bg-primary: #7c3aed;
+  --bg-primary: #6d28d9;
   --bg-primary-deep: #4c1d95;
-  --bg-primary-hover: #6d28d9;
-  --bg-primary-active: #5b21b6;
+  --bg-primary-hover: #5b21b6;
+  --bg-primary-active: #4c1d95;
   --bg-primary-soft: #f5f3ff;
   --bg-primary-light: #ede9fe;
-  --text-primary: #7c3aed;
+  --text-primary: #6d28d9;
   --text-on-primary: #ffffff;
-  --border-primary: #7c3aed;
-  --ring-focus: #7c3aed;
+  --border-primary: #6d28d9;
+  --ring-focus: #6d28d9;
 }
 
-.dark .teacher-scope {
+.dark .admin-scope {
   --color-primary: 167 139 250;
   --color-primary-deep: 76 29 149;
   --color-primary-mid: 196 181 253;
   --color-primary-light: 46 16 101;
   --color-primary-h: 76 29 149;
-  --bg-primary: #8b5cf6;
+  --bg-primary: #a78bfa;
   --bg-primary-deep: #4c1d95;
-  --bg-primary-hover: #a78bfa;
-  --bg-primary-active: #c4b5fd;
+  --bg-primary-hover: #c4b5fd;
+  --bg-primary-active: #ddd6fe;
   --bg-primary-soft: #2e1065;
   --bg-primary-light: #4c1d95;
   --text-primary: #a78bfa;
   --text-on-primary: #020617;
-  --border-primary: #8b5cf6;
+  --border-primary: #a78bfa;
   --ring-focus: #a78bfa;
+}
+
+.teacher-scope {
+  --color-primary: 29 78 216;
+  --color-primary-deep: 23 37 84;
+  --color-primary-mid: 37 99 235;
+  --color-primary-light: 219 234 254;
+  --color-primary-h: 191 219 254;
+  --bg-primary: #1d4ed8;
+  --bg-primary-deep: #172554;
+  --bg-primary-hover: #2563eb;
+  --bg-primary-active: #1e40af;
+  --bg-primary-soft: #eff6ff;
+  --bg-primary-light: #dbeafe;
+  --text-primary: #1d4ed8;
+  --text-on-primary: #ffffff;
+  --border-primary: #1d4ed8;
+  --ring-focus: #1d4ed8;
+}
+
+.dark .teacher-scope {
+  --color-primary: 96 165 250;
+  --color-primary-deep: 30 58 138;
+  --color-primary-mid: 147 197 253;
+  --color-primary-light: 23 37 84;
+  --color-primary-h: 30 58 138;
+  --bg-primary: #60a5fa;
+  --bg-primary-deep: #1e3a8a;
+  --bg-primary-hover: #93c5fd;
+  --bg-primary-active: #bfdbfe;
+  --bg-primary-soft: #172554;
+  --bg-primary-light: #1e3a8a;
+  --text-primary: #60a5fa;
+  --text-on-primary: #020617;
+  --border-primary: #60a5fa;
+  --ring-focus: #60a5fa;
+}
+
+.student-scope {
+  --color-primary: 4 120 87;
+  --color-primary-deep: 6 78 59;
+  --color-primary-mid: 5 150 105;
+  --color-primary-light: 209 250 229;
+  --color-primary-h: 167 243 208;
+  --bg-primary: #047857;
+  --bg-primary-deep: #064e3b;
+  --bg-primary-hover: #059669;
+  --bg-primary-active: #065f46;
+  --bg-primary-soft: #ecfdf5;
+  --bg-primary-light: #d1fae5;
+  --text-primary: #047857;
+  --text-on-primary: #ffffff;
+  --border-primary: #047857;
+  --ring-focus: #047857;
+}
+
+.dark .student-scope {
+  --color-primary: 52 211 153;
+  --color-primary-deep: 6 95 70;
+  --color-primary-mid: 110 231 183;
+  --color-primary-light: 2 44 34;
+  --color-primary-h: 6 78 59;
+  --bg-primary: #34d399;
+  --bg-primary-deep: #065f46;
+  --bg-primary-hover: #6ee7b7;
+  --bg-primary-active: #a7f3d0;
+  --bg-primary-soft: #022c22;
+  --bg-primary-light: #064e3b;
+  --text-primary: #34d399;
+  --text-on-primary: #020617;
+  --border-primary: #34d399;
+  --ring-focus: #34d399;
+}
+
+.parent-scope {
+  --color-primary: 180 83 9;
+  --color-primary-deep: 120 53 15;
+  --color-primary-mid: 194 65 12;
+  --color-primary-light: 254 243 199;
+  --color-primary-h: 253 230 138;
+  --bg-primary: #b45309;
+  --bg-primary-deep: #78350f;
+  --bg-primary-hover: #92400e;
+  --bg-primary-active: #78350f;
+  --bg-primary-soft: #fffbeb;
+  --bg-primary-light: #fef3c7;
+  --text-primary: #b45309;
+  --text-on-primary: #ffffff;
+  --border-primary: #b45309;
+  --ring-focus: #b45309;
+}
+
+.dark .parent-scope {
+  --color-primary: 251 191 36;
+  --color-primary-deep: 180 83 9;
+  --color-primary-mid: 252 211 77;
+  --color-primary-light: 69 26 3;
+  --color-primary-h: 120 53 15;
+  --bg-primary: #fbbf24;
+  --bg-primary-deep: #b45309;
+  --bg-primary-hover: #fcd34d;
+  --bg-primary-active: #fde68a;
+  --bg-primary-soft: #451a03;
+  --bg-primary-light: #78350f;
+  --text-primary: #fbbf24;
+  --text-on-primary: #020617;
+  --border-primary: #fbbf24;
+  --ring-focus: #fbbf24;
 }
