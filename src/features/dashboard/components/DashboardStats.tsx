@@ -172,7 +172,7 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
       title: 'الحصص المنفذة',
       value: stats.completedSessions,
       icon: CheckCircle2,
-      variant: 'soft-primary',
+      variant: 'soft-success',
     },
   ]
 
@@ -237,7 +237,7 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
               variant={isLast ? 'primary' : card.variant}
               watermark
               unit={card.prefix}
-              className="h-full"
+              className={cn('h-full', isLast && 'shadow-elevation-2 shadow-primary/15')}
             />
           </motion.div>
         )

@@ -11,7 +11,7 @@ const actions = [
     title: 'الدفعات',
     icon: Wallet,
     href: '/teacher-payment-history',
-    tone: 'bg-success-soft text-success-strong',
+    tone: 'bg-warning-soft text-warning-strong',
   },
   {
     title: 'الدردشة',
@@ -56,7 +56,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
             className={cn(
               'flex h-14 w-full items-center justify-center rounded-full transition-all duration-normal',
               action.tone,
-              'shadow-elevation-1 outline-none hover:scale-105 focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+              'shadow-elevation-1 outline-none hover:scale-105 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             )}
           >
             <Icon size={22} />

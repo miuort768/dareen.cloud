@@ -174,7 +174,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             <div className="flex items-center justify-between gap-2">
               <div className="flex min-w-0 items-center gap-2">
                 <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-warning text-on-warning shadow-elevation-1 sm:h-10 sm:w-10"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-on-accent shadow-elevation-1 sm:h-10 sm:w-10"
                   aria-hidden="true"
                 >
                   <Star size={16} fill="currentColor" />
@@ -191,16 +191,16 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
               <div className="bg-surface/60 rounded-xl border border-border p-3 dark:bg-surface sm:p-3.5">
                 <div className="mb-2 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-xs font-bold text-main">
-                    <Zap size={12} className="text-warning-strong" />
+                    <Zap size={12} className="text-accent" />
                     <CountUp value={points} className="font-dash tabular-nums text-primary" />
                     <span className="text-micro font-bold text-muted">نقطة</span>
                   </span>
-                  <span className="rounded-full bg-warning-soft px-2 py-0.5 text-[10px] font-black tabular-nums text-warning-strong">
+                  <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-black tabular-nums text-accent">
                     {xpProgress}%
                   </span>
                 </div>
                 <div
-                  className="h-2.5 w-full overflow-hidden rounded-full bg-hover"
+                  className="h-2.5 w-full overflow-hidden rounded-full bg-accent-soft"
                   role="progressbar"
                   aria-valuenow={xpProgress}
                   aria-valuemin={0}
@@ -208,7 +208,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                   aria-label="تقدم الرتبة"
                 >
                   <div
-                    className="h-full rounded-full bg-gradient-to-l from-warning to-warning-hover transition-all duration-700"
+                    className="h-full rounded-full bg-gradient-to-l from-accent to-accent-hover transition-all duration-700"
                     style={{ width: `${Math.max(xpProgress, 6)}%` }}
                   />
                 </div>
@@ -222,7 +222,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
         </div>
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-2.5">
-          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-1 shadow-primary/15 sm:p-4">
+          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-1 shadow-primary/25 sm:p-4">
             <div className="mb-1.5 flex items-center gap-1.5">
               <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/20">
                 <TrendingUp size={12} className="text-white" />

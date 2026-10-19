@@ -123,7 +123,7 @@ export const ModernAnnouncements = () => {
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-2xl border border-border bg-card font-dash shadow-elevation-1 dark:border-primary/20 dark:bg-card',
+        'overflow-hidden rounded-2xl border border-border bg-card font-dash shadow-elevation-1 shadow-primary/10 dark:border-primary/20 dark:bg-card',
         current.type === 'urgent' && 'border-s-4 border-s-error',
         current.type === 'holiday' && 'border-s-4 border-s-warning',
         current.type === 'event' && 'border-s-4 border-s-info',

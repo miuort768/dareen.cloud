@@ -38,7 +38,7 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
       aria-label="حمل الأسبوع القادم"
       className={cn(
         'flex h-full flex-col bg-card p-5 transition-colors duration-slow',
-        framed && 'rounded-2xl border border-border shadow-elevation-1',
+        framed && 'rounded-2xl border border-border shadow-elevation-1 shadow-primary/10',
       )}
     >
       <div className="mb-5 flex items-center justify-between gap-3">
@@ -82,7 +82,7 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
                 style={{ height: `${day.barPct}%` }}
                 className={cn(
                   'w-full transition-all duration-500',
-                  day.count > 0 ? 'bg-primary' : 'bg-border',
+                  day.count > 0 ? 'bg-gradient-to-t from-primary to-primary-light' : 'bg-border',
                   day.isToday && 'min-h-[8px]',
                 )}
               />

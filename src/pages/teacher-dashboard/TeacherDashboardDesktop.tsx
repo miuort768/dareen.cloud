@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
@@ -67,7 +67,7 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       <motion.div {...fadeUp(0.04)}>
-        <div className="grid grid-cols-1 overflow-hidden rounded-none border border-border bg-card shadow-elevation-1 lg:grid-cols-12">
+        <div className="grid grid-cols-1 overflow-hidden rounded-none border border-border bg-card shadow-elevation-1 shadow-primary/10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <WeekStrip counts={weekCounts} framed={false} />
           </div>
