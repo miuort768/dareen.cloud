@@ -164,7 +164,7 @@ export const Contact = () => {
 
           {/* ── Contact Form Card ── */}
           <AnimateOnScroll animation="fadeUp">
-            <div className="shadow-elevation-1/40 overflow-hidden rounded-none border border-border bg-card shadow-elevation-4 dark:shadow-black/40">
+            <div className="overflow-hidden rounded-none border border-border bg-card shadow-elevation-4 dark:shadow-black/40">
               {/* Top accent bar */}
               <div className="h-1.5 bg-gradient-to-r from-primary via-primary to-warning" />
 

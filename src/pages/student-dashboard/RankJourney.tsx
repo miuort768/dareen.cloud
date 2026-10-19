@@ -100,7 +100,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
                 'rounded-2xl p-2 text-center transition-all duration-slow',
                 unlocked
                   ? cn('hover:-translate-y-0.5 hover:shadow-elevation-1', badge.tile)
-                  : 'bg-divider/40',
+                  : 'bg-divider',
               )}
               title={badge.label}
             >

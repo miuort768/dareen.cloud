@@ -236,7 +236,7 @@ export const Evaluations = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background font-sans"
       dir="rtl"
     >
       {/* زخارف خلفية ناعمة أعلى الصفحة */}

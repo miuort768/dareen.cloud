@@ -130,7 +130,7 @@ export const SchedulePopover = ({
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-on-primary">{event.subject}</h3>
-                    <p className="text-on-primary/70 mt-0.5 text-micro">
+                    <p className="mt-0.5 text-micro text-white/70">
                       {event.curriculum || 'المنهج العام'}
                     </p>
                   </div>
@@ -138,7 +138,7 @@ export const SchedulePopover = ({
                 <button
                   onClick={onClose}
                   autoFocus
-                  className="text-on-primary/60 flex h-7 w-7 items-center justify-center rounded-lg outline-none transition-colors duration-fast hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg text-white/60 outline-none transition-colors duration-fast hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="إغلاق"
                 >
                   <X size={14} />

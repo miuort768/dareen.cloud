@@ -128,7 +128,7 @@ export const AdminAttendanceView = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: idx * 0.03 }}
-                        className="bg-surface/50 rounded-2xl border border-border p-2.5"
+                        className="rounded-2xl border border-border bg-surface p-2.5"
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex min-w-0 items-center gap-2">

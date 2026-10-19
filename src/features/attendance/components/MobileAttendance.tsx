@@ -233,7 +233,7 @@ export const MobileAttendance = () => {
         />
 
         {/* التبويبات اللاصقة */}
-        <div className="bg-background/95 sticky top-0 z-30 pb-2 pt-3 backdrop-blur-sm">
+        <div className="sticky top-0 z-30 bg-background pb-2 pt-3 backdrop-blur-sm">
           <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
             {tabs.map((tab) => (
               <motion.button

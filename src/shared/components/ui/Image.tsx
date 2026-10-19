@@ -1,4 +1,4 @@
-﻿import { useState, type ImgHTMLAttributes } from 'react'
+import { useState, type ImgHTMLAttributes } from 'react'
 import { cn } from '../../../lib/utils'
 import { pictureVariants } from './pictureVariants'
 

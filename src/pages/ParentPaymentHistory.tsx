@@ -337,7 +337,7 @@ export const ParentPaymentHistory = () => {
   if (authLoading || loading) {
     return (
       <div
-        className="from-primary-soft/40 min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
+        className="min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background"
         dir="rtl"
       >
         <HeroSkeleton />
@@ -350,7 +350,7 @@ export const ParentPaymentHistory = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background font-sans"
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 pt-1 sm:px-4">

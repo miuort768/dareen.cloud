@@ -208,7 +208,7 @@ export const AdminBlogCustomers = () => {
 
   return (
     <div
-      className="from-success-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-success-soft via-background to-background"
       dir="rtl"
     >
       <div className="mx-auto max-w-page">
@@ -433,7 +433,7 @@ export const AdminBlogCustomers = () => {
 
                         <div className="flex flex-wrap items-center gap-1.5">
                           <span
-                            className="from-success-soft/40 inline-flex items-center gap-1 rounded-lg bg-gradient-to-b via-background to-background px-2 py-1 text-[10px] font-bold text-main"
+                            className="inline-flex items-center gap-1 rounded-lg bg-gradient-to-b from-success-soft via-background to-background px-2 py-1 text-[10px] font-bold text-main"
                             dir="ltr"
                           >
                             <span className="max-w-[140px] truncate">{cust.phone}</span>
@@ -450,7 +450,7 @@ export const AdminBlogCustomers = () => {
                             </span>
                             <BookOpen size={10} />
                           </span>
-                          <span className="from-success-soft/40 hidden items-center gap-1 rounded-lg bg-gradient-to-b via-background to-background px-2 py-1 text-[10px] font-bold text-muted sm:inline-flex">
+                          <span className="hidden items-center gap-1 rounded-lg bg-gradient-to-b from-success-soft via-background to-background px-2 py-1 text-[10px] font-bold text-muted sm:inline-flex">
                             <span>{formatDate(cust.createdAt)}</span>
                             <Clock size={10} />
                           </span>

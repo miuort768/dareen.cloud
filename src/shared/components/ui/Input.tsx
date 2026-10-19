@@ -42,7 +42,7 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
             sizeStyles[sz],
             leftIcon ? 'ps-10' : '',
             rightIcon ? 'pe-12' : '',
-            error ? 'focus:ring-error/20 border-error focus:border-error' : '',
+            error ? 'border-error focus:border-error focus:ring-error-light' : '',
             className,
           )}
           aria-invalid={!!error}

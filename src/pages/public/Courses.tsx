@@ -169,7 +169,7 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="shadow-elevation-1/50 w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-bold shadow-elevation-3 outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-elevation-3 dark:focus-visible:ring-primary/10"
+                className="w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-bold shadow-elevation-3 outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-elevation-3 dark:focus-visible:ring-primary/10"
               />
               <Search className="absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-dim transition-colors group-focus-within:text-primary dark:text-dim dark:group-focus-within:text-primary" />
             </div>

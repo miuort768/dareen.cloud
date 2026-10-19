@@ -272,7 +272,7 @@ export const StudentInvoices = () => {
   if (loading) {
     return (
       <div
-        className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
+        className="min-h-full bg-gradient-to-b from-primary-soft via-background to-background pb-8"
         dir="rtl"
       >
         <div className="mx-auto max-w-page pt-1 sm:px-4">
@@ -291,7 +291,7 @@ export const StudentInvoices = () => {
 
   return (
     <div
-      className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
+      className="min-h-full bg-gradient-to-b from-primary-soft via-background to-background pb-8"
       dir="rtl"
     >
       <div className="mx-auto max-w-page pt-1 sm:px-4">

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'

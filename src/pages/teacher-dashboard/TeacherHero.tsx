@@ -188,7 +188,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
 
             {next && (
-              <div className="bg-surface/60 rounded-xl border border-border p-3 dark:bg-surface sm:p-3.5">
+              <div className="rounded-xl border border-border bg-surface p-3 dark:bg-surface sm:p-3.5">
                 <div className="mb-2 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-xs font-bold text-main">
                     <Zap size={12} className="text-accent" />
@@ -240,8 +240,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="bg-surface/60 flex items-center gap-2.5 rounded-xl border border-border p-3 dark:bg-surface">
-            <div className="ring-error/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error-soft ring-1">
+          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface p-3 dark:bg-surface">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error-soft ring-1 ring-error-light">
               <AlertCircle size={17} className="text-error-strong" />
             </div>
             <div>
@@ -252,8 +252,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="bg-surface/60 flex items-center gap-2.5 rounded-xl border border-border p-3 dark:bg-surface">
-            <div className="ring-warning/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft ring-1">
+          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface p-3 dark:bg-surface">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft ring-1 ring-warning-light">
               <Clock size={17} className="text-warning-strong" />
             </div>
             <div>

@@ -296,7 +296,7 @@ export const AdminBlog = () => {
 
   return (
     <div
-      className="from-warning-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-2"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-warning-soft via-background to-background pb-2"
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">

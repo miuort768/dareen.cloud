@@ -354,7 +354,7 @@ export const Teachers = () => {
   if (loading)
     return (
       <div
-        className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background"
+        className="min-h-full bg-gradient-to-b from-primary-soft via-background to-background"
         dir="rtl"
       >
         <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
@@ -370,7 +370,7 @@ export const Teachers = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-2"
+      className="min-h-full bg-gradient-to-b from-primary-soft via-background to-background pb-2"
       dir="rtl"
     >
       <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">

@@ -240,7 +240,7 @@ export const ParentAccountPage = () => {
                     </div>
 
                     {/* التقدم العام — شريط زمردي ملوّن يجمع أبناء الحساب */}
-                    <div className="ring-jade/40 relative overflow-hidden rounded-none bg-jade-deep p-4 shadow-elevation-1 ring-1">
+                    <div className="relative overflow-hidden rounded-none bg-jade-deep p-4 shadow-elevation-1 ring-1 ring-jade-soft">
                       <div className="pointer-events-none absolute -end-8 -top-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
                       <div className="relative mb-2 flex items-center justify-between gap-2">
                         <span className="flex items-center gap-2 text-micro font-bold text-jade-on opacity-90">

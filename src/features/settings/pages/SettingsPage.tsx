@@ -33,7 +33,7 @@ export const Settings = () => {
 
   if (h.loading)
     return (
-      <div className="from-primary-soft/30 mx-auto max-w-page space-y-3 bg-gradient-to-b via-background to-background pt-4">
+      <div className="mx-auto max-w-page space-y-3 bg-gradient-to-b from-primary-soft via-background to-background pt-4">
         <Skeleton className="h-[76px] rounded-2xl" />
         <Skeleton className="h-14 rounded-2xl" />
         <Skeleton className="h-64 rounded-2xl" />
@@ -42,7 +42,7 @@ export const Settings = () => {
 
   return (
     <div
-      className="from-primary-soft/30 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background"
       dir="rtl"
     >
       <div className="mx-auto max-w-page">

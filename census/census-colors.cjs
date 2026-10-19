@@ -23,7 +23,7 @@ const THEME_EXEMPT = [
 ]
 const THEME_FILES = new Set(['useDarkMode.ts'])
 const GLASS_ON_FILL = [
-  /(?:^|\s)(?:text|bg|border|ring)-(?:white|black)(?:\/\d+(?:\.\d+)?)?(?:\s|$)/,
+  /(?:^|[\s"'`({,:])(?:text|bg|border|ring)-(?:white|black)(?:\/\d+(?:\.\d+)?)?(?=[\s"'`)}\],;:]|$)/,
 ]
 const RGBA_GLASS = /rgba\((?:255\s*,\s*255\s*,\s*255|0\s*,\s*0\s*,\s*0)\s*,\s*0\.\d+\)/
 const RGBA_GOLD = /rgba\(\s*212\s*,\s*175\s*,\s*55\s*,\s*0\.\d+\s*\)/

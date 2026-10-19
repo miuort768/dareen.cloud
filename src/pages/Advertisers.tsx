@@ -212,7 +212,7 @@ const AdSenseSlotEditor = ({
             </p>
           </div>
           {showWarning && (
-            <div className="border-warning/30 flex items-start gap-2 rounded-xl border bg-warning-soft p-3">
+            <div className="flex items-start gap-2 rounded-xl border border-warning bg-warning-soft p-3">
               <AlertTriangle size={14} className="mt-0.5 shrink-0 text-warning" />
               <p className="text-[10px] font-bold leading-relaxed text-warning">
                 النص الملصوق لا يبدو ككود أدسنس (ينقصه &lt;ins&gt; أو adsbygoogle) — تأكد قبل الحفظ.
@@ -558,7 +558,7 @@ export const Advertisers = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background font-sans"
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 pb-36 pt-3 sm:px-4 md:space-y-6 md:px-6 md:pb-8 md:pt-8">

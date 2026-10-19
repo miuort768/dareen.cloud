@@ -219,7 +219,7 @@ export const AdminContacts = () => {
 
   return (
     <div
-      className="from-info-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
+      className="min-h-full bg-gradient-to-b from-info-soft via-background to-background pb-8"
       dir="rtl"
     >
       <div className="mx-auto max-w-5xl sm:px-6">
@@ -499,7 +499,7 @@ export const AdminContacts = () => {
                           </div>
                         </div>
 
-                        <div className="from-info-soft/40 mb-3 rounded-xl border border-divider bg-gradient-to-b via-background to-background p-3.5">
+                        <div className="mb-3 rounded-xl border border-divider bg-gradient-to-b from-info-soft via-background to-background p-3.5">
                           <p className="whitespace-pre-wrap text-xs font-bold leading-relaxed text-main">
                             {msg.message || 'لا توجد رسالة'}
                           </p>

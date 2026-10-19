@@ -46,9 +46,9 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['بونص', 'المدير', 'مكافأة', 'مدير'],
     cfg: {
       icon: Award,
-      gradient: 'bg-gradient-to-br from-warning/90 to-warning',
+      gradient: 'bg-gradient-to-br from-warning to-warning',
       on: 'text-on-warning',
-      accentBorder: 'border-warning/40',
+      accentBorder: 'border-warning',
     },
   },
   {
@@ -109,9 +109,9 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['ملغية', 'إلغاء', 'الغاء'],
     cfg: {
       icon: XCircle,
-      gradient: 'bg-gradient-to-br from-error/90 to-error',
+      gradient: 'bg-gradient-to-br from-error to-error',
       on: 'text-on-error',
-      accentBorder: 'border-error/40',
+      accentBorder: 'border-error',
     },
   },
 ]

@@ -46,7 +46,7 @@ export const TeachersPageHeader = ({
         className="relative hidden overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:block md:p-6"
       >
         <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-        <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-accent-soft blur-3xl" />
 
         <div className="relative z-10">
           <div className="mb-4 flex items-center justify-between">

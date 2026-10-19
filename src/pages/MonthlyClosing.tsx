@@ -331,7 +331,7 @@ export const MonthlyClosing = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background"
       dir="rtl"
     >
       <div className="mx-auto max-w-page">
@@ -342,7 +342,7 @@ export const MonthlyClosing = () => {
           className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6"
         >
           <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-success opacity-10 blur-3xl" />
 
           <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
             <div className="flex items-center gap-4">
