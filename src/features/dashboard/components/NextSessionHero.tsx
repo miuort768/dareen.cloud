@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Clock, GraduationCap } from 'lucide-react'
+import { cn } from '../../../lib/utils'
 import { parseTimeTo24 } from '../../attendance/utils/slotUtils'
 
 interface TimelineSession {
@@ -15,11 +16,13 @@ interface TimelineSession {
 
 interface NextSessionHeroProps {
   timeline?: TimelineSession[]
+  /** false when the hero sits inside a merged framed container (e.g. Desktop) */
+  framed?: boolean
 }
 
 const parseTime = parseTimeTo24
 
-export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
+export const NextSessionHero = ({ timeline, framed = true }: NextSessionHeroProps) => {
   const nextSession = timeline?.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
   const [timeLeft, setTimeLeft] = useState('')
   const [isNow, setIsNow] = useState(false)
@@ -59,7 +62,12 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
   if (!nextSession) return null
 
   return (
-    <div className="relative h-full overflow-hidden bg-primary p-5 sm:p-6">
+    <div
+      className={cn(
+        'relative h-full overflow-hidden bg-primary p-5 sm:p-6',
+        framed && 'rounded-3xl shadow-elevation-3 shadow-primary/25',
+      )}
+    >
       <div className="relative z-10">
         <div className="mb-4 flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-success" />

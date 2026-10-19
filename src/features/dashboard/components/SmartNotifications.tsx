@@ -106,7 +106,7 @@ export const SmartNotifications = ({
         }
       />
 
-      <div className="grid auto-rows-fr grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-1">
+      <div className="grid auto-rows-fr grid-cols-1 gap-2.5">
         {alerts.map((alert, i) => (
           <div
             key={`alert-${i}`}

@@ -69,11 +69,11 @@ export const TeacherDashboardDesktop = ({
       <motion.div {...fadeUp(0.04)}>
         <div className="grid grid-cols-1 overflow-hidden rounded-none border border-border bg-card shadow-elevation-1 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <WeekStrip counts={weekCounts} />
+            <WeekStrip counts={weekCounts} framed={false} />
           </div>
           <div className="border-t border-border lg:col-span-5 lg:border-s lg:border-t-0">
             {nextSession ? (
-              <NextSessionHero timeline={timeline} />
+              <NextSessionHero timeline={timeline} framed={false} />
             ) : (
               <div className="flex h-full min-h-[150px] items-center justify-center p-5">
                 <EmptyState

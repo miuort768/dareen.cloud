@@ -86,7 +86,7 @@ export const TeacherDashboardMobile = ({
         {nextSession ? (
           <NextSessionHero timeline={timeline} />
         ) : (
-          <div className="flex min-h-[140px] items-center justify-center rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
+          <div className="flex min-h-[140px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-elevation-1">
             <EmptyState
               icon={Calendar}
               title="لا توجد حصة قادمة اليوم"

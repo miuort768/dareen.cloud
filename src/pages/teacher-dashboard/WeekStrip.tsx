@@ -3,6 +3,8 @@ import { cn } from '../../lib/utils'
 
 interface WeekStripProps {
   counts: number[]
+  /** false when the strip sits inside a merged framed container (e.g. Desktop) */
+  framed?: boolean
 }
 
 const DAY_LABELS = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت']
@@ -11,7 +13,7 @@ const DAY_LABELS = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خ�
  * Week-at-a-glance — إعادة تصميم كاملة.
  * No compression, equal cells, today is primary-gradient accent.
  */
-export const WeekStrip = ({ counts }: WeekStripProps) => {
+export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
   const todayIdx = new Date().getDay()
   const weekTotal = counts.reduce((a, b) => a + b, 0)
 
@@ -22,7 +24,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   const ordered = Array.from({ length: 7 }, (_, i) => {
     const idx = (todayIdx + i) % 7
     const count = counts[i] ?? 0
-    const barPct = count > 0 ? Math.max(18, Math.round((count / maxCount) * 100)) : 6
+    const barPct = count > 0 ? Math.max(18, Math.round((count / maxCount) * 100)) : 0
     return {
       label: DAY_LABELS[idx],
       count,
@@ -34,7 +36,10 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   return (
     <section
       aria-label="حمل الأسبوع القادم"
-      className="flex h-full flex-col bg-card p-5 transition-colors duration-slow"
+      className={cn(
+        'flex h-full flex-col bg-card p-5 transition-colors duration-slow',
+        framed && 'rounded-2xl border border-border shadow-elevation-1',
+      )}
     >
       <div className="mb-5 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -63,7 +68,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
             }
             className={cn(
               'group flex flex-col items-center justify-between bg-card p-2 transition-colors hover:bg-surface',
-              day.isToday && 'border-t-2 border-t-primary bg-primary-soft',
+              day.isToday && 'border-t border-t-primary/60 bg-primary-soft',
             )}
           >
             <span
@@ -76,7 +81,8 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
               <div
                 style={{ height: `${day.barPct}%` }}
                 className={cn(
-                  'w-full bg-primary transition-all duration-500',
+                  'w-full transition-all duration-500',
+                  day.count > 0 ? 'bg-primary' : 'bg-border',
                   day.isToday && 'min-h-[8px]',
                 )}
               />
