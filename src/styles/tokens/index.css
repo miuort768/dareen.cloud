@@ -6,7 +6,6 @@
 @import './buttons.css';
 @import './motion.css';
 @import './selects.css';
-@import './neumorphic.css';
 
 /* ── Global Accessibility: Focus-Visible Ring ── */
 button:focus-visible,
