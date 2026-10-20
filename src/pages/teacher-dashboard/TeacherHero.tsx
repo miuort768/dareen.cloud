@@ -65,7 +65,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
   return (
     <section
       aria-label="ترحيب وإنجازات"
-      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
+      className="relative overflow-hidden rounded-2xl border border-primary/15 bg-card shadow-[0_20px_60px_-30px_rgba(59,130,246,0.4)] transition-shadow duration-300 hover:shadow-[0_25px_70px_-25px_rgba(59,130,246,0.45)]"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light via-primary-soft to-transparent"
@@ -174,7 +174,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             <div className="flex items-center justify-between gap-2">
               <div className="flex min-w-0 items-center gap-2">
                 <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-on-accent shadow-elevation-1 sm:h-10 sm:w-10"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-on-accent shadow-[0_12px_40px_-20px_rgba(251,191,36,0.8)] sm:h-10 sm:w-10"
                   aria-hidden="true"
                 >
                   <Star size={16} fill="currentColor" />
@@ -222,7 +222,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
         </div>
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-2.5">
-          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-1 shadow-primary/25 sm:p-4">
+          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-[0_20px_60px_-30px_rgba(59,130,246,0.7)] sm:p-4">
             <div className="mb-1.5 flex items-center gap-1.5">
               <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/20">
                 <TrendingUp size={12} className="text-white" />
@@ -240,7 +240,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface p-3 dark:bg-surface">
+          <div className="border-border/60 flex items-center gap-2.5 rounded-xl border bg-surface p-3 shadow-[0_12px_40px_-25px_rgba(239,68,68,0.5)] dark:bg-surface">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error-soft ring-1 ring-error-light">
               <AlertCircle size={17} className="text-error-strong" />
             </div>
@@ -252,7 +252,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface p-3 dark:bg-surface">
+          <div className="border-border/60 flex items-center gap-2.5 rounded-xl border bg-surface p-3 shadow-[0_12px_40px_-25px_rgba(245,158,11,0.5)] dark:bg-surface">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft ring-1 ring-warning-light">
               <Clock size={17} className="text-warning-strong" />
             </div>
