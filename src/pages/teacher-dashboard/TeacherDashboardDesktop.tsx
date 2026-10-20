@@ -67,7 +67,7 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       <motion.div {...fadeUp(0.04)}>
-        <div className="grid grid-cols-1 overflow-hidden rounded-none border border-border bg-card shadow-elevation-1 shadow-primary/10 lg:grid-cols-12">
+        <div className="border-border/60 grid grid-cols-1 overflow-hidden rounded-2xl border bg-card shadow-[0_18px_50px_-28px_rgba(15,23,42,0.5)] lg:grid-cols-12">
           <div className="lg:col-span-7">
             <WeekStrip counts={weekCounts} framed={false} />
           </div>
