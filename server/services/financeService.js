@@ -121,7 +121,7 @@ async function convertItems(items, amountField, currencyField, defaultCurrency, 
   if (!items || items.length === 0) return 0;
   const conversions = items.map(async (item) => {
     const amount = item[amountField] || 0;
-    const currency = item[currencyField] || defaultCurrency;
+    const currency = currencyService.normalizeCurrency(item[currencyField] || defaultCurrency);
     if (amount === 0) return 0;
     return currencyService.convert(amount, currency, reportCurrency);
   });
@@ -134,7 +134,7 @@ async function sumGroupedByCurrency(rows, sumField, currencyField, defaultCurren
   for (const row of rows) {
     const amount = row._sum[sumField] || 0;
     if (amount === 0) continue;
-    const currency = row[currencyField] || defaultCurrency;
+    const currency = currencyService.normalizeCurrency(row[currencyField] || defaultCurrency);
     total += await currencyService.convert(amount, currency, reportCurrency);
   }
   return total;
@@ -145,7 +145,7 @@ async function sumTeacherInvoiceNet(rows, reportCurrency) {
   for (const inv of rows) {
     const net = Math.max((inv.amount || 0) - (inv.personalExpenses || 0), 0);
     if (net === 0) continue;
-    total += await currencyService.convert(net, inv.currency || 'EGP', reportCurrency);
+    total += await currencyService.convert(net, currencyService.normalizeCurrency(inv.currency || 'EGP'), reportCurrency);
   }
   return total;
 }
@@ -162,6 +162,7 @@ async function getStats() {
       sessionByCurrency,
       incomeByCurrency,
       paidTeacherInvoices,
+      paidStudentInvoices,
       expenseByCurrency,
       expenseByCategoryCurrency,
       fixedExpenses,
@@ -180,6 +181,10 @@ async function getStats() {
         where: { deletedAt: null, status: { in: ['paid', 'مدفوعة', 'تم الدفع'] } },
         select: { amount: true, personalExpenses: true, currency: true },
       }),
+      prisma.studentInvoice.findMany({
+        where: { deletedAt: null, status: { in: ['paid', 'مدفوعة', 'تم الدفع'] } },
+        select: { amount: true, currency: true },
+      }),
       prisma.manualTransaction.groupBy({
         by: ['currency'],
         where: { type: 'expense', status: 'completed' },
@@ -196,7 +201,7 @@ async function getStats() {
       }),
     ]);
 
-    const [monthSessionByCurrency, monthIncomeByCurrency, monthPaidTeacherInvoices, monthExpenseByCurrency] = await Promise.all([
+    const [monthSessionByCurrency, monthIncomeByCurrency, monthPaidTeacherInvoices, monthPaidStudentInvoices, monthExpenseByCurrency] = await Promise.all([
       prisma.session.groupBy({
         by: ['studentCurrency'],
         where: { status: 'completed', date: { startsWith: currentMonth } },
@@ -215,6 +220,14 @@ async function getStats() {
         },
         select: { amount: true, personalExpenses: true, currency: true },
       }),
+      prisma.studentInvoice.findMany({
+        where: {
+          deletedAt: null,
+          status: { in: ['paid', 'مدفوعة', 'تم الدفع'] },
+          date: { startsWith: currentMonth },
+        },
+        select: { amount: true, currency: true },
+      }),
       prisma.manualTransaction.groupBy({
         by: ['currency'],
         where: { type: 'expense', status: 'completed', date: { startsWith: currentMonth } },
@@ -223,23 +236,29 @@ async function getStats() {
     ]);
 
     const sessionIncome = await sumGroupedByCurrency(sessionByCurrency, 'price', 'studentCurrency', 'EGP', reportCurrency);
+    const studentInvoiceIncome = await convertItems(paidStudentInvoices, 'amount', 'currency', 'EGP', reportCurrency);
     const manualIncomeTotal = await sumGroupedByCurrency(incomeByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
     const invoiceExpense = await sumTeacherInvoiceNet(paidTeacherInvoices, reportCurrency);
     const manualExpenseTotal = await sumGroupedByCurrency(expenseByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
     const fixedExpenseTotal = await convertItems(fixedExpenses, 'amount', 'currency', 'EGP', reportCurrency);
 
     const mSessionIncome = await sumGroupedByCurrency(monthSessionByCurrency, 'price', 'studentCurrency', 'EGP', reportCurrency);
+    const mStudentInvoiceIncome = await convertItems(monthPaidStudentInvoices, 'amount', 'currency', 'EGP', reportCurrency);
     const mManualIncomeTotal = await sumGroupedByCurrency(monthIncomeByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
     const mInvoiceExpense = await sumTeacherInvoiceNet(monthPaidTeacherInvoices, reportCurrency);
     const mManualExpenseTotal = await sumGroupedByCurrency(monthExpenseByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
 
-    const [recentSessions, recentIncomes, recentInvoices, recentExpenses] = await Promise.all([
+    const [recentSessions, recentIncomes, recentStudentInvoices, recentInvoices, recentExpenses] = await Promise.all([
       prisma.session.findMany({
         where: { status: 'completed', date: { gte: sixMonthsAgoStr } },
         select: { price: true, studentCurrency: true, date: true },
       }),
       prisma.manualTransaction.findMany({
         where: { type: 'income', status: 'completed', date: { gte: sixMonthsAgoStr } },
+        select: { amount: true, currency: true, date: true },
+      }),
+      prisma.studentInvoice.findMany({
+        where: { deletedAt: null, status: { in: ['paid', 'مدفوعة', 'تم الدفع'] }, date: { gte: sixMonthsAgoStr } },
         select: { amount: true, currency: true, date: true },
       }),
       prisma.teacherInvoice.findMany({
@@ -260,18 +279,20 @@ async function getStats() {
 
       const mSessions = recentSessions.filter(s => s.date && s.date.startsWith(mStr));
       const mIncomes = recentIncomes.filter(t => t.date && t.date.startsWith(mStr));
+      const mStudentInvoices = recentStudentInvoices.filter(ix => ix.date && ix.date.startsWith(mStr));
       const mInvoices = recentInvoices.filter(ix => ix.date && ix.date.startsWith(mStr));
       const mExpenses = recentExpenses.filter(t => t.date && t.date.startsWith(mStr));
 
-      const [mSessConv, mIncConv, mInvConv, mExpConv] = await Promise.all([
+      const [mSessConv, mIncConv, mStudInvConv, mInvConv, mExpConv] = await Promise.all([
         convertItems(mSessions, 'price', 'studentCurrency', 'EGP', reportCurrency),
         convertItems(mIncomes, 'amount', 'currency', 'EGP', reportCurrency),
+        convertItems(mStudentInvoices, 'amount', 'currency', 'EGP', reportCurrency),
         sumTeacherInvoiceNet(mInvoices, reportCurrency),
         convertItems(mExpenses, 'amount', 'currency', 'EGP', reportCurrency),
       ]);
 
       const monthFixed = i === 0 ? fixedExpenseTotal : 0;
-      monthlyData.push({ month: mLabel, income: mSessConv + mIncConv, expense: mInvConv + mExpConv + monthFixed });
+      monthlyData.push({ month: mLabel, income: mSessConv + mIncConv + mStudInvConv, expense: mInvConv + mExpConv + monthFixed });
     }
 
     const catMap = {};
@@ -284,8 +305,8 @@ async function getStats() {
       catMap[cat] = (catMap[cat] || 0) + converted;
     }
 
-    const totalIncome = sessionIncome + manualIncomeTotal;
-    const monthIncome = mSessionIncome + mManualIncomeTotal;
+    const totalIncome = sessionIncome + studentInvoiceIncome + manualIncomeTotal;
+    const monthIncome = mSessionIncome + mStudentInvoiceIncome + mManualIncomeTotal;
     const totalExpenses = invoiceExpense + manualExpenseTotal + fixedExpenseTotal;
     const monthExpenses = mInvoiceExpense + mManualExpenseTotal + fixedExpenseTotal;
 

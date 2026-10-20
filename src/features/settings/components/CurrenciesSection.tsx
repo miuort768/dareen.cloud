@@ -139,7 +139,7 @@ export const CurrenciesSection = ({
       {activeTab === 'currencies' && (
         <>
           <div className="mb-5 rounded-xl border border-primary/20 bg-primary-soft p-4 text-[11px] font-bold text-primary">
-            عملة النظام الموحدة هي الجنيه المصري (ج.م) — لا توجد عملات أخرى في المنصة.
+            يدعم النظام العملات التالية مع إمكانية إضافة أسعار الصرف بين أي عملتين.
           </div>
 
           <div className="hidden overflow-x-auto rounded-xl border border-divider md:block">

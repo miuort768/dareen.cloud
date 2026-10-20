@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const { prisma } = require('../utils/prisma');
 const cacheService = require('./cacheService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
+const currencyService = require('./currencyService');
 const { CACHE_KEYS } = require('../constants/cacheKeys');
 const { validateTransition } = require('../constants/invoiceStates');
 const { parseItems, serializeItems, invalidateInvoiceCache, auditInvoice, checkExists } = require('./invoiceHelpers');
@@ -96,7 +97,7 @@ async function createTeacherInvoice(data, user) {
         teacherName: data.teacher,
         specialization: data.specialization || '',
         amount: data.amount,
-        currency: data.currency || null,
+        currency: currencyService.normalizeCurrency(data.currency) || null,
         paymentMethod: data.paymentMethod || '',
         status: data.status || 'unpaid',
         personalExpenses: data.personalExpenses ?? 0,
@@ -286,7 +287,7 @@ async function createStudentInvoice(data, user) {
         studentId: data.studentId,
         studentName: data.studentName || '',
         amount: data.amount,
-        currency: data.currency || null,
+        currency: currencyService.normalizeCurrency(data.currency) || null,
         description: data.description || '',
         date: data.date,
         dueDate: data.dueDate || '',

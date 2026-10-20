@@ -4,7 +4,16 @@ import { RefreshCw } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { SectionCard as BaseSectionCard } from '../../../shared/components/SectionCard'
 
-export const ALLOWED_CURRENCIES = [{ code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م' }]
+export const ALLOWED_CURRENCIES = [
+  { code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م' },
+  { code: 'KWD', name: 'دينار كويتي', symbol: 'د.ك' },
+  { code: 'AED', name: 'درهم إماراتي', symbol: 'د.إ' },
+  { code: 'SAR', name: 'ريال سعودي', symbol: 'ر.س' },
+  { code: 'BHD', name: 'دينار بحريني', symbol: 'د.ب' },
+  { code: 'OMR', name: 'ريال عماني', symbol: 'ر.ع' },
+  { code: 'JOD', name: 'دينار أردني', symbol: 'د.أ' },
+  { code: 'USD', name: 'دولار أمريكي', symbol: '$' },
+]
 
 export const ALLOWED_CURRENCY_CODES = ALLOWED_CURRENCIES.map((c) => c.code)
 

@@ -121,6 +121,32 @@ function invalidateSettingsCache() {
   cache.invalidate('rates:exchange:*');
 }
 
+const SUPPORTED_CURRENCIES = ['EGP', 'KWD', 'AED', 'SAR', 'BHD', 'OMR', 'JOD', 'USD'];
+
+function getSupportedCurrencies() {
+  return [...SUPPORTED_CURRENCIES];
+}
+
+function getCurrencySymbols() {
+  return {
+    EGP: 'ج.م',
+    KWD: 'د.ك',
+    AED: 'د.إ',
+    SAR: 'ر.س',
+    BHD: 'د.ب',
+    OMR: 'ر.ع',
+    JOD: 'د.أ',
+    USD: '$',
+  };
+}
+
+function normalizeCurrency(code) {
+  if (!code) return 'EGP';
+  const c = String(code).trim().toUpperCase();
+  if (SUPPORTED_CURRENCIES.includes(c)) return c;
+  return 'EGP';
+}
+
 module.exports = {
   getReportCurrency,
   getDecimalPlaces,
@@ -132,4 +158,8 @@ module.exports = {
   formatMoney,
   invalidateRateCache,
   invalidateSettingsCache,
+  getSupportedCurrencies,
+  getCurrencySymbols,
+  normalizeCurrency,
+  SUPPORTED_CURRENCIES,
 };
