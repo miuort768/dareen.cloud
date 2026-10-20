@@ -65,10 +65,10 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
   return (
     <section
       aria-label="ترحيب وإنجازات"
-      className="relative overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-elevation-1"
+      className="relative overflow-hidden neu-card"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light via-primary-soft to-transparent"
+        className="pointer-events-none absolute inset-0"
         aria-hidden="true"
       />
       <div
@@ -153,15 +153,15 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
 
             <div className="flex flex-wrap gap-1">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2 py-1 text-[10px] font-black text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
+              <span className="inline-flex items-center gap-1.5 neu-btn px-2 py-1 text-[10px] font-black text-main lg:px-3 lg:py-1.5 lg:text-xs">
                 <Users size={11} />
                 {stats.studentsCount === 1 ? 'طالب واحد' : `${stats.studentsCount} طلاب`}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
+              <span className="inline-flex items-center gap-1.5 neu-inset px-2 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
                 <CalendarDays size={11} />
                 {stats.todaySessions > 0 ? `${stats.todaySessions} حصص اليوم` : 'لا حصص اليوم'}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
+              <span className="inline-flex items-center gap-1.5 neu-inset px-2 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
                 <CheckCircle2 size={11} />
                 {showRing
                   ? `${stats.monthCompletedSessions} من ${stats.monthTotalSessions}`
@@ -173,10 +173,10 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
           <div className="flex flex-col justify-between gap-3 lg:gap-4 lg:border-s lg:border-divider lg:ps-5">
             <div className="flex items-center justify-between gap-2">
               <div className="flex min-w-0 items-center gap-2">
-                <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent text-on-accent shadow-elevation-1 sm:h-10 sm:w-10"
-                  aria-hidden="true"
-                >
+              <div
+                className="flex h-9 w-9 shrink-0 items-center justify-center neu-circle-sm bg-accent text-on-accent sm:h-10 sm:w-10"
+                aria-hidden="true"
+              >
                   <Star size={16} fill="currentColor" />
                 </div>
                 <div className="min-w-0">
@@ -188,7 +188,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
 
             {next && (
-              <div className="rounded-xl border border-border bg-surface p-3 dark:bg-surface sm:p-3.5">
+              <div className="neu-inset p-3 sm:p-3.5">
                 <div className="mb-2 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-xs font-bold text-main">
                     <Zap size={12} className="text-accent" />
@@ -222,7 +222,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
         </div>
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-2.5">
-          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-1 shadow-primary/25 sm:p-4">
+          <div className="neu-card p-3 sm:p-4">
             <div className="mb-1.5 flex items-center gap-1.5">
               <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/20">
                 <TrendingUp size={12} className="text-white" />
@@ -240,8 +240,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface p-3 dark:bg-surface">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error-soft ring-1 ring-error-light">
+          <div className="flex items-center gap-2.5 neu-inset p-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center neu-circle-sm bg-error-soft ring-1 ring-error-light">
               <AlertCircle size={17} className="text-error-strong" />
             </div>
             <div>
@@ -252,8 +252,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface p-3 dark:bg-surface">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft ring-1 ring-warning-light">
+          <div className="flex items-center gap-2.5 neu-inset p-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center neu-circle-sm bg-warning-soft ring-1 ring-warning-light">
               <Clock size={17} className="text-warning-strong" />
             </div>
             <div>

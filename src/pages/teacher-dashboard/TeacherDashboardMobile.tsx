@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, Bell, GraduationCap, Loader2, RefreshCw } from 'lucide-react'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
-import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import { MobilePageHeader } from '../../shared/components/mobile/MobilePageHeader'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
@@ -32,7 +31,7 @@ export const TeacherDashboardMobile = ({
 
   return (
     <div
-      className="min-h-full overflow-x-hidden bg-background pb-6 transition-colors duration-500"
+      className="min-h-full overflow-x-hidden pb-6 transition-colors duration-500" style={{ background: 'var(--neumo-bg)' }}
       dir="rtl"
       {...handlers}
     >
@@ -65,7 +64,7 @@ export const TeacherDashboardMobile = ({
         action={
           <button
             onClick={() => navigate('/announcements')}
-            className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-button outline-none transition-all duration-normal hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985]"
+            className="relative flex h-11 w-11 items-center justify-center neu-btn text-main outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985]"
             aria-label="الإعلانات"
           >
             <Bell size={16} />
@@ -86,7 +85,7 @@ export const TeacherDashboardMobile = ({
         {nextSession ? (
           <NextSessionHero timeline={timeline} />
         ) : (
-          <div className="flex min-h-[140px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-elevation-1">
+          <div className="flex min-h-[140px] items-center justify-center neu-card p-5">
             <EmptyState
               icon={Calendar}
               title="لا توجد حصة قادمة اليوم"
@@ -100,16 +99,16 @@ export const TeacherDashboardMobile = ({
 
         <QuickActions showQuickLinks={true} />
 
-        <SectionCard>
+        <div className="neu-card p-3">
           <SmartNotifications
             lowBalanceStudents={lowBalanceStudents}
             focusStudents={focusStudents || []}
           />
-        </SectionCard>
+        </div>
 
-        <SectionCard>
+        <div className="neu-card p-3">
           <TasksAndRequests tasks={tasks} limit={3} />
-        </SectionCard>
+        </div>
 
         <WeekStrip counts={weekCounts} />
       </div>

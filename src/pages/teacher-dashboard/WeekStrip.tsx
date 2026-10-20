@@ -57,7 +57,7 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
         </span>
       </div>
 
-      <div className="grid flex-1 grid-cols-7 gap-px overflow-hidden rounded-none border border-border bg-border">
+      <div className="grid flex-1 grid-cols-7 gap-2 overflow-hidden neu-inset p-1">
         {ordered.map((day) => (
           <div
             key={day.label}
@@ -67,8 +67,8 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
                 : `${day.label}: لا حصص`
             }
             className={cn(
-              'group flex flex-col items-center justify-between bg-card p-2 transition-colors hover:bg-surface',
-              day.isToday && 'border-t border-t-primary/60 bg-primary-soft',
+              'group flex flex-col items-center justify-between neu-card p-2',
+              day.isToday && 'ring-1 ring-primary/40',
             )}
           >
             <span
