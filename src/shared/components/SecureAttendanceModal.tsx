@@ -86,7 +86,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
       <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-3 duration-normal animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border md:animate-in md:zoom-in-95">
         {/* Accent bar */}
-        <div className="h-1 w-full bg-primary"></div>
+        <div className="h-1 w-full bg-gradient-to-l from-primary via-primary-deep to-primary-hover"></div>
 
         <div className="p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           {/* Header */}
@@ -96,13 +96,13 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 <ShieldCheck size={20} className="text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-main">تسجيل حضور مؤكد</h3>
+                <h3 className="text-sm font-black text-main">تسجيل حضور مؤكد</h3>
                 <p className="text-[11px] text-muted">كلمة مرور المشرف مطلوبة</p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-surface text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-error text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus md:h-9 md:w-9"
               aria-label="إغلاق"
             >
               <X size={16} />
@@ -113,7 +113,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           <div className="mb-5 rounded-2xl bg-surface p-4 text-center dark:bg-hover">
             <p className="mb-1 text-[11px] font-medium text-muted">تسجيل للطالب</p>
             <h4 className="text-base font-bold text-main">{studentName}</h4>
-            <span className="mt-1 inline-block rounded-2xl bg-primary/10 px-2.5 py-1 text-[11px] font-bold text-primary">
+            <span className="mt-1 inline-block rounded-2xl border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-black text-primary">
               بتاريخ: {date}
             </span>
           </div>
@@ -190,7 +190,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           {/* Cancelled checkbox */}
           {status === 'cancelled' && (
             <div className="mb-5 duration-normal animate-in fade-in slide-in-from-top-2">
-              <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-error-soft bg-error-soft p-3.5 transition-colors hover:bg-error-soft">
+              <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-error-light bg-error-soft p-3.5 transition-colors hover:bg-error-light">
                 <input
                   type="checkbox"
                   checked={needsCompensation}

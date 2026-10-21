@@ -196,7 +196,10 @@ export const Announcements = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-2" dir="rtl">
+    <div
+      className="from-primary/8 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-2"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         {/* Header — unified PageHeader pattern */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

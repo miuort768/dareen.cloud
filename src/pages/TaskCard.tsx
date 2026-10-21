@@ -35,14 +35,16 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3
-              className={cn(
-                'min-w-0 text-sm font-black leading-snug text-main',
-                isCompleted && 'line-through opacity-50',
-              )}
-            >
-              {task.title}
-            </h3>
+            <div className="min-w-0 flex-1">
+              <span
+                className={cn(
+                  'inline-flex max-w-full items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-sm font-black text-main',
+                  isCompleted && 'line-through opacity-60',
+                )}
+              >
+                <span className="truncate">{task.title}</span>
+              </span>
+            </div>
             <span
               className={cn(
                 'shrink-0 rounded-full border border-current px-2.5 py-0.5 text-micro font-bold',

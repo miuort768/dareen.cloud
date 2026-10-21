@@ -86,7 +86,7 @@ export const TeacherDashboardMobile = ({
         {nextSession ? (
           <NextSessionHero timeline={timeline} />
         ) : (
-          <div className="border-border/60 flex min-h-[140px] items-center justify-center rounded-3xl border bg-card p-5 shadow-[0_16px_50px_-28px_rgba(15,23,42,0.45)]">
+          <div className="flex min-h-[140px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-elevation-1">
             <EmptyState
               icon={Calendar}
               title="لا توجد حصة قادمة اليوم"
@@ -100,12 +100,20 @@ export const TeacherDashboardMobile = ({
 
         <QuickActions showQuickLinks={true} />
 
-        <SectionCard>
-          <SmartNotifications
-            lowBalanceStudents={lowBalanceStudents}
-            focusStudents={focusStudents || []}
-          />
-        </SectionCard>
+        <div className="overflow-hidden rounded-2xl border border-primary/15 bg-card shadow-elevation-2">
+          <div className="flex items-center gap-2 border-b border-border bg-gradient-to-l from-primary/10 via-card to-card px-3 py-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary">
+              <Bell size={14} />
+            </div>
+            <p className="text-sm font-black text-main">مركز التنبيهات</p>
+          </div>
+          <div className="p-2.5">
+            <SmartNotifications
+              lowBalanceStudents={lowBalanceStudents}
+              focusStudents={focusStudents || []}
+            />
+          </div>
+        </div>
 
         <SectionCard>
           <TasksAndRequests tasks={tasks} limit={3} />

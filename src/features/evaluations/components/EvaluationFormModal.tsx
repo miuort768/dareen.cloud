@@ -55,28 +55,28 @@ export const EvaluationFormModal = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
             transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-            className="relative mb-[calc(96px+env(safe-area-inset-bottom))] flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3 sm:mb-0 sm:rounded-2xl"
+            className="relative mb-[calc(96px+env(safe-area-inset-bottom))] flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3 sm:mb-0 sm:rounded-2xl"
             dir="rtl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-border p-4">
+            <div className="flex items-center justify-between bg-gradient-to-l from-primary via-primary-deep to-primary-hover px-4 py-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
-                  <Award size={20} className="text-primary" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-on-primary">
+                  <Award size={20} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-main">
+                  <h3 className="text-sm font-black text-on-primary">
                     {formData.studentId
                       ? `تقييم: ${students.find((s) => s.id === formData.studentId)?.name || ''}`
                       : 'إضافة تقييم جديد'}
                   </h3>
-                  <p className="mt-0.5 text-micro text-muted">تقييم أداء الطالب</p>
+                  <p className="mt-0.5 text-micro text-white/80">تقييم أداء الطالب</p>
                 </div>
               </div>
               <button
                 onClick={onClose}
                 aria-label="إغلاق"
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-surface text-muted transition-all hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-error text-on-error transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={16} />
               </button>

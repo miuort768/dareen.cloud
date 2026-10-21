@@ -25,12 +25,14 @@ export const CURRENCY_MAP: Record<string, { label: string; symbol: string }> = {
 
 export const getCurrencySymbol = (currency?: string | null): string => {
   const code = typeof currency === 'string' ? currency.trim().toUpperCase() : ''
-  if (code && CURRENCY_MAP[code]) return CURRENCY_MAP[code].symbol
+  const entry = CURRENCY_MAP[code]
+  if (code && entry) return entry.symbol
   return CURRENCY_SYMBOL
 }
 
 export const normalizeCurrency = (c: unknown): string => {
   const code = typeof c === 'string' ? c.trim().toUpperCase() : ''
-  if (code && CURRENCY_MAP[code]) return code
+  const entry = CURRENCY_MAP[code]
+  if (code && entry) return code
   return 'EGP'
 }

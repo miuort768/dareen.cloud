@@ -133,7 +133,10 @@ export const Appointments = () => {
   if (loading && allAppointments.length === 0) return <PageLoader />
 
   return (
-    <div className="relative min-h-full bg-background" dir="rtl">
+    <div
+      className="from-primary/8 relative min-h-full bg-gradient-to-b via-background to-background"
+      dir="rtl"
+    >
       <div className="hidden px-2 md:block">
         {isError ? (
           /* حالة الخطأ مع إعادة المحاولة */

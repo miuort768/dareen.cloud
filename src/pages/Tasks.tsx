@@ -115,7 +115,10 @@ export const Tasks = () => {
       <div className="block md:hidden">
         <MobileTasks />
       </div>
-      <div className="relative hidden min-h-full bg-background md:block" dir="rtl">
+      <div
+        className="from-primary/8 relative hidden min-h-full bg-gradient-to-b via-background to-background md:block"
+        dir="rtl"
+      >
         <div className="space-y-4 px-2 pb-16 md:pb-12">
           {/* Hero — بنفس لغة صفحة أبنائي */}
           <TasksHeader

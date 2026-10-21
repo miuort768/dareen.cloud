@@ -129,12 +129,12 @@ export const EvaluationFormFields = ({
     </div>
 
     {/* Footer */}
-    <div className="flex gap-3 pt-2">
+    <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row">
       {onCancel && (
         <button
           type="button"
           onClick={onCancel}
-          className="flex-1 rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-error py-3 text-xs font-black text-on-error transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           إلغاء
         </button>
@@ -142,12 +142,7 @@ export const EvaluationFormFields = ({
       <button
         type="submit"
         disabled={isSubmitting}
-        className={cn(
-          'flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
-          onCancel
-            ? 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary/90'
-            : 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary/90',
-        )}
+        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-black text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
       >
         <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : submitLabel}
       </button>
