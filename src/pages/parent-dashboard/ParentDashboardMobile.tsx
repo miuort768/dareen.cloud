@@ -1,6 +1,18 @@
 import { useState, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Loader2, RefreshCw, Users, Calendar, Award, Sparkle, CheckCircle2 } from 'lucide-react'
+import {
+  Loader2,
+  RefreshCw,
+  Users,
+  Calendar,
+  Award,
+  Sparkle,
+  CheckCircle2,
+  Star,
+  User,
+  MessageSquareText,
+  HeartHandshake,
+} from 'lucide-react'
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import {
   usePullToRefresh,
@@ -125,7 +137,7 @@ export const ParentDashboardMobile = ({
         <OverviewHeader
           appName="أكاديمية دارين"
           slogan="متابعة مسيرة الأبناء التعليمية"
-          logoIcon={<span className="text-2xl">🏡</span>}
+          logoIcon={<Users size={22} className="text-on-accent" strokeWidth={2.2} />}
           notificationCount={activeTimers.length}
           onNotificationClick={() => navigate('/parent-announcements')}
           contextLabel={selectedChild ? `الابن: ${selectedChild.name}` : 'اختر الابن'}
@@ -136,7 +148,7 @@ export const ParentDashboardMobile = ({
 
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
-          badge="متابعة أداء الأبناء 🌟"
+          badge="متابعة أداء الأبناء"
           title="أهلاً بك، ولي الأمر"
           subtitle={`لديك ${kids.length} أبناء مسجلين بالأكاديمية · متابعة أداء وحضور الأبناء وجداول الحصص اليوم.`}
           metric={{
@@ -148,8 +160,8 @@ export const ParentDashboardMobile = ({
             if (selectedChild) scrollToChild(selectedChild.id)
           }}
           illustration={
-            <div className="bg-accent/20 border-accent/30 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
-              <span className="text-5xl drop-shadow-md">👨‍👩‍👧‍👦</span>
+            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
+              <HeartHandshake size={38} strokeWidth={2} />
             </div>
           }
         />
@@ -181,8 +193,8 @@ export const ParentDashboardMobile = ({
           <section>
             <div className="mb-2.5 flex items-center justify-between px-0.5">
               <div className="flex items-center gap-2">
-                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-xs text-main">
-                  ⭐
+                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
+                  <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
                 <h3 className="text-sm font-black text-main">الأبناء المميزون</h3>
               </div>
@@ -213,9 +225,9 @@ export const ParentDashboardMobile = ({
                     actionLabel="الملف"
                     onClick={() => scrollToChild(child.id)}
                     visual={
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-2xl">👦</span>
-                        <span className="mt-1 line-clamp-1 text-[9px] font-black text-main">
+                      <div className="flex flex-col items-center justify-center gap-1 text-primary">
+                        <User size={26} strokeWidth={1.8} />
+                        <span className="line-clamp-1 text-[9px] font-black text-main">
                           {child.name}
                         </span>
                       </div>
@@ -231,7 +243,7 @@ export const ParentDashboardMobile = ({
         <OverviewPromoBanner
           title="تواصل مباشر مع الإدارة والمعلمين"
           subtitle="استفسر عن أي تفاصيل دراسية أو مالية لأبنائك عبر المحادثة"
-          iconEmoji="💬"
+          icon={<MessageSquareText size={24} className="text-accent" strokeWidth={2} />}
           onClick={() => navigate('/chat')}
           ariaLabel="الانتقال إلى الدردشة"
         />

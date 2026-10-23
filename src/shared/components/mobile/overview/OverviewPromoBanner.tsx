@@ -1,11 +1,10 @@
 import React from 'react'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export interface OverviewPromoBannerProps {
   title: string
   subtitle: string
-  iconEmoji?: string
   icon?: React.ReactNode
   onClick?: () => void
   ariaLabel?: string
@@ -15,7 +14,6 @@ export interface OverviewPromoBannerProps {
 export const OverviewPromoBanner: React.FC<OverviewPromoBannerProps> = ({
   title,
   subtitle,
-  iconEmoji = '🦜',
   icon,
   onClick,
   ariaLabel,
@@ -41,9 +39,9 @@ export const OverviewPromoBanner: React.FC<OverviewPromoBannerProps> = ({
       dir="rtl"
     >
       <div className="flex min-w-0 items-center gap-3">
-        {/* Leading Mascot / Icon */}
-        <div className="bg-accent/20 border-accent/30 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-2xl shadow-elevation-1">
-          {icon || <span>{iconEmoji}</span>}
+        {/* Leading Vector Icon */}
+        <div className="border-accent/30 bg-accent/20 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border text-accent shadow-elevation-1">
+          {icon || <Sparkles size={24} strokeWidth={2} />}
         </div>
 
         {/* Text */}

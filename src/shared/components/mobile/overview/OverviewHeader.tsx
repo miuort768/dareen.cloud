@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Bell, ChevronDown, Check } from 'lucide-react'
+import { Bell, ChevronDown, Check, GraduationCap, MapPin } from 'lucide-react'
 import { BottomSheet } from '../BottomSheet'
 import { cn } from '@/lib/utils'
 
@@ -44,11 +44,7 @@ export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
         {/* Brand / Logo */}
         <div className="flex min-w-0 items-center gap-2.5">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent text-on-accent shadow-elevation-1">
-            {logoIcon || (
-              <span className="text-xl" role="img" aria-label="شعار">
-                🎓
-              </span>
-            )}
+            {logoIcon || <GraduationCap size={22} strokeWidth={2} />}
           </div>
           <div className="min-w-0">
             <h1 className="truncate text-base font-black tracking-tight text-main">{appName}</h1>
@@ -85,7 +81,7 @@ export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
               : 'cursor-default text-muted',
           )}
         >
-          <span className="text-sm">📍</span>
+          <MapPin size={14} className="shrink-0 text-accent" />
           <span className="truncate">{contextLabel}</span>
           {hasOptions && <ChevronDown size={14} className="text-muted" />}
         </button>

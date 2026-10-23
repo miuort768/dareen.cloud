@@ -17,6 +17,11 @@ import {
   Calendar,
   Users,
   Sparkle,
+  Building2,
+  Crown,
+  BookOpen,
+  BarChart3,
+  Star,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import type { Session } from '../../../types'
@@ -167,7 +172,7 @@ export const MobileDashboardView = ({
         <OverviewHeader
           appName="أكاديمية دارين"
           slogan="لوحة الإدارة والتحكم"
-          logoIcon={<span className="text-2xl">🏛️</span>}
+          logoIcon={<Building2 size={22} strokeWidth={2.2} className="text-on-accent" />}
           notificationCount={pendingNotificationCount}
           onNotificationClick={() => navigate('/announcements')}
           contextLabel="العام الدراسي الحالي 2024 - 2025"
@@ -175,7 +180,7 @@ export const MobileDashboardView = ({
 
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
-          badge="نظرة إدارية شاملة ⚡"
+          badge="نظرة إدارية شاملة"
           title={`أهلاً بك، ${firstName}`}
           subtitle="متابعة دقيقة لكل الحصص والطلاب والتحصيلات المالية اليوم في مكان واحد."
           metric={{
@@ -185,8 +190,8 @@ export const MobileDashboardView = ({
           ctaText="إجراءات سريعة"
           onCtaClick={scrollToQuickActions}
           illustration={
-            <div className="bg-accent/20 border-accent/30 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
-              <span className="text-5xl drop-shadow-md">👑</span>
+            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
+              <Crown size={38} strokeWidth={2} />
             </div>
           }
         />
@@ -210,8 +215,8 @@ export const MobileDashboardView = ({
           <section>
             <div className="mb-2.5 flex items-center justify-between px-0.5">
               <div className="flex items-center gap-2">
-                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-xs text-main">
-                  ⭐
+                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
+                  <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
                 <h3 className="text-sm font-black text-main">حصص اليوم المميزة</h3>
               </div>
@@ -244,9 +249,9 @@ export const MobileDashboardView = ({
                       actionLabel="تفاصيل"
                       onClick={() => navigate('/attendance')}
                       visual={
-                        <div className="flex flex-col items-center justify-center">
-                          <span className="text-2xl">📚</span>
-                          <span className="mt-1 line-clamp-1 text-[9px] font-black text-main">
+                        <div className="flex flex-col items-center justify-center gap-1 text-primary">
+                          <BookOpen size={26} strokeWidth={1.8} />
+                          <span className="line-clamp-1 text-[9px] font-black text-main">
                             {s.studentName}
                           </span>
                         </div>
@@ -291,7 +296,7 @@ export const MobileDashboardView = ({
         <OverviewPromoBanner
           title="الإغلاق والتقارير الشهرية"
           subtitle="مراجعة الإيرادات والمصروفات والرواتب بدقة فائقة"
-          iconEmoji="📊"
+          icon={<BarChart3 size={24} className="text-accent" strokeWidth={2} />}
           onClick={() => navigate('/monthly-closing')}
           ariaLabel="الانتقال للإغلاق المالي"
         />

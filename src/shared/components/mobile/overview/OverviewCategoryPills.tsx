@@ -6,7 +6,6 @@ export interface OverviewCategoryItem {
   id: string
   label: string
   icon?: LucideIcon
-  emoji?: string
   count?: number
 }
 
@@ -56,11 +55,7 @@ export const OverviewCategoryPills: React.FC<OverviewCategoryPillsProps> = ({
                   : 'text-muted group-hover:text-main',
               )}
             >
-              {Icon ? (
-                <Icon size={18} strokeWidth={isActive ? 2.3 : 1.8} />
-              ) : cat.emoji ? (
-                <span className="text-base">{cat.emoji}</span>
-              ) : null}
+              {Icon && <Icon size={18} strokeWidth={isActive ? 2.3 : 1.8} />}
             </div>
 
             {/* Label */}

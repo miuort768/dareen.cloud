@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heart, ChevronLeft } from 'lucide-react'
+import { Heart, ChevronLeft, BookOpen, MapPin } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export interface OverviewFeaturedCardProps {
@@ -93,12 +93,8 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
 
       {/* Center Visual / Avatar */}
       <div className="flex items-center justify-center py-1">
-        <div className="bg-surface/80 border-border/50 relative flex h-20 w-full items-center justify-center overflow-hidden rounded-2xl border">
-          {visual || (
-            <span className="text-3xl" role="img" aria-label="صورة">
-              📖
-            </span>
-          )}
+        <div className="border-border/50 bg-surface/80 relative flex h-20 w-full items-center justify-center overflow-hidden rounded-2xl border">
+          {visual || <BookOpen size={28} className="text-primary" strokeWidth={1.8} />}
         </div>
       </div>
 
@@ -112,7 +108,7 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
 
         {meta && (
           <p className="flex items-center gap-1 truncate text-[9px] font-semibold text-dim">
-            <span>📍</span>
+            <MapPin size={11} className="shrink-0 text-accent" />
             <span>{meta}</span>
           </p>
         )}

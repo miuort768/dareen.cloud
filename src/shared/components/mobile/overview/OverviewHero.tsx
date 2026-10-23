@@ -85,10 +85,8 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
         {/* Mascot / 3D cut-out element */}
         <div className="flex shrink-0 items-center justify-center">
           {illustration || (
-            <div className="bg-accent/20 border-accent/30 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
-              <span className="text-4xl" role="img" aria-label="أيقونة">
-                🌟
-              </span>
+            <div className="border-accent/30 bg-accent/20 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
+              <Sparkles size={38} className="text-accent" strokeWidth={1.8} />
             </div>
           )}
         </div>

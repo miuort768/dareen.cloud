@@ -1,6 +1,18 @@
 import { useState, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Loader2, RefreshCw, BookOpen, Calendar, Award, ListTodo, Sparkle } from 'lucide-react'
+import {
+  Loader2,
+  RefreshCw,
+  BookOpen,
+  Calendar,
+  Award,
+  ListTodo,
+  Sparkle,
+  GraduationCap,
+  Trophy,
+  Star,
+  Rocket,
+} from 'lucide-react'
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import {
@@ -138,7 +150,7 @@ export const StudentDashboardMobile = ({
         <OverviewHeader
           appName="أكاديمية دارين"
           slogan={`مرحباً يا بطل · ${studentData?.grade || 'طالب متميز'}`}
-          logoIcon={<span className="text-2xl">🎓</span>}
+          logoIcon={<GraduationCap size={22} className="text-on-accent" strokeWidth={2.2} />}
           notificationCount={activeSession ? 1 : 0}
           onNotificationClick={() => navigate('/announcements')}
           contextLabel={`مسار التعلم · ${studentData?.grade || 'المرحلة الدراسية'}`}
@@ -146,8 +158,8 @@ export const StudentDashboardMobile = ({
 
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
-          badge={`الرتبة: ${rank.name} 🏆`}
-          title={`أهلاً بك، يا ${firstName} 👋`}
+          badge={`الرتبة: ${rank.name}`}
+          title={`أهلاً بك، يا ${firstName}`}
           subtitle={
             nextSessionLabel
               ? `حصتك القادمة: ${nextSessionLabel} · استعد جيداً وكن حاضراً!`
@@ -160,8 +172,8 @@ export const StudentDashboardMobile = ({
           ctaText="رحلة الرتب"
           onCtaClick={scrollToRank}
           illustration={
-            <div className="bg-accent/20 border-accent/30 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
-              <span className="text-5xl drop-shadow-md">🏅</span>
+            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
+              <Trophy size={38} strokeWidth={2} />
             </div>
           }
         />
@@ -189,8 +201,8 @@ export const StudentDashboardMobile = ({
           <section>
             <div className="mb-2.5 flex items-center justify-between px-0.5">
               <div className="flex items-center gap-2">
-                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-xs text-main">
-                  ⭐
+                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
+                  <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
                 <h3 className="text-sm font-black text-main">موادي الدراسية المميزة</h3>
               </div>
@@ -213,9 +225,9 @@ export const StudentDashboardMobile = ({
                     highlightLabel="نسبة الحضور والإنجاز"
                     actionLabel="عرض"
                     visual={
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-2xl">📘</span>
-                        <span className="mt-1 line-clamp-1 text-[9px] font-black text-main">
+                      <div className="flex flex-col items-center justify-center gap-1 text-primary">
+                        <BookOpen size={26} strokeWidth={1.8} />
+                        <span className="line-clamp-1 text-[9px] font-black text-main">
                           {sub.subject}
                         </span>
                       </div>
@@ -235,7 +247,7 @@ export const StudentDashboardMobile = ({
         <OverviewPromoBanner
           title="تحديات التفوق ورتب المجد"
           subtitle={`تحتاج ${nextRank.pointsNeeded || 0} نقطة إضافية للوصول إلى رتبة ${nextRank.next?.name || 'القمة'}`}
-          iconEmoji="🚀"
+          icon={<Rocket size={24} className="text-accent" strokeWidth={2} />}
           onClick={scrollToRank}
           ariaLabel="الانتقال إلى لوحة الرتب"
         />

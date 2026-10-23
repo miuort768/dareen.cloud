@@ -10,6 +10,11 @@ import {
   ListTodo,
   AlertCircle,
   Sparkle,
+  GraduationCap,
+  BookOpen,
+  Star,
+  UserCheck,
+  FileText,
 } from 'lucide-react'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
@@ -142,7 +147,7 @@ export const TeacherDashboardMobile = ({
         <OverviewHeader
           appName="أكاديمية دارين"
           slogan={`أهلاً أ. ${firstName} · لوحة تحكم المعلمة`}
-          logoIcon={<span className="text-2xl">👩‍🏫</span>}
+          logoIcon={<GraduationCap size={22} className="text-on-accent" strokeWidth={2.2} />}
           notificationCount={lowBalanceStudents.length}
           onNotificationClick={() => navigate('/announcements')}
           contextLabel="جدول الحصص والطلاب المسندين"
@@ -150,7 +155,7 @@ export const TeacherDashboardMobile = ({
 
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
-          badge="يوم دراسي متميز ⚡"
+          badge="يوم دراسي متميز"
           title={`مرحباً، أ. ${firstName}`}
           subtitle={
             nextSession
@@ -164,8 +169,8 @@ export const TeacherDashboardMobile = ({
           ctaText="إجراءات المعلمة"
           onCtaClick={scrollToQuickActions}
           illustration={
-            <div className="bg-accent/20 border-accent/30 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
-              <span className="text-5xl drop-shadow-md">📘</span>
+            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
+              <BookOpen size={38} strokeWidth={2} />
             </div>
           }
         />
@@ -192,8 +197,8 @@ export const TeacherDashboardMobile = ({
           <section>
             <div className="mb-2.5 flex items-center justify-between px-0.5">
               <div className="flex items-center gap-2">
-                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-xs text-main">
-                  ⭐
+                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
+                  <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
                 <h3 className="text-sm font-black text-main">حصص اليوم المميزة</h3>
               </div>
@@ -228,9 +233,9 @@ export const TeacherDashboardMobile = ({
                         })
                       }}
                       visual={
-                        <div className="flex flex-col items-center justify-center">
-                          <span className="text-2xl">🎓</span>
-                          <span className="mt-1 line-clamp-1 text-[9px] font-black text-main">
+                        <div className="flex flex-col items-center justify-center gap-1 text-primary">
+                          <UserCheck size={26} strokeWidth={1.8} />
+                          <span className="line-clamp-1 text-[9px] font-black text-main">
                             {s.studentName}
                           </span>
                         </div>
@@ -256,7 +261,7 @@ export const TeacherDashboardMobile = ({
         <OverviewPromoBanner
           title="التقارير الشهرية للطلاب"
           subtitle="إنشاء ومشاركة تقارير تقييم الطلاب بضغطة زر واحدة"
-          iconEmoji="📝"
+          icon={<FileText size={24} className="text-accent" strokeWidth={2} />}
           onClick={() => navigate('/teacher-reports')}
           ariaLabel="الانتقال إلى تقارير المعلمة"
         />
