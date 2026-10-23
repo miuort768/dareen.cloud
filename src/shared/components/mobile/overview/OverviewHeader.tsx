@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Bell, ChevronDown, Check } from 'lucide-react'
 import { BottomSheet } from '../BottomSheet'
-import { cn } from '../../../lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface OverviewContextOption {
   id: string

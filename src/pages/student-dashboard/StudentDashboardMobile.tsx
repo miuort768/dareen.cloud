@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Loader2, RefreshCw, BookOpen, Calendar, Award, ListCheck, Sparkle } from 'lucide-react'
+import { Loader2, RefreshCw, BookOpen, Calendar, Award, ListTodo, Sparkle } from 'lucide-react'
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import {
@@ -84,7 +84,7 @@ export const StudentDashboardMobile = ({
       { id: 'classes', label: 'حصصي', icon: Calendar, count: todayItems.length },
       { id: 'subjects', label: 'المواد', icon: BookOpen, count: subjects.length },
       { id: 'points', label: 'نقاطي', icon: Award, count: points },
-      { id: 'tasks', label: 'الواجبات', icon: ListCheck },
+      { id: 'tasks', label: 'الواجبات', icon: ListTodo },
     ],
     [todayItems.length, subjects.length, points],
   )

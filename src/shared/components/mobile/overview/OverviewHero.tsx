@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sparkles, ArrowLeft } from 'lucide-react'
-import { cn } from '../../../lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface OverviewHeroProps {
   badge?: string

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
-import { cn } from '../../../lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface OverviewSearchFilterProps {
   value: string

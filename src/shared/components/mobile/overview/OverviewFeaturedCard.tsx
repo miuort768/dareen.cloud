@@ -1,6 +1,6 @@
 import React from 'react'
 import { Heart, ChevronLeft } from 'lucide-react'
-import { cn } from '../../../lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface OverviewFeaturedCardProps {
   id?: string

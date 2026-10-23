@@ -1,6 +1,6 @@
 import React from 'react'
 import { ChevronLeft } from 'lucide-react'
-import { cn } from '../../../lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface OverviewPromoBannerProps {
   title: string
