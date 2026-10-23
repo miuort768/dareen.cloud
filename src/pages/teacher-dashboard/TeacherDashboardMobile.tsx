@@ -156,6 +156,7 @@ export const TeacherDashboardMobile = ({
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
           badge="يوم دراسي متميز"
+          badgeIcon={<BookOpen size={12} className="text-primary" />}
           title={`مرحباً، أ. ${firstName}`}
           subtitle={
             nextSession
@@ -164,13 +165,18 @@ export const TeacherDashboardMobile = ({
           }
           metric={{
             value: `${stats.todaySessions} حصص`,
-            label: 'إجمالي حصص اليوم',
+            label: 'حصص اليوم',
           }}
+          chips={[
+            { label: 'الطلاب المسندين', value: stats.totalStudents },
+            { label: 'الحصص المكتملة', value: stats.completedSessions },
+          ]}
           ctaText="إجراءات المعلمة"
           onCtaClick={scrollToQuickActions}
           illustration={
-            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
-              <BookOpen size={38} strokeWidth={2} />
+            <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
+              <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
+              <BookOpen size={42} strokeWidth={2} className="drop-shadow-xs" />
             </div>
           }
         />

@@ -159,6 +159,7 @@ export const StudentDashboardMobile = ({
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
           badge={`الرتبة: ${rank.name}`}
+          badgeIcon={<Trophy size={12} className="text-primary" />}
           title={`أهلاً بك، يا ${firstName}`}
           subtitle={
             nextSessionLabel
@@ -167,13 +168,18 @@ export const StudentDashboardMobile = ({
           }
           metric={{
             value: `${points} نقطة`,
-            label: 'رصيد نقاط التميز',
+            label: 'رصيد التميز',
           }}
+          chips={[
+            { label: 'الرتبة', value: rank.name },
+            { label: 'المستوى', value: studentData?.grade || 'طالب' },
+          ]}
           ctaText="رحلة الرتب"
           onCtaClick={scrollToRank}
           illustration={
-            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
-              <Trophy size={38} strokeWidth={2} />
+            <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
+              <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
+              <Trophy size={42} strokeWidth={2} className="drop-shadow-xs" />
             </div>
           }
         />

@@ -149,19 +149,25 @@ export const ParentDashboardMobile = ({
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
           badge="متابعة أداء الأبناء"
+          badgeIcon={<HeartHandshake size={12} className="text-primary" />}
           title="أهلاً بك، ولي الأمر"
           subtitle={`لديك ${kids.length} أبناء مسجلين بالأكاديمية · متابعة أداء وحضور الأبناء وجداول الحصص اليوم.`}
           metric={{
             value: `${weekly.attendanceRate}%`,
-            label: 'نسبة حضور الأبناء',
+            label: 'حضور الأبناء',
           }}
+          chips={[
+            { label: 'عدد الأبناء', value: kids.length },
+            { label: 'الحصص هذا الأسبوع', value: weekly.totalSessions },
+          ]}
           ctaText="تفاصيل الأبناء"
           onCtaClick={() => {
             if (selectedChild) scrollToChild(selectedChild.id)
           }}
           illustration={
-            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
-              <HeartHandshake size={38} strokeWidth={2} />
+            <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
+              <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
+              <HeartHandshake size={42} strokeWidth={2} className="drop-shadow-xs" />
             </div>
           }
         />

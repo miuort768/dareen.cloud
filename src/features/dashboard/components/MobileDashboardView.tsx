@@ -185,17 +185,23 @@ export const MobileDashboardView = ({
         {/* 2. Petly Style Hero Banner */}
         <OverviewHero
           badge="نظرة إدارية شاملة"
+          badgeIcon={<Crown size={12} className="text-primary" />}
           title={`أهلاً بك، ${firstName}`}
           subtitle="متابعة دقيقة لكل الحصص والطلاب والتحصيلات المالية اليوم في مكان واحد."
           metric={{
             value: `${stats.attendanceRate}%`,
             label: 'نسبة الحضور',
           }}
+          chips={[
+            { label: 'حصص اليوم', value: todaySessions.length },
+            { label: 'الطلاب', value: stats.studentsCount },
+          ]}
           ctaText="إجراءات سريعة"
           onCtaClick={scrollToQuickActions}
           illustration={
-            <div className="border-accent/40 bg-accent/20 relative flex h-20 w-20 items-center justify-center rounded-3xl border text-accent shadow-elevation-2">
-              <Crown size={38} strokeWidth={2} />
+            <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
+              <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
+              <Crown size={42} strokeWidth={2} className="drop-shadow-xs" />
             </div>
           }
         />
