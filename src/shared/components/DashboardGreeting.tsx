@@ -67,10 +67,24 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
     <section
       aria-label="ترحيب"
       className={cn(
-        'relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-active to-primary-deep shadow-soft',
+        'group relative overflow-hidden rounded-[28px] border border-primary/20 bg-gradient-to-br from-primary via-primary-active to-primary-deep shadow-elevation-2 transition-all duration-normal hover:shadow-elevation-3',
         className,
       )}
     >
+      {/* Background ambient lighting effects */}
+      <div
+        className="pointer-events-none absolute -start-16 -top-16 h-56 w-56 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80"
+        aria-hidden="true"
+      />
+      <div
+        className="bg-accent/25 pointer-events-none absolute -bottom-16 -end-16 h-56 w-56 rounded-full blur-3xl transition-opacity duration-slow group-hover:opacity-80"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[0.08] via-transparent to-transparent opacity-60"
+        aria-hidden="true"
+      />
+
       <div className="relative z-10 p-6 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
@@ -99,19 +113,19 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
                   return (
                     <div
                       key={stat.label}
-                      className="rounded-xl border border-white/20 bg-white/10 px-2 py-2.5 backdrop-blur-sm sm:px-3 sm:py-3"
+                      className="group/stat rounded-2xl border border-white/20 bg-white/10 px-3 py-3 backdrop-blur-md transition-all duration-normal hover:bg-white/15 hover:shadow-elevation-1 sm:px-4 sm:py-3.5"
                     >
                       {StatIcon && (
-                        <span className="mb-1.5 flex h-6 w-6 items-center justify-center rounded-md bg-white/15 sm:h-7 sm:w-7">
-                          <StatIcon size={13} className="text-on-primary" />
+                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-xl bg-white/20 text-on-primary transition-transform duration-normal group-hover/stat:scale-110 sm:h-8 sm:w-8">
+                          <StatIcon size={14} className="text-on-primary" />
                         </span>
                       )}
                       <CountUp
                         value={stat.value}
                         format={stat.formatter}
-                        className="block text-lg font-black tabular-nums leading-none text-on-primary sm:text-xl"
+                        className="block text-xl font-black tabular-nums leading-none text-on-primary sm:text-2xl"
                       />
-                      <p className="mt-1 truncate text-[10px] font-bold text-white/80 sm:text-[11px]">
+                      <p className="mt-1.5 truncate text-[10px] font-bold text-white/90 sm:text-[11px]">
                         {stat.label}
                       </p>
                     </div>

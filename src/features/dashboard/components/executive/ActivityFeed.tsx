@@ -199,7 +199,7 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
 
   return (
     <div
-      className="rounded-2xl border border-border bg-card p-5 font-dash shadow-elevation-1"
+      className="rounded-[24px] border border-border bg-card p-5 font-dash shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between">

@@ -74,7 +74,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
   return (
     <section
       aria-label="حصص اليوم"
-      className="rounded-2xl border border-border bg-surface p-4 shadow-elevation-1 transition-colors duration-slow md:p-5"
+      className="rounded-[24px] border border-border bg-card p-4 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 md:p-5"
     >
       <div className="mb-4 flex items-center gap-3">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
