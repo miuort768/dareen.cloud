@@ -39,6 +39,15 @@ export const TILE_TONE: Record<Tone, string> = {
   error: 'bg-error-soft text-error-strong ring-error-soft',
 }
 
+/** شرائح الهيرو — خلفية ناعمة + نص قوي + إطار خفيف */
+const CHIP_SOFT: Record<Tone, string> = {
+  primary: 'bg-jade-soft text-jade-deep ring-jade-soft',
+  success: 'bg-success-soft text-success-strong ring-success-soft',
+  warning: 'bg-warning-soft text-warning-strong ring-warning-soft',
+  info: 'bg-info-soft text-info-strong ring-info-soft',
+  error: 'bg-error-soft text-error-strong ring-error-soft',
+}
+
 /** تعبئة مصمتة ملوّنة (هوية جريئة) — للبطاقات والأيقونات البارزة + نص on-* لكل لون */
 export const SOLID_FILL: Record<Tone, string> = {
   primary: 'bg-jade text-jade-on',
@@ -89,6 +98,10 @@ interface AccountHeroProps {
   metaChips?: string[]
   /** تكبير خط الكبسولات (المادة/سعر الحصة في صفحة المعلمة) */
   chipsBold?: boolean
+  /** ترتيب الشرائح داخل سطر الاسم على الشاشات الكبيرة وتمركزها على الهاتف */
+  chipsInline?: boolean
+  /** ألوان الشرائح — الافتراضي زمردي */
+  chipTones?: Tone[]
   quickStats?: { label: string; value?: ReactNode; tone?: Tone; icon?: LucideIcon }[]
   /** متاح فقط للأدوار التي تدعم التعديل فعليًا في النظام */
   onEdit?: () => void
@@ -100,155 +113,178 @@ export const AccountHero = ({
   subtitle,
   metaChips,
   chipsBold,
+  chipsInline,
+  chipTones,
   quickStats,
   onEdit,
-}: AccountHeroProps) => (
-  <>
-    <div className="relative">
-      {/* الغلاف العلوي التزييني */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="relative h-24 overflow-hidden rounded-3xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover shadow-elevation-3 md:h-32"
+}: AccountHeroProps) => {
+  const hasChips = Boolean(metaChips && metaChips.length > 0)
+  const chipNodes = metaChips?.map((chip, index) => {
+    const tone = chipTones?.[index] ?? 'primary'
+    return (
+      <span
+        key={chip}
+        className={cn(
+          'inline-flex items-center rounded-full font-bold ring-1',
+          CHIP_SOFT[tone],
+          chipsBold
+            ? cn(
+                'px-3 py-1 text-xs sm:px-3.5 sm:py-1.5 sm:text-sm',
+                chipsInline ? 'text-xs' : 'md:text-base',
+              )
+            : 'px-2.5 py-0.5 text-[9px] sm:px-3 sm:py-1 sm:text-xs',
+        )}
       >
-        <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
-          <svg width="100%" height="100%">
-            <defs>
-              <pattern
-                id="account-hero-dots"
-                x="0"
-                y="0"
-                width="22"
-                height="22"
-                patternUnits="userSpaceOnUse"
+        {chip}
+      </span>
+    )
+  })
+
+  return (
+    <>
+      <div className="relative">
+        {/* الغلاف العلوي التزييني */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="relative h-24 overflow-hidden rounded-3xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover shadow-elevation-3 md:h-32"
+        >
+          <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
+            <svg width="100%" height="100%">
+              <defs>
+                <pattern
+                  id="account-hero-dots"
+                  x="0"
+                  y="0"
+                  width="22"
+                  height="22"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1" fill="white" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#account-hero-dots)" />
+            </svg>
+          </div>
+          {/* حلقات تزيينية + توهج */}
+          <div
+            className="pointer-events-none absolute -end-20 -top-20 h-60 w-60 rounded-full border border-white/10"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute -bottom-24 -start-16 h-52 w-52 rounded-full border border-white/10"
+            aria-hidden="true"
+          />
+          <div className="pointer-events-none absolute -end-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+        </motion.div>
+
+        {/* بطاقة الهوية — متداخلة مع الغلاف */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative z-10 mx-3 -mt-8 rounded-2xl border border-border bg-card px-4 pb-4 pt-4 shadow-elevation-3 dark:border-white/[0.06] dark:bg-surface md:mx-6 md:-mt-10 md:px-5 md:pb-5 md:pt-5"
+        >
+          <div className="flex flex-wrap items-end gap-x-3.5 gap-y-3">
+            {/* شعار المنصة + نقطة الحالة */}
+            <div className="relative -mt-12 shrink-0 md:-mt-14">
+              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-white shadow-elevation-1 ring-1 ring-border dark:ring-white/15 md:h-24 md:w-24">
+                <Image
+                  src="/dareen_logo_new.v2.webp"
+                  webpSrc="/dareen_logo_new.v2.webp"
+                  avifSrc="/dareen_logo_new.v2.avif"
+                  alt="شعار المنصة"
+                  loading="eager"
+                  className="h-full w-full"
+                  imgClassName="object-contain p-1 md:p-1.5"
+                />
+              </div>
+            </div>
+
+            <div className="min-w-0 flex-1 pb-0.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="min-w-0 break-words text-xl font-black leading-tight text-main md:text-2xl lg:text-3xl">
+                  {name}
+                </h1>
+                <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-0.5 text-[9px] font-bold text-jade-on ring-1 ring-white/20 md:px-2.5 md:py-1 md:text-micro">
+                  <BadgeCheck size={10} />
+                  {roleLabel}
+                </span>
+                {chipsInline && hasChips && (
+                  <div className="hidden flex-wrap items-center gap-1.5 md:flex">{chipNodes}</div>
+                )}
+              </div>
+              {subtitle && <p className="mt-1 text-xs font-bold text-muted">{subtitle}</p>}
+            </div>
+
+            {onEdit && (
+              <button
+                onClick={onEdit}
+                className="hidden min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-bold text-jade-on shadow-elevation-1 transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:flex md:px-5 md:text-xs"
               >
-                <circle cx="2" cy="2" r="1" fill="white" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#account-hero-dots)" />
-          </svg>
-        </div>
-        {/* حلقات تزيينية + توهج */}
-        <div
-          className="pointer-events-none absolute -end-20 -top-20 h-60 w-60 rounded-full border border-white/10"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -bottom-24 -start-16 h-52 w-52 rounded-full border border-white/10"
-          aria-hidden="true"
-        />
-        <div className="pointer-events-none absolute -end-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
-      </motion.div>
-
-      {/* بطاقة الهوية — متداخلة مع الغلاف */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 mx-3 -mt-8 rounded-2xl border border-border bg-card px-4 pb-4 pt-4 shadow-elevation-3 dark:border-white/[0.06] dark:bg-surface md:mx-6 md:-mt-10 md:px-5 md:pb-5 md:pt-5"
-      >
-        <div className="flex flex-wrap items-end gap-x-3.5 gap-y-3">
-          {/* شعار المنصة + نقطة الحالة */}
-          <div className="relative -mt-12 shrink-0 md:-mt-14">
-            <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-elevation-2 ring-4 ring-card md:h-24 md:w-24">
-              <Image
-                src="/dareen_logo_new.v2.webp"
-                webpSrc="/dareen_logo_new.v2.webp"
-                avifSrc="/dareen_logo_new.v2.avif"
-                alt="شعار المنصة"
-                loading="eager"
-                className="h-full w-full"
-                imgClassName="object-contain p-2.5 md:p-3"
-              />
-            </div>
+                <PencilLine size={13} /> تعديل البيانات
+              </button>
+            )}
           </div>
 
-          <div className="min-w-0 flex-1 pb-0.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <h1 className="min-w-0 break-words text-xl font-black leading-tight text-main md:text-2xl lg:text-3xl">
-                {name}
-              </h1>
-              <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-0.5 text-[9px] font-bold text-jade-on ring-1 ring-white/20 md:px-2.5 md:py-1 md:text-micro">
-                <BadgeCheck size={10} />
-                {roleLabel}
-              </span>
+          {chipsInline && hasChips && (
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-2 md:hidden">
+              {chipNodes}
             </div>
-            {subtitle && <p className="mt-1 text-xs font-bold text-muted">{subtitle}</p>}
-          </div>
+          )}
+
+          {!chipsInline && hasChips && (
+            <div className="mt-3 flex flex-wrap gap-2 border-t border-divider pt-3">
+              {chipNodes}
+            </div>
+          )}
 
           {onEdit && (
             <button
               onClick={onEdit}
-              className="hidden min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-bold text-jade-on shadow-elevation-1 transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:flex md:px-5 md:text-xs"
+              className="mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-bold text-jade-on shadow-elevation-1 transition-all hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:hidden"
             >
               <PencilLine size={13} /> تعديل البيانات
             </button>
           )}
-        </div>
-
-        {metaChips && metaChips.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2 border-t border-divider pt-3">
-            {metaChips.map((chip) => (
-              <span
-                key={chip}
-                className={cn(
-                  'inline-flex items-center rounded-full bg-jade-soft font-bold text-jade-deep ring-1 ring-jade-soft',
-                  chipsBold
-                    ? 'px-3 py-1 text-xs sm:px-3.5 sm:py-1.5 sm:text-sm md:text-base'
-                    : 'px-2.5 py-0.5 text-[9px] sm:px-3 sm:py-1 sm:text-xs',
-                )}
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {onEdit && (
-          <button
-            onClick={onEdit}
-            className="mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-bold text-jade-on shadow-elevation-1 transition-all hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:hidden"
-          >
-            <PencilLine size={13} /> تعديل البيانات
-          </button>
-        )}
-      </motion.div>
-    </div>
-
-    {/* المؤشرات — مربّع واحد يجمع الإحصاءات (خلايا مفصولة بفواصل رفيعة) */}
-    {quickStats && quickStats.length > 0 && (
-      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 dark:border-white/[0.06] dark:bg-surface">
-        <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-4">
-          {quickStats.map((q) => {
-            const Icon = q.icon
-            return (
-              <div
-                key={q.label}
-                className={cn(
-                  'flex items-center gap-2.5 p-3 transition-all duration-normal hover:-translate-y-0.5 hover:brightness-110 sm:p-3.5',
-                  SOLID_FILL[q.tone ?? 'primary'],
-                )}
-              >
-                {Icon && (
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 shadow-elevation-1 ring-1 ring-white/25">
-                    <Icon size={17} />
-                  </span>
-                )}
-                <div className="min-w-0">
-                  <p className="truncate font-dash text-xl font-black tabular-nums leading-none text-inherit sm:text-2xl">
-                    {q.value}
-                  </p>
-                  <p className="mt-1 truncate text-[9px] font-bold text-inherit opacity-80 sm:text-micro">
-                    {q.label}
-                  </p>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+        </motion.div>
       </div>
-    )}
-  </>
-)
+
+      {/* المؤشرات — مربّع واحد يجمع الإحصاءات (خلايا مفصولة بفواصل رفيعة) */}
+      {quickStats && quickStats.length > 0 && (
+        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 dark:border-white/[0.06] dark:bg-surface">
+          <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-4">
+            {quickStats.map((q) => {
+              const Icon = q.icon
+              return (
+                <div
+                  key={q.label}
+                  className={cn(
+                    'flex items-center gap-2.5 p-3 transition-all duration-normal hover:-translate-y-0.5 hover:brightness-110 sm:p-3.5',
+                    SOLID_FILL[q.tone ?? 'primary'],
+                  )}
+                >
+                  {Icon && (
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 shadow-elevation-1 ring-1 ring-white/25">
+                      <Icon size={17} />
+                    </span>
+                  )}
+                  <div className="min-w-0">
+                    <p className="truncate font-dash text-xl font-black tabular-nums leading-none text-inherit sm:text-2xl">
+                      {q.value}
+                    </p>
+                    <p className="mt-1 truncate text-[9px] font-bold text-inherit opacity-80 sm:text-micro">
+                      {q.label}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
 
 /* ---------- بطاقة قسم بعنوان ---------- */
 
@@ -354,13 +390,13 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="flex items-center gap-3 border-b border-divider py-2.5 transition-colors duration-normal last:border-b-0 hover:bg-surface sm:py-3">
+    <div className="flex items-center gap-2.5">
       {Icon && (
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-jade-soft text-jade ring-1 ring-jade-soft sm:h-10 sm:w-10 sm:rounded-xl">
           <Icon size={16} />
         </span>
       )}
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 transition-colors duration-normal hover:border-jade-light dark:bg-background sm:rounded-xl">
         <p className="text-micro font-bold text-muted">{label}</p>
         {empty ? (
           <p className="mt-0.5 text-xs font-bold text-muted sm:text-sm">—</p>

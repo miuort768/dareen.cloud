@@ -36,6 +36,15 @@ const WALLET_LABELS: Record<string, string> = {
   orange: 'أورنج كاش',
 }
 
+const PRIMARY_BUTTON =
+  'flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-2 transition-all hover:shadow-elevation-3 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
+
+const EDIT_BUTTON =
+  'flex h-9 w-9 items-center justify-center rounded-full border border-jade-light bg-jade-soft text-jade-deep shadow-soft transition-all hover:border-jade hover:bg-jade-deep hover:text-jade-on focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus'
+
+const DELETE_BUTTON =
+  'flex h-9 w-9 items-center justify-center rounded-full border border-error-light bg-error-soft text-error-strong shadow-soft transition-all hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50'
+
 interface PaymentSetting {
   id?: string
   method?: MethodId
@@ -215,7 +224,10 @@ export const PaymentMethodsSection = () => {
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-3.5 py-2 text-[8px] font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] sm:text-micro"
+            className={cn(
+              'min-h-11 px-3.5 py-2 text-[8px] font-bold sm:text-micro',
+              PRIMARY_BUTTON,
+            )}
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -236,7 +248,7 @@ export const PaymentMethodsSection = () => {
           <p className="text-xs font-bold text-main">تعذر تحميل طرق الدفع</p>
           <button
             onClick={() => window.location.reload()}
-            className="mx-auto mt-3 flex min-h-11 items-center rounded-full bg-jade-deep px-4 py-2 text-micro font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className={cn('mx-auto mt-3 min-h-11 px-4 py-2 text-micro font-bold', PRIMARY_BUTTON)}
           >
             إعادة المحاولة
           </button>
@@ -255,7 +267,10 @@ export const PaymentMethodsSection = () => {
           </p>
           <button
             onClick={openAdd}
-            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-5 py-2.5 text-micro font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] sm:text-xs"
+            className={cn(
+              'mt-5 min-h-11 px-5 py-2.5 text-micro font-bold sm:text-xs',
+              PRIMARY_BUTTON,
+            )}
           >
             <Plus size={14} /> إضافة طريقة دفع
           </button>
@@ -334,25 +349,21 @@ export const PaymentMethodsSection = () => {
                 </div>
               </div>
               <div className="flex shrink-0 items-center gap-1.5">
-                <button
-                  onClick={openEdit}
-                  aria-label="تعديل طريقة الدفع"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted transition-colors hover:border-jade hover:text-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                >
+                <button onClick={openEdit} aria-label="تعديل طريقة الدفع" className={EDIT_BUTTON}>
                   <PencilLine size={14} />
                 </button>
                 <button
                   onClick={handleDelete}
                   disabled={deleting}
                   aria-label="حذف طريقة الدفع"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                  className={DELETE_BUTTON}
                 >
                   {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                 </button>
               </div>
             </div>
 
-            <div className="px-4 py-1">
+            <div className="space-y-2 px-4 py-3">
               {setting.method === 'wallet' && (
                 <>
                   <InfoRow
@@ -381,7 +392,7 @@ export const PaymentMethodsSection = () => {
             <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep py-2 text-micro font-bold text-jade-on transition-colors hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className={cn('min-h-11 w-full py-2 text-micro font-bold', PRIMARY_BUTTON)}
               >
                 <PencilLine size={12} /> تعديل البيانات
               </button>
@@ -453,21 +464,46 @@ const PaymentMethodForm = ({
           className="relative flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-card shadow-elevation-3 sm:rounded-2xl"
           dir="rtl"
         >
-          <div className="bg-jade-deep">
-            <div className="flex justify-center pt-3 sm:hidden">
-              <div className="h-1.5 w-10 rounded-full bg-white/40" />
+          <div className="relative overflow-hidden bg-gradient-to-br from-jade via-jade-deep to-jade-hover">
+            <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
+              <svg width="100%" height="100%">
+                <defs>
+                  <pattern
+                    id="pm-modal-dots"
+                    x="0"
+                    y="0"
+                    width="20"
+                    height="20"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <circle cx="2" cy="2" r="1" fill="white" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#pm-modal-dots)" />
+              </svg>
             </div>
-            <div className="flex items-start justify-between gap-3 px-5 pb-4 pt-3">
-              <div>
-                <h3 className="text-sm font-black text-jade-on">
-                  {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
-                </h3>
-                <p className="mt-0.5 text-micro text-white/80">اختر النوع ثم أكمل البيانات</p>
+            <div className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+            <div className="relative flex justify-center pt-3 sm:hidden">
+              <div className="h-1.5 w-10 rounded-full bg-white/50" />
+            </div>
+            <div className="relative flex items-start justify-between gap-3 px-5 pb-4 pt-3">
+              <div className="flex min-w-0 items-center gap-2.5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 text-jade-on ring-1 ring-white/25">
+                  {isEdit ? <PencilLine size={17} /> : <Plus size={18} />}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-black text-jade-on md:text-base">
+                    {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
+                  </h3>
+                  <p className="mt-0.5 text-micro text-jade-on opacity-80">
+                    اختر النوع ثم أكمل البيانات
+                  </p>
+                </div>
               </div>
               <button
                 onClick={onClose}
                 aria-label="إغلاق"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-error bg-error text-lg leading-none text-on-error shadow-elevation-1 outline-none transition-all duration-normal hover:border-error-hover hover:bg-error-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-error bg-error text-lg leading-none text-on-error shadow-elevation-1 outline-none ring-1 ring-white/30 transition-all duration-normal hover:border-error-hover hover:bg-error-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 ✕<span className="sr-only">إغلاق</span>
               </button>
@@ -493,8 +529,8 @@ const PaymentMethodForm = ({
                       className={cn(
                         'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                         active
-                          ? 'border-jade bg-jade-deep text-jade-on shadow-elevation-1'
-                          : 'border-border bg-surface text-muted hover:border-jade-light hover:text-main',
+                          ? 'border-jade bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1'
+                          : 'border-border bg-surface text-muted hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep',
                       )}
                     >
                       <m.icon size={17} strokeWidth={active ? 2.3 : 1.8} />
@@ -524,8 +560,8 @@ const PaymentMethodForm = ({
                         className={cn(
                           'rounded-lg border py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                           form.walletProvider === w
-                            ? 'border-jade bg-jade-deep text-jade-on'
-                            : 'border-border bg-surface text-muted hover:text-main',
+                            ? 'border-jade bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1'
+                            : 'border-border bg-surface text-muted hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep',
                         )}
                       >
                         {WALLET_LABELS[w]}
@@ -607,7 +643,7 @@ const PaymentMethodForm = ({
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+              className="rounded-full border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
             >
               إلغاء
             </button>
@@ -615,7 +651,10 @@ const PaymentMethodForm = ({
               type="submit"
               onClick={(e) => onSubmit(e)}
               disabled={submitting}
-              className="flex items-center justify-center gap-2 rounded-full bg-jade-deep py-3 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]"
+              className={cn(
+                'gap-2 py-3 text-xs font-bold disabled:cursor-not-allowed',
+                PRIMARY_BUTTON,
+              )}
             >
               {submitting && <Loader2 size={13} className="animate-spin" />}
               {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}

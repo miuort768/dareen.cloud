@@ -112,6 +112,8 @@ export const TeacherAccountPage = () => {
             name={displayName}
             roleLabel="معلمة"
             chipsBold
+            chipsInline
+            chipTones={['info', 'success']}
             metaChips={[
               teacher?.subject || 'مادة غير محددة',
               teacher?.price != null
