@@ -223,13 +223,13 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-2.5 lg:grid-cols-4">
-          <div className="rounded-xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3 shadow-elevation-2 shadow-primary/20 sm:col-span-2 sm:p-4 lg:col-span-1">
-            <div className="mb-1.5 flex items-center gap-1.5">
-              <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/20">
-                <TrendingUp size={12} className="text-white" />
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-4">
+          <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3.5 shadow-elevation-2 shadow-primary/20 transition-all duration-normal hover:shadow-elevation-3">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold text-white/90">صافي أرباح الشهر (تقديري)</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/20">
+                <TrendingUp size={14} className="text-white" />
               </div>
-              <span className="text-[11px] font-bold text-white/80">صافي أرباح الشهر (تقديري)</span>
             </div>
             <div className="flex items-baseline gap-1.5">
               <span className="font-dash text-2xl font-black tabular-nums leading-none text-white lg:text-3xl">
@@ -238,36 +238,61 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                   format={(n) => Math.round(n).toLocaleString('ar-EG')}
                 />
               </span>
-              <span className="text-xs font-bold text-white/70">{CURRENCY_SYMBOL}</span>
+              <span className="text-xs font-bold text-white/80">{CURRENCY_SYMBOL}</span>
             </div>
+            <p className="mt-1 text-[10px] font-medium text-white/75">يُحسب بنهاية الشهر</p>
           </div>
 
-          <div className="sm:col-span-2 lg:col-span-3">
-            <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-              <div className="flex items-center gap-2.5 rounded-xl border border-error-light bg-error-soft p-3 shadow-elevation-1">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-error text-on-error">
-                  <AlertCircle size={17} />
-                </div>
-                <div>
-                  <span className="font-dash text-xl font-black tabular-nums leading-none text-main">
-                    {expiredCount}
-                  </span>
-                  <p className="mt-0.5 text-[11px] font-bold text-muted">منتهي</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2.5 rounded-xl border border-warning-light bg-warning-soft p-3 shadow-elevation-1">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning text-on-warning">
-                  <Clock size={17} />
-                </div>
-                <div>
-                  <span className="font-dash text-xl font-black tabular-nums leading-none text-main">
-                    {lowCount}
-                  </span>
-                  <p className="mt-0.5 text-[11px] font-bold text-muted">مستحق</p>
-                </div>
+          <div className="border-success/20 rounded-2xl border bg-success-soft p-3.5 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold text-success-strong">الحصص المنفذة</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-success text-on-success">
+                <CheckCircle2 size={14} />
               </div>
             </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
+                <CountUp value={stats.monthCompletedSessions || 0} />
+              </span>
+              <span className="text-xs font-bold text-muted">
+                من {stats.monthTotalSessions || 0}
+              </span>
+            </div>
+            <p className="mt-1 text-[10px] font-medium text-success-strong">
+              نسبة الإنجاز {percent}%
+            </p>
+          </div>
+
+          <div className="border-error/20 rounded-2xl border bg-error-soft p-3.5 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold text-error-strong">اشتراكات منتهية</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-error text-on-error">
+                <AlertCircle size={14} />
+              </div>
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
+                {expiredCount}
+              </span>
+              <span className="text-xs font-bold text-muted">طلاب</span>
+            </div>
+            <p className="mt-1 text-[10px] font-medium text-error-strong">تحتاج لتجديد فوري</p>
+          </div>
+
+          <div className="border-warning/20 rounded-2xl border bg-warning-soft p-3.5 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold text-warning-strong">قاربت على الانتهاء</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-warning text-on-warning">
+                <Clock size={14} />
+              </div>
+            </div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
+                {lowCount}
+              </span>
+              <span className="text-xs font-bold text-muted">طلاب</span>
+            </div>
+            <p className="mt-1 text-[10px] font-medium text-warning-strong">متبقي حصتان أو أقل</p>
           </div>
         </div>
       </div>

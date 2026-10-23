@@ -15,6 +15,18 @@ interface SmartNotificationsProps {
   focusStudents: FocusStudent[]
 }
 
+interface AlertItem {
+  icon: LucideIcon
+  iconBg: string
+  iconColor: string
+  cardBg: string
+  borderColor: string
+  titleColor: string
+  textColor: string
+  title: string
+  desc: string
+}
+
 export const SmartNotifications = ({
   lowBalanceStudents,
   focusStudents,
@@ -22,19 +34,17 @@ export const SmartNotifications = ({
   const expired = lowBalanceStudents.filter((s) => s.remainingSessions === 0)
   const low = lowBalanceStudents.filter((s) => s.remainingSessions > 0 && s.remainingSessions <= 2)
 
-  const alerts: {
-    icon: LucideIcon
-    bg: string
-    on: string
-    title: string
-    desc: string
-  }[] = []
+  const alerts: AlertItem[] = []
 
   if (expired.length > 0) {
     alerts.push({
       icon: AlertCircle,
-      bg: 'bg-error',
-      on: 'text-on-error',
+      iconBg: 'bg-error',
+      iconColor: 'text-on-error',
+      cardBg: 'bg-error-soft',
+      borderColor: 'border-error-soft',
+      titleColor: 'text-error-strong',
+      textColor: 'text-main',
       title: `${expired.length} طالب منتهي اشتراكهم`,
       desc:
         expired
@@ -47,8 +57,12 @@ export const SmartNotifications = ({
   if (low.length > 0) {
     alerts.push({
       icon: Clock,
-      bg: 'bg-warning',
-      on: 'text-on-warning',
+      iconBg: 'bg-warning',
+      iconColor: 'text-on-warning',
+      cardBg: 'bg-warning-soft',
+      borderColor: 'border-warning/25',
+      titleColor: 'text-warning-strong',
+      textColor: 'text-main',
       title: `${low.length} طالب رصيدهم على وشك النفاد`,
       desc:
         low
@@ -61,8 +75,12 @@ export const SmartNotifications = ({
   focusStudents.slice(0, 3).forEach((f) => {
     alerts.push({
       icon: AlertTriangle,
-      bg: 'bg-warning',
-      on: 'text-on-warning',
+      iconBg: 'bg-warning',
+      iconColor: 'text-on-warning',
+      cardBg: 'bg-warning-soft',
+      borderColor: 'border-warning/25',
+      titleColor: 'text-warning-strong',
+      textColor: 'text-main',
       title: f.name,
       desc: f.reason,
     })
@@ -71,10 +89,14 @@ export const SmartNotifications = ({
   if (alerts.length === 0) {
     alerts.push({
       icon: Info,
-      bg: 'bg-success',
-      on: 'text-on-success',
+      iconBg: 'bg-success',
+      iconColor: 'text-on-success',
+      cardBg: 'bg-success-soft',
+      borderColor: 'border-success/25',
+      titleColor: 'text-success-strong',
+      textColor: 'text-main',
       title: 'كل شيء على ما يرام',
-      desc: 'لا توجد تنبيهات حالياً',
+      desc: 'لا توجد تنبيهات تستدعي انتباهك حالياً',
     })
   }
 
@@ -89,10 +111,10 @@ export const SmartNotifications = ({
           urgencyLabel ? (
             <span
               className={cn(
-                'rounded-md px-1.5 py-0.5 text-[10px] font-bold',
+                'rounded-full px-2 py-0.5 text-[10px] font-black',
                 expired.length > 0
-                  ? 'bg-error-soft text-error-strong'
-                  : 'bg-warning-soft text-warning-strong',
+                  ? 'border border-error-soft bg-error-soft text-error-strong'
+                  : 'border border-warning-soft bg-warning-soft text-warning-strong',
               )}
             >
               {urgencyLabel}
@@ -100,7 +122,7 @@ export const SmartNotifications = ({
           ) : null
         }
         action={
-          <span className="shrink-0 rounded-lg border border-border bg-surface px-2.5 py-1 text-[10px] font-bold text-muted">
+          <span className="shrink-0 rounded-full border border-border bg-card px-2.5 py-0.5 text-[11px] font-black text-muted shadow-elevation-1">
             {alerts.length} تنبيه
           </span>
         }
@@ -111,17 +133,29 @@ export const SmartNotifications = ({
           <div
             key={`alert-${i}`}
             className={cn(
-              'flex h-full items-start justify-between gap-3 rounded-2xl p-3.5 transition-all duration-normal hover:shadow-elevation-1',
-              alert.bg,
+              'flex h-full items-start justify-between gap-3 rounded-2xl border p-3.5 transition-all duration-normal hover:shadow-elevation-1',
+              alert.cardBg,
+              alert.borderColor,
             )}
           >
             <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/25">
-                <alert.icon size={17} className="text-white" />
+              <div
+                className={cn(
+                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
+                  alert.iconBg,
+                  alert.iconColor,
+                )}
+              >
+                <alert.icon size={16} />
               </div>
               <div className="min-w-0">
-                <p className={cn('mb-1 text-sm font-black', alert.on)}>{alert.title}</p>
-                <p className="line-clamp-3 text-[11px] font-medium leading-relaxed text-white/80">
+                <p className={cn('mb-0.5 text-xs font-black', alert.titleColor)}>{alert.title}</p>
+                <p
+                  className={cn(
+                    'line-clamp-2 text-[11px] font-medium leading-relaxed',
+                    alert.textColor,
+                  )}
+                >
                   {alert.desc}
                 </p>
               </div>

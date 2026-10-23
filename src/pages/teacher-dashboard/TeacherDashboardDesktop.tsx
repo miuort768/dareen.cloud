@@ -113,16 +113,16 @@ export const TeacherDashboardDesktop = ({
         </div>
 
         <div className="space-y-5 lg:col-span-4">
-          <SectionCard delay={0.12} className="flex flex-1 flex-col">
+          <SectionCard delay={0.12}>
             <QuickActions showQuickLinks={true} />
           </SectionCard>
 
-          <motion.div {...fadeUp(0.16)} className="flex flex-1 flex-col">
+          <SectionCard delay={0.16}>
             <SmartNotifications
               lowBalanceStudents={lowBalanceStudents}
               focusStudents={focusStudents || []}
             />
-          </motion.div>
+          </SectionCard>
           <SectionCard delay={0.22}>
             <TasksAndRequests tasks={tasks} limit={3} />
           </SectionCard>

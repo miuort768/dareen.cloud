@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, Bell, GraduationCap, Loader2, RefreshCw } from 'lucide-react'
@@ -11,13 +12,19 @@ import { NextSessionHero } from '../../features/dashboard/components/NextSession
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
 import { TasksAndRequests } from '../../features/dashboard/components/TasksAndRequests'
+import { TeacherSessionTimeline } from '../../features/dashboard/components/TeacherSessionTimeline'
+import { StudentQuickBrief } from '../../features/dashboard/components/StudentQuickBrief'
+import { MonthlyReportPreview } from '../../features/dashboard/components/MonthlyReportPreview'
 import { TeacherHero } from './TeacherHero'
 import { WeekStrip } from './WeekStrip'
+import { sessionOutcome } from '../../shared/utils/enrollments'
 import type { TeacherDashboardMobileProps } from './types'
+import type { Session } from '../../types'
 
 export const TeacherDashboardMobile = ({
   currentUser,
   stats,
+  rawSessions,
   tasks,
   lowBalanceStudents,
   focusStudents,
@@ -30,9 +37,29 @@ export const TeacherDashboardMobile = ({
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
   const firstName = (currentUser?.name || 'المعلمة').split(' ')[0] || 'المعلمة'
 
+  const [briefingStudent, setBriefingStudent] = useState<{
+    id?: string
+    name?: string
+    grade?: string
+    notes?: string
+    curriculum?: string
+    totalPoints?: number
+  } | null>(null)
+
+  const [selectedStudentForReport, setSelectedStudentForReport] = useState<{
+    id: string
+    name: string
+    grade: string
+    subject: string
+    points: number
+    attendance: number
+    sessionsCompleted: number
+    lastNotes: string[]
+  } | null>(null)
+
   return (
     <div
-      className="min-h-full overflow-x-hidden bg-background pb-6 font-teacher transition-colors duration-500"
+      className="min-h-full overflow-x-hidden bg-background pb-8 font-teacher transition-colors duration-500"
       dir="rtl"
       {...handlers}
     >
@@ -59,7 +86,7 @@ export const TeacherDashboardMobile = ({
 
       <MobilePageHeader
         title={`أ. ${firstName}`}
-        subtitle="لوحة المعلمة"
+        subtitle="لوحة تحكم المعلمة"
         className="mx-auto max-w-page sm:px-4"
         icon={<GraduationCap size={16} />}
         action={
@@ -74,7 +101,7 @@ export const TeacherDashboardMobile = ({
         }
       />
 
-      <div className="mx-auto max-w-page space-y-5 pt-4 sm:px-4">
+      <div className="mx-auto max-w-page space-y-4 px-2.5 pt-3 sm:px-4">
         <TeacherHero
           name={currentUser?.name || currentUser?.username || 'المعلمة'}
           stats={stats}
@@ -86,7 +113,7 @@ export const TeacherDashboardMobile = ({
         {nextSession ? (
           <NextSessionHero timeline={timeline} />
         ) : (
-          <div className="flex min-h-[140px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-elevation-1">
+          <div className="flex min-h-[140px] items-center justify-center rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
             <EmptyState
               icon={Calendar}
               title="لا توجد حصة قادمة اليوم"
@@ -98,22 +125,22 @@ export const TeacherDashboardMobile = ({
 
         <DashboardStats stats={stats} isTeacher={true} carousel />
 
-        <QuickActions showQuickLinks={true} />
+        <SectionCard>
+          <QuickActions showQuickLinks={true} withHeader={true} />
+        </SectionCard>
 
-        <div className="overflow-hidden rounded-2xl border border-primary/15 bg-card shadow-elevation-2">
-          <div className="flex items-center gap-2 border-b border-border bg-gradient-to-l from-primary/10 via-card to-card px-3 py-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 text-primary">
-              <Bell size={14} />
-            </div>
-            <p className="text-sm font-black text-main">مركز التنبيهات</p>
-          </div>
-          <div className="p-2.5">
-            <SmartNotifications
-              lowBalanceStudents={lowBalanceStudents}
-              focusStudents={focusStudents || []}
-            />
-          </div>
-        </div>
+        {timeline.length > 0 && (
+          <SectionCard>
+            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
+          </SectionCard>
+        )}
+
+        <SectionCard>
+          <SmartNotifications
+            lowBalanceStudents={lowBalanceStudents}
+            focusStudents={focusStudents || []}
+          />
+        </SectionCard>
 
         <SectionCard>
           <TasksAndRequests tasks={tasks} limit={3} />
@@ -121,6 +148,51 @@ export const TeacherDashboardMobile = ({
 
         <WeekStrip counts={weekCounts} />
       </div>
+
+      {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
+        <StudentQuickBrief
+          isOpen={!!briefingStudent}
+          onClose={() => setBriefingStudent(null)}
+          onGenerateReport={(student) => {
+            const studentSessions = rawSessions.filter(
+              (s: Session & { studentID?: string }) =>
+                s.studentId === student.id || s.studentID === student.id,
+            )
+            const concluded = studentSessions.filter((s) => sessionOutcome(s.status) !== null)
+            const completed = concluded.filter((s) => sessionOutcome(s.status) === 'done').length
+            const total = concluded.length
+            setSelectedStudentForReport({
+              id: student.id,
+              name: student.name,
+              grade: student.grade,
+              subject: student.curriculum || 'مادة عامة',
+              points: student.totalPoints || 0,
+              attendance: total > 0 ? Math.round((completed / total) * 100) : 0,
+              sessionsCompleted: completed,
+              lastNotes: [student.notes || 'تقدم ممتاز في المادة'],
+            })
+            setBriefingStudent(null)
+          }}
+          student={{
+            id: briefingStudent.id,
+            name: briefingStudent.name,
+            grade: briefingStudent.grade,
+            notes: briefingStudent.notes,
+            curriculum: briefingStudent.curriculum,
+            totalPoints: briefingStudent.totalPoints,
+          }}
+          recentSessions={[]}
+        />
+      )}
+
+      {selectedStudentForReport && (
+        <MonthlyReportPreview
+          isOpen={!!selectedStudentForReport}
+          onClose={() => setSelectedStudentForReport(null)}
+          student={selectedStudentForReport}
+          onShare={() => {}}
+        />
+      )}
     </div>
   )
 }

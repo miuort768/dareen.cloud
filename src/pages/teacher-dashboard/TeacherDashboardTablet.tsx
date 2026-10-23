@@ -68,18 +68,25 @@ export const TeacherDashboardTablet = ({
         </motion.div>
 
         <motion.div {...fadeUp(0.04)}>
-          {nextSession ? (
-            <NextSessionHero timeline={timeline} />
-          ) : (
-            <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-soft">
-              <EmptyState
-                icon={Calendar}
-                title="لا توجد حصة قادمة اليوم"
-                subtitle="يمكنك بدء حصة مباشرة متى شئت"
-                compact
-              />
+          <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 md:grid-cols-12">
+            <div className="md:col-span-7">
+              <WeekStrip counts={weekCounts} framed={false} />
             </div>
-          )}
+            <div className="border-t border-border md:col-span-5 md:border-s md:border-t-0">
+              {nextSession ? (
+                <NextSessionHero timeline={timeline} framed={false} />
+              ) : (
+                <div className="flex h-full min-h-[150px] items-center justify-center p-5">
+                  <EmptyState
+                    icon={Calendar}
+                    title="لا توجد حصة قادمة اليوم"
+                    subtitle="يمكنك بدء حصة مباشرة متى شئت"
+                    compact
+                  />
+                </div>
+              )}
+            </div>
+          </div>
         </motion.div>
 
         <motion.div {...fadeUp(0.06)}>
@@ -101,10 +108,6 @@ export const TeacherDashboardTablet = ({
         <SectionCard delay={0.12}>
           <LiveSessions />
         </SectionCard>
-
-        <motion.div {...fadeUp(0.14)}>
-          <WeekStrip counts={weekCounts} />
-        </motion.div>
 
         <SectionCard delay={0.16}>
           <TasksAndRequests tasks={tasks} limit={3} />
