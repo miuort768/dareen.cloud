@@ -90,7 +90,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                   <span className="font-dash">{today}</span>
                 </p>
 
-                <h1 className="mt-2 text-lg font-black leading-tight text-main md:text-2xl xl:text-3xl">
+                <h1 className="mt-2 font-teacher-heading text-lg font-black leading-tight text-main md:text-2xl xl:text-3xl">
                   {getGreeting()}، {firstName}
                 </h1>
 

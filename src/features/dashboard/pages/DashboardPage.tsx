@@ -124,7 +124,7 @@ export const Dashboard = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="min-h-full bg-background"
+          className="min-h-full bg-background font-admin"
           dir="rtl"
         >
           {device === 'mobile' ? (

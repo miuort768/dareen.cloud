@@ -1,8 +1,26 @@
 :root {
-  --font-family-sans: 'IBM Plex Sans Arabic', 'Tajawal', 'Readex Pro', sans-serif;
-  --font-family-heading: 'Cairo', 'Noto Kufi Arabic', 'El Messiri', sans-serif;
-  --font-family-dash: 'Cairo', 'Tajawal', sans-serif;
-  --font-family-display: 'Cairo', 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+  /* الخطوط الأساسية للتطبيق */
+  --font-family-sans: 'Alexandria', 'IBM Plex Sans Arabic', 'Tajawal', sans-serif;
+  --font-family-heading: 'Alexandria', 'Noto Kufi Arabic', 'Cairo', sans-serif;
+  --font-family-dash: 'Alexandria', 'Cairo', 'Tajawal', sans-serif;
+  --font-family-display: 'Alexandria', 'Noto Kufi Arabic', sans-serif;
+
+  /* خطوط مميزة وهوية طباعية لكل لوحة تحكم */
+  /* 1. لوحة تحكم ولي الأمر: خط المرعي الرصين والمطمئن للأسر */
+  --font-family-parent: 'Almarai', 'Tajawal', sans-serif;
+  --font-family-parent-heading: 'Almarai', 'Noto Kufi Arabic', sans-serif;
+
+  /* 2. لوحة تحكم الطالب: خط ريديكس برو العصري والحيوي والمحفز */
+  --font-family-student: 'Readex Pro', 'Alexandria', 'Tajawal', sans-serif;
+  --font-family-student-heading: 'Readex Pro', 'Alexandria', sans-serif;
+
+  /* 3. لوحة تحكم المعلم: خط آي بي إم بليكس عربي الدقيق والمنظم أكاديمياً */
+  --font-family-teacher: 'IBM Plex Sans Arabic', 'Alexandria', 'Tajawal', sans-serif;
+  --font-family-teacher-heading: 'Alexandria', 'IBM Plex Sans Arabic', sans-serif;
+
+  /* 4. لوحة تحكم مدير النظام: خط الإسكندرية الهندسي الفخم للتنفيذيين */
+  --font-family-admin: 'Alexandria', 'Noto Kufi Arabic', sans-serif;
+  --font-family-admin-heading: 'Alexandria', 'Noto Kufi Arabic', sans-serif;
 
   --font-size-xs: 0.75rem;
   --line-height-xs: 1rem;

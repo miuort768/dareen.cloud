@@ -53,7 +53,7 @@ export const TeacherDashboardTablet = ({
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
 
   return (
-    <div className="min-h-full bg-background transition-colors duration-500" dir="rtl">
+    <div className="min-h-full bg-background font-teacher transition-colors duration-500" dir="rtl">
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-4 sm:px-4 md:px-5">
         <motion.div {...fadeUp(0)}>
           <TeacherHero

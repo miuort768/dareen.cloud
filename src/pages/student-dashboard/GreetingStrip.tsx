@@ -72,7 +72,7 @@ export const GreetingStrip = ({
             </span>
           </div>
 
-          <h1 className="mt-3 text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
+          <h1 className="mt-3 font-student-heading text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
             {getGreeting()}، {firstName}
           </h1>
           <p className="mt-1 text-xs font-bold leading-relaxed text-muted sm:text-sm xl:text-base">

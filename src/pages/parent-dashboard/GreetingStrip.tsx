@@ -59,7 +59,7 @@ export const GreetingStrip = ({
               <span className="font-dash">{today}</span>
             </p>
 
-            <h1 className="mt-3 text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
+            <h1 className="mt-3 font-parent-heading text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
               {getGreeting()}، شريك النجاح
             </h1>
 

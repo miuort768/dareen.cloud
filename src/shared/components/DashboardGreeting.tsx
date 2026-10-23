@@ -78,7 +78,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
               <CalendarDays size={12} />
               {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
             </p>
-            <h1 className="text-xl font-black leading-tight text-on-primary md:text-2xl">
+            <h1 className="font-heading text-xl font-black leading-tight text-on-primary md:text-2xl">
               {getGreeting(nightMessage)}، {firstName}
             </h1>
             {subtitle && <div className="mt-1">{subtitle}</div>}

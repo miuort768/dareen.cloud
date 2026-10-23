@@ -56,7 +56,10 @@ export const StudentDashboardDesktop = ({
     : null
 
   return (
-    <div className="min-h-screen bg-background transition-colors duration-slow" dir="rtl">
+    <div
+      className="min-h-screen bg-background font-student transition-colors duration-slow"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-2 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip

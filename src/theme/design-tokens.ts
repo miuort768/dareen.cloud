@@ -1,9 +1,13 @@
 export const typography = {
   fontFamily: {
-    sans: "'Tajawal', 'IBM Plex Sans Arabic', sans-serif",
-    heading: "'Noto Kufi Arabic', 'El Messiri', sans-serif",
-    dash: "'Tajawal', 'Cairo', sans-serif",
-    display: "'Noto Kufi Arabic', 'Tajawal', sans-serif",
+    sans: "'Alexandria', 'IBM Plex Sans Arabic', 'Tajawal', sans-serif",
+    heading: "'Alexandria', 'Noto Kufi Arabic', sans-serif",
+    dash: "'Alexandria', 'Cairo', sans-serif",
+    display: "'Alexandria', 'Noto Kufi Arabic', sans-serif",
+    parent: "'Almarai', 'Tajawal', sans-serif",
+    student: "'Readex Pro', 'Alexandria', sans-serif",
+    teacher: "'IBM Plex Sans Arabic', 'Alexandria', sans-serif",
+    admin: "'Alexandria', 'Noto Kufi Arabic', sans-serif",
   },
   fontWeight: {
     normal: '400',

@@ -53,7 +53,10 @@ export const TeacherDashboardDesktop = ({
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
 
   return (
-    <div className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-5 sm:px-4 md:px-6" dir="rtl">
+    <div
+      className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-5 font-teacher sm:px-4 md:px-6"
+      dir="rtl"
+    >
       <motion.div {...fadeUp(0)}>
         <TeacherHero
           name={currentUser?.name || currentUser?.username || 'المعلمة'}

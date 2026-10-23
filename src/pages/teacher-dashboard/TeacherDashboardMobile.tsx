@@ -32,7 +32,7 @@ export const TeacherDashboardMobile = ({
 
   return (
     <div
-      className="min-h-full overflow-x-hidden bg-background pb-6 transition-colors duration-500"
+      className="min-h-full overflow-x-hidden bg-background pb-6 font-teacher transition-colors duration-500"
       dir="rtl"
       {...handlers}
     >

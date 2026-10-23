@@ -37,7 +37,10 @@ export const ParentDashboardDesktop = ({
   const selectedChild: Student | undefined = kids.find((c) => c.id === selectedChildId) ?? kids[0]
 
   return (
-    <div className="min-h-screen bg-background transition-colors duration-slow" dir="rtl">
+    <div
+      className="min-h-screen bg-background font-parent transition-colors duration-slow"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-2 sm:px-4 md:px-6 md:pt-4">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
