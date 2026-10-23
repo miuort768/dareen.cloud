@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import {
   ThumbsUp,
-  MoreHorizontal,
   AlertTriangle,
   Clock,
   Trash2,
@@ -25,8 +24,7 @@ interface ForumPostCardProps {
   isAdmin: boolean
   currentUserId: string
   currentUserName?: string
-  showMenuPostId: string | null
-  setShowMenuPostId: (v: string | null) => void
+  isReported: boolean
   onVote: (postId: string, type: 'upvote') => void
   onDelete: (postId: string) => void
   onReport: (postId: string) => void
@@ -76,8 +74,7 @@ export const ForumPostCard = ({
   isAdmin,
   currentUserId,
   currentUserName,
-  showMenuPostId,
-  setShowMenuPostId,
+  isReported,
   onVote,
   onDelete,
   onReport,
@@ -96,25 +93,6 @@ export const ForumPostCard = ({
   const [editPostContent, setEditPostContent] = useState(post.content)
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null)
   const [editCommentText, setEditCommentText] = useState('')
-  const menuRef = useRef<HTMLDivElement>(null)
-
-  const isMenuOpen = showMenuPostId === post.id
-
-  useEffect(() => {
-    if (!isMenuOpen) return
-    const onPointerDown = (e: PointerEvent) => {
-      if (!menuRef.current?.contains(e.target as Node)) setShowMenuPostId(null)
-    }
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowMenuPostId(null)
-    }
-    document.addEventListener('pointerdown', onPointerDown)
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown)
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [isMenuOpen, setShowMenuPostId])
 
   const handleSavePostEdit = () => {
     if (!editPostContent.trim()) return
@@ -142,7 +120,7 @@ export const ForumPostCard = ({
     <div
       id={`post-${post.id}`}
       className={cn(
-        'group/card relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-1 dark:bg-surface',
+        'group/card relative overflow-hidden rounded-3xl border border-border bg-surface shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-1',
         isHighlighted && 'ring-2 ring-primary',
       )}
     >
@@ -204,9 +182,8 @@ export const ForumPostCard = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-1">
-          {/* Admin only: Edit Post Button */}
-          {isAdmin && (
+        {isAdmin && (
+          <div className="flex items-center gap-1">
             <button
               onClick={() => {
                 setIsEditingPost(!isEditingPost)
@@ -218,10 +195,7 @@ export const ForumPostCard = ({
             >
               <Edit3 size={15} />
             </button>
-          )}
 
-          {/* Admin only: Delete Post Button */}
-          {isAdmin && (
             <button
               onClick={() => onDelete(post.id)}
               className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
@@ -229,37 +203,8 @@ export const ForumPostCard = ({
             >
               <Trash2 size={15} />
             </button>
-          )}
-
-          <div className="relative" ref={menuRef}>
-            <button
-              onClick={() => setShowMenuPostId(isMenuOpen ? null : post.id)}
-              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-              aria-label="خيارات المنشور"
-              aria-haspopup="menu"
-              aria-expanded={isMenuOpen}
-            >
-              <MoreHorizontal size={17} />
-            </button>
-            {isMenuOpen && (
-              <div
-                role="menu"
-                className="absolute end-0 top-full z-50 mt-1 w-36 rounded-2xl border border-border bg-card py-1 shadow-soft"
-              >
-                <button
-                  role="menuitem"
-                  onClick={() => {
-                    onReport(post.id)
-                    setShowMenuPostId(null)
-                  }}
-                  className="flex w-full items-center gap-2 px-4 py-2 text-start text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
-                >
-                  <AlertTriangle size={12} className="text-error" /> الإبلاغ عن المنشور
-                </button>
-              </div>
-            )}
           </div>
-        </div>
+        )}
       </div>
 
       {/* Post Content or Edit Form */}
@@ -274,12 +219,12 @@ export const ForumPostCard = ({
               aria-label="تعديل نص المنشور"
               value={editPostContent}
               onChange={(e) => setEditPostContent(e.target.value)}
-              className="w-full resize-none rounded-xl border border-border bg-card p-3 text-sm font-medium text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full resize-none rounded-xl border border-border bg-surface p-3 text-sm font-medium text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsEditingPost(false)}
-                className="rounded-lg border border-border px-3 py-1.5 text-xs font-bold text-muted outline-none transition-colors duration-fast hover:bg-card focus-visible:ring-2 focus-visible:ring-focus"
+                className="rounded-lg border border-border px-3 py-1.5 text-xs font-bold text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إلغاء
               </button>
@@ -319,16 +264,23 @@ export const ForumPostCard = ({
         </button>
         <button
           onClick={() => onReport(post.id)}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-error outline-none transition-colors duration-fast hover:bg-error-light hover:text-error focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          disabled={isReported}
+          aria-label={isReported ? 'تم الإبلاغ عن هذا المنشور' : 'الإبلاغ عن هذا المنشور'}
+          className={cn(
+            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
+            isReported
+              ? 'cursor-default bg-warning-soft text-warning-strong'
+              : 'text-warning-strong hover:bg-warning hover:text-on-warning active:scale-95',
+          )}
         >
-          <AlertTriangle size={15} />
-          <span>بلاغ</span>
+          {isReported ? <Check size={15} /> : <AlertTriangle size={15} />}
+          <span>{isReported ? 'تم الإبلاغ' : 'بلاغ'}</span>
         </button>
       </div>
 
       {/* Comments Section */}
       {viewingComments[post.id] && (
-        <div className="border-t border-border bg-surface p-4 md:p-5">
+        <div className="border-t border-border bg-background p-4 md:p-5">
           <div className="space-y-1">
             {buildThreadedComments(Array.isArray(comments) ? comments : []).map((node) => {
               const commentAuthorName = formatDisplayName(
@@ -337,7 +289,7 @@ export const ForumPostCard = ({
               )
               return (
                 <div key={node.comment.id} className="group/comment">
-                  <div className="flex gap-3 rounded-2xl p-3 transition-colors duration-fast hover:bg-card">
+                  <div className="flex gap-3 rounded-2xl p-3 transition-colors duration-fast hover:bg-surface">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
                       {(commentAuthorName[0] || '').toUpperCase()}
                     </div>
@@ -379,7 +331,7 @@ export const ForumPostCard = ({
 
                       {/* Comment Content or Admin Edit Comment Form */}
                       {editingCommentId === node.comment.id ? (
-                        <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
+                        <div className="my-1.5 space-y-2 rounded-lg border border-border bg-surface p-2">
                           <input
                             type="text"
                             aria-label="تعديل التعليق"
@@ -462,7 +414,7 @@ export const ForumPostCard = ({
                         return (
                           <div
                             key={replyNode.comment.id}
-                            className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-fast hover:bg-card"
+                            className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-fast hover:bg-surface"
                           >
                             <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-bold text-primary">
                               {(replyAuthorName[0] || '').toUpperCase()}
@@ -504,7 +456,7 @@ export const ForumPostCard = ({
                               </div>
 
                               {editingCommentId === replyNode.comment.id ? (
-                                <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
+                                <div className="my-1.5 space-y-2 rounded-lg border border-border bg-surface p-2">
                                   <input
                                     type="text"
                                     aria-label="تعديل التعليق"
@@ -600,7 +552,7 @@ export const ForumPostCard = ({
                   setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))
                 }
                 placeholder="اكتب تعليقاً..."
-                className="w-full rounded-2xl border border-border bg-card py-2.5 pe-11 ps-4 text-xs font-medium text-dim text-main outline-none transition-colors duration-fast focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-2xl border border-border bg-surface py-2.5 pe-11 ps-4 text-xs font-medium text-dim text-main outline-none transition-colors duration-fast focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') onAddComment(post.id)
                 }}

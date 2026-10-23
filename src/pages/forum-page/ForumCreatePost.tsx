@@ -1,6 +1,13 @@
 import { useState } from 'react'
-import { Send, ShieldCheck } from 'lucide-react'
-import { HelpCircle, MessageSquare, Lightbulb, Megaphone } from 'lucide-react'
+import {
+  Send,
+  ShieldCheck,
+  PenLine,
+  HelpCircle,
+  MessageSquare,
+  Lightbulb,
+  Megaphone,
+} from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { ForumPostType } from '../../features/forum/types'
 
@@ -50,8 +57,31 @@ export const ForumCreatePost = ({
   const [postType, setPostType] = useState<ForumPostType>('discussion')
 
   return (
-    <div className="rounded-3xl border border-border bg-card p-5 shadow-soft">
-      <div className="space-y-3">
+    <div className="overflow-hidden rounded-3xl border border-primary/20 bg-surface shadow-elevation-1">
+      <div className="relative overflow-hidden bg-primary p-4 text-on-primary md:p-5">
+        <div
+          className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full border border-white/10"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-12 -start-8 h-32 w-32 rounded-full bg-white/5"
+          aria-hidden="true"
+        />
+        <div className="relative flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/20 backdrop-blur-sm">
+            <PenLine size={18} />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-black">شارك فكرتك</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-bold opacity-80">
+              <ShieldCheck size={11} />
+              نشر متوافق مع سياسات المنصة
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3 p-4 md:p-5">
         <textarea
           aria-label="اكتب منشورك"
           value={newPostContent}
@@ -60,7 +90,6 @@ export const ForumCreatePost = ({
           placeholder="شارك فكرة أو سؤال…"
         />
 
-        {/* اختيار نوع المنشور — تحت حقل الكتابة */}
         <div className="grid grid-cols-4 gap-2">
           {TYPE_OPTIONS.map((opt) => {
             const Icon = opt.icon
@@ -72,10 +101,10 @@ export const ForumCreatePost = ({
                 onClick={() => setPostType(opt.value)}
                 aria-pressed={active}
                 className={cn(
-                  'flex min-h-11 flex-col items-center justify-center gap-1 rounded-2xl border px-1 py-2 text-[10px] font-bold outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                  'flex min-h-11 flex-col items-center justify-center gap-1 rounded-2xl border px-1 py-2 text-[10px] font-bold outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                   active
                     ? cn(opt.tone, 'shadow-soft hover:brightness-110')
-                    : 'border-border bg-surface text-muted hover:bg-hover',
+                    : 'border-border bg-background text-muted hover:bg-hover hover:text-main',
                 )}
               >
                 <Icon size={15} strokeWidth={2} />
@@ -85,14 +114,11 @@ export const ForumCreatePost = ({
           })}
         </div>
 
-        <div className="flex items-center justify-between">
-          <p className="flex items-center gap-1.5 text-micro font-medium text-muted">
-            <ShieldCheck size={11} className="text-primary" /> نشر متوافق مع سياسات المنصة
-          </p>
+        <div className="flex items-center justify-end">
           <button
             onClick={() => handleCreatePost(postType)}
             disabled={!newPostContent.trim()}
-            className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-30"
+            className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-30"
           >
             <Send size={13} /> نشر
           </button>

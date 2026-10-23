@@ -1,6 +1,14 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle, ArrowUpDown } from 'lucide-react'
+import {
+  MessageSquare,
+  Plus,
+  Users,
+  ThumbsUp,
+  MessageCircle,
+  ArrowUpDown,
+  AlertTriangle,
+} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 
@@ -83,7 +91,7 @@ export const Forum = () => {
   // مخزن منفصل للتعليقات — لا يتأثر بإعادة جلب المنشورات كل 15 ثانية
   const [commentsByPost, setCommentsByPost] = useState<Record<string, Comment[]>>({})
   const toggleCooldownRef = useRef<Record<string, number>>({})
-  const [showMenuPostId, setShowMenuPostId] = useState<string | null>(null)
+  const [reportedPosts, setReportedPosts] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     if (highlightedPostId && !loading) {
@@ -209,12 +217,23 @@ export const Forum = () => {
   }
 
   const handleReport = async (postId: string) => {
+    if (reportedPosts.has(postId)) return
+    const confirmed = await confirm({
+      title: 'الإبلاغ عن المنشور',
+      message: 'سيتم إرسال بلاغ إلى إدارة الأكاديمية لمراجعة هذا المنشور. هل تريد المتابعة؟',
+      confirmText: 'إرسال البلاغ',
+      cancelText: 'إلغاء',
+      icon: <AlertTriangle size={28} />,
+      isDestructive: false,
+    })
+    if (!confirmed) return
     try {
       await api.post(`/forum/${postId}/report`)
-      showNotification('تم إرسال البلاغ للمراجعة', 'info')
+      setReportedPosts((prev) => new Set(prev).add(postId))
+      showNotification('تم إرسال البلاغ إلى إدارة الأكاديمية', 'info')
     } catch (e) {
       console.error(e)
-      showNotification('فشل الإبلاغ', 'error')
+      showNotification('تعذر إرسال البلاغ، حاول مرة أخرى', 'error')
     }
   }
 
@@ -303,28 +322,32 @@ export const Forum = () => {
         short: 'منشورات',
         value: posts.length,
         icon: MessageSquare,
-        iconBg: 'bg-primary text-on-primary',
+        card: 'border-primary bg-primary text-on-primary',
+        fg: 'text-on-primary',
       },
       {
         label: 'إجمالي الإعجابات',
         short: 'إعجابات',
         value: totalUpvotes,
         icon: ThumbsUp,
-        iconBg: 'bg-success text-on-success',
+        card: 'border-success bg-success text-on-success',
+        fg: 'text-on-success',
       },
       {
         label: 'التعليقات',
         short: 'تعليقات',
         value: totalComments,
         icon: MessageCircle,
-        iconBg: 'bg-warning text-on-warning',
+        card: 'border-warning bg-warning text-on-warning',
+        fg: 'text-on-warning',
       },
       {
         label: 'المشاركون',
         short: 'مشاركون',
         value: totalParticipants,
         icon: Users,
-        iconBg: 'bg-info text-on-info',
+        card: 'border-info bg-info text-on-info',
+        fg: 'text-on-info',
       },
     ],
     [posts, totalUpvotes, totalComments, totalParticipants],
@@ -379,28 +402,40 @@ export const Forum = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="grid grid-cols-4 divide-x divide-x-reverse divide-border overflow-hidden rounded-3xl border border-border bg-card shadow-soft dark:bg-surface">
+          <div className="grid grid-cols-2 gap-2.5 md:grid-cols-4 md:gap-3">
             {kpiCards.map((kpi) => {
               const Icon = kpi.icon
               return (
                 <div
                   key={kpi.label}
-                  className="flex flex-col items-center justify-center gap-2 px-1.5 py-4 text-center transition-colors hover:bg-surface md:flex-row md:gap-3 md:px-4"
+                  className={cn(
+                    'flex items-center gap-2.5 rounded-2xl border p-3 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 md:gap-3 md:p-4',
+                    kpi.card,
+                  )}
                 >
-                  <div
-                    className={cn(
-                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl md:h-9 md:w-9',
-                      kpi.iconBg,
-                    )}
-                  >
-                    <Icon size={15} />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/20">
+                    <Icon size={16} className={kpi.fg} />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-dash text-lg font-black tabular-nums leading-none text-main md:text-2xl">
+                    <p
+                      className={cn(
+                        'font-dash text-lg font-black tabular-nums leading-none md:text-2xl',
+                        kpi.fg,
+                      )}
+                    >
                       {kpi.value}
                     </p>
-                    <p className="mt-1 hidden text-xs text-muted sm:block">{kpi.label}</p>
-                    <p className="mt-1 text-[10px] font-medium text-muted sm:hidden">{kpi.short}</p>
+                    <p
+                      className={cn(
+                        'mt-1 hidden text-[11px] font-bold opacity-80 sm:block',
+                        kpi.fg,
+                      )}
+                    >
+                      {kpi.label}
+                    </p>
+                    <p className={cn('mt-1 text-[10px] font-bold opacity-80 sm:hidden', kpi.fg)}>
+                      {kpi.short}
+                    </p>
                   </div>
                 </div>
               )
@@ -423,7 +458,7 @@ export const Forum = () => {
                 'flex-1 rounded-full border px-2 py-1.5 text-micro font-bold outline-none transition-all duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                 sortMode === opt.value
                   ? cn(SORT_TONE[opt.value], 'shadow-soft')
-                  : cn('border-border bg-card text-muted', SORT_TONE_IDLE[opt.value]),
+                  : cn('border-border bg-surface text-muted', SORT_TONE_IDLE[opt.value]),
               )}
             >
               {opt.label}
@@ -468,7 +503,7 @@ export const Forum = () => {
               {[1, 2, 3].map((i) => (
                 <div
                   key={`skel-${i}`}
-                  className="space-y-4 rounded-3xl border border-border bg-card p-5 shadow-soft md:p-6"
+                  className="space-y-4 rounded-3xl border border-border bg-surface p-5 shadow-soft md:p-6"
                 >
                   <div className="flex items-center gap-3">
                     <Skeleton className="h-11 w-11 rounded-full" />
@@ -485,7 +520,7 @@ export const Forum = () => {
             <EmptyState
               icon={MessageSquare}
               title="لا توجد منشورات هنا"
-              className="rounded-3xl border-2 border-dashed border-border bg-card p-6 md:p-16"
+              className="rounded-3xl border-2 border-dashed border-border bg-surface p-6 md:p-16"
             />
           ) : (
             <div className="space-y-3 md:space-y-4">
@@ -512,8 +547,7 @@ export const Forum = () => {
                             ? 'إدارة الأكاديمية'
                             : currentUser?.username || 'عضو المنتدى')
                     }
-                    showMenuPostId={showMenuPostId}
-                    setShowMenuPostId={setShowMenuPostId}
+                    isReported={reportedPosts.has(post.id)}
                     onVote={handleVote}
                     onDelete={handleDeletePost}
                     onReport={handleReport}
@@ -551,7 +585,7 @@ export const Forum = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-soft">
+                <span className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-bold text-main shadow-soft">
                   {action.label}
                 </span>
                 <button

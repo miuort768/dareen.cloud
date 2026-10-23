@@ -1,8 +1,51 @@
 import { useDialogFocus } from '../../shared/hooks/useDialogFocus'
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useCurrentUser } from '../../context/AppContext'
-import { Scale, ShieldCheck, Heart, Sparkles, GraduationCap, X } from 'lucide-react'
+import { Scale, ShieldCheck, Heart, Sparkles, GraduationCap, X, Check, Info } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+type RoleTone = 'primary' | 'success' | 'error' | 'info'
+
+const TONE: Record<
+  RoleTone,
+  {
+    solid: string
+    hover: string
+    soft: string
+    text: string
+    borderStart: string
+  }
+> = {
+  primary: {
+    solid: 'bg-primary text-on-primary',
+    hover: 'hover:bg-primary-hover',
+    soft: 'bg-primary-soft',
+    text: 'text-primary',
+    borderStart: 'border-s-primary',
+  },
+  success: {
+    solid: 'bg-success text-on-success',
+    hover: 'hover:bg-success-hover',
+    soft: 'bg-success-soft',
+    text: 'text-success-strong',
+    borderStart: 'border-s-success',
+  },
+  error: {
+    solid: 'bg-error text-on-error',
+    hover: 'hover:bg-error-hover',
+    soft: 'bg-error-soft',
+    text: 'text-error-strong',
+    borderStart: 'border-s-error',
+  },
+  info: {
+    solid: 'bg-info text-on-info',
+    hover: 'hover:bg-info-hover',
+    soft: 'bg-info-soft',
+    text: 'text-info-strong',
+    borderStart: 'border-s-info',
+  },
+}
 
 export const ForumHelpBanner = () => {
   const currentUser = useCurrentUser()
@@ -11,12 +54,17 @@ export const ForumHelpBanner = () => {
 
   const { containerRef, handleKeyDown } = useDialogFocus(showModal, () => setShowModal(false))
 
-  const getRoleRules = () => {
+  const getRoleRules = (): {
+    roleTitle: string
+    tone: RoleTone
+    icon: typeof Heart
+    rules: string[]
+  } => {
     switch (role) {
       case 'parent':
         return {
           roleTitle: 'شريك النجاح (ولي الأمر)',
-          badgeClass: 'bg-primary text-on-primary border-primary',
+          tone: 'primary',
           icon: Heart,
           rules: [
             'متابعة الاستفسارات الخاصة بالتحصيل الأكاديمي للأبناء بأسلوب راقٍ ومباشر.',
@@ -28,7 +76,7 @@ export const ForumHelpBanner = () => {
       case 'teacher':
         return {
           roleTitle: 'المعلمة',
-          badgeClass: 'bg-success text-on-success border-success',
+          tone: 'success',
           icon: ShieldCheck,
           rules: [
             'توجيه ونصح الطلاب برفق وإيجابية وتحفيزهم على التفاعل والمشاركة.',
@@ -40,19 +88,19 @@ export const ForumHelpBanner = () => {
       case 'admin':
         return {
           roleTitle: 'مدير النظام',
-          badgeClass: 'bg-error text-on-error border-error',
+          tone: 'error',
           icon: Sparkles,
           rules: [
             'الإشراف العام على جودة المحتوى والمناقشات في المنتدى.',
-            'مراجعة البلاغات والتأكد من ملاءمة المشاركات للسياسات العامية.',
+            'مراجعة البلاغات والتأكد من ملاءمة المشاركات للسياسات العامة.',
             'تعديل وإدارة المحتوى والتعليقات لضمان انضباط المنتدى.',
             'تقديم الدعم الكامل لجميع أطراف العملية التعليمية.',
           ],
         }
-      default: // student
+      default:
         return {
           roleTitle: 'الطالب / الطالبة',
-          badgeClass: 'bg-info text-on-info border-info',
+          tone: 'info',
           icon: GraduationCap,
           rules: [
             'الالتزام بالأدب والاحترام في التعامل مع المعلمات والزملاء.',
@@ -65,105 +113,158 @@ export const ForumHelpBanner = () => {
   }
 
   const currentRules = getRoleRules()
+  const tone = TONE[currentRules.tone]
   const Icon = currentRules.icon
 
   return (
-    <div className="mx-auto mb-6 mt-6 max-w-[700px] px-4">
-      <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border border-border bg-card p-4 shadow-soft sm:flex-row sm:p-5">
-        <div className="flex w-full items-start gap-3.5 text-start sm:w-auto sm:items-center">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary sm:h-11 sm:w-11">
-            <Scale size={20} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="mb-1 flex flex-wrap items-center gap-2">
-              <h4 className="text-xs font-bold text-main sm:text-sm">قواعد وإرشادات المنتدى</h4>
-              <span
-                className={`rounded-full border px-2 py-0.5 text-micro font-bold ${currentRules.badgeClass}`}
-              >
-                خاص بـ {currentRules.roleTitle}
-              </span>
+    <>
+      <div className="mx-auto mb-6 mt-6 max-w-[700px] px-4">
+        <div
+          className={`relative overflow-hidden rounded-3xl border border-white/10 p-4 shadow-elevation-2 sm:p-5 ${tone.solid}`}
+        >
+          <div
+            className="pointer-events-none absolute -end-10 -top-12 h-32 w-32 rounded-full border border-white/10"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute -bottom-16 -start-10 h-40 w-40 rounded-full bg-white/5"
+            aria-hidden="true"
+          />
+          <div className="relative flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <div className="flex w-full items-start gap-3.5 text-start sm:w-auto sm:items-center">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20 backdrop-blur-sm">
+                <Scale size={20} />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="mb-1 flex flex-wrap items-center gap-2">
+                  <h4 className="text-sm font-black">قواعد وإرشادات المنتدى</h4>
+                  <span className="rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-micro font-bold backdrop-blur-sm">
+                    خاص بـ {currentRules.roleTitle}
+                  </span>
+                </div>
+                <p className="text-[11px] font-medium leading-tight opacity-80 sm:text-xs">
+                  قواعد مخصصة لدورك في المنصة لضمان بيئة آمنة ومثمرة
+                </p>
+              </div>
             </div>
-            <p className="truncate text-micro font-medium leading-tight text-muted sm:text-xs">
-              قواعد مخصصة لدورك في المنصة لضمان بيئة آمنة ومثمرة
-            </p>
+            <button
+              onClick={() => setShowModal(true)}
+              className="w-full shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-center text-xs font-black shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60 active:scale-95 sm:w-auto sm:px-5"
+            >
+              عرض القواعد والتعليمات
+            </button>
           </div>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="w-full shrink-0 rounded-full bg-primary px-4 py-2.5 text-center text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:w-auto sm:px-5"
-        >
-          عرض القواعد والتعليمات
-        </button>
       </div>
 
-      {/* Rules Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <div
-            className="fixed inset-0 z-[300] flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm sm:p-4"
-            onClick={(e) => {
-              if (e.target === e.currentTarget) setShowModal(false)
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="forum-rules-title"
-              ref={containerRef}
-              onKeyDown={handleKeyDown}
-              className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft"
-              dir="rtl"
-            >
-              <div className="flex shrink-0 items-center justify-between bg-primary p-4 text-on-primary sm:p-5">
-                <div className="flex items-center gap-2.5">
-                  <Icon size={20} />
-                  <h3 id="forum-rules-title" className="text-xs font-bold sm:text-sm">
-                    إرشادات وقواعد {currentRules.roleTitle}
-                  </h3>
-                </div>
-                <button
-                  onClick={() => setShowModal(false)}
-                  autoFocus
-                  aria-label="إغلاق النافذة"
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 outline-none transition-colors duration-fast hover:bg-error focus-visible:ring-2 focus-visible:ring-focus"
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {showModal && (
+              <div
+                className="fixed inset-0 z-[300] flex items-end justify-center bg-black/60 p-3 backdrop-blur-sm sm:items-center sm:p-4"
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) setShowModal(false)
+                }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.97, y: 24 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.97, y: 24 }}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="forum-rules-title"
+                  aria-describedby="forum-rules-description"
+                  ref={containerRef}
+                  onKeyDown={handleKeyDown}
+                  className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-b-none rounded-t-3xl border border-border bg-surface shadow-elevation-3 sm:rounded-3xl"
+                  dir="rtl"
                 >
-                  <X size={16} />
-                </button>
-              </div>
-              <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4 sm:p-6">
-                <p className="text-xs font-bold leading-relaxed text-muted">
-                  عزيزي/عزيزتي {currentRules.roleTitle}، نرجو الالتزام بالقواعد التالية لضمان تجربة
-                  تعليمية راقية ومثمرة:
-                </p>
-                <ul className="space-y-2.5">
-                  {currentRules.rules.map((rule, index) => (
-                    <li
-                      key={index}
-                      className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-3"
+                  <div className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-border sm:hidden" />
+
+                  <div className={`relative shrink-0 overflow-hidden p-4 sm:p-5 ${tone.solid}`}>
+                    <div
+                      className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full border border-white/15"
+                      aria-hidden="true"
+                    />
+                    <div className="relative flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20 backdrop-blur-sm">
+                          <Icon size={21} />
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-black tracking-wide opacity-70">
+                            دليل المشاركة
+                          </p>
+                          <h3 id="forum-rules-title" className="text-base font-black sm:text-lg">
+                            إرشادات وقواعد {currentRules.roleTitle}
+                          </h3>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setShowModal(false)}
+                        data-autofocus
+                        aria-label="إغلاق النافذة"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 bg-white/10 outline-none transition-colors duration-fast hover:border-error hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-white/60"
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4 sm:p-5">
+                    <p
+                      id="forum-rules-description"
+                      className="text-xs font-bold leading-relaxed text-muted"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-on-primary">
-                        {index + 1}
-                      </span>
-                      <span className="text-xs font-semibold leading-relaxed text-main">
-                        {rule}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="mt-4 w-full rounded-full bg-primary py-3 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
-                >
-                  فهمت وأوافق على الإرشادات
-                </button>
+                      عزيزي/عزيزتي {currentRules.roleTitle}، نرجو الالتزام بالقواعد التالية لضمان
+                      تجربة تعليمية راقية ومثمرة:
+                    </p>
+
+                    <div className="flex items-start gap-2.5 rounded-2xl border border-warning-soft bg-warning-soft p-3">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-warning text-on-warning">
+                        <Info size={14} />
+                      </div>
+                      <p className="text-[11px] font-bold leading-relaxed text-warning-strong">
+                        ملاحظة: البلاغات تُراجع من إدارة الأكاديمية، وقد يُحذف المحتوى المخالف بعد
+                        المراجعة.
+                      </p>
+                    </div>
+
+                    <ul className="space-y-2">
+                      {currentRules.rules.map((rule, index) => (
+                        <li
+                          key={index}
+                          className={`flex items-start gap-3 rounded-2xl border border-s-4 border-border bg-background p-3 ${tone.borderStart}`}
+                        >
+                          <span
+                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl text-[11px] font-black ${tone.solid}`}
+                          >
+                            {index + 1}
+                          </span>
+                          <span className="text-xs font-semibold leading-relaxed text-main sm:text-sm">
+                            {rule}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="shrink-0 border-t border-border bg-surface p-4 sm:p-5">
+                    <button
+                      onClick={() => setShowModal(false)}
+                      className={`flex w-full items-center justify-center gap-2 rounded-full py-3 text-xs font-black shadow-elevation-1 outline-none transition-all hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:text-sm ${tone.solid} ${tone.hover}`}
+                    >
+                      <Check size={16} />
+                      فهمت وأوافق على الإرشادات
+                    </button>
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
-          </div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
-    </div>
+    </>
   )
 }
