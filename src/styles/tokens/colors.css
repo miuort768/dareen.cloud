@@ -230,21 +230,21 @@
 }
 
 .profile-scope {
-  --jade: #0d9b83;
-  --jade-deep: #0a8471;
-  --jade-hover: #0b8f79;
-  --jade-soft: #eaf8f4;
-  --jade-light: #ddf5ee;
+  --jade: #6366f1;
+  --jade-deep: #4338ca;
+  --jade-hover: #4f46e5;
+  --jade-soft: #eef2ff;
+  --jade-light: #e0e7ff;
   --jade-on: #ffffff;
 }
 
 .dark .profile-scope {
-  --jade: #2fc0b0;
-  --jade-deep: #17a090;
-  --jade-hover: #3bccbb;
-  --jade-soft: #12332e;
-  --jade-light: #1b4841;
-  --jade-on: #032b26;
+  --jade: #818cf8;
+  --jade-deep: #4f46e5;
+  --jade-hover: #a5b4fc;
+  --jade-soft: #1e1b4b;
+  --jade-light: #312e81;
+  --jade-on: #ffffff;
 }
 
 /* عائلات الأدوار — جواهر ملكية: إدارة بنفسجي · معلم أزرق · طالب زمردي · ولي أمر عنبري */
