@@ -194,17 +194,21 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads
     }
 }));
 
-prerender.set('prerenderToken', process.env.PRERENDER_TOKEN);
-prerender.set('crawlerUserAgents', [
-    'googlebot', 'bingbot', 'yandexbot', 'facebookexternalhit',
-    'twitterbot', 'rogerbot', 'linkedinbot', 'embedly',
-    'baiduspider', 'pinterestbot', 'slackbot-likex', 'vkshare',
-    'w3c_validator', 'redditbot', 'applebot', 'whatsapp',
-    'flipboard', 'tumblr', 'bitlybot', 'semrushbot',
-    'ahrefsbot', 'dotbot'
-]);
-prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/blog', '/books/.*']);
-app.use(prerender);
+// Prerender only when a token is configured — a blank token would make every
+// crawler request hit prerender.io and fail (plus a compose warning).
+if (process.env.PRERENDER_TOKEN) {
+    prerender.set('prerenderToken', process.env.PRERENDER_TOKEN);
+    prerender.set('crawlerUserAgents', [
+        'googlebot', 'bingbot', 'yandexbot', 'facebookexternalhit',
+        'twitterbot', 'rogerbot', 'linkedinbot', 'embedly',
+        'baiduspider', 'pinterestbot', 'slackbot-likex', 'vkshare',
+        'w3c_validator', 'redditbot', 'applebot', 'whatsapp',
+        'flipboard', 'tumblr', 'bitlybot', 'semrushbot',
+        'ahrefsbot', 'dotbot'
+    ]);
+    prerender.set('whitelist', ['/', '/courses', '/about', '/contact', '/books', '/login', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/blog', '/books/.*']);
+    app.use(prerender);
+}
 
 // RSS Feed (sitemap handled in routes/seo.js)
 app.get('/rss.xml', async (req, res) => {

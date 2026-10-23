@@ -28,7 +28,7 @@ services:
       # IP from X-Forwarded-For instead of the shared Cloudflare edge IP, so the
       # rate limiter buckets real users (avoiding mass false 429s).
       - TRUST_PROXY=2
-      - PRERENDER_TOKEN=${PRERENDER_TOKEN}
+      - PRERENDER_TOKEN=${PRERENDER_TOKEN:-}
     depends_on:
       postgres:
         condition: service_healthy
@@ -80,7 +80,10 @@ services:
     image: redis:7-alpine
     container_name: darin-redis
     restart: unless-stopped
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:?REDIS_PASSWORD is required}", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    # BullMQ requires noeviction: with allkeys-lru Redis may evict job keys
+    # under memory pressure and silently lose queue work. Cache writes fail
+    # when full (cacheService.wrap() falls back) which is the safe tradeoff.
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:?REDIS_PASSWORD is required}", "--maxmemory", "256mb", "--maxmemory-policy", "noeviction"]
     mem_limit: 512m
     pids_limit: 50
     security_opt:
