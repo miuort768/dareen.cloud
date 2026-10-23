@@ -50,19 +50,19 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
 
         {/* Secondary KPIs */}
         <div className="grid flex-1 grid-cols-2 gap-3 lg:gap-4">
-          <article className="flex flex-col rounded-2xl bg-success-soft p-4 transition-transform hover:-translate-y-0.5">
-            <CheckCircle2 className="mb-2 text-success" size={20} />
+          <article className="border-success/20 flex flex-col rounded-2xl border bg-success-soft p-4 transition-transform hover:-translate-y-0.5">
+            <CheckCircle2 className="mb-2 text-success-strong" size={20} />
             <CountUp
               value={stats.completed}
-              className="font-dash text-2xl font-black tabular-nums text-success"
+              className="font-dash text-2xl font-black tabular-nums text-success-strong"
             />
-            <p className="mt-1 text-xs font-bold text-success">حصص منجزة</p>
-            <p className="mt-0.5 text-[10px] font-medium text-success opacity-80">
+            <p className="mt-1 text-xs font-bold text-success-strong">حصص منجزة</p>
+            <p className="text-success-strong/80 mt-0.5 text-[10px] font-medium">
               {stats.weeklyCompleted} هذا الأسبوع
             </p>
           </article>
 
-          <article className="flex flex-col rounded-2xl bg-surface p-4 transition-transform hover:-translate-y-0.5">
+          <article className="flex flex-col rounded-2xl border border-border bg-surface p-4 transition-transform hover:-translate-y-0.5">
             <ClipboardList className="mb-2 text-primary" size={20} />
             <CountUp
               value={stats.todayCount}

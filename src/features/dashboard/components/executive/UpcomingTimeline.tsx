@@ -29,7 +29,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
 
   return (
     <div
-      className="flex h-full flex-col rounded-3xl border border-info-soft bg-card p-5 font-dash"
+      className="flex h-full flex-col rounded-2xl border border-info-soft bg-card p-5 font-dash shadow-elevation-1"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between gap-2">

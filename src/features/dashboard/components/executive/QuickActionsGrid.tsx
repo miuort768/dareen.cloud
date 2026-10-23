@@ -36,7 +36,10 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
   const navigate = useNavigate()
 
   return (
-    <div className="rounded-3xl border border-border bg-card p-5 font-dash shadow-soft" dir="rtl">
+    <div
+      className="rounded-2xl border border-border bg-card p-5 font-dash shadow-elevation-1"
+      dir="rtl"
+    >
       <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-6">
         {QUICK_ACTIONS.map((action) => {
           const Icon = action.icon

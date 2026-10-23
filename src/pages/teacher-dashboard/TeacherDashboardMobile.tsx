@@ -1,11 +1,28 @@
-import { useState } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Calendar, Bell, GraduationCap, Loader2, RefreshCw } from 'lucide-react'
+import {
+  Calendar,
+  Loader2,
+  RefreshCw,
+  Clock,
+  Users,
+  ListTodo,
+  AlertCircle,
+  Sparkle,
+} from 'lucide-react'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
-import { MobilePageHeader } from '../../shared/components/mobile/MobilePageHeader'
-import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
+import {
+  usePullToRefresh,
+  OverviewHeader,
+  OverviewHero,
+  OverviewSearchFilter,
+  OverviewCategoryPills,
+  OverviewFeaturedCard,
+  OverviewPromoBanner,
+  type OverviewCategoryItem,
+} from '../../shared/components/mobile'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
 import { ModernAnnouncements } from '../../features/dashboard/components/ModernAnnouncements'
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
@@ -34,6 +51,11 @@ export const TeacherDashboardMobile = ({
 }: TeacherDashboardMobileProps) => {
   const navigate = useNavigate()
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
+  const quickActionsRef = useRef<HTMLDivElement>(null)
+
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeCategory, setActiveCategory] = useState('all')
+
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
   const firstName = (currentUser?.name || 'المعلمة').split(' ')[0] || 'المعلمة'
 
@@ -57,12 +79,43 @@ export const TeacherDashboardMobile = ({
     lastNotes: string[]
   } | null>(null)
 
+  const categories: OverviewCategoryItem[] = useMemo(
+    () => [
+      { id: 'all', label: 'الكل', icon: Sparkle },
+      { id: 'sessions', label: 'حصص اليوم', icon: Clock, count: timeline.length },
+      { id: 'students', label: 'الطلاب', icon: Users, count: stats.studentsCount },
+      { id: 'tasks', label: 'المهام', icon: ListTodo, count: tasks.length },
+      { id: 'alerts', label: 'التنبيهات', icon: AlertCircle, count: lowBalanceStudents.length },
+    ],
+    [timeline.length, stats.studentsCount, tasks.length, lowBalanceStudents.length],
+  )
+
+  // Filter timeline sessions for the featured cards
+  const filteredSessions = useMemo(() => {
+    let list = timeline
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim()
+      list = list.filter(
+        (s) =>
+          s.studentName?.toLowerCase().includes(q) ||
+          s.subject?.toLowerCase().includes(q) ||
+          s.time?.toLowerCase().includes(q),
+      )
+    }
+    return list
+  }, [timeline, searchQuery])
+
+  const scrollToQuickActions = () => {
+    quickActionsRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <div
       className="min-h-full overflow-x-hidden bg-background pb-8 font-teacher transition-colors duration-500"
       dir="rtl"
       {...handlers}
     >
+      {/* Pull To Refresh Indicator */}
       <motion.div
         animate={{ height: isRefreshing ? 44 : pullDistance }}
         className="flex items-center justify-center overflow-hidden"
@@ -84,72 +137,176 @@ export const TeacherDashboardMobile = ({
         </div>
       </motion.div>
 
-      <MobilePageHeader
-        title={`أ. ${firstName}`}
-        subtitle="لوحة تحكم المعلمة"
-        className="mx-auto max-w-page sm:px-4"
-        icon={<GraduationCap size={16} />}
-        action={
-          <button
-            onClick={() => navigate('/announcements')}
-            className="relative flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-button outline-none transition-all duration-normal hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985]"
-            aria-label="الإعلانات"
-          >
-            <Bell size={16} />
-            <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-background bg-error" />
-          </button>
-        }
-      />
-
-      <div className="mx-auto max-w-page space-y-4 px-2.5 pt-3 sm:px-4">
-        <TeacherHero
-          name={currentUser?.name || currentUser?.username || 'المعلمة'}
-          stats={stats}
-          lowBalanceStudents={lowBalanceStudents}
+      <div className="mx-auto max-w-page space-y-4 px-2.5 pb-8 pt-2 sm:px-4">
+        {/* 1. Petly Style Top Header */}
+        <OverviewHeader
+          appName="أكاديمية دارين"
+          slogan={`أهلاً أ. ${firstName} · لوحة تحكم المعلمة`}
+          logoIcon={<span className="text-2xl">👩‍🏫</span>}
+          notificationCount={lowBalanceStudents.length}
+          onNotificationClick={() => navigate('/announcements')}
+          contextLabel="جدول الحصص والطلاب المسندين"
         />
 
+        {/* 2. Petly Style Hero Banner */}
+        <OverviewHero
+          badge="يوم دراسي متميز ⚡"
+          title={`مرحباً، أ. ${firstName}`}
+          subtitle={
+            nextSession
+              ? `حصتك التالية مع ${nextSession.studentName || 'الطالب'} في تمام الساعة ${nextSession.time || 'اليوم'}`
+              : 'أهلاً بكِ في لوحة التعليم والتدريب، جاهزون لبدء حصص اليوم بكل نشاط!'
+          }
+          metric={{
+            value: `${stats.todaySessions} حصص`,
+            label: 'إجمالي حصص اليوم',
+          }}
+          ctaText="إجراءات المعلمة"
+          onCtaClick={scrollToQuickActions}
+          illustration={
+            <div className="bg-accent/20 border-accent/30 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
+              <span className="text-5xl drop-shadow-md">📘</span>
+            </div>
+          }
+        />
+
+        {/* 3. Search & Filter Bar */}
+        <OverviewSearchFilter
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="ابحث عن حصة، طالب، أو موضوع..."
+        />
+
+        {/* 4. Category Pills Row */}
+        <OverviewCategoryPills
+          categories={categories}
+          activeId={activeCategory}
+          onSelect={setActiveCategory}
+        />
+
+        {/* Announcements Banner */}
         <ModernAnnouncements />
 
-        {nextSession ? (
-          <NextSessionHero timeline={timeline} />
-        ) : (
-          <div className="flex min-h-[140px] items-center justify-center rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
-            <EmptyState
-              icon={Calendar}
-              title="لا توجد حصة قادمة اليوم"
-              subtitle="يمكنك بدء حصة مباشرة متى شئت"
-              compact
-            />
-          </div>
+        {/* 5. Featured Cards ("العناصر المميزة" / حصص اليوم) */}
+        {(activeCategory === 'all' || activeCategory === 'sessions') && (
+          <section>
+            <div className="mb-2.5 flex items-center justify-between px-0.5">
+              <div className="flex items-center gap-2">
+                <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-xs text-main">
+                  ⭐
+                </span>
+                <h3 className="text-sm font-black text-main">حصص اليوم المميزة</h3>
+              </div>
+              <span className="text-xs font-bold text-accent">{timeline.length} حصة مجدولة</span>
+            </div>
+
+            {filteredSessions.length > 0 ? (
+              <div className="grid grid-cols-2 gap-2.5">
+                {filteredSessions.slice(0, 4).map((s) => {
+                  const isScheduled = s.status === 'scheduled' || !s.status
+                  const isCompleted = s.status === 'completed'
+                  return (
+                    <OverviewFeaturedCard
+                      key={s.id}
+                      badge={{
+                        label: isCompleted ? 'تم الإنجاز' : isScheduled ? 'قادمة' : 'ملغاة',
+                        tone: isCompleted ? 'success' : isScheduled ? 'info' : 'warning',
+                      }}
+                      title={s.studentName || 'طالب'}
+                      subtitle={s.subject || 'جلسة تعليمية'}
+                      meta={s.time ? `الساعة ${s.time}` : 'اليوم'}
+                      highlight={s.time || 'اليوم'}
+                      highlightLabel="موعد الحصة"
+                      actionLabel="التحضير"
+                      onClick={() => {
+                        setBriefingStudent({
+                          id: s.id,
+                          name: s.studentName,
+                          grade: 'الصف الحالي',
+                          curriculum: s.subject,
+                          totalPoints: 100,
+                        })
+                      }}
+                      visual={
+                        <div className="flex flex-col items-center justify-center">
+                          <span className="text-2xl">🎓</span>
+                          <span className="mt-1 line-clamp-1 text-[9px] font-black text-main">
+                            {s.studentName}
+                          </span>
+                        </div>
+                      }
+                    />
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-border bg-card p-5 text-center shadow-elevation-1">
+                <EmptyState
+                  icon={Calendar}
+                  title="لا توجد حصص قادمة اليوم"
+                  subtitle="يمكنك بدء حصة مباشرة متى شئت"
+                  compact
+                />
+              </div>
+            )}
+          </section>
         )}
 
-        <DashboardStats stats={stats} isTeacher={true} carousel />
+        {/* 6. Petly Style Promo Banner */}
+        <OverviewPromoBanner
+          title="التقارير الشهرية للطلاب"
+          subtitle="إنشاء ومشاركة تقارير تقييم الطلاب بضغطة زر واحدة"
+          iconEmoji="📝"
+          onClick={() => navigate('/teacher-reports')}
+          ariaLabel="الانتقال إلى تقارير المعلمة"
+        />
 
-        <SectionCard>
-          <QuickActions showQuickLinks={true} withHeader={true} />
-        </SectionCard>
+        {/* 7. Preserved Existing Panels */}
+        {nextSession && <NextSessionHero timeline={timeline} />}
 
-        {timeline.length > 0 && (
+        {(activeCategory === 'all' || activeCategory === 'students') && (
+          <>
+            <TeacherHero
+              name={currentUser?.name || currentUser?.username || 'المعلمة'}
+              stats={stats}
+              lowBalanceStudents={lowBalanceStudents}
+            />
+            <DashboardStats stats={stats} isTeacher={true} carousel />
+          </>
+        )}
+
+        <div ref={quickActionsRef}>
+          <SectionCard>
+            <QuickActions showQuickLinks={true} withHeader={true} />
+          </SectionCard>
+        </div>
+
+        {(activeCategory === 'all' || activeCategory === 'sessions') && timeline.length > 0 && (
           <SectionCard>
             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
           </SectionCard>
         )}
 
-        <SectionCard>
-          <SmartNotifications
-            lowBalanceStudents={lowBalanceStudents}
-            focusStudents={focusStudents || []}
-          />
-        </SectionCard>
+        {(activeCategory === 'all' || activeCategory === 'alerts') && (
+          <SectionCard>
+            <SmartNotifications
+              lowBalanceStudents={lowBalanceStudents}
+              focusStudents={focusStudents || []}
+            />
+          </SectionCard>
+        )}
 
-        <SectionCard>
-          <TasksAndRequests tasks={tasks} limit={3} />
-        </SectionCard>
+        {(activeCategory === 'all' || activeCategory === 'tasks') && (
+          <SectionCard>
+            <TasksAndRequests tasks={tasks} limit={3} />
+          </SectionCard>
+        )}
 
         <WeekStrip counts={weekCounts} />
       </div>
 
-      {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
+      {/* Modals */}
+      {briefingStudent && briefingStudent.id && briefingStudent.name && (
         <StudentQuickBrief
           isOpen={!!briefingStudent}
           onClose={() => setBriefingStudent(null)}
@@ -176,7 +333,7 @@ export const TeacherDashboardMobile = ({
           student={{
             id: briefingStudent.id,
             name: briefingStudent.name,
-            grade: briefingStudent.grade,
+            grade: briefingStudent.grade || '',
             notes: briefingStudent.notes,
             curriculum: briefingStudent.curriculum,
             totalPoints: briefingStudent.totalPoints,

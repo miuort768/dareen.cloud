@@ -14,7 +14,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
     return (
       <section
         aria-label="الحصة القادمة"
-        className="rounded-none border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
+        className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
@@ -36,7 +36,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
   return (
     <section
       aria-label="الحصة القادمة"
-      className="relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-soft transition-all duration-slow hover:shadow-elevation-1"
+      className="relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2 sm:p-6"
     >
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center justify-between gap-2">

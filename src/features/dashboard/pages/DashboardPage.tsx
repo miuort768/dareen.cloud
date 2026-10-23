@@ -73,7 +73,7 @@ export const Dashboard = () => {
           dir="rtl"
         >
           {device === 'mobile' ? (
-            <div className="mx-auto block max-w-page space-y-4 pt-3 sm:px-4 md:hidden">
+            <div className="mx-auto block max-w-page space-y-4 px-2.5 pt-3 sm:px-4 md:hidden">
               <div className="flex items-center justify-between">
                 <div className="space-y-2">
                   <Skeleton className="h-3 w-24" />
@@ -145,7 +145,7 @@ export const Dashboard = () => {
             </div>
           ) : (
             /* Desktop */
-            <div className="relative z-10 mx-auto hidden max-w-page px-6 md:block">
+            <div className="relative z-10 mx-auto hidden max-w-page px-4 sm:px-6 md:block">
               <ExecutiveDashboard
                 academicYear={academicYear}
                 userName={currentUser?.name || currentUser?.username}

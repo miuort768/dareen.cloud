@@ -58,7 +58,10 @@ export const PresenceGrid = memo(function PresenceGrid({
   })
 
   return (
-    <div className="rounded-3xl border border-border bg-card p-5 font-dash shadow-soft" dir="rtl">
+    <div
+      className="rounded-2xl border border-border bg-card p-5 font-dash shadow-elevation-1"
+      dir="rtl"
+    >
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft">

@@ -49,7 +49,7 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
 
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 rounded-3xl border border-border bg-card px-4 py-2.5 font-dash shadow-soft"
+      className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 rounded-2xl border border-border bg-card px-4 py-2.5 font-dash shadow-elevation-1"
       dir="rtl"
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
