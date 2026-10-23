@@ -106,7 +106,7 @@ export const ParentDashboardMobile = ({
 
   return (
     <div
-      className="min-h-screen overflow-x-hidden bg-background font-parent transition-colors duration-slow"
+      className="overview-mobile-scope min-h-screen overflow-x-hidden bg-background font-parent text-main transition-colors duration-slow"
       dir="rtl"
       {...handlers}
     >

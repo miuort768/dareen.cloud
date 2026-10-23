@@ -29,7 +29,7 @@ export const OverviewSearchFilter: React.FC<OverviewSearchFilterProps> = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="placeholder:text-muted/70 h-11 w-full rounded-2xl border border-border bg-card pe-10 ps-10 text-xs font-medium text-main shadow-elevation-1 outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
+          className="placeholder:text-muted/70 focus:ring-accent/15 h-11 w-full rounded-2xl border border-border bg-card pe-10 ps-10 text-xs font-medium text-main shadow-elevation-1 outline-none transition-all duration-normal focus:border-accent focus:ring-2"
         />
         {value.length > 0 && (
           <button
@@ -52,7 +52,7 @@ export const OverviewSearchFilter: React.FC<OverviewSearchFilterProps> = ({
           className={cn(
             'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]',
             isFilterActive
-              ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
+              ? 'border-accent bg-accent text-on-accent shadow-elevation-1'
               : 'border-border bg-card text-main shadow-elevation-1 hover:bg-hover',
           )}
         >

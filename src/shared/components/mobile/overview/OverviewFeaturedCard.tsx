@@ -93,8 +93,8 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
 
       {/* Center Visual / Avatar */}
       <div className="flex items-center justify-center py-1">
-        <div className="border-border/50 bg-surface/80 relative flex h-20 w-full items-center justify-center overflow-hidden rounded-2xl border">
-          {visual || <BookOpen size={28} className="text-primary" strokeWidth={1.8} />}
+        <div className="border-border/70 bg-accent-soft/40 relative flex h-20 w-full items-center justify-center overflow-hidden rounded-2xl border">
+          {visual || <BookOpen size={28} className="text-accent" strokeWidth={1.8} />}
         </div>
       </div>
 
@@ -124,7 +124,7 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
         </div>
 
         {actionLabel ? (
-          <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-primary transition-transform group-hover:translate-x-[-2px]">
+          <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-accent transition-transform group-hover:translate-x-[-2px]">
             <span>{actionLabel}</span>
             <ChevronLeft size={12} />
           </span>

@@ -32,7 +32,7 @@ export const OverviewPromoBanner: React.FC<OverviewPromoBannerProps> = ({
       }}
       aria-label={ariaLabel || title}
       className={cn(
-        'border-accent/20 from-accent-light/40 group relative flex items-center justify-between gap-3 overflow-hidden rounded-[24px] border bg-gradient-to-r via-accent-soft to-card p-3.5 shadow-elevation-1 outline-none transition-all duration-normal hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus',
+        'border-border/80 from-accent-light/60 group relative flex items-center justify-between gap-3 overflow-hidden rounded-[24px] border bg-gradient-to-r via-accent-soft to-card p-3.5 shadow-elevation-1 outline-none transition-all duration-normal hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus',
         onClick && 'cursor-pointer active:scale-[0.98]',
         className,
       )}

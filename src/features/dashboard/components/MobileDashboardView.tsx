@@ -144,7 +144,11 @@ export const MobileDashboardView = ({
   }
 
   return (
-    <div {...handlers} className="min-h-full pb-8" dir="rtl">
+    <div
+      {...handlers}
+      className="overview-mobile-scope min-h-full bg-background pb-8 font-sans text-main"
+      dir="rtl"
+    >
       {/* Pull To Refresh Indicator */}
       <motion.div
         animate={{ height: isRefreshing ? 48 : pullDistance }}

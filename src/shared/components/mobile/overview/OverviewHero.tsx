@@ -30,18 +30,18 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
     <section
       aria-label="البنر الترحيبي"
       className={cn(
-        'border-accent/20 to-accent-light/40 relative overflow-hidden rounded-[26px] border bg-gradient-to-br from-accent-soft via-card p-5 shadow-elevation-1 transition-all',
+        'border-border/80 from-accent-light/70 via-accent-soft/90 relative overflow-hidden rounded-[26px] border bg-gradient-to-br to-card p-5 shadow-elevation-1 transition-all',
         className,
       )}
       dir="rtl"
     >
       {/* Decorative ambient blobs */}
       <div
-        className="bg-accent/15 pointer-events-none absolute -start-10 -top-10 h-36 w-36 rounded-full blur-2xl"
+        className="bg-accent/20 pointer-events-none absolute -start-10 -top-10 h-36 w-36 rounded-full blur-2xl"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -bottom-6 -end-6 h-36 w-36 rounded-full bg-primary/10 blur-2xl"
+        className="bg-accent/15 pointer-events-none absolute -bottom-6 -end-6 h-36 w-36 rounded-full blur-2xl"
         aria-hidden="true"
       />
 
