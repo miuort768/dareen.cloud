@@ -30,18 +30,17 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
     <section
       aria-label="البنر الترحيبي"
       className={cn(
-        'border-border/80 from-accent-light/70 via-accent-soft/90 relative overflow-hidden rounded-[26px] border bg-gradient-to-br to-card p-5 shadow-elevation-1 transition-all',
+        'via-primary-light/60 relative overflow-hidden rounded-[26px] border border-primary/30 bg-gradient-to-br from-primary-soft to-card p-5 shadow-elevation-1 transition-all',
         className,
       )}
       dir="rtl"
     >
-      {/* Decorative ambient blobs */}
       <div
-        className="bg-accent/20 pointer-events-none absolute -start-10 -top-10 h-36 w-36 rounded-full blur-2xl"
+        className="pointer-events-none absolute -start-10 -top-10 h-36 w-36 rounded-full bg-primary/15 blur-2xl"
         aria-hidden="true"
       />
       <div
-        className="bg-accent/15 pointer-events-none absolute -bottom-6 -end-6 h-36 w-36 rounded-full blur-2xl"
+        className="bg-accent/10 pointer-events-none absolute -bottom-6 -end-6 h-36 w-36 rounded-full blur-2xl"
         aria-hidden="true"
       />
 
@@ -49,8 +48,8 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
         {/* Text content */}
         <div className="min-w-0 flex-1 space-y-1.5">
           {badge && (
-            <div className="bg-accent/20 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-black text-main">
-              <Sparkles size={11} className="text-accent" />
+            <div className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2.5 py-0.5 text-[10px] font-black text-primary">
+              <Sparkles size={11} className="text-primary" />
               <span>{badge}</span>
             </div>
           )}
@@ -72,7 +71,7 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
                 <button
                   type="button"
                   onClick={onCtaClick}
-                  className="inline-flex items-center gap-1 rounded-xl bg-accent px-3 py-1.5 text-[11px] font-bold text-on-accent shadow-elevation-1 outline-none transition-transform duration-fast hover:opacity-95 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]"
+                  className="inline-flex items-center gap-1 rounded-xl bg-primary px-3 py-1.5 text-[11px] font-bold text-on-primary shadow-elevation-1 outline-none transition-transform duration-fast hover:opacity-95 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]"
                 >
                   <span>{ctaText}</span>
                   <ArrowLeft size={13} strokeWidth={2.2} />
@@ -85,8 +84,8 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
         {/* Mascot / 3D cut-out element */}
         <div className="flex shrink-0 items-center justify-center">
           {illustration || (
-            <div className="border-accent/30 bg-accent/20 relative flex h-24 w-24 items-center justify-center rounded-3xl border shadow-elevation-2">
-              <Sparkles size={38} className="text-accent" strokeWidth={1.8} />
+            <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-primary/30 bg-primary/10 shadow-elevation-2">
+              <Sparkles size={38} className="text-primary" strokeWidth={1.8} />
             </div>
           )}
         </div>

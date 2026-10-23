@@ -393,83 +393,83 @@
 }
 
 
-/* ── Warm Honey & Amber Mobile Overview Theme (Petly Style) ── */
+/* ── Indigo/Violet Élite Mobile Overview Theme ── */
 .overview-mobile-scope {
-  --color-primary: 245 158 11;
-  --color-primary-deep: 180 83 9;
-  --color-primary-mid: 217 119 6;
-  --color-primary-light: 254 243 199;
-  --color-primary-h: 253 230 138;
+  --color-primary: 99 102 241;
+  --color-primary-deep: 67 56 202;
+  --color-primary-mid: 129 140 248;
+  --color-primary-light: 238 242 255;
+  --color-primary-h: 199 210 254;
 
-  --bg-primary: #f59e0b; /* Sunny Honey Amber */
-  --bg-primary-deep: #b45309;
-  --bg-primary-hover: #d97706;
-  --bg-primary-active: #b45309;
-  --bg-primary-soft: #fffbeb; /* Warm Sunny Cream */
-  --bg-primary-light: #fef3c7; /* Soft Honey Peach */
-  --border-primary: #fde68a;
-  --text-primary: #d97706;
-  --text-on-primary: #1c1917; /* Deep readable charcoal text on honey */
-  --ring-focus: #f59e0b;
+  --bg-primary: #6366f1; /* Indigo-500 */
+  --bg-primary-deep: #4338ca; /* Indigo-700 */
+  --bg-primary-hover: #4f46e5; /* Indigo-600 */
+  --bg-primary-active: #4338ca;
+  --bg-primary-soft: #eef2ff; /* Indigo-50 */
+  --bg-primary-light: #e0e7ff; /* Indigo-100 */
+  --border-primary: #a5b4fc; /* Indigo-300 */
+  --text-primary: #4f46e5; /* Indigo-600 */
+  --text-on-primary: #ffffff;
+  --ring-focus: #6366f1;
 
-  --bg-accent: #f59e0b;
-  --bg-accent-hover: #d97706;
-  --bg-accent-soft: #fffbeb;
-  --bg-accent-light: #fef3c7;
-  --border-accent: #fde68a;
-  --text-accent: #d97706;
-  --text-on-accent: #1c1917;
+  --bg-accent: #8b5cf6; /* Violet-500 */
+  --bg-accent-hover: #7c3aed; /* Violet-600 */
+  --bg-accent-soft: #f5f3ff; /* Violet-50 */
+  --bg-accent-light: #ede9fe; /* Violet-100 */
+  --border-accent: #c4b5fd; /* Violet-300 */
+  --text-accent: #7c3aed; /* Violet-600 */
+  --text-on-accent: #ffffff;
 
-  --bg-background: #faf8f5; /* Warm porcelain cream backdrop like Petly */
-  --bg-card: #ffffff; /* Crisp white card */
-  --bg-surface: #f7f4ee;
-  --bg-hover: #f3ede2;
+  --bg-background: #f8f8ff; /* Ghost White — cool clean canvas */
+  --bg-card: #ffffff;
+  --bg-surface: #f1f0fe; /* Very soft indigo tint */
+  --bg-hover: #e8e6fd;
 
-  --border: #f0e9dc; /* Warm soft border */
-  --border-strong: #e4dbc9;
-  --divider: #f0e9dc;
+  --border: #e0e7ff; /* Indigo-100 */
+  --border-strong: #c7d2fe; /* Indigo-200 */
+  --divider: #e0e7ff;
 
-  --text-main: #1c1917; /* Deep warm ink */
-  --text-muted: #78716c; /* Warm stone muted */
-  --text-dim: #a8a29e;
+  --text-main: #1e1b4b; /* Indigo-950 — deep readable */
+  --text-muted: #6b7280; /* Gray-500 — neutral muted */
+  --text-dim: #9ca3af; /* Gray-400 */
 }
 
 .dark .overview-mobile-scope {
-  --color-primary: 251 191 36;
-  --color-primary-deep: 180 83 9;
-  --color-primary-mid: 245 158 11;
-  --color-primary-light: 69 26 3;
-  --color-primary-h: 120 53 15;
+  --color-primary: 129 140 248;
+  --color-primary-deep: 99 102 241;
+  --color-primary-mid: 165 180 252;
+  --color-primary-light: 30 27 75;
+  --color-primary-h: 49 46 129;
 
-  --bg-primary: #f59e0b;
-  --bg-primary-deep: #78350f;
-  --bg-primary-hover: #fbbf24;
-  --bg-primary-active: #fcd34d;
-  --bg-primary-soft: #2e1b07;
-  --bg-primary-light: #451a03;
-  --border-primary: #78350f;
-  --text-primary: #fbbf24;
-  --text-on-primary: #1c1917;
-  --ring-focus: #f59e0b;
+  --bg-primary: #818cf8; /* Indigo-400 — lighter on dark */
+  --bg-primary-deep: #6366f1;
+  --bg-primary-hover: #a5b4fc;
+  --bg-primary-active: #c7d2fe;
+  --bg-primary-soft: #1e1b4b; /* Indigo-950 */
+  --bg-primary-light: #312e81; /* Indigo-900 */
+  --border-primary: #4338ca;
+  --text-primary: #a5b4fc; /* Indigo-300 */
+  --text-on-primary: #1e1b4b;
+  --ring-focus: #818cf8;
 
-  --bg-accent: #f59e0b;
-  --bg-accent-hover: #fbbf24;
-  --bg-accent-soft: #382005;
-  --bg-accent-light: #522d08;
-  --border-accent: #78350f;
-  --text-accent: #fbbf24;
-  --text-on-accent: #1c1917;
+  --bg-accent: #a78bfa; /* Violet-400 */
+  --bg-accent-hover: #c4b5fd;
+  --bg-accent-soft: #2e1065; /* Violet-950 */
+  --bg-accent-light: #4c1d95; /* Violet-900 */
+  --border-accent: #6d28d9;
+  --text-accent: #c4b5fd; /* Violet-300 */
+  --text-on-accent: #1e1b4b;
 
-  --bg-background: #141210; /* Warm deep graphite */
-  --bg-card: #1c1917; /* Warm dark card */
-  --bg-surface: #262220;
-  --bg-hover: #302b28;
+  --bg-background: #0f0e1a; /* Deep indigo-tinted dark */
+  --bg-card: #1a1929; /* Dark indigo card */
+  --bg-surface: #221f35;
+  --bg-hover: #2d2a45;
 
-  --border: #292524;
-  --border-strong: #44403c;
-  --divider: #292524;
+  --border: #2e2b50;
+  --border-strong: #3d3a6b;
+  --divider: #2e2b50;
 
-  --text-main: #fafaf9;
-  --text-muted: #a8a29e;
-  --text-dim: #78716c;
+  --text-main: #f0f0ff; /* Soft white with indigo tint */
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
 }
