@@ -85,35 +85,35 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
       ></div>
 
       <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-3 duration-normal animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border md:animate-in md:zoom-in-95">
-        {/* Accent bar */}
-        <div className="h-1 w-full bg-gradient-to-l from-primary via-primary-deep to-primary-hover"></div>
-
-        <div className="p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
-          {/* Header */}
-          <div className="mb-5 flex items-center justify-between">
+        {/* رأس النافذة ملون وجذاب */}
+        <div className="relative overflow-hidden bg-gradient-to-l from-primary via-primary-deep to-primary-hover px-5 py-4 text-on-primary">
+          <div className="pointer-events-none absolute -end-6 -top-6 h-20 w-20 rounded-full bg-white/10 blur-xl" />
+          <div className="relative z-10 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 dark:bg-primary/15">
-                <ShieldCheck size={20} className="text-primary" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/15 text-on-primary shadow-sm backdrop-blur-sm">
+                <ShieldCheck size={20} />
               </div>
               <div>
-                <h3 className="text-sm font-black text-main">تسجيل حضور مؤكد</h3>
-                <p className="text-[11px] text-muted">كلمة مرور المشرف مطلوبة</p>
+                <h3 className="text-sm font-black text-on-primary">تسجيل حضور مؤكد</h3>
+                <p className="text-[11px] font-medium text-white/90">كلمة مرور المشرف مطلوبة</p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-error text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus md:h-9 md:w-9"
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-error text-on-error shadow-button outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-white active:scale-95"
               aria-label="إغلاق"
             >
               <X size={16} />
             </button>
           </div>
+        </div>
 
+        <div className="p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           {/* Student info */}
-          <div className="mb-5 rounded-2xl bg-surface p-4 text-center dark:bg-hover">
+          <div className="mb-5 rounded-2xl border border-border bg-surface p-3.5 text-center">
             <p className="mb-1 text-[11px] font-medium text-muted">تسجيل للطالب</p>
-            <h4 className="text-base font-bold text-main">{studentName}</h4>
-            <span className="mt-1 inline-block rounded-2xl border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-black text-primary">
+            <h4 className="text-base font-black text-main">{studentName}</h4>
+            <span className="mt-1 inline-block rounded-xl border border-primary/30 bg-primary-soft px-2.5 py-1 text-[11px] font-black text-primary">
               بتاريخ: {date}
             </span>
           </div>
@@ -125,7 +125,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               className={cn(
                 'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                 status === 'completed'
-                  ? 'border-success bg-success-soft text-success'
+                  ? 'border-success bg-success-soft text-success shadow-elevation-1'
                   : 'border-border bg-surface text-muted hover:border-success',
               )}
             >

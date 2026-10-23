@@ -14,7 +14,6 @@ interface AppointmentsHeaderProps {
   onTeacherChange: (v: string) => void
   uniqueTeachers: string[]
   todayName: string
-  dayCounts: Record<string, number>
   hasActiveFilters: boolean
   onReset: () => void
 }
@@ -40,7 +39,6 @@ export const AppointmentsHeader = ({
   onTeacherChange,
   uniqueTeachers,
   todayName,
-  dayCounts,
   hasActiveFilters,
   onReset,
 }: AppointmentsHeaderProps) => {
@@ -82,7 +80,6 @@ export const AppointmentsHeader = ({
             onTeacherChange={onTeacherChange}
             uniqueTeachers={uniqueTeachers}
             todayName={todayName}
-            dayCounts={dayCounts}
             hasActiveFilters={hasActiveFilters}
             onReset={onReset}
           />

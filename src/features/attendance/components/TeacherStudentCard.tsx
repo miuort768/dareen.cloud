@@ -230,7 +230,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         />
 
         {/* Notes */}
-        <div className="rounded-none border border-e-[3px] border-border border-e-primary bg-primary-soft p-3">
+        <div className="rounded-2xl border border-e-[3px] border-border border-e-primary bg-primary-soft p-3">
           <div className="mb-2 flex items-center justify-between">
             <h5 className="flex items-center gap-1.5 text-micro font-bold uppercase text-primary">
               <MessageSquare size={12} /> ملاحظات الحصة القادمة
@@ -307,7 +307,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                   student.curriculum,
                 )
               }
-              className="w-full rounded-2xl bg-error px-1 py-2 text-micro font-bold text-on-error shadow-button ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:bg-error-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
+              className="w-full rounded-2xl bg-primary-soft px-1 py-2 text-micro font-bold text-primary shadow-button ring-1 ring-inset ring-primary/20 transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
             >
               السجل
             </button>

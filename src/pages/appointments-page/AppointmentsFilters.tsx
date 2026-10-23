@@ -1,6 +1,4 @@
-import { Search, GraduationCap, X, RotateCcw } from 'lucide-react'
-import { DayDropdown } from '../../shared/components/mobile'
-import { FilterDropdown } from '../../shared/components/ui'
+import { Search, GraduationCap, CalendarDays, X, RotateCcw } from 'lucide-react'
 
 interface AppointmentsFiltersProps {
   searchTerm: string
@@ -11,15 +9,12 @@ interface AppointmentsFiltersProps {
   onTeacherChange: (v: string) => void
   uniqueTeachers: string[]
   todayName: string
-  /** عدد الحصص لكل يوم (بلا فلترة اليوم) — لعرضه داخل قائمة الأيام */
-  dayCounts: Record<string, number>
   hasActiveFilters: boolean
   onReset: () => void
 }
 
 /**
- * شريط فلاتر سطح المكتب — بحث + قائمة أيام مخصصة + قائمة معلمات مخصصة + إعادة تعيين.
- * قوائم مخصصة (لا عناصر native) لتجنب صندوق المتصفح بالأبيض/الأسود في الوضع الداكن.
+ * شريط فلاتر سطح المكتب — بحث + قائمة أيام عادية + قائمة معلمات + إعادة تعيين.
  */
 export const AppointmentsFilters = ({
   searchTerm,
@@ -30,15 +25,9 @@ export const AppointmentsFilters = ({
   onTeacherChange,
   uniqueTeachers,
   todayName,
-  dayCounts,
   hasActiveFilters,
   onReset,
 }: AppointmentsFiltersProps) => {
-  const teacherItems = [
-    { key: 'all', label: 'كل المعلمات' },
-    ...uniqueTeachers.map((teacher) => ({ key: teacher, label: teacher })),
-  ]
-
   return (
     <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
       {/* البحث */}
@@ -64,23 +53,57 @@ export const AppointmentsFilters = ({
         )}
       </div>
 
-      {/* القوائم المخصصة */}
+      {/* القوائم المنسدلة */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-        <div className="flex-1 lg:w-44">
-          <DayDropdown
-            selectedDay={filterDay}
-            onSelectDay={onDayChange}
-            todayName={todayName}
-            dayCounts={dayCounts}
+        {/* Day select */}
+        <div className="relative flex-1 lg:w-44">
+          <CalendarDays
+            size={13}
+            className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
           />
+          <select
+            aria-label="تصفية حسب اليوم"
+            value={filterDay}
+            onChange={(e) => onDayChange(e.target.value)}
+            className={`h-11 w-full appearance-none rounded-2xl border bg-surface pe-3 ps-9 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+              filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
+            }`}
+          >
+            <option value="all">كل الأيام</option>
+            {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(
+              (day) => (
+                <option key={day} value={day}>
+                  {day}
+                  {day === todayName ? ' (اليوم)' : ''}
+                </option>
+              ),
+            )}
+          </select>
         </div>
-        <FilterDropdown
-          value={filterTeacher}
-          items={teacherItems}
-          onChange={onTeacherChange}
-          icon={GraduationCap}
-          className="flex-1 lg:w-48"
-        />
+
+        {/* Teacher select */}
+        <div className="relative flex-1 lg:w-48">
+          <GraduationCap
+            size={13}
+            className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
+          />
+          <select
+            aria-label="تصفية حسب المعلمة"
+            value={filterTeacher}
+            onChange={(e) => onTeacherChange(e.target.value)}
+            className={`h-11 w-full appearance-none rounded-2xl border bg-surface pe-3 ps-9 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+              filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
+            }`}
+          >
+            <option value="all">كل المعلمات</option>
+            {uniqueTeachers.map((teacher) => (
+              <option key={teacher} value={teacher}>
+                {teacher}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {hasActiveFilters && (
           <button
             type="button"

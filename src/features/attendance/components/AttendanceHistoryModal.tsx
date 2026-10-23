@@ -53,10 +53,10 @@ export const AttendanceHistoryModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-2xl bg-white/15 text-on-primary outline-none transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-error text-on-error shadow-button outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-white active:scale-95"
             aria-label="إغلاق"
           >
-            <X size={14} />
+            <X size={15} />
           </button>
         </div>
 

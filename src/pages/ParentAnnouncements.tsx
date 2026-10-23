@@ -82,7 +82,10 @@ export const ParentAnnouncements = () => {
   }
 
   return (
-    <div className="min-h-full space-y-4 bg-background pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
+    <div
+      className="mx-auto min-h-full max-w-page space-y-4 px-4 pb-2 pt-3 md:space-y-5 md:px-6 md:pt-8"
+      dir="rtl"
+    >
       {/* الترويسة — هيرو متدرج */}
       <section
         aria-label="الإعلانات"
@@ -221,7 +224,7 @@ export const ParentAnnouncements = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: Math.min(idx * 0.05, 0.3) }}
                   key={ann.id}
-                  className="relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-5 md:p-6"
+                  className="relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-soft transition-all hover:border-primary/30 hover:bg-card hover:shadow-elevation-1 md:p-6"
                 >
                   <div className="mb-4 flex items-start justify-between">
                     <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-micro font-bold text-on-primary">

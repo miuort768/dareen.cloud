@@ -250,15 +250,16 @@ export const MobileTasks = () => {
                       </AnimatePresence>
                     </motion.button>
 
-                    <div className="flex min-w-0 flex-1 items-start justify-between gap-2">
-                      <p
+                    <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                      {/* عنوان المهمة — مستطيل واضح بجانب الدائرة */}
+                      <span
                         className={cn(
-                          'min-w-0 text-sm font-black leading-snug',
+                          'inline-flex min-w-0 flex-1 items-center rounded-xl bg-white/20 px-3 py-1 text-sm font-black leading-snug text-white ring-1 ring-white/25',
                           done && 'line-through decoration-2 opacity-80',
                         )}
                       >
-                        {task.title}
-                      </p>
+                        <span className="truncate">{task.title}</span>
+                      </span>
                       <button
                         onClick={() => handleDelete(task)}
                         disabled={deleteTask.isPending}

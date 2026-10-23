@@ -270,8 +270,8 @@ export const ParentDashboard = () => {
             period: normalizePeriod(slot.period),
             minutes,
             notes: en.nextSessionNotes || undefined,
-            topics: outcome === 'done' ? matched?.topics || undefined : undefined,
-            homework: outcome === 'done' ? matched?.homework || undefined : undefined,
+            topics: matched?.topics || undefined,
+            homework: matched?.homework || undefined,
             status: isLive ? 'live' : (outcome ?? 'upcoming'),
           })
         })
@@ -306,8 +306,8 @@ export const ParentDashboard = () => {
         hour: String(hour12),
         period: h >= 12 ? 'pm' : 'am',
         minutes: h * 60 + m,
-        topics: outcome === 'done' ? s.topics || undefined : undefined,
-        homework: outcome === 'done' ? s.homework || undefined : undefined,
+        topics: s.topics || undefined,
+        homework: s.homework || undefined,
         status: isLive ? 'live' : outcome,
       })
     })

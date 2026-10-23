@@ -149,7 +149,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
 
                   {(item.topics || item.homework || item.notes) && (
                     <div className="mt-2.5 space-y-1.5">
-                      {item.status === 'done' && item.topics && (
+                      {item.topics && (
                         <Detail
                           icon={BookOpen}
                           wrap="border-success-soft bg-success-soft"
@@ -159,7 +159,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                           value={item.topics}
                         />
                       )}
-                      {item.status === 'done' && item.homework && (
+                      {item.homework && (
                         <Detail
                           icon={Star}
                           wrap="border-warning-soft bg-warning-soft dark:border-primary-soft dark:bg-primary-soft"

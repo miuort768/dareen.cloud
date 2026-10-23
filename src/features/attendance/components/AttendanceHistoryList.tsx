@@ -53,7 +53,7 @@ export const AttendanceHistoryList = ({
       return sessions
         .filter(
           (s) =>
-            s.studentId === studentId &&
+            String(s.studentId) === String(studentId) &&
             (studentSubject ? s.subject === studentSubject : true) &&
             sessionOutcome(s.status) !== null,
         )

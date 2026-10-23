@@ -413,7 +413,7 @@ export const Schedule = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="rounded-3xl border border-border bg-card p-5 shadow-soft"
+                  className="rounded-3xl border border-primary/25 bg-gradient-to-l from-primary/10 via-primary-soft to-primary-soft p-5 shadow-elevation-1 ring-1 ring-primary/10"
                 >
                   {/* Progress bar */}
                   <div className="mb-4 flex items-center justify-between">

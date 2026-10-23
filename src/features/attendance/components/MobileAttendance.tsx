@@ -197,7 +197,7 @@ export const MobileAttendance = () => {
   ]
 
   return (
-    <MobilePage>
+    <MobilePage className="px-4">
       <div {...handlers}>
         {/* السحب للتحديث */}
         <motion.div

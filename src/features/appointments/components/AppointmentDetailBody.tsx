@@ -55,19 +55,19 @@ export const AppointmentDetailBody = ({ appointment }: AppointmentDetailBodyProp
         </div>
       </div>
 
-      {/* شريط الموعد: اليوم + الوقت */}
+      {/* شريط الموعد: اليوم في مستطيل ملون بلون واضح + الوقت */}
       <div className="flex items-stretch gap-2.5">
-        <div className="flex flex-1 items-center gap-2.5 rounded-2xl border border-primary/20 bg-primary-soft p-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card text-primary ring-1 ring-primary/10">
-            <CalendarDays size={15} strokeWidth={1.7} />
+        <div className="flex flex-1 items-center gap-2.5 rounded-2xl bg-gradient-to-l from-primary to-primary-deep p-3 text-on-primary shadow-elevation-1">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white">
+            <CalendarDays size={16} strokeWidth={2} />
           </div>
           <div className="min-w-0">
-            <p className="text-micro font-bold text-muted">اليوم</p>
-            <p className="truncate text-sm font-black text-main">{appointment.day}</p>
+            <p className="text-micro font-bold text-white/80">اليوم</p>
+            <p className="truncate text-sm font-black text-white">{appointment.day}</p>
           </div>
         </div>
-        <div className="flex flex-1 items-center gap-2.5 rounded-2xl border border-primary/20 bg-primary-soft p-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card text-primary ring-1 ring-primary/10">
+        <div className="flex flex-1 items-center gap-2.5 rounded-2xl border border-border bg-surface p-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-card text-primary ring-1 ring-border">
             <Clock size={15} strokeWidth={1.7} />
           </div>
           <div className="min-w-0">

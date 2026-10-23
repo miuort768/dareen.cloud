@@ -25,116 +25,121 @@ export const EvaluationFormFields = ({
   className,
 }: EvaluationFormFieldsProps) => (
   <form id={formId} onSubmit={onSubmit} className={cn('space-y-5', className)} dir="rtl">
-    {/* Rating */}
-    <div>
-      <label className="mb-2.5 block text-xs font-bold text-muted">مستوى التميز</label>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {RATING_OPTIONS.map((opt) => {
-          const isSelected = formData.rating === opt.value
-          const OptIcon = opt.icon
-          return (
-            <button
-              type="button"
-              key={opt.value}
-              onClick={() => onChange({ ...formData, rating: opt.value })}
-              aria-pressed={isSelected}
-              className={cn(
-                'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                isSelected
-                  ? cn(opt.bg, opt.border, opt.color, 'shadow-elevation-1')
-                  : 'border-border bg-surface text-muted hover:border-primary/40 hover:bg-hover hover:text-main',
-              )}
-            >
-              {isSelected && (
-                <motion.span
-                  layoutId="rating-check"
-                  className="absolute end-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full"
-                  style={{ backgroundColor: 'currentColor' }}
-                  aria-hidden="true"
-                >
-                  <Check size={10} strokeWidth={3.5} className="text-white" />
-                </motion.span>
-              )}
-              <OptIcon size={22} strokeWidth={isSelected ? 2.4 : 1.9} />
-              <span className="text-center text-xs font-extrabold leading-snug">{opt.value}</span>
-            </button>
-          )
-        })}
-      </div>
-    </div>
-
-    {/* XP Points */}
-    <div>
-      <div className="mb-2.5 flex items-center justify-between">
-        <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
-      </div>
-      <div className="mb-3 flex flex-nowrap gap-1.5">
-        {[5, 15, 25, 40, 50].map((p) => {
-          const isSelected = formData.points === p
-          return (
-            <button
-              key={p}
-              type="button"
-              onClick={() => onChange({ ...formData, points: p })}
-              aria-pressed={isSelected}
-              className={cn(
-                'min-w-0 flex-1 rounded-lg border px-0 py-1.5 text-center text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                isSelected
-                  ? 'border-primary bg-primary-soft font-black text-primary shadow-elevation-1 dark:bg-primary/10'
-                  : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-primary',
-              )}
-            >
-              +{p}
-            </button>
-          )
-        })}
-      </div>
-      <div className="flex items-center gap-2.5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary-soft dark:bg-primary/10">
-          <Zap size={16} className="text-primary" />
+    {/* Side-by-side layout on md+ screens */}
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      {/* Column 1: Rating */}
+      <div className="space-y-2">
+        <label className="block text-xs font-bold text-muted">مستوى التميز</label>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {RATING_OPTIONS.map((opt) => {
+            const isSelected = formData.rating === opt.value
+            const OptIcon = opt.icon
+            return (
+              <button
+                type="button"
+                key={opt.value}
+                onClick={() => onChange({ ...formData, rating: opt.value })}
+                aria-pressed={isSelected}
+                className={cn(
+                  'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                  isSelected
+                    ? cn(opt.bg, opt.border, opt.color, 'shadow-elevation-1')
+                    : 'border-border bg-surface text-muted hover:border-primary/40 hover:bg-hover hover:text-main',
+                )}
+              >
+                {isSelected && (
+                  <motion.span
+                    layoutId="rating-check"
+                    className="absolute end-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full"
+                    style={{ backgroundColor: 'currentColor' }}
+                    aria-hidden="true"
+                  >
+                    <Check size={10} strokeWidth={3.5} className="text-white" />
+                  </motion.span>
+                )}
+                <OptIcon size={22} strokeWidth={isSelected ? 2.4 : 1.9} />
+                <span className="text-center text-xs font-extrabold leading-snug">{opt.value}</span>
+              </button>
+            )
+          })}
         </div>
-        <input
-          type="number"
-          value={formData.points || ''}
-          onChange={(e) =>
-            onChange({
-              ...formData,
-              points: Math.min(50, Math.max(0, Number(e.target.value))),
-            })
-          }
-          placeholder="0"
-          min="0"
-          max="50"
-          aria-label="عدد النقاط من 0 إلى 50"
-          className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-bold tabular-nums text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
-        />
-        <span className="text-micro text-muted">/ 50</span>
       </div>
-      <p className="mt-1.5 text-micro text-muted">الحد الأقصى 50 نقطة في كل تقييم</p>
+
+      {/* Column 2: XP Points + Notes */}
+      <div className="space-y-4">
+        {/* XP Points */}
+        <div>
+          <div className="mb-2 flex items-center justify-between">
+            <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
+          </div>
+          <div className="mb-2 flex flex-nowrap gap-1.5">
+            {[5, 15, 25, 40, 50].map((p) => {
+              const isSelected = formData.points === p
+              return (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => onChange({ ...formData, points: p })}
+                  aria-pressed={isSelected}
+                  className={cn(
+                    'min-w-0 flex-1 rounded-lg border px-0 py-1.5 text-center text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    isSelected
+                      ? 'border-primary bg-primary-soft font-black text-primary shadow-elevation-1 dark:bg-primary/10'
+                      : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-primary',
+                  )}
+                >
+                  +{p}
+                </button>
+              )
+            })}
+          </div>
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary-soft dark:bg-primary/10">
+              <Zap size={16} className="text-primary" />
+            </div>
+            <input
+              type="number"
+              value={formData.points || ''}
+              onChange={(e) =>
+                onChange({
+                  ...formData,
+                  points: Math.min(50, Math.max(0, Number(e.target.value))),
+                })
+              }
+              placeholder="0"
+              min="0"
+              max="50"
+              aria-label="عدد النقاط من 0 إلى 50"
+              className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-bold tabular-nums text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+            />
+            <span className="text-micro text-muted">/ 50</span>
+          </div>
+        </div>
+
+        {/* Notes */}
+        <div>
+          <label htmlFor="eval-notes" className="mb-1.5 block text-xs font-bold text-muted">
+            رسالة الإشادة (تظهر لولي الأمر)
+          </label>
+          <textarea
+            id="eval-notes"
+            value={formData.notes}
+            onChange={(e) => onChange({ ...formData, notes: e.target.value })}
+            rows={3}
+            className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main"
+            placeholder="مثال: أداء ممتاز اليوم وتفاعل رائع..."
+          />
+        </div>
+      </div>
     </div>
 
-    {/* Notes */}
-    <div>
-      <label htmlFor="eval-notes" className="mb-2 block text-xs font-bold text-muted">
-        رسالة الإشادة (تظهر لولي الأمر)
-      </label>
-      <textarea
-        id="eval-notes"
-        value={formData.notes}
-        onChange={(e) => onChange({ ...formData, notes: e.target.value })}
-        rows={3}
-        className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main"
-        placeholder="مثال: أداء ممتاز اليوم..."
-      />
-    </div>
-
-    {/* Footer */}
-    <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row">
+    {/* Footer — زر الإلغاء بالأحمر الفاقع وزر الإرسال */}
+    <div className="flex flex-col-reverse gap-2.5 border-t border-border pt-4 sm:flex-row">
       {onCancel && (
         <button
           type="button"
           onClick={onCancel}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-error py-3 text-xs font-black text-on-error transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-error px-5 py-3 text-xs font-black text-on-error shadow-button transition-all hover:bg-error-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           إلغاء
         </button>
@@ -142,9 +147,9 @@ export const EvaluationFormFields = ({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-black text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : submitLabel}
+        <CheckCircle2 size={15} /> {isSubmitting ? 'جاري الإرسال...' : submitLabel}
       </button>
     </div>
   </form>

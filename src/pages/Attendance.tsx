@@ -215,17 +215,26 @@ export const Attendance = () => {
 
   return (
     <div
-      className="from-primary/8 relative min-h-full bg-gradient-to-b via-background to-background font-sans"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background font-sans"
       dir="rtl"
     >
+      {/* زخارف خلفية علوية ناعمة لتحسين تداخل الألوان */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute -top-28 start-[12%] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -top-16 end-[8%] h-56 w-56 rounded-full bg-primary/5 blur-3xl" />
+      </div>
+
       {/* Mobile view */}
       <div className="md:hidden">
         <MobileAttendance />
       </div>
 
       {/* Desktop view */}
-      <div className="hidden md:block">
-        <div className="space-y-4">
+      <div className="relative z-10 hidden md:block">
+        <div className="mx-auto max-w-page space-y-4 px-4 pt-3 md:space-y-5 md:px-6 md:pt-5">
           {/* Hero — internally divided: identity | stats */}
           <GradientHeroCard
             icon={UserCheck}

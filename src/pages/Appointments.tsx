@@ -66,14 +66,6 @@ export const Appointments = () => {
     [searchedAppointments, filterDay],
   )
 
-  const dayCounts = useMemo(() => {
-    const counts: Record<string, number> = {}
-    for (const appointment of searchedAppointments) {
-      counts[appointment.day] = (counts[appointment.day] || 0) + 1
-    }
-    return counts
-  }, [searchedAppointments])
-
   const appointmentsByDay = useMemo(
     () =>
       DAYS_OF_WEEK.map((day) => ({
@@ -134,7 +126,7 @@ export const Appointments = () => {
 
   return (
     <div
-      className="from-primary/8 relative min-h-full bg-gradient-to-b via-background to-background"
+      className="relative min-h-full bg-gradient-to-b from-primary-soft via-background to-background"
       dir="rtl"
     >
       <div className="hidden px-2 md:block">
@@ -163,7 +155,6 @@ export const Appointments = () => {
               onTeacherChange={setFilterTeacher}
               uniqueTeachers={uniqueTeachers}
               todayName={todayName}
-              dayCounts={dayCounts}
               hasActiveFilters={hasActiveFilters}
               onReset={handleResetFilters}
             />

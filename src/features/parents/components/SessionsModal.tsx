@@ -121,7 +121,7 @@ export const SessionsModal = ({
             </div>
             <button
               onClick={onClose}
-              className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
+              className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-error text-on-error shadow-button outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-white active:scale-95 md:h-8 md:w-8"
               aria-label="إغلاق"
             >
               <X size={16} />

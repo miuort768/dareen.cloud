@@ -31,8 +31,8 @@ export const AppointmentDetailsSheet = ({
     }}
     title="تفاصيل الموعد"
     subtitle={appointment?.day}
-    headerClassName="bg-error border-b-white/10 [&_[data-slot=bst-title]]:text-on-error [&_[data-slot=bst-desc]]:text-white/80"
-    closeClassName="border-transparent bg-error text-on-error hover:bg-error-hover"
+    headerClassName="bg-gradient-to-l from-primary via-primary-deep to-primary-hover border-b-white/10 [&_[data-slot=bst-title]]:text-on-primary [&_[data-slot=bst-desc]]:text-white/85"
+    closeClassName="border-transparent bg-error text-on-error hover:bg-error-hover shadow-sm"
     footer={
       activeTab === 'upcoming' && canComplete && appointment ? (
         <button

@@ -15,12 +15,7 @@ import {
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
-import {
-  MobilePage,
-  usePullToRefresh,
-  MobileSkeleton,
-  DayDropdown,
-} from '../../../shared/components/mobile'
+import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
 import { normalizeDayName, to24Minutes } from '../../attendance/utils/slotUtils'
 import { appointmentTeacherKeyOf } from '../../appointments/types'
 
@@ -365,12 +360,31 @@ export const MobileSchedule = () => {
 
         {/* ===== DAY FILTER ===== */}
         <div className="pb-1 pt-3">
-          <DayDropdown
-            selectedDay={selectedDay}
-            onSelectDay={setSelectedDay}
-            todayName={todayName}
-            dayCounts={countsByDay}
-          />
+          <div className="relative">
+            <CalendarDays
+              size={14}
+              className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-primary"
+            />
+            <select
+              aria-label="تصفية حسب اليوم"
+              value={selectedDay}
+              onChange={(e) => setSelectedDay(e.target.value)}
+              className={`h-11 w-full appearance-none rounded-2xl border bg-card pe-3 ps-9 text-xs font-bold text-main shadow-soft outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+                selectedDay !== 'all' ? 'border-primary text-primary' : 'border-border'
+              }`}
+            >
+              <option value="all">كل الأيام</option>
+              {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(
+                (day) => (
+                  <option key={day} value={day}>
+                    {day}
+                    {day === todayName ? ' (اليوم)' : ''}
+                    {countsByDay[day] ? ` — ${countsByDay[day]}` : ''}
+                  </option>
+                ),
+              )}
+            </select>
+          </div>
         </div>
 
         {/* ===== NEXT SESSION BANNER ===== */}

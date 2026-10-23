@@ -197,10 +197,19 @@ export const Announcements = () => {
 
   return (
     <div
-      className="from-primary/8 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-2"
+      className="relative min-h-full overflow-x-hidden bg-gradient-to-b from-primary-soft via-background to-background pb-2 font-sans"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+      {/* زخارف خلفية علوية ناعمة لتخفيف حدة البياض */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute -top-28 start-[12%] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -top-16 end-[8%] h-56 w-56 rounded-full bg-primary/5 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-page space-y-4 px-4 pt-3 md:space-y-5 md:px-6 md:pt-8">
         {/* Header — unified PageHeader pattern */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <PageHeader
@@ -237,7 +246,7 @@ export const Announcements = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-3xl border border-border bg-card p-5 shadow-soft transition-shadow hover:shadow-elevation-1"
+                  className="rounded-3xl border border-border bg-surface p-5 shadow-soft transition-all hover:bg-card hover:shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-xl p-2.5', kpi.iconBg)}>

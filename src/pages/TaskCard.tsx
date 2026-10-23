@@ -34,17 +34,16 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
         </span>
 
         <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0 flex-1">
-              <span
-                className={cn(
-                  'inline-flex max-w-full items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-sm font-black text-main',
-                  isCompleted && 'line-through opacity-60',
-                )}
-              >
-                <span className="truncate">{task.title}</span>
-              </span>
-            </div>
+          <div className="flex items-center justify-between gap-2">
+            {/* عنوان المهمة — مستطيل واضح بجانب السهم */}
+            <span
+              className={cn(
+                'inline-flex min-w-0 flex-1 items-center rounded-xl border border-primary/25 bg-primary-soft px-3 py-1.5 text-sm font-black text-main',
+                isCompleted && 'line-through opacity-60',
+              )}
+            >
+              <span className="truncate">{task.title}</span>
+            </span>
             <span
               className={cn(
                 'shrink-0 rounded-full border border-current px-2.5 py-0.5 text-micro font-bold',

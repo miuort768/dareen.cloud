@@ -104,8 +104,8 @@ export const EvaluationCard = ({
           <h4 className="truncate text-sm font-black text-main">{student.name}</h4>
           <div className="mt-1 flex flex-wrap items-center gap-1.5">
             {student.grade && (
-              <span className="inline-flex items-center gap-1 rounded-lg bg-surface px-2 py-0.5 text-[10px] font-bold text-muted ring-1 ring-border">
-                <GraduationCap size={10} className="text-dim" />
+              <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5 text-[10px] font-bold text-warning ring-1 ring-warning-light">
+                <GraduationCap size={11} className="text-warning" />
                 {student.grade}
               </span>
             )}
@@ -211,7 +211,7 @@ export const EvaluationCard = ({
       {/* Actions */}
       <div
         className={cn(
-          'grid gap-1.5 border-t border-border bg-surface p-3',
+          'grid gap-2 border-t border-border bg-surface p-3',
           isParent ? 'grid-cols-1' : 'grid-cols-3',
         )}
       >
@@ -220,9 +220,9 @@ export const EvaluationCard = ({
             onClick={() => togglePanel('evaluate')}
             aria-label={`إضافة تقييم لـ ${student.name}`}
             aria-expanded={expanded === 'evaluate'}
-            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
-            <Plus size={12} /> تقييم
+            <Plus size={13} /> تقييم
           </button>
         )}
         <button
@@ -231,14 +231,14 @@ export const EvaluationCard = ({
           className={cn(
             'flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             isParent
-              ? 'bg-primary text-on-primary hover:bg-primary/90'
+              ? 'bg-primary text-on-primary shadow-button hover:bg-primary-hover'
               : expanded === 'history'
-                ? 'border border-primary bg-primary-soft text-primary'
-                : 'border border-border bg-card text-main hover:border-primary/30 hover:bg-hover',
+                ? 'border border-primary bg-primary text-on-primary shadow-button'
+                : 'shadow-xs border border-primary/25 bg-primary-soft text-primary hover:bg-primary hover:text-on-primary',
           )}
         >
           <History size={12} /> السجل
-          <span className="me-0.5 rounded-md bg-primary-soft px-1 py-0.5 text-[10px] font-bold text-primary dark:bg-primary/10">
+          <span className="me-0.5 rounded-md bg-card px-1 py-0.5 text-[10px] font-black tabular-nums">
             {studentEvals.length}
           </span>
         </button>
@@ -248,10 +248,10 @@ export const EvaluationCard = ({
             aria-label={`عرض ملف ${student.name}`}
             aria-expanded={expanded === 'profile'}
             className={cn(
-              'flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+              'shadow-xs flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
               expanded === 'profile'
                 ? 'border border-primary bg-primary-soft text-primary'
-                : 'border border-border bg-card text-main hover:border-primary/30 hover:bg-hover',
+                : 'border border-border bg-surface text-main hover:border-primary/30 hover:bg-hover hover:text-primary',
             )}
           >
             <User size={12} /> الملف

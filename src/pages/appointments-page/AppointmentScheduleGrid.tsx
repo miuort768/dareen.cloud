@@ -25,6 +25,59 @@ interface AppointmentScheduleGridProps {
   onShowWeek?: () => void
 }
 
+// لون مختلف لكل يوم من أيام الأسبوع
+const DAY_PALETTE: Record<string, { header: string; border: string; text: string; badge: string }> =
+  {
+    السبت: {
+      header: 'bg-gradient-to-l from-success to-success-hover',
+      border: 'border-success',
+      text: 'text-on-success',
+      badge: 'bg-white/20 text-on-success',
+    },
+    الأحد: {
+      header: 'bg-gradient-to-l from-info to-info-hover',
+      border: 'border-info',
+      text: 'text-on-info',
+      badge: 'bg-white/20 text-on-info',
+    },
+    الاثنين: {
+      header: 'bg-gradient-to-l from-warning to-warning-hover',
+      border: 'border-warning',
+      text: 'text-on-warning',
+      badge: 'bg-white/20 text-on-warning',
+    },
+    الثلاثاء: {
+      header: 'bg-gradient-to-l from-primary via-primary-deep to-primary-hover',
+      border: 'border-primary/40',
+      text: 'text-on-primary',
+      badge: 'bg-white/20 text-on-primary',
+    },
+    الأربعاء: {
+      header: 'bg-chart-1',
+      border: 'border-chart-1',
+      text: 'text-on-primary',
+      badge: 'bg-white/20 text-on-primary',
+    },
+    الخميس: {
+      header: 'bg-gradient-to-l from-error to-error-hover',
+      border: 'border-error',
+      text: 'text-on-error',
+      badge: 'bg-white/20 text-on-error',
+    },
+    الجمعة: {
+      header: 'bg-chart-4',
+      border: 'border-chart-4',
+      text: 'text-on-primary',
+      badge: 'bg-white/20 text-on-primary',
+    },
+  }
+const DEFAULT_PALETTE = {
+  header: 'bg-gradient-to-l from-primary to-primary-deep',
+  border: 'border-primary/40',
+  text: 'text-on-primary',
+  badge: 'bg-white/20 text-on-primary',
+}
+
 export const AppointmentScheduleGrid = ({
   appointmentsByDay,
   todayName,
@@ -108,6 +161,9 @@ export const AppointmentScheduleGrid = ({
         .filter((d) => !hideEmptyDays || d.appointments.length > 0)
         .map(({ day, appointments }) => {
           const isToday = day === todayName
+          const palette = isToday
+            ? { ...DEFAULT_PALETTE, border: 'border-primary/50' }
+            : (DAY_PALETTE[day] ?? DEFAULT_PALETTE)
           return (
             <motion.div
               key={day}
@@ -116,30 +172,22 @@ export const AppointmentScheduleGrid = ({
               transition={{ duration: 0.25 }}
               className={cn(
                 'overflow-hidden rounded-3xl border bg-card transition-shadow',
-                isToday ? 'border-primary shadow-elevation-1' : 'border-border shadow-soft',
+                isToday ? 'border-primary shadow-elevation-1' : `${palette.border} shadow-soft`,
               )}
             >
               {/* Day header */}
               <div
                 className={cn(
                   'flex items-center justify-between border-b px-4 py-2.5',
-                  isToday
-                    ? 'border-primary bg-gradient-to-l from-primary to-primary-deep'
-                    : 'border-info bg-info',
+                  palette.border,
+                  palette.header,
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <Calendar size={13} className={isToday ? 'text-on-primary' : 'text-on-info'} />
-                  <h3
-                    className={cn(
-                      'text-xs font-bold',
-                      isToday ? 'text-on-primary' : 'text-on-info',
-                    )}
-                  >
-                    {day}
-                  </h3>
+                  <Calendar size={13} className={palette.text} />
+                  <h3 className={cn('text-xs font-bold', palette.text)}>{day}</h3>
                   {isToday && (
-                    <span className="rounded-2xl bg-white/20 px-1.5 py-0.5 text-micro font-bold text-on-primary">
+                    <span className="rounded-2xl bg-white/20 px-1.5 py-0.5 text-micro font-bold text-white">
                       اليوم
                     </span>
                   )}
@@ -147,11 +195,7 @@ export const AppointmentScheduleGrid = ({
                 <span
                   className={cn(
                     'rounded-2xl px-2 py-0.5 text-micro font-bold tabular-nums',
-                    isToday
-                      ? 'bg-white/15 text-on-primary'
-                      : appointments.length > 0
-                        ? 'bg-white/25 text-on-info'
-                        : 'bg-border text-muted',
+                    appointments.length > 0 ? palette.badge : 'bg-white/10 text-white/70',
                   )}
                 >
                   {appointments.length} موعد

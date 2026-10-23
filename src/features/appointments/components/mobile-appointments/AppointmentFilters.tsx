@@ -1,6 +1,5 @@
 import { Search, X } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
-import { DayDropdown } from '../../../../shared/components/mobile'
 
 interface AppointmentFiltersProps {
   searchTerm: string
@@ -50,13 +49,26 @@ export const AppointmentFilters = ({
       />
     </div>
 
-    {/* قائمة الأيام المنسدلة */}
-    <DayDropdown
-      selectedDay={filterDay}
-      onSelectDay={onDayChange}
-      todayName={todayName}
-      dayCounts={dayCounts}
-    />
+    {/* قائمة الأيام المنسدلة — عادية ومألوفة */}
+    <div className="relative">
+      <select
+        aria-label="تصفية حسب اليوم"
+        value={filterDay}
+        onChange={(e) => onDayChange(e.target.value)}
+        className={`h-11 w-full appearance-none rounded-2xl border bg-card px-4 text-xs font-bold text-main shadow-soft outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+          filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
+        }`}
+      >
+        <option value="all">كل الأيام</option>
+        {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map((day) => (
+          <option key={day} value={day}>
+            {day}
+            {day === todayName ? ' (اليوم)' : ''}
+            {dayCounts[day] ? ` — ${dayCounts[day]} موعد` : ''}
+          </option>
+        ))}
+      </select>
+    </div>
 
     {/* شرائح المعلمات */}
     {uniqueTeachers.length > 1 && (

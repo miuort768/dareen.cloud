@@ -40,7 +40,14 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
     id: s.id || `ss-${i}`,
     title: `حصة ${s.subject || ''}`,
     meta: s.date || '',
-    detail: s.topics && s.homework ? `${s.topics} · الواجب: ${s.homework}` : s.topics || undefined,
+    detail:
+      s.topics && s.homework
+        ? `${s.topics} · الواجب: ${s.homework}`
+        : s.topics
+          ? s.topics
+          : s.homework
+            ? `الواجب: ${s.homework}`
+            : undefined,
     tone: sessionOutcome(s.status) === 'done' ? 'neutral' : 'negative',
   }))
 
