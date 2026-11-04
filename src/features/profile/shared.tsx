@@ -16,9 +16,9 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div
       dir="rtl"
-      className="profile-scope min-h-full overflow-x-hidden bg-background pb-6 md:pb-10"
+      className="profile-scope min-h-full overflow-x-hidden bg-background pb-10 md:pb-14"
     >
-      <div className="mx-auto max-w-page space-y-4 px-2 pt-2 md:space-y-5 md:p-6 md:pt-4">
+      <div className="mx-auto max-w-5xl space-y-4 px-3 pt-3 sm:px-4 sm:pt-4 md:space-y-6 md:px-6 md:pt-6">
         {children}
       </div>
     </div>
@@ -147,7 +147,7 @@ export const AccountHero = ({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative h-24 overflow-hidden rounded-3xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover shadow-elevation-3 md:h-32"
+          className="relative h-28 overflow-hidden rounded-[26px] bg-gradient-to-br from-jade via-jade-deep to-jade-hover shadow-elevation-2 md:h-36"
         >
           <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
             <svg width="100%" height="100%">
@@ -182,7 +182,7 @@ export const AccountHero = ({
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative z-10 mx-3 -mt-8 rounded-2xl border border-border bg-card px-4 pb-4 pt-4 shadow-elevation-3 dark:border-white/[0.06] dark:bg-surface md:mx-6 md:-mt-10 md:px-5 md:pb-5 md:pt-5"
+          className="border-border/80 bg-card/95 dark:bg-card/95 relative z-10 mx-2 -mt-10 rounded-2xl border px-4 pb-4 pt-4 shadow-elevation-3 backdrop-blur-md dark:border-white/[0.08] sm:mx-4 sm:-mt-12 md:mx-6 md:px-6 md:pb-6 md:pt-5"
         >
           <div className="flex flex-wrap items-end gap-x-3.5 gap-y-3">
             {/* شعار المنصة + نقطة الحالة */}
@@ -396,7 +396,7 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
           <Icon size={16} />
         </span>
       )}
-      <div className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 transition-colors duration-normal hover:border-jade-light dark:bg-background sm:rounded-xl">
+      <div className="border-border/80 bg-surface/80 hover:border-jade/30 dark:bg-background/80 min-w-0 flex-1 rounded-xl border px-3.5 py-2.5 transition-all duration-normal hover:bg-surface sm:rounded-xl">
         <p className="text-micro font-normal text-muted">{label}</p>
         {empty ? (
           <p className="mt-0.5 text-xs font-normal text-muted sm:text-sm">—</p>
