@@ -225,7 +225,10 @@ export const Tasks = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="إنشاء مهمة جديدة"
-          className={cn(FAB_SURFACE, 'fixed bottom-6 end-6 z-50 h-14 w-14 rounded-2xl')}
+          className={cn(
+            FAB_SURFACE,
+            'fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 h-14 w-14 rounded-2xl md:bottom-6 md:end-6',
+          )}
         >
           <Plus size={24} />
         </motion.button>

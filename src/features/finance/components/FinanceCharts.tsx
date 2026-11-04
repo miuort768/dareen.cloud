@@ -285,7 +285,7 @@ export const FinanceCharts = ({
                     <span className="text-[9px] font-bold tabular-nums text-main">
                       {(entry.value ?? 0).toLocaleString()}
                     </span>
-                    <span className="rounded bg-surface px-1 py-0.5 text-[8px] font-bold text-muted">
+                    <span className="rounded bg-surface px-1 py-0.5 text-[9px] font-bold text-muted">
                       {pct}%
                     </span>
                   </div>

@@ -119,7 +119,7 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
         <div className="min-w-0">
           <p className="truncate font-dash text-xs font-black text-accent">{highlight}</p>
           {highlightLabel && (
-            <p className="truncate text-[8px] font-bold text-muted">{highlightLabel}</p>
+            <p className="truncate text-[9px] font-bold text-muted">{highlightLabel}</p>
           )}
         </div>
 

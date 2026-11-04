@@ -245,7 +245,7 @@ const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => 
           </span>
           {event.teacherName && event.studentGrade && (
             <span
-              className={`ms-auto shrink-0 rounded-sm px-1 py-px text-[8px] font-black ${c.soft} ${c.text}`}
+              className={`ms-auto shrink-0 rounded-sm px-1 py-px text-[9px] font-black ${c.soft} ${c.text}`}
             >
               {event.studentGrade}
             </span>

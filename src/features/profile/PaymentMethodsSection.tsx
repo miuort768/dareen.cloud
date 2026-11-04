@@ -218,16 +218,13 @@ export const PaymentMethodsSection = () => {
       title="طرق الدفع"
       icon={CreditCard}
       description="إدارة طرق استلام مستحقاتك المالية."
-      descClassName="text-[8px] sm:text-micro"
+      descClassName="text-micro"
       delay={0.2}
       action={
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className={cn(
-              'min-h-11 px-3.5 py-2 text-[8px] font-bold sm:text-micro',
-              PRIMARY_BUTTON,
-            )}
+            className={cn('min-h-11 px-3.5 py-2 text-micro font-bold', PRIMARY_BUTTON)}
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>

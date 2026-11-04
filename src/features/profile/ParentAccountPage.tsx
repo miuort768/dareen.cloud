@@ -176,7 +176,7 @@ export const ParentAccountPage = () => {
                 icon={Users}
                 headerTone="primary"
                 description="الطلاب المرتبطون بحسابك"
-                descClassName="text-[8px] sm:text-micro"
+                descClassName="text-micro"
                 delay={0.15}
                 action={
                   <button

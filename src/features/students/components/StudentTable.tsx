@@ -72,7 +72,7 @@ export const StudentTable = memo(
                       {student.name || '—'}
                     </p>
                     {hasLowBalance && (
-                      <span className="animate-pulse rounded bg-error-soft px-1.5 py-0.5 text-[8px] font-bold text-error">
+                      <span className="animate-pulse rounded bg-error-soft px-1.5 py-0.5 text-[9px] font-bold text-error">
                         <AlertTriangle size={8} />
                       </span>
                     )}
