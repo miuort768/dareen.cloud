@@ -155,7 +155,7 @@ export const StatCard = ({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl border p-5 shadow-soft transition-all duration-slow hover:-translate-y-1 hover:shadow-elevation-1',
+        'border-border/80 group relative overflow-hidden rounded-2xl border p-5 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-elevation-2',
         s.card,
         className,
       )}
