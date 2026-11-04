@@ -187,7 +187,7 @@ export const AccountHero = ({
           <div className="flex flex-wrap items-end gap-x-3.5 gap-y-3">
             {/* شعار المنصة + نقطة الحالة */}
             <div className="relative -mt-12 shrink-0 md:-mt-14">
-              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-white shadow-elevation-1 ring-1 ring-border dark:ring-white/15 md:h-24 md:w-24">
+              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-white shadow-elevation-3 ring-4 ring-card dark:bg-slate-900 dark:ring-surface md:h-24 md:w-24">
                 <Image
                   src="/dareen_logo_new.v2.webp"
                   webpSrc="/dareen_logo_new.v2.webp"
@@ -219,7 +219,7 @@ export const AccountHero = ({
             {onEdit && (
               <button
                 onClick={onEdit}
-                className="hidden min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-normal text-jade-on shadow-elevation-1 transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:flex md:px-5 md:text-xs"
+                className="hidden min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-jade to-jade-deep px-5 py-2.5 text-xs font-medium text-jade-on shadow-elevation-2 transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:flex"
               >
                 <PencilLine size={13} /> تعديل البيانات
               </button>
@@ -241,7 +241,7 @@ export const AccountHero = ({
           {onEdit && (
             <button
               onClick={onEdit}
-              className="mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-normal text-jade-on shadow-elevation-1 transition-all hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:hidden"
+              className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-jade to-jade-deep px-5 py-2.5 text-xs font-medium text-jade-on shadow-elevation-2 transition-all hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:hidden"
             >
               <PencilLine size={13} /> تعديل البيانات
             </button>
@@ -396,7 +396,7 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
           <Icon size={16} />
         </span>
       )}
-      <div className="border-border/80 bg-surface/80 hover:border-jade/30 dark:bg-background/80 min-w-0 flex-1 rounded-xl border px-3.5 py-2.5 transition-all duration-normal hover:bg-surface sm:rounded-xl">
+      <div className="border-border/80 bg-surface/70 hover:border-jade/30 dark:bg-card/60 min-w-0 flex-1 rounded-xl border px-4 py-2.5 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:bg-surface hover:shadow-elevation-2 sm:rounded-xl">
         <p className="text-micro font-normal text-muted">{label}</p>
         {empty ? (
           <p className="mt-0.5 text-xs font-normal text-muted sm:text-sm">—</p>
@@ -488,14 +488,14 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
           href={`https://wa.me/${supportPhone}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-normal text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-jade to-jade-deep px-5 py-3 text-xs font-medium text-jade-on shadow-elevation-2 transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           <MessageCircle size={14} /> تواصل مع الدعم الفني
         </a>
       )}
       <button
         onClick={handleLogout}
-        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-normal text-on-error shadow-soft transition-all hover:-translate-y-0.5 hover:bg-error-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+        className="border-error/20 bg-error-soft/60 dark:border-error/30 dark:bg-error/10 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border px-5 py-3 text-xs font-medium text-error transition-all hover:-translate-y-0.5 hover:bg-error hover:text-on-error hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
       >
         <LogOut size={14} /> تسجيل الخروج
       </button>
@@ -532,7 +532,7 @@ export const ErrorBlock = ({ onRetry }: ErrorBlockProps) => (
     <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
     <button
       onClick={onRetry}
-      className="mx-auto mt-4 flex min-h-11 items-center rounded-full bg-jade-deep px-6 py-2.5 text-xs font-normal text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+      className="mx-auto mt-4 flex min-h-11 items-center rounded-xl bg-gradient-to-r from-jade to-jade-deep px-6 py-2.5 text-xs font-medium text-jade-on shadow-elevation-2 transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
     >
       إعادة المحاولة
     </button>
