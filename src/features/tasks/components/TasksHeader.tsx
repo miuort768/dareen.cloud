@@ -26,7 +26,7 @@ const statusFilters = [
 ]
 
 const ADD_BUTTON =
-  'flex items-center gap-1.5 rounded-full bg-primary px-4 text-xs font-normal text-on-primary shadow-elevation-2 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
+  'flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary-hover px-4.5 py-2.5 text-xs font-medium text-on-primary shadow-elevation-2 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-3 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
 
 interface TasksStat {
   title: string

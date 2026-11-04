@@ -218,7 +218,7 @@ export const MobileTasks = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
                   className={cn(
-                    'overflow-hidden rounded-none border border-border bg-card shadow-elevation-1',
+                    'border-border/80 overflow-hidden rounded-2xl border bg-card shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2',
                     done && 'opacity-80',
                   )}
                 >
