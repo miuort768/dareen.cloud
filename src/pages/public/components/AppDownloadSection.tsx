@@ -20,7 +20,7 @@ export const AppDownloadSection = () => {
                   تطبيق دارين السابعة
                 </span>
               </div>
-              <h2 className="mb-2 font-heading text-lg font-black leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
+              <h2 className="mb-2 font-heading text-lg font-bold leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
                 حمل التطبيق الآن
               </h2>
               <p className="mx-auto mb-6 max-w-xl text-xs font-medium leading-relaxed text-muted dark:text-muted lg:text-xs">
@@ -80,7 +80,7 @@ export const AppDownloadSection = () => {
             </div>
           </div>
           <div className="mb-2 text-center">
-            <h2 className="font-heading text-2xl font-black leading-tight text-main dark:text-main">
+            <h2 className="font-heading text-2xl font-bold leading-tight text-main dark:text-main">
               حمل التطبيق الآن
             </h2>
           </div>

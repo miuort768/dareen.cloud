@@ -118,7 +118,7 @@ export const Home = () => {
             href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-extrabold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-semibold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
           >
             <Headphones className="h-2.5 w-2.5 shrink-0" /> طلب حصة مجانية
           </a>
@@ -134,7 +134,7 @@ export const Home = () => {
             <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                  <h1 className="mb-0.5 text-lg font-black leading-tight text-main dark:text-main">
+                  <h1 className="mb-0.5 text-lg font-bold leading-tight text-main dark:text-main">
                     {slide.title}
                     {heroIndex === 0 && (
                       <span className="text-success-dark dark:text-primary">
@@ -160,7 +160,7 @@ export const Home = () => {
                     </Link>
                     <Link
                       to={isAuthenticated ? '/dashboard' : '/login'}
-                      className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-extrabold text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                      className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-semibold text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                     >
                       {isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}
                     </Link>
@@ -225,7 +225,7 @@ export const Home = () => {
                       <f.icon className={`${s.text} dark:text-primary`} size={20} />
                     </div>
                     <div className="min-w-0">
-                      <span className="mb-0 block text-micro font-black leading-tight text-main dark:text-main">
+                      <span className="mb-0 block text-micro font-bold leading-tight text-main dark:text-main">
                         {f.label}
                       </span>
                       <span className="dark:text-soft block text-micro font-medium leading-tight text-main">
@@ -245,7 +245,7 @@ export const Home = () => {
         </AnimateOnScroll>
         <section className="px-1">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-black text-main dark:text-main">أحدث الدورات</h2>
+            <h2 className="text-lg font-bold text-main dark:text-main">أحدث الدورات</h2>
             <Link
               to="/courses"
               className="flex items-center gap-1 text-sm font-bold text-primary dark:text-primary"
@@ -289,15 +289,13 @@ export const Home = () => {
                   <div className="relative h-24 overflow-hidden bg-surface dark:bg-background">
                     <Image src={c.image} alt={c.title} className="h-24" />
                     <span
-                      className={`absolute start-2 top-2 rounded-full px-2 py-0.5 text-micro font-black shadow-elevation-1 ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning dark:bg-primary dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary' : 'bg-error text-on-error'}`}
+                      className={`absolute start-2 top-2 rounded-full px-2 py-0.5 text-micro font-bold shadow-elevation-1 ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning dark:bg-primary dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary' : 'bg-error text-on-error'}`}
                     >
                       {stages.find((cat) => cat.value === c.category)?.label || c.category}
                     </span>
                   </div>
                   <div className="p-3">
-                    <h3 className="mb-0.5 text-xs font-black text-main dark:text-main">
-                      {c.title}
-                    </h3>
+                    <h3 className="mb-0.5 text-xs font-bold text-main dark:text-main">{c.title}</h3>
                     <p className="mb-2 line-clamp-1 text-xs font-medium text-muted dark:text-muted">
                       {c.desc}
                     </p>

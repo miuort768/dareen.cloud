@@ -79,7 +79,7 @@ export const FloatingActions = () => {
               {/* Hover Label */}
               <div className="pointer-events-none absolute end-full top-1/2 me-4 -translate-y-1/2 overflow-hidden md:start-full md:ms-4">
                 <motion.div className="-translate-x-4 rounded-full border border-white/20 bg-white/80 px-3 py-1.5 opacity-0 shadow-elevation-4 backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 dark:border-border dark:bg-card md:translate-x-4">
-                  <span className="whitespace-nowrap text-micro font-black uppercase tracking-wider text-main">
+                  <span className="whitespace-nowrap text-micro font-bold uppercase tracking-wider text-main">
                     {action.label}
                   </span>
                 </motion.div>

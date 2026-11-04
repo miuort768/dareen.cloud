@@ -60,12 +60,12 @@ export const MasarSection = () => {
                 <div className="mb-6 flex items-center justify-center gap-4 lg:justify-start">
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 backdrop-blur-md dark:border-primary/40 dark:bg-primary/20">
                     <Download className="h-3.5 w-3.5 animate-pulse text-warning dark:text-primary" />
-                    <span className="text-xs font-black uppercase tracking-widest text-on-primary dark:text-primary">
+                    <span className="text-xs font-bold uppercase tracking-widest text-on-primary dark:text-primary">
                       بوابة الكتب والملخصات
                     </span>
                   </div>
                 </div>
-                <h2 className="mb-3 font-heading text-lg font-black leading-tight sm:text-xl md:text-2xl lg:text-3xl">
+                <h2 className="mb-3 font-heading text-lg font-bold leading-tight sm:text-xl md:text-2xl lg:text-3xl">
                   <span className="text-on-primary dark:text-main">مركز</span>
                   <span className="text-shadow-none inline-block -rotate-1 transform whitespace-nowrap bg-primary px-3 py-1 text-on-primary shadow-elevation-3 dark:bg-primary dark:text-on-primary md:px-5 md:py-1">
                     دارين السابعة
@@ -93,7 +93,7 @@ export const MasarSection = () => {
                 <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
                   <Link
                     to="/books"
-                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-black text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-warning"
+                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-bold text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-warning"
                   >
                     <FileText className="h-6 w-6 transition-transform group-hover:scale-110" />
                     <span>تحميل مذكرة</span>
@@ -103,7 +103,7 @@ export const MasarSection = () => {
                     href={`https://wa.me/${contactUsNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 rounded-xl border border-white/20 bg-white/5 px-10 py-4 text-lg font-black text-on-primary backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 dark:border-primary/30 dark:bg-primary/10 dark:text-primary dark:hover:border-primary/50 dark:hover:bg-primary/20"
+                    className="flex items-center justify-center gap-3 rounded-xl border border-white/20 bg-white/5 px-10 py-4 text-lg font-bold text-on-primary backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 dark:border-primary/30 dark:bg-primary/10 dark:text-primary dark:hover:border-primary/50 dark:hover:bg-primary/20"
                   >
                     <MessageCircle className="h-6 w-6" />
                     <span>تواصل معنا</span>
@@ -139,7 +139,7 @@ export const MasarSection = () => {
 
           <div className="mb-5 flex items-center justify-between rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 dark:border-primary/30 dark:bg-card">
             <div>
-              <h2 className="text-lg font-black text-main dark:text-main">بوابة الكتب والملخصات</h2>
+              <h2 className="text-lg font-bold text-main dark:text-main">بوابة الكتب والملخصات</h2>
               <p className="mt-0.5 text-xs font-medium text-muted dark:text-muted">
                 جميع المذكرات في مكان واحد
               </p>
@@ -152,7 +152,7 @@ export const MasarSection = () => {
           <div className="mb-5 rounded-3xl bg-gradient-to-br from-primary via-primary-hover to-primary p-6 shadow-elevation-3 shadow-primary/20 dark:from-primary dark:via-warning dark:to-primary dark:shadow-primary/20">
             <div className="mb-4 flex items-center gap-4">
               <div className="relative">
-                <span className="text-sm font-black text-on-primary dark:text-on-primary">
+                <span className="text-sm font-bold text-on-primary dark:text-on-primary">
                   مركز دارين السابعة
                 </span>
                 <div className="absolute -bottom-1 start-0 h-0.5 w-full rounded-full bg-white/80 shadow-elevation-1 dark:bg-black/30"></div>
@@ -170,7 +170,7 @@ export const MasarSection = () => {
             <div className="flex flex-col gap-3">
               <Link
                 to="/books"
-                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-white/20 to-white/30 py-4 text-base font-black text-on-primary shadow-elevation-3 shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-primary/50 dark:from-black/20 dark:to-black/30 dark:text-on-primary dark:shadow-black/20"
+                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-white/20 to-white/30 py-4 text-base font-bold text-on-primary shadow-elevation-3 shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-primary/50 dark:from-black/20 dark:to-black/30 dark:text-on-primary dark:shadow-black/20"
               >
                 <FileText size={20} />
                 <span>تحميل مذكرة</span>

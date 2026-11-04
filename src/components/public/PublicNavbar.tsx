@@ -82,7 +82,7 @@ export const PublicNavbar = () => {
                 isAuthenticated ? 'hidden md:flex' : 'flex',
               )}
             >
-              <p className="site-title text-sm font-black leading-tight text-primary dark:text-main md:text-base md:dark:text-primary">
+              <p className="site-title text-sm font-bold leading-tight text-primary dark:text-main md:text-base md:dark:text-primary">
                 {academyName}
               </p>
               <span className="mt-0.5 hidden items-center gap-1.5 text-xs font-bold italic text-primary dark:text-main md:dark:text-primary lg:inline-flex">

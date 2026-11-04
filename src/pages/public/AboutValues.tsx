@@ -10,9 +10,9 @@ export const AboutValues = () => (
       <AnimateOnScroll animation="fadeUp">
         <div className="mb-8 text-center">
           <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-3 py-1 shadow-elevation-3 shadow-primary/20">
-            <span className="text-micro font-black text-on-primary">دستورنا التعليمي</span>
+            <span className="text-micro font-bold text-on-primary">دستورنا التعليمي</span>
           </div>
-          <h2 className="mb-4 font-heading text-2xl font-black text-main md:text-4xl">
+          <h2 className="mb-4 font-heading text-2xl font-bold text-main md:text-4xl">
             القيم التي <span className="text-primary">تُحدد هويتنا</span>
           </h2>
           <div className="mx-auto mb-6 h-1 w-20 bg-warning"></div>
@@ -37,7 +37,7 @@ export const AboutValues = () => (
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-primary to-primary text-on-primary shadow-elevation-3 shadow-primary/20">
                 <Shield className="h-6 w-6" />
               </div>
-              <h3 className="font-heading text-lg font-black text-main md:text-xl">الأمانة</h3>
+              <h3 className="font-heading text-lg font-bold text-main md:text-xl">الأمانة</h3>
             </div>
             <p className="text-xs font-medium leading-relaxed text-muted md:text-sm">
               نلتزم بأعلى معايير النزاهة والصدق في كل تفاعل تعليمي، لنكون الشريك الموثوق لمستقبل
@@ -54,7 +54,7 @@ export const AboutValues = () => (
               <div className="shadow-l flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-warning to-warning text-on-warning">
                 <Lightbulb className="h-6 w-6" />
               </div>
-              <h3 className="font-heading text-lg font-black text-main md:text-xl">الابتكار</h3>
+              <h3 className="font-heading text-lg font-bold text-main md:text-xl">الابتكار</h3>
             </div>
             <p className="text-xs font-medium leading-relaxed text-muted md:text-sm">
               نطور أدواتنا باستمرار لنجعل من رحلة العلم تجربة استثنائية مشوقة تفتح آفاق العقل.
@@ -70,7 +70,7 @@ export const AboutValues = () => (
               <div className="shadow-l flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-success to-success text-on-success">
                 <Award className="h-6 w-6" />
               </div>
-              <h3 className="font-heading text-lg font-black text-main md:text-xl">التميز</h3>
+              <h3 className="font-heading text-lg font-bold text-main md:text-xl">التميز</h3>
             </div>
             <p className="text-xs font-medium leading-relaxed text-muted md:text-sm">
               لا نرضى بأقل من الجودة الفائقة في كل برنامج نقدمه، لضمان مخرجات تعليمية تليق بطلابنا.
@@ -86,7 +86,7 @@ export const AboutValues = () => (
               <div className="shadow-l flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-error to-error text-on-error">
                 <Compass className="h-6 w-6" />
               </div>
-              <h3 className="font-heading text-lg font-black text-main md:text-xl">بناء الجيل</h3>
+              <h3 className="font-heading text-lg font-bold text-main md:text-xl">بناء الجيل</h3>
             </div>
             <p className="text-xs font-medium leading-relaxed text-muted md:text-sm">
               نركز على صقل شخصية الطالب ومهاراته القيادية ليكون منارة للتغيير الإيجابي في المجتمع.

@@ -65,12 +65,12 @@ export const RefundPolicy = () => {
         <div className="container relative z-10 mx-auto px-4 text-center">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/20 px-4 py-1.5 backdrop-blur-sm md:border-primary md:bg-primary-soft">
             <Sparkles size={12} className="text-on-primary md:text-primary" />
-            <span className="text-micro font-black text-on-primary md:text-micro md:text-primary">
+            <span className="text-micro font-bold text-on-primary md:text-micro md:text-primary">
               السياسات المالية
             </span>
           </div>
 
-          <h1 className="mb-1 font-heading text-lg font-black leading-tight text-on-primary md:mb-3 md:text-5xl md:text-main">
+          <h1 className="mb-1 font-heading text-lg font-bold leading-tight text-on-primary md:mb-3 md:text-5xl md:text-main">
             سياسة{' '}
             <span className="inline-block py-1 text-warning md:bg-gradient-to-r md:from-info md:to-primary md:bg-clip-text md:text-transparent dark:md:from-info dark:md:to-primary">
               الاسترجاع
@@ -99,7 +99,7 @@ export const RefundPolicy = () => {
                 <ShieldCheck className="h-6 w-6 text-info" />
               </div>
               <div>
-                <h2 className="mb-2 text-xl font-black text-main md:text-2xl">مبادئ عامة</h2>
+                <h2 className="mb-2 text-xl font-bold text-main md:text-2xl">مبادئ عامة</h2>
                 <p className="text-sm leading-relaxed text-muted md:text-base">
                   في دارين السابعة، نسعى لتقديم خدمة تعليمية متميزة. تهدف هذه السياسة إلى ضمان
                   الشفافية والعدالة لكل من الطالب والمعهد فيما يخص الرسوم المدفوعة وإجراءات الإلغاء.
@@ -115,7 +115,7 @@ export const RefundPolicy = () => {
                 <CreditCard className="h-6 w-6 text-success" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-black text-main">حالات طلب الاسترداد</h2>
+                <h2 className="mb-3 text-2xl font-bold text-main">حالات طلب الاسترداد</h2>
                 <div className="space-y-4 text-muted">
                   <div className="border-s-4 border-success bg-success-light p-4 dark:bg-success-soft">
                     <h3 className="mb-1 font-bold text-main">قبل بدء الدورة:</h3>
@@ -150,7 +150,7 @@ export const RefundPolicy = () => {
                 <CalendarX className="h-6 w-6 text-error" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-black text-main">سياسة إلغاء الحصص</h2>
+                <h2 className="mb-3 text-2xl font-bold text-main">سياسة إلغاء الحصص</h2>
                 <div className="space-y-4 text-muted">
                   <ul className="ms-4 list-inside list-disc space-y-3">
                     <li>
@@ -179,7 +179,7 @@ export const RefundPolicy = () => {
                 <Clock className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-black text-main">إجراءات الاسترداد المالي</h2>
+                <h2 className="mb-3 text-2xl font-bold text-main">إجراءات الاسترداد المالي</h2>
                 <div className="space-y-2 leading-relaxed text-muted">
                   <p>
                     تستغرق عملية معالجة طلب الاسترداد من{' '}
@@ -199,7 +199,7 @@ export const RefundPolicy = () => {
                 <div className="flex h-8 w-8 items-center justify-center bg-warning-soft">
                   <AlertCircle className="h-4 w-4 text-warning" />
                 </div>
-                <h2 className="text-lg font-black text-main md:text-xl">المشاكل التقنية</h2>
+                <h2 className="text-lg font-bold text-main md:text-xl">المشاكل التقنية</h2>
               </div>
               <p className="relative z-10 text-sm font-medium leading-relaxed text-muted dark:text-main md:text-base">
                 في حال عدم إمكانية تقديم الحصة بسبب مشاكل تقنية من طرف المعهد، يتم تعويض الطالب بحصة
@@ -222,7 +222,7 @@ export const RefundPolicy = () => {
             <div className="absolute bottom-0 end-0 -mb-16 -me-16 h-32 w-32 rounded-full bg-white/10 blur-3xl"></div>
 
             <div className="relative z-10 text-center">
-              <h2 className="mb-2 text-2xl font-black text-on-primary dark:text-primary">
+              <h2 className="mb-2 text-2xl font-bold text-on-primary dark:text-primary">
                 تحتاج مساعدة بخصوص طلبك؟
               </h2>
               <p className="mx-auto mb-8 max-w-md whitespace-nowrap text-micro text-on-primary dark:text-primary md:whitespace-normal md:text-base">

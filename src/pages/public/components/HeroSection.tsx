@@ -30,7 +30,7 @@ export const HeroSection = ({
                   منصة تعليم عن بعد رائدة في الكويت والخليج
                 </span>
               </div>
-              <h1 className="relative mb-0 font-heading text-3xl font-black leading-none text-main dark:text-main lg:text-5xl">
+              <h1 className="relative mb-0 font-heading text-3xl font-bold leading-none text-main dark:text-main lg:text-5xl">
                 <span className="sr-only">
                   دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم 1 للدروس الخصوصية وتحفيظ القرآن
                   في الكويت، الكويت، الإمارات، قطر وسلطنة عمان ومملكة البحرين - دروس خصوصية في
@@ -53,7 +53,7 @@ export const HeroSection = ({
                 <Link
                   to="/courses"
                   onClick={() => window.scrollTo(0, 0)}
-                  className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary px-6 py-3 text-base font-extrabold text-on-primary shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:from-primary dark:to-warning dark:text-on-primary dark:shadow-primary/20 sm:px-10 sm:py-4 sm:text-lg"
+                  className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary px-6 py-3 text-base font-semibold text-on-primary shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:from-primary dark:to-warning dark:text-on-primary dark:shadow-primary/20 sm:px-10 sm:py-4 sm:text-lg"
                   aria-label="تصفح الدورات التعليمية"
                 >
                   <span>تصفح الدورات</span>
@@ -63,7 +63,7 @@ export const HeroSection = ({
                   href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + academyName)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-3 rounded-xl bg-success px-6 py-3 text-base font-extrabold text-on-success shadow-elevation-3 transition-all hover:bg-success-dark hover:shadow-elevation-4 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary sm:px-10 sm:py-4 sm:text-lg"
+                  className="group flex items-center justify-center gap-3 rounded-xl bg-success px-6 py-3 text-base font-semibold text-on-success shadow-elevation-3 transition-all hover:bg-success-dark hover:shadow-elevation-4 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary sm:px-10 sm:py-4 sm:text-lg"
                   aria-label="حجز حصة مجانية عبر واتساب"
                 >
                   <MessageCircle className="h-5 w-5" />
@@ -77,7 +77,7 @@ export const HeroSection = ({
                     <Users className="h-5 w-5 text-primary dark:text-primary" />
                   </div>
                   <div className="-ms-4 flex h-10 w-10 items-center justify-center rounded-full border-2 border-surface bg-success-light dark:border-background dark:bg-primary/20">
-                    <span className="text-xs font-black text-success dark:text-primary">+2k</span>
+                    <span className="text-xs font-bold text-success dark:text-primary">+2k</span>
                   </div>
                 </div>
                 <div className="text-start">
@@ -126,7 +126,7 @@ export const HeroSection = ({
                 key={idx}
                 className="group flex items-center justify-between gap-1 rounded-2xl border border-border bg-surface p-2 shadow-elevation-1 transition-all hover:shadow-elevation-2 dark:border-primary/20 dark:bg-card"
               >
-                <p className="dark:text-soft flex-1 text-micro font-black leading-tight text-main lg:text-xs">
+                <p className="dark:text-soft flex-1 text-micro font-bold leading-tight text-main lg:text-xs">
                   {text}
                 </p>
                 <a
@@ -134,7 +134,7 @@ export const HeroSection = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`سجل الآن: ${text}`}
-                  className="shrink-0 whitespace-nowrap rounded-xl bg-primary px-2.5 py-1 text-micro font-extrabold text-on-primary shadow-elevation-1 transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary lg:text-micro"
+                  className="shrink-0 whitespace-nowrap rounded-xl bg-primary px-2.5 py-1 text-micro font-semibold text-on-primary shadow-elevation-1 transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary lg:text-micro"
                 >
                   سجل الآن
                 </a>

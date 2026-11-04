@@ -55,7 +55,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     برامج تحفيظ متميزة
                   </span>
                 </div>
-                <h2 className="mb-4 font-heading text-lg font-black leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
+                <h2 className="mb-4 font-heading text-lg font-bold leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
                   رحلتك مع{' '}
                   <span className="relative inline-block text-success dark:text-primary">
                     كتاب الله
@@ -84,7 +84,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-extrabold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-semibold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                   >
                     <span>ابدأ الحفظ الآن</span>
                     <ArrowLeft
@@ -147,7 +147,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-surface text-primary dark:bg-primary/15 dark:text-primary">
                       <Clock className="h-5 w-5" />
                     </div>
-                    <h3 className="mb-1 text-xs font-black text-main dark:text-main">أوقات مرنة</h3>
+                    <h3 className="mb-1 text-xs font-bold text-main dark:text-main">أوقات مرنة</h3>
                     <p className="text-micro font-medium leading-tight text-muted dark:text-muted">
                       اختر مواعيدك المفضلة
                     </p>
@@ -160,7 +160,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-warning-soft text-warning dark:bg-primary/15 dark:text-primary">
                       <ClipboardCheck className="h-5 w-5" />
                     </div>
-                    <h3 className="mb-1 text-xs font-black text-main dark:text-main">
+                    <h3 className="mb-1 text-xs font-bold text-main dark:text-main">
                       متابعة دقيقة
                     </h3>
                     <p className="text-micro font-medium leading-tight text-muted dark:text-muted">
@@ -175,7 +175,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft text-success dark:bg-primary/15 dark:text-primary">
                       <Mic className="h-5 w-5" />
                     </div>
-                    <h3 className="mb-1 text-xs font-black text-main dark:text-main">
+                    <h3 className="mb-1 text-xs font-bold text-main dark:text-main">
                       معلمون مجازون
                     </h3>
                     <p className="text-micro font-medium leading-tight text-muted dark:text-muted">
@@ -193,10 +193,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 text-on-primary backdrop-blur-sm dark:bg-black/20 dark:text-on-primary">
                         <Sparkles className="h-5 w-5" />
                       </div>
-                      <h3 className="mb-1 text-xs font-black text-on-primary dark:text-on-primary">
+                      <h3 className="mb-1 text-xs font-bold text-on-primary dark:text-on-primary">
                         جرب مجاناً
                       </h3>
-                      <p className="text-micro font-extrabold leading-tight text-on-primary opacity-80 dark:text-on-primary">
+                      <p className="text-micro font-semibold leading-tight text-on-primary opacity-80 dark:text-on-primary">
                         حصة تجريبية للمشتركين
                       </p>
                     </Link>
@@ -226,7 +226,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
           </div>
 
           <div className="mb-5 text-center">
-            <h2 className="font-heading text-2xl font-black leading-tight text-main dark:text-main">
+            <h2 className="font-heading text-2xl font-bold leading-tight text-main dark:text-main">
               رحلتك مع{' '}
               <span className="relative inline-block text-success dark:text-primary">
                 كتاب الله
@@ -260,7 +260,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-extrabold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-semibold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
             >
               <span>ابدأ الحفظ الآن</span>
               <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
@@ -278,7 +278,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
           <div className="mb-8 flex items-center justify-center gap-4">
             <div className="text-end">
               <div className="flex items-center gap-1.5">
-                <span className="text-lg font-black text-main dark:text-main">4.9</span>
+                <span className="text-lg font-bold text-main dark:text-main">4.9</span>
                 <span className="text-sm font-bold text-muted dark:text-muted">/5</span>
                 <Star
                   size={14}
@@ -303,7 +303,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   />
                 </div>
               ))}
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-card bg-success text-micro font-black text-on-success shadow-elevation-1 dark:border-primary/40 dark:bg-primary dark:text-on-primary">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-card bg-success text-micro font-bold text-on-success shadow-elevation-1 dark:border-primary/40 dark:bg-primary dark:text-on-primary">
                 5K+
               </div>
             </div>
@@ -324,7 +324,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-warning-soft dark:bg-primary/15">
                 <ClipboardCheck size={22} className="text-warning dark:text-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-black text-main dark:text-main">متابعة دقيقة</h3>
+              <h3 className="mb-1 text-sm font-bold text-main dark:text-main">متابعة دقيقة</h3>
               <p className="text-micro leading-relaxed text-muted dark:text-muted">
                 تقارير إنجاز أسبوعية
               </p>
@@ -337,7 +337,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/15">
                 <Clock size={22} className="text-primary dark:text-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-black text-main dark:text-main">أوقات مرنة</h3>
+              <h3 className="mb-1 text-sm font-bold text-main dark:text-main">أوقات مرنة</h3>
               <p className="text-micro leading-relaxed text-muted dark:text-muted">
                 اختر مواعيدك المفضلة
               </p>
@@ -350,7 +350,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm dark:bg-black/20">
                 <Sparkles size={22} className="text-on-primary dark:text-on-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-black text-on-primary dark:text-on-primary">
+              <h3 className="mb-1 text-sm font-bold text-on-primary dark:text-on-primary">
                 جرب مجانًا
               </h3>
               <p className="text-micro font-bold leading-relaxed text-on-primary opacity-80 dark:text-on-primary">
@@ -365,7 +365,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-success-soft dark:bg-primary/15">
                 <Mic size={22} className="text-success dark:text-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-black text-main dark:text-main">معلمون مجازون</h3>
+              <h3 className="mb-1 text-sm font-bold text-main dark:text-main">معلمون مجازون</h3>
               <p className="text-micro leading-relaxed text-muted dark:text-muted">
                 نخبة الحفاظ المبدعون
               </p>

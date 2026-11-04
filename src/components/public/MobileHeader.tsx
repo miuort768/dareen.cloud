@@ -49,7 +49,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
               <GraduationCap className="relative z-10 h-6 w-6 text-on-primary dark:text-on-primary" />
             </div>
             <div>
-              <p className="text-base font-black leading-tight text-main dark:text-main">
+              <p className="text-base font-bold leading-tight text-main dark:text-main">
                 {academyName}
               </p>
               <p className="dark:text-soft text-micro font-bold leading-tight text-main">

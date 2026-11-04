@@ -126,10 +126,10 @@ export const SelectionGrid = ({
                 onClick={() => onSelectGrade(cls)}
                 className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl bg-primary p-4 text-on-primary shadow-elevation-1 outline-none transition-all duration-200 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 font-dash text-lg font-black">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 font-dash text-lg font-bold">
                   {ARABIC_DIGITS[cls] || cls}
                 </div>
-                <span className="text-center text-xs font-extrabold">
+                <span className="text-center text-xs font-semibold">
                   الصف {gradeNames[cls] || cls}
                 </span>
               </button>
@@ -147,10 +147,10 @@ export const SelectionGrid = ({
                   onClick={() => onSelectTerm(t.id)}
                   className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl bg-success p-4 text-on-success shadow-elevation-1 outline-none transition-all duration-200 hover:bg-success-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 font-dash text-lg font-black">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 font-dash text-lg font-bold">
                     {ARABIC_DIGITS[t.id]}
                   </div>
-                  <span className="text-xs font-extrabold">{t.label}</span>
+                  <span className="text-xs font-semibold">{t.label}</span>
                 </button>
               ))}
             </>
@@ -175,7 +175,7 @@ export const SelectionGrid = ({
                       <Icon size={18} />
                     </div>
                   )}
-                  <span className="text-center text-xs font-extrabold">{subj.name}</span>
+                  <span className="text-center text-xs font-semibold">{subj.name}</span>
                 </button>
               )
             })}
@@ -185,7 +185,7 @@ export const SelectionGrid = ({
           <button
             type="button"
             onClick={goBack}
-            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-error px-6 py-3 text-xs font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:w-auto"
+            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-error px-6 py-3 text-xs font-semibold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:w-auto"
           >
             <ArrowLeft size={14} />
             <span>العودة</span>
@@ -214,10 +214,10 @@ export const SelectionGrid = ({
                 onClick={() => onSelectGrade(cls)}
                 className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-primary px-3 py-6 text-on-primary shadow-elevation-1 outline-none transition-all duration-200 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-black">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-bold">
                   {ARABIC_DIGITS[cls] || cls}
                 </div>
-                <span className="text-center text-sm font-extrabold">
+                <span className="text-center text-sm font-semibold">
                   الصف {gradeNames[cls] || cls}
                 </span>
               </button>
@@ -235,10 +235,10 @@ export const SelectionGrid = ({
                   onClick={() => onSelectTerm(t.id)}
                   className="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl bg-success px-3 py-6 text-on-success shadow-elevation-1 outline-none transition-all duration-200 hover:bg-success-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-black">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 font-dash text-xl font-bold">
                     {ARABIC_DIGITS[t.id]}
                   </div>
-                  <span className="text-sm font-extrabold">{t.label}</span>
+                  <span className="text-sm font-semibold">{t.label}</span>
                 </button>
               ))}
             </>
@@ -263,7 +263,7 @@ export const SelectionGrid = ({
                       <Icon size={22} />
                     </div>
                   )}
-                  <span className="text-center text-sm font-extrabold">{subj.name}</span>
+                  <span className="text-center text-sm font-semibold">{subj.name}</span>
                 </button>
               )
             })}
@@ -273,7 +273,7 @@ export const SelectionGrid = ({
           <button
             type="button"
             onClick={goBack}
-            className="inline-flex min-h-11 w-full max-w-[32rem] cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="inline-flex min-h-11 w-full max-w-[32rem] cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-semibold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <ArrowLeft size={16} />
             <span>العودة</span>

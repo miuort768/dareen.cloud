@@ -118,10 +118,10 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
             <BookOpen size={22} />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="mb-1 text-[10px] font-extrabold text-white/70">
+            <p className="mb-1 text-[10px] font-semibold text-white/70">
               تعلّم بالأسئلة · تحدي المستويات
             </p>
-            <h3 className="text-lg font-black leading-tight text-on-primary sm:text-xl">
+            <h3 className="text-lg font-bold leading-tight text-on-primary sm:text-xl">
               {language.name}
             </h3>
             <p className="mt-0.5 text-xs font-bold text-white/80">{language.sub}</p>
@@ -151,7 +151,7 @@ export const LanguageQuizSection = ({ languageId }: LanguageQuizSectionProps) =>
             {summary.totalStars}/{summary.maxStars} نجمة
           </span>
           {summary.totalXp > 0 && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning px-2.5 py-1 text-[9px] font-black tabular-nums text-on-warning">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning px-2.5 py-1 text-[9px] font-bold tabular-nums text-on-warning">
               <Zap size={11} />
               {summary.totalXp} نقطة
             </span>

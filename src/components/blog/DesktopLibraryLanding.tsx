@@ -261,7 +261,7 @@ export const DesktopLibraryLanding = ({
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-8 lg:px-10 lg:py-10">
       {/* ===== TOP HEADING ===== */}
       <section className="mb-5 text-center">
-        <h1 className="mb-3 font-heading text-3xl font-black text-main lg:text-4xl">
+        <h1 className="mb-3 font-heading text-3xl font-bold text-main lg:text-4xl">
           مركز ملفات <span className="text-primary">{academyName}</span>
         </h1>
         <p className="mx-auto max-w-lg text-sm font-medium leading-relaxed text-muted">
@@ -277,9 +277,9 @@ export const DesktopLibraryLanding = ({
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary-soft px-3 py-1">
-              <span className="text-[10px] font-extrabold text-primary">الأكثر قراءة</span>
+              <span className="text-[10px] font-semibold text-primary">الأكثر قراءة</span>
             </div>
-            <h2 className="font-heading text-2xl font-black text-main lg:text-3xl">
+            <h2 className="font-heading text-2xl font-bold text-main lg:text-3xl">
               الملفات الأكثر قراءة
             </h2>
             <p className="mt-1.5 text-sm font-medium text-muted">
@@ -329,13 +329,13 @@ export const DesktopLibraryLanding = ({
                     </span>
                     {t.id !== 'foundation' && (
                       <span
-                        className={cn('rounded-lg px-2.5 py-1 text-[11px] font-extrabold', s.badge)}
+                        className={cn('rounded-lg px-2.5 py-1 text-[11px] font-semibold', s.badge)}
                       >
                         {count} مقال
                       </span>
                     )}
                   </div>
-                  <h3 className="mb-1 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-primary">
+                  <h3 className="mb-1 text-base font-semibold text-main transition-colors duration-300 group-hover:text-primary">
                     {t.name}
                   </h3>
                   <p className="mb-3 text-[11px] font-medium leading-relaxed text-muted">
@@ -343,7 +343,7 @@ export const DesktopLibraryLanding = ({
                   </p>
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5',
+                      'inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 group-hover:gap-2.5',
                       s.linkColor,
                     )}
                   >
@@ -379,7 +379,7 @@ export const DesktopLibraryLanding = ({
                 <Search size={22} />
               </span>
               <div>
-                <h2 className="font-heading text-base font-black text-on-primary">
+                <h2 className="font-heading text-base font-bold text-on-primary">
                   ابحث في المكتبة
                 </h2>
                 <p className="text-xs font-medium text-white/80">تصفح أحدث المقالات والملفات</p>
@@ -421,7 +421,7 @@ export const DesktopLibraryLanding = ({
         <aside className="space-y-5">
           {/* Popular Categories */}
           <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 lg:rounded-none">
-            <h3 className="mb-4 flex items-center gap-2.5 text-sm font-extrabold text-main">
+            <h3 className="mb-4 flex items-center gap-2.5 text-sm font-semibold text-main">
               <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <BookMarked size={15} />
               </span>
@@ -451,7 +451,7 @@ export const DesktopLibraryLanding = ({
                       </span>
                       <span
                         className={cn(
-                          'shrink-0 rounded-lg bg-surface px-2 py-0.5 text-[11px] font-extrabold transition-colors',
+                          'shrink-0 rounded-lg bg-surface px-2 py-0.5 text-[11px] font-semibold transition-colors',
                           s.countColor,
                         )}
                       >
@@ -480,7 +480,7 @@ export const DesktopLibraryLanding = ({
               <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white">
                 <Mail size={18} />
               </span>
-              <h3 className="mb-1 text-sm font-extrabold text-on-primary dark:text-main">
+              <h3 className="mb-1 text-sm font-semibold text-on-primary dark:text-main">
                 اشترك في النشرة التعليمية
               </h3>
               <p className="mb-4 text-[11px] font-medium leading-relaxed text-white/50">
@@ -558,7 +558,7 @@ export const DesktopLibraryLanding = ({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-extrabold text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep disabled:opacity-50"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-semibold text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep disabled:opacity-50"
                   >
                     {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
                     {!submitting && <Send size={13} />}
@@ -574,9 +574,9 @@ export const DesktopLibraryLanding = ({
           <div className="mb-4 flex items-end justify-between gap-4">
             <div>
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary-soft px-3 py-1">
-                <span className="text-[10px] font-extrabold text-primary">آخر ما نُشر</span>
+                <span className="text-[10px] font-semibold text-primary">آخر ما نُشر</span>
               </div>
-              <h2 className="font-heading text-2xl font-black text-main lg:text-3xl">
+              <h2 className="font-heading text-2xl font-bold text-main lg:text-3xl">
                 أحدث المقالات
               </h2>
               <p className="mt-1.5 text-sm font-medium text-muted">
@@ -610,7 +610,7 @@ export const DesktopLibraryLanding = ({
               <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft text-primary">
                 <Search size={24} />
               </span>
-              <h3 className="mb-1 text-base font-extrabold text-main">لا توجد نتائج</h3>
+              <h3 className="mb-1 text-base font-semibold text-main">لا توجد نتائج</h3>
               <p className="text-sm font-medium text-muted">
                 جرّب كلمات بحث مختلفة أو تصفح الأقسام بالأسفل.
               </p>
@@ -629,7 +629,7 @@ export const DesktopLibraryLanding = ({
                     <div className="flex items-center justify-between gap-2">
                       <span
                         className={cn(
-                          'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-extrabold',
+                          'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-semibold',
                           style.badge,
                         )}
                       >
@@ -638,7 +638,7 @@ export const DesktopLibraryLanding = ({
                       </span>
                     </div>
                     <div className="flex min-w-0 flex-col">
-                      <h3 className="mb-1.5 line-clamp-2 text-sm font-extrabold leading-snug text-main transition-colors duration-300 group-hover:text-primary">
+                      <h3 className="mb-1.5 line-clamp-2 text-sm font-semibold leading-snug text-main transition-colors duration-300 group-hover:text-primary">
                         {post.title}
                       </h3>
                       <p className="mb-3 line-clamp-3 text-[11px] font-medium leading-relaxed text-muted">
@@ -649,7 +649,7 @@ export const DesktopLibraryLanding = ({
                           <Clock size={11} />
                           {formatDate(post.date)}
                         </span>
-                        <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-extrabold text-on-primary transition-all duration-300 hover:bg-primary-hover group-hover:gap-1.5 group-hover:shadow-elevation-2">
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-semibold text-on-primary transition-all duration-300 hover:bg-primary-hover group-hover:gap-1.5 group-hover:shadow-elevation-2">
                           اقرأ المقال
                           <ArrowLeft
                             size={11}
@@ -672,9 +672,9 @@ export const DesktopLibraryLanding = ({
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-warning-soft bg-warning-soft px-3 py-1">
               <Languages size={12} className="text-warning" />
-              <span className="text-[10px] font-extrabold text-warning">تعلم بمفردك</span>
+              <span className="text-[10px] font-semibold text-warning">تعلم بمفردك</span>
             </div>
-            <h2 className="font-heading text-2xl font-black text-main lg:text-3xl">
+            <h2 className="font-heading text-2xl font-bold text-main lg:text-3xl">
               أقسام تعلم اللغة
             </h2>
             <p className="mt-1.5 text-sm font-medium text-muted">اختر اللغة التي تريد تعلمها</p>
@@ -713,11 +713,11 @@ export const DesktopLibraryLanding = ({
                       <Globe size={22} />
                     </span>
                   </div>
-                  <h3 className="mb-1 text-base font-extrabold">{lang.name}</h3>
+                  <h3 className="mb-1 text-base font-semibold">{lang.name}</h3>
                   <p className="mb-3 text-[11px] font-medium leading-relaxed opacity-80">
                     {lang.sub}
                   </p>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 group-hover:gap-2.5">
                     تصفح المحتوى
                     <ArrowLeft
                       size={12}
@@ -737,9 +737,9 @@ export const DesktopLibraryLanding = ({
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-success-soft bg-success-soft px-3 py-1">
               <CheckCircle size={12} className="text-success" />
-              <span className="text-[10px] font-extrabold text-success">حلول الكتب والمذكرات</span>
+              <span className="text-[10px] font-semibold text-success">حلول الكتب والمذكرات</span>
             </div>
-            <h2 className="font-heading text-2xl font-black text-main lg:text-3xl">
+            <h2 className="font-heading text-2xl font-bold text-main lg:text-3xl">
               حسب المنهج الدراسي
             </h2>
             <p className="mt-1.5 text-sm font-medium text-muted">
@@ -777,16 +777,16 @@ export const DesktopLibraryLanding = ({
                       <curr.icon size={22} />
                     </span>
                   </div>
-                  <h3 className="mb-1 text-base font-extrabold">{curr.name}</h3>
+                  <h3 className="mb-1 text-base font-semibold">{curr.name}</h3>
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-extrabold">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-semibold">
                       حلول الكتب
                     </span>
-                    <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-extrabold">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-white/20 px-2 py-0.5 text-[10px] font-semibold">
                       المذكرات
                     </span>
                   </div>
-                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5">
+                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 group-hover:gap-2.5">
                     تصفح المحتوى
                     <ArrowLeft
                       size={12}

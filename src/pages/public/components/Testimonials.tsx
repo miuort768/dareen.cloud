@@ -21,7 +21,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
 
       <div className="container relative z-10 mx-auto px-4">
         <div className="mb-4 text-center md:mb-6">
-          <h2 className="mb-3 font-heading text-3xl font-black leading-tight text-main dark:text-main md:text-4xl">
+          <h2 className="mb-3 font-heading text-3xl font-bold leading-tight text-main dark:text-main md:text-4xl">
             <span className="text-primary dark:text-primary">آراء يعتز بها</span>
           </h2>
         </div>
@@ -37,7 +37,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
 
                 <div className="relative z-10 flex h-full flex-grow flex-col">
                   <div className="mb-4 flex items-center justify-between">
-                    <div className="rounded-full bg-success-dark px-3 py-1 text-micro font-black text-on-success dark:bg-primary dark:text-on-primary">
+                    <div className="rounded-full bg-success-dark px-3 py-1 text-micro font-bold text-on-success dark:bg-primary dark:text-on-primary">
                       {reviews[currentIndex]?.name}
                     </div>
                     <div className="flex gap-0.5 text-warning dark:text-primary">
@@ -86,7 +86,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                   <div className="mb-4 flex items-center justify-between">
                     <div
                       className={cn(
-                        'rounded-full px-4 py-1.5 text-xs font-black shadow-elevation-1 transition-transform group-hover:scale-105',
+                        'rounded-full px-4 py-1.5 text-xs font-bold shadow-elevation-1 transition-transform group-hover:scale-105',
                         isLarge
                           ? 'bg-on-success text-success-dark dark:bg-background dark:text-primary'
                           : 'bg-success-dark text-on-success dark:bg-primary dark:text-on-primary',

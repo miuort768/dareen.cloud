@@ -67,7 +67,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
       <div className="relative z-10 px-4 py-6">
         <div className="mb-6 flex items-center justify-between px-1">
           <div className="flex items-center gap-3">
-            <span className="text-sm font-black text-primary dark:text-primary">
+            <span className="text-sm font-bold text-primary dark:text-primary">
               {formatTime(time)}
             </span>
             <span className="text-micro font-bold text-muted dark:text-muted">
@@ -87,12 +87,12 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             size={10}
             className="fill-warning text-warning dark:fill-on-primary dark:text-on-primary"
           />
-          <span className="text-micro font-black text-on-primary dark:text-on-primary">
+          <span className="text-micro font-bold text-on-primary dark:text-on-primary">
             حصتك المجانية بانتظارك
           </span>
         </div>
 
-        <h2 className="mb-1 text-xl font-black leading-tight text-main dark:text-main">
+        <h2 className="mb-1 text-xl font-bold leading-tight text-main dark:text-main">
           كيف تشترك في{' '}
           <span className="bg-gradient-to-l from-primary to-primary-hover bg-clip-text text-transparent dark:from-primary dark:to-warning">
             المعهد؟
@@ -109,7 +109,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
               className="relative flex flex-col items-center rounded-2xl border border-border bg-card p-3.5 text-center shadow-elevation-1 dark:border-primary/30 dark:bg-card"
             >
               <div className="absolute -start-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary shadow-elevation-2 dark:bg-primary">
-                <span className="text-micro font-black text-on-primary dark:text-on-primary">
+                <span className="text-micro font-bold text-on-primary dark:text-on-primary">
                   {s.num}
                 </span>
               </div>
@@ -118,7 +118,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
               >
                 <s.icon size={18} className="text-on-primary dark:text-on-primary" />
               </div>
-              <h3 className="mb-0.5 text-xs font-black text-main dark:text-main">{s.title}</h3>
+              <h3 className="mb-0.5 text-xs font-bold text-main dark:text-main">{s.title}</h3>
               <p className="text-micro font-medium leading-tight text-main dark:text-muted">
                 {s.desc}
               </p>
@@ -145,7 +145,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 )}
               </div>
               <div>
-                <span className="text-xs font-black text-main dark:text-main">{item.title}</span>
+                <span className="text-xs font-bold text-main dark:text-main">{item.title}</span>
                 <p className="text-micro text-muted dark:text-muted">{item.desc}</p>
               </div>
             </div>
@@ -159,7 +159,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
           className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-primary to-primary-hover px-6 py-4 shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-110 dark:from-primary dark:to-warning dark:shadow-primary/20"
         >
           <Gift size={16} className="text-on-primary opacity-90 dark:text-on-primary" />
-          <span className="text-sm font-black text-on-primary dark:text-on-primary">
+          <span className="text-sm font-bold text-on-primary dark:text-on-primary">
             احجز حصتك المجانية الآن
           </span>
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-all group-hover:bg-white/30 dark:bg-black/20 dark:group-hover:bg-black/30">

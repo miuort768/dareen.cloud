@@ -106,9 +106,9 @@ export const FAQSection = () => {
         <div className="mb-4 text-center md:mb-8">
           <div className="mx-auto mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 px-2.5 py-1 shadow-elevation-1 backdrop-blur-sm dark:border-primary/40 dark:bg-primary/20">
             <HelpCircle size={12} className="text-primary dark:text-primary" />
-            <span className="dark:text-soft text-micro font-black text-muted">لديك استفسار؟</span>
+            <span className="dark:text-soft text-micro font-bold text-muted">لديك استفسار؟</span>
           </div>
-          <h2 className="mb-3 font-heading text-2xl font-black text-main dark:text-main md:text-3xl">
+          <h2 className="mb-3 font-heading text-2xl font-bold text-main dark:text-main md:text-3xl">
             الأسئلة <span className="text-primary dark:text-primary">الشائعة</span>
           </h2>
           <div className="mx-auto h-1 w-16 rounded-full bg-warning dark:bg-primary"></div>
@@ -167,7 +167,7 @@ export const FAQSection = () => {
                     className="flex w-full cursor-pointer items-center justify-between p-4 text-start outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     aria-expanded={isOpen}
                   >
-                    <h3 className="text-xs font-black text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-accent md:text-sm">
+                    <h3 className="text-xs font-bold text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-accent md:text-sm">
                       {item.q}
                     </h3>
                     <span

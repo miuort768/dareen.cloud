@@ -83,13 +83,13 @@ export const QuizLevelMap = ({ quizzes, progress, onPlay }: QuizLevelMapProps) =
                 >
                   <StageIcon size={26} />
                 </span>
-                <span className={cn('rounded-full px-2 py-0.5 text-[9px] font-black', tone.chip)}>
+                <span className={cn('rounded-full px-2 py-0.5 text-[9px] font-bold', tone.chip)}>
                   {stageLabel}
                 </span>
               </div>
 
               <div className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-black text-main">{quiz.title}</span>
+                <span className="block truncate text-sm font-bold text-main">{quiz.title}</span>
                 <p className="mt-0.5 truncate text-micro font-bold text-muted">
                   {quiz.description}
                 </p>
@@ -133,7 +133,7 @@ export const QuizLevelMap = ({ quizzes, progress, onPlay }: QuizLevelMapProps) =
               <button
                 type="button"
                 onClick={() => onPlay(quiz.id)}
-                className="inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-primary px-4 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                className="inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
                 {hasRun || !stat?.completed ? <Play size={13} /> : <RotateCcw size={13} />}
                 {label}

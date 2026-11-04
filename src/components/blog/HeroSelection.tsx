@@ -63,7 +63,7 @@ export const MobileHero = ({
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
                 </span>
-                <span className="text-[10px] font-extrabold text-white/90">
+                <span className="text-[10px] font-semibold text-white/90">
                   برعاية {academyName}
                 </span>
               </div>
@@ -95,7 +95,7 @@ export const MobileHero = ({
 
             {/* Content */}
             <div className="min-w-0">
-              <h1 className="mb-1.5 font-heading text-lg font-black leading-tight text-on-primary dark:text-main">
+              <h1 className="mb-1.5 font-heading text-lg font-bold leading-tight text-on-primary dark:text-main">
                 مكتبة <span className="text-accent">{academyName}</span>
               </h1>
               <p className="mb-4 text-[10px] font-medium leading-relaxed text-white/50">
@@ -107,13 +107,13 @@ export const MobileHero = ({
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-semibold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
                   حصة مجانية فردية
                 </a>
                 <a
                   href="#mobile-categories"
-                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[11px] font-extrabold text-primary-deep transition-all hover:bg-white/90 active:scale-[0.97]"
+                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[11px] font-semibold text-primary-deep transition-all hover:bg-white/90 active:scale-[0.97]"
                 >
                   تصفح الدورات
                 </a>
@@ -129,7 +129,7 @@ export const MobileHero = ({
               <CheckCircle size={15} className="text-success" />
             </div>
             <div>
-              <h3 className="text-sm font-extrabold text-main">تحميل مجاني بدون إعلانات</h3>
+              <h3 className="text-sm font-semibold text-main">تحميل مجاني بدون إعلانات</h3>
               <p className="text-[10px] font-medium text-muted">
                 اختر ما تريد من كتب أو مذكرات مجاناً
               </p>
@@ -141,7 +141,7 @@ export const MobileHero = ({
                 href={`https://wa.me/${libraryWhatsappDigits}?text=${encodeURIComponent('السلام عليكم، أريد الاستفسار عن المكتبة')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-[11px] font-extrabold text-on-success transition-all hover:bg-success-hover active:scale-[0.97]"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-[11px] font-semibold text-on-success transition-all hover:bg-success-hover active:scale-[0.97]"
               >
                 <MessageCircle size={13} />
                 واتساب
@@ -152,7 +152,7 @@ export const MobileHero = ({
                 href={telegramHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-info py-2.5 text-[11px] font-extrabold text-on-info transition-all hover:bg-info-hover active:scale-[0.97]"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-info py-2.5 text-[11px] font-semibold text-on-info transition-all hover:bg-info-hover active:scale-[0.97]"
               >
                 <Send size={13} />
                 تيليجرام
@@ -199,7 +199,7 @@ export const MobileHero = ({
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20">
                 <item.icon size={20} />
               </div>
-              <span className="text-center text-sm font-extrabold leading-tight">{item.name}</span>
+              <span className="text-center text-sm font-semibold leading-tight">{item.name}</span>
               {item.sub && (
                 <span className="text-center text-[10px] font-bold opacity-75">{item.sub}</span>
               )}
@@ -284,7 +284,7 @@ export const MobileHero = ({
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 transition-transform duration-200 group-hover:scale-110">
                 <item.icon size={20} />
               </div>
-              <span className="text-center text-sm font-extrabold leading-tight">{item.name}</span>
+              <span className="text-center text-sm font-semibold leading-tight">{item.name}</span>
               {item.sub && (
                 <span className="text-center text-[10px] font-bold opacity-75">{item.sub}</span>
               )}
@@ -298,7 +298,7 @@ export const MobileHero = ({
           <button
             type="button"
             onClick={goBack}
-            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-error px-6 py-3 text-xs font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:w-auto"
+            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-error px-6 py-3 text-xs font-semibold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:w-auto"
           >
             <ArrowLeft size={14} />
             <span>العودة</span>
@@ -347,12 +347,12 @@ export const DesktopHero = ({
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
                 </span>
-                <span className="text-[11px] font-extrabold tracking-wide text-white/90">
+                <span className="text-[11px] font-semibold tracking-wide text-white/90">
                   مركز ملفات {academyName}
                 </span>
               </div>
 
-              <h1 className="mb-5 max-w-xl font-heading text-4xl font-black leading-[1.1] text-on-primary dark:text-main xl:text-5xl 2xl:text-[3.5rem]">
+              <h1 className="mb-5 max-w-xl font-heading text-4xl font-bold leading-[1.1] text-on-primary dark:text-main xl:text-5xl 2xl:text-[3.5rem]">
                 مركز ملفات
                 <span className="relative mx-3 inline-block">
                   <span className="relative z-10 text-accent">{academyName}</span>
@@ -371,13 +371,13 @@ export const DesktopHero = ({
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
                   طلب حصة مجانية
                 </a>
                 <a
                   href="#library-categories"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-6 py-3 text-sm font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
                 >
                   تصفح الدورات
                 </a>
@@ -391,7 +391,7 @@ export const DesktopHero = ({
                   { label: 'دولة مستهدفة', value: '٦' },
                 ].map((stat, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <span className="font-heading text-2xl font-black text-accent">
+                    <span className="font-heading text-2xl font-bold text-accent">
                       {stat.value}
                     </span>
                     <span className="max-w-[60px] text-[11px] font-bold leading-tight text-white/40">
@@ -431,7 +431,7 @@ export const DesktopHero = ({
                     <CheckCircle size={14} className="text-success" />
                   </span>
                   <div>
-                    <span className="block text-[11px] font-extrabold text-white">حلول معتمدة</span>
+                    <span className="block text-[11px] font-semibold text-white">حلول معتمدة</span>
                     <span className="block text-[9px] text-white/40">١٠٠+ كتاب</span>
                   </div>
                 </div>
@@ -442,7 +442,7 @@ export const DesktopHero = ({
                     <Languages size={14} className="text-info" />
                   </span>
                   <div>
-                    <span className="block text-[11px] font-extrabold text-white">تعلم اللغة</span>
+                    <span className="block text-[11px] font-semibold text-white">تعلم اللغة</span>
                     <span className="block text-[9px] text-white/40">٤ لغات متاحة</span>
                   </div>
                 </div>
@@ -464,9 +464,9 @@ export const DesktopHero = ({
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary-soft px-3 py-1">
-                <span className="text-[10px] font-extrabold text-primary">تصفح حسب القسم</span>
+                <span className="text-[10px] font-semibold text-primary">تصفح حسب القسم</span>
               </div>
-              <h2 className="font-heading text-2xl font-black text-main lg:text-3xl">
+              <h2 className="font-heading text-2xl font-bold text-main lg:text-3xl">
                 الفئات الأكثر قراءة
               </h2>
               <p className="mt-1.5 text-sm font-medium text-muted">
@@ -511,11 +511,11 @@ export const DesktopHero = ({
                   <item.icon size={22} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="mb-0.5 text-base font-extrabold">{item.name}</h3>
+                  <h3 className="mb-0.5 text-base font-semibold">{item.name}</h3>
                   {item.sub && (
                     <p className="text-[11px] font-medium leading-relaxed opacity-75">{item.sub}</p>
                   )}
-                  <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5">
+                  <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold transition-all duration-300 group-hover:gap-2.5">
                     تصفح المحتوى
                     <ArrowLeft
                       size={12}
@@ -607,7 +607,7 @@ export const DesktopHero = ({
                 <item.icon size={21} />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="block text-base font-extrabold leading-tight">{item.name}</span>
+                <span className="block text-base font-semibold leading-tight">{item.name}</span>
                 {item.sub && (
                   <span className="block text-[11px] font-bold opacity-75">{item.sub}</span>
                 )}
@@ -626,7 +626,7 @@ export const DesktopHero = ({
           <button
             type="button"
             onClick={goBack}
-            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-semibold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <ArrowLeft size={16} />
             <span>العودة</span>

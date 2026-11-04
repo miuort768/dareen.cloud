@@ -18,7 +18,7 @@ export const BlogPostRelatedPosts = ({ posts }: BlogPostRelatedPostsProps) => {
   if (!posts || !Array.isArray(posts) || posts.length === 0) return null
   return (
     <div className="container mx-auto mb-8 mt-16 max-w-5xl px-4">
-      <h2 className="mb-6 text-2xl font-black text-main">مقالات ذات صلة</h2>
+      <h2 className="mb-6 text-2xl font-bold text-main">مقالات ذات صلة</h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {posts.map((rp) => (
           <Link
@@ -41,7 +41,7 @@ export const BlogPostRelatedPosts = ({ posts }: BlogPostRelatedPostsProps) => {
             </div>
             <div className="p-4">
               <p className="mb-1 text-micro font-bold text-muted">{rp.date}</p>
-              <h3 className="line-clamp-2 text-sm font-black text-main transition-colors group-hover:text-error">
+              <h3 className="line-clamp-2 text-sm font-bold text-main transition-colors group-hover:text-error">
                 {rp.title}
               </h3>
               {rp.excerpt && <p className="mt-1 line-clamp-2 text-xs text-muted">{rp.excerpt}</p>}

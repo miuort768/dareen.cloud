@@ -29,9 +29,9 @@ export const PublicFooter = () => {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-none bg-gradient-to-br from-primary to-primary-hover shadow-elevation-3 dark:from-primary dark:to-primary">
-                <span className="text-2xl font-black text-on-primary dark:text-card">د</span>
+                <span className="text-2xl font-bold text-on-primary dark:text-card">د</span>
               </div>
-              <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text font-heading text-lg font-black text-transparent dark:from-primary dark:to-primary">
+              <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text font-heading text-lg font-bold text-transparent dark:from-primary dark:to-primary">
                 {academyName}
               </span>
             </div>
@@ -117,7 +117,7 @@ export const PublicFooter = () => {
               </Link>
               <Link
                 to="/terms-of-work"
-                className="block w-full transform bg-gradient-to-r from-accent to-accent-hover py-3 text-center text-sm font-black text-on-accent transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
+                className="block w-full transform bg-gradient-to-r from-accent to-accent-hover py-3 text-center text-sm font-bold text-on-accent transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
               >
                 قوانين العمل
               </Link>
@@ -153,7 +153,7 @@ export const PublicFooter = () => {
               <span className="relative z-10 font-heading text-micro font-bold tracking-wide text-white/80 dark:text-card">
                 تصميم وتطوير
               </span>
-              <span className="relative z-10 font-heading text-micro font-black text-on-primary dark:text-card">
+              <span className="relative z-10 font-heading text-micro font-bold text-on-primary dark:text-card">
                 مستر احمد عبدالله
               </span>
               <span className="relative z-10 h-1.5 w-1.5 animate-pulse bg-accent dark:bg-card"></span>

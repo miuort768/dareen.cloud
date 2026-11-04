@@ -129,11 +129,11 @@ export const Contact = () => {
             <div className="mb-6 text-center">
               <div className="mb-1 inline-flex items-center gap-2 rounded-full border border-primary bg-primary-soft px-4 py-1.5 backdrop-blur-sm dark:border-primary/20 dark:bg-primary/10 md:mb-5">
                 <Sparkles size={13} className="text-primary" />
-                <span className="mt-[3px] text-micro font-black text-primary md:mt-0">
+                <span className="mt-[3px] text-micro font-bold text-primary md:mt-0">
                   نحن في خدمتك
                 </span>
               </div>
-              <h1 className="mb-1 font-heading text-3xl font-black text-main md:mb-3 md:text-5xl">
+              <h1 className="mb-1 font-heading text-3xl font-bold text-main md:mb-3 md:text-5xl">
                 تواصل مع{' '}
                 <span className="bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
                   دارين السابعة
@@ -173,7 +173,7 @@ export const Contact = () => {
                   <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-none bg-success-light text-success">
                     <CheckCircle2 size={44} />
                   </div>
-                  <h2 className="mb-2 text-2xl font-black text-main">تم الإرسال بنجاح!</h2>
+                  <h2 className="mb-2 text-2xl font-bold text-main">تم الإرسال بنجاح!</h2>
                   <p className="mb-8 flex items-center justify-center gap-1.5 text-sm text-muted">
                     سنتواصل معك في أقرب وقت{' '}
                     <Heart size={14} className="fill-warning text-warning" />
@@ -188,7 +188,7 @@ export const Contact = () => {
               ) : (
                 <div className="p-6 md:p-8">
                   <div className="mb-4">
-                    <h2 className="mb-1 text-xl font-black text-main">أرسل لنا رسالة</h2>
+                    <h2 className="mb-1 text-xl font-bold text-main">أرسل لنا رسالة</h2>
                     <p className="flex items-center gap-1.5 text-sm text-muted">
                       سنتواصل معك في أقرب وقت{' '}
                       <Heart size={12} className="fill-warning text-warning" />
@@ -202,7 +202,7 @@ export const Contact = () => {
                         role="alert"
                         aria-live="assertive"
                       >
-                        <p className="text-micro font-black text-error">
+                        <p className="text-micro font-bold text-error">
                           عذراً، حدث خطأ في الإرسال. الرجاء المحاولة مرة أخرى أو التواصل عبر واتساب.
                         </p>
                         {errorDetail && (
@@ -215,7 +215,7 @@ export const Contact = () => {
                       <div className="space-y-1.5">
                         <label
                           htmlFor="contact-name"
-                          className="block text-micro font-black text-muted"
+                          className="block text-micro font-bold text-muted"
                         >
                           الاسم الكامل
                         </label>
@@ -232,7 +232,7 @@ export const Contact = () => {
                       <div className="space-y-1.5">
                         <label
                           htmlFor="contact-phone"
-                          className="block text-micro font-black text-muted"
+                          className="block text-micro font-bold text-muted"
                         >
                           رقم الهاتف
                         </label>
@@ -260,7 +260,7 @@ export const Contact = () => {
                     <div className="space-y-1.5">
                       <label
                         htmlFor="contact-subject"
-                        className="block text-micro font-black text-muted"
+                        className="block text-micro font-bold text-muted"
                       >
                         الموضوع
                       </label>
@@ -286,7 +286,7 @@ export const Contact = () => {
                     <div className="space-y-1.5">
                       <label
                         htmlFor="contact-curriculum"
-                        className="block text-micro font-black text-muted"
+                        className="block text-micro font-bold text-muted"
                       >
                         المنهج
                       </label>
@@ -313,7 +313,7 @@ export const Contact = () => {
                     <div className="space-y-1.5">
                       <label
                         htmlFor="contact-message"
-                        className="block text-micro font-black text-muted"
+                        className="block text-micro font-bold text-muted"
                       >
                         رسالتك
                       </label>
@@ -335,7 +335,7 @@ export const Contact = () => {
                         type="submit"
                         disabled={formState === 'submitting'}
                         className={cn(
-                          'flex items-center justify-center gap-2 rounded-none py-3.5 text-sm font-black outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                          'flex items-center justify-center gap-2 rounded-none py-3.5 text-sm font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           formState === 'submitting'
                             ? 'cursor-not-allowed bg-card text-muted'
                             : 'bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 hover:bg-primary-hover',
@@ -352,7 +352,7 @@ export const Contact = () => {
                         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-black text-on-success shadow-elevation-3 transition-all hover:bg-success-dark"
+                        className="flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-bold text-on-success shadow-elevation-3 transition-all hover:bg-success-dark"
                       >
                         <MessageCircle size={16} />
                         <span>تواصل واتساب</span>
@@ -384,7 +384,7 @@ export const Contact = () => {
                       <card.icon size={20} />
                     </div>
                     <div className="min-w-0 flex-grow">
-                      <p className="mb-0.5 text-micro font-black text-muted">{card.title}</p>
+                      <p className="mb-0.5 text-micro font-bold text-muted">{card.title}</p>
                       <p
                         className="truncate text-sm font-bold text-main"
                         dir={card.title.includes('هاتف') ? 'ltr' : 'rtl'}

@@ -78,7 +78,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
   <header className="container mx-auto mb-6 max-w-4xl px-4 md:mb-12">
     <div className="mb-3 flex flex-col gap-3 md:mb-6 md:flex-row md:items-center md:justify-between md:gap-0">
       <div className="order-2 flex flex-wrap items-center gap-4 md:order-1">
-        <span className="bg-error-light px-3 py-1.5 text-xs font-black uppercase tracking-widest text-error">
+        <span className="bg-error-light px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-error">
           {post.category}
         </span>
         <div className="flex items-center gap-4 text-xs font-medium text-muted">
@@ -90,7 +90,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
               <Clock size={14} /> <span>{post.readingTime} دقيقة قراءة</span>
             </div>
           ) : null}
-          <div className="rounded-lg bg-error-light px-2.5 py-1 text-xs font-black text-error sm:px-3 sm:py-1.5 sm:text-xs">
+          <div className="rounded-lg bg-error-light px-2.5 py-1 text-xs font-bold text-error sm:px-3 sm:py-1.5 sm:text-xs">
             <User size={12} className="inline" /> {post.author}
           </div>
           <div className="mt-2 flex items-center gap-2 md:hidden">
@@ -140,13 +140,13 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
       </div>
       <Link
         to="/books"
-        className="order-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:text-sm md:order-2 md:w-auto md:justify-start md:px-6 md:py-3"
+        className="order-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:text-sm md:order-2 md:w-auto md:justify-start md:px-6 md:py-3"
       >
         <ArrowRight size={16} />
         <span>العودة لجميع المقالات</span>
       </Link>
     </div>
-    <h1 className="mb-2 font-heading text-2xl font-black leading-tight text-main sm:text-3xl md:mb-4 md:text-4xl lg:text-5xl">
+    <h1 className="mb-2 font-heading text-2xl font-bold leading-tight text-main sm:text-3xl md:mb-4 md:text-4xl lg:text-5xl">
       {post.title}
     </h1>
     {post.contentType !== 'more' &&
