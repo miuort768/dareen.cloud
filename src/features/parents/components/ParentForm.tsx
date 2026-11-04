@@ -59,7 +59,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               <ShieldCheck size={18} />
             </div>
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-widest text-on-primary">
+              <h3 className="text-sm font-normal uppercase tracking-widest text-on-primary">
                 {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
               </h3>
               <p className="mt-0.5 text-micro font-normal uppercase tracking-widest text-white/90">
@@ -127,7 +127,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
           <div className="flex justify-end border-t border-border pt-6">
             <button
               type="submit"
-              className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-bold text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-normal text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Save size={14} className="transition-transform group-hover:rotate-12" />
               {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

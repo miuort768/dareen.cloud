@@ -37,7 +37,7 @@ export const AdminTeacherGroupList = ({
     return (
       <div className="rounded-2xl border border-dashed border-border bg-card py-12 text-center">
         <Users className="mx-auto mb-2 text-muted" size={28} strokeWidth={1.5} />
-        <p className="text-xs font-bold text-muted">لا توجد بيانات حضور متاحة</p>
+        <p className="text-xs font-normal text-muted">لا توجد بيانات حضور متاحة</p>
         <p className="mt-1 text-xs text-muted">سيظهر هذا القسم بعد تسجيل حصص للمعلمات</p>
       </div>
     )
@@ -58,12 +58,12 @@ export const AdminTeacherGroupList = ({
             {/* Teacher Header */}
             <div className="flex items-center justify-between bg-primary px-5 py-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-xs font-bold text-on-primary shadow-elevation-1">
+                <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-xs font-normal text-on-primary shadow-elevation-1">
                   {teacher.teacherName.charAt(0)}
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold text-on-primary">{teacher.teacherName}</h3>
-                  <p className="text-[10px] font-bold text-white/90">
+                  <h3 className="text-xs font-normal text-on-primary">{teacher.teacherName}</h3>
+                  <p className="text-[10px] font-normal text-white/90">
                     {filteredStudents.length} طالب
                   </p>
                 </div>
@@ -72,7 +72,7 @@ export const AdminTeacherGroupList = ({
                 {/* Teacher rate badge */}
                 <div
                   className={cn(
-                    'flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-bold',
+                    'flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-normal',
                     getRateBg(teacher.rate),
                     getRateColor(teacher.rate),
                   )}
@@ -87,7 +87,7 @@ export const AdminTeacherGroupList = ({
                   {teacher.rate}%
                 </div>
                 {/* Session counts */}
-                <div className="flex items-center gap-2 text-[10px] font-bold text-white/90">
+                <div className="flex items-center gap-2 text-[10px] font-normal text-white/90">
                   <span className="flex items-center gap-1">
                     <span className="h-1.5 w-1.5 rounded-full bg-success" />
                     {teacher.completed}
@@ -111,37 +111,37 @@ export const AdminTeacherGroupList = ({
                   <tr className="border-b border-border bg-surface">
                     <th
                       scope="col"
-                      className="px-4 py-2.5 text-start text-[10px] font-bold text-muted"
+                      className="px-4 py-2.5 text-start text-[10px] font-normal text-muted"
                     >
                       الطالب
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-2.5 text-start text-[10px] font-bold text-muted"
+                      className="px-4 py-2.5 text-start text-[10px] font-normal text-muted"
                     >
                       المادة
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                      className="px-4 py-2.5 text-center text-[10px] font-normal text-muted"
                     >
                       الحصص
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                      className="px-4 py-2.5 text-center text-[10px] font-normal text-muted"
                     >
                       النسبة
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                      className="px-4 py-2.5 text-center text-[10px] font-normal text-muted"
                     >
                       التغطية
                     </th>
                     <th
                       scope="col"
-                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                      className="px-4 py-2.5 text-center text-[10px] font-normal text-muted"
                     >
                       سجل
                     </th>
@@ -158,28 +158,28 @@ export const AdminTeacherGroupList = ({
                     >
                       <td className="px-4 py-2.5">
                         <div className="flex items-center gap-2.5">
-                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-[10px] font-bold text-primary">
+                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-[10px] font-normal text-primary">
                             {getGradeDisplay(student.studentName)}
                           </div>
-                          <span className="max-w-[120px] truncate text-[11px] font-bold text-main">
+                          <span className="max-w-[120px] truncate text-[11px] font-normal text-main">
                             {student.studentName}
                           </span>
                         </div>
                       </td>
                       <td className="px-4 py-2.5">
-                        <span className="rounded-2xl bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
+                        <span className="rounded-2xl bg-surface px-2 py-0.5 text-[10px] font-normal text-muted">
                           {student.subject}
                         </span>
                       </td>
                       <td className="px-4 py-2.5 text-center">
-                        <span className="text-[11px] font-bold tabular-nums text-main">
+                        <span className="text-[11px] font-normal tabular-nums text-main">
                           {student.completed}/{student.total}
                         </span>
                       </td>
                       <td className="px-4 py-2.5 text-center">
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1 text-[11px] font-bold tabular-nums',
+                            'inline-flex items-center gap-1 text-[11px] font-normal tabular-nums',
                             getRateColor(student.rate),
                           )}
                         >
@@ -216,7 +216,7 @@ export const AdminTeacherGroupList = ({
                               student.subject,
                             )
                           }
-                          className="inline-flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-[9px] font-bold text-primary transition-all hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                          className="inline-flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-[9px] font-normal text-primary transition-all hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                         >
                           <History size={10} /> سجل
                         </button>

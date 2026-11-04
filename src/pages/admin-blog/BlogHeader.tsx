@@ -31,7 +31,7 @@ export const BlogHeader = ({
   <>
     <div className="rounded-2xl border border-border bg-card p-3 md:p-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-bold text-muted">أدوات الإدارة</p>
+        <p className="text-xs font-normal text-muted">أدوات الإدارة</p>
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => setShowSettings((s) => !s)}
@@ -43,7 +43,7 @@ export const BlogHeader = ({
           </button>
           <button
             onClick={handleOpenModal}
-            className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-normal text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={14} /> مقال
           </button>
@@ -53,10 +53,10 @@ export const BlogHeader = ({
 
     {showSettings && (
       <div className="space-y-3 rounded-2xl border border-border bg-surface p-4">
-        <h3 className="text-xs font-bold text-main">إعدادات المكتبة</h3>
+        <h3 className="text-xs font-normal text-main">إعدادات المكتبة</h3>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <div>
-            <label htmlFor="lib-wa" className="mb-1 block text-micro font-bold text-muted">
+            <label htmlFor="lib-wa" className="mb-1 block text-micro font-normal text-muted">
               رقم واتساب المكتبة
             </label>
             <input
@@ -64,13 +64,13 @@ export const BlogHeader = ({
               type="text"
               value={libraryWhatsapp}
               onChange={(e) => setLibraryWhatsapp(e.target.value)}
-              className="h-11 w-full rounded-xl border border-border bg-background px-3.5 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 w-full rounded-xl border border-border bg-background px-3.5 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               placeholder="مثال: 201234567890"
               dir="ltr"
             />
           </div>
           <div>
-            <label htmlFor="lib-tg" className="mb-1 block text-micro font-bold text-muted">
+            <label htmlFor="lib-tg" className="mb-1 block text-micro font-normal text-muted">
               معرف تليجرام المكتبة
             </label>
             <input
@@ -78,7 +78,7 @@ export const BlogHeader = ({
               type="text"
               value={libraryTelegram}
               onChange={(e) => setLibraryTelegram(e.target.value)}
-              className="h-11 w-full rounded-xl border border-border bg-background px-3.5 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 w-full rounded-xl border border-border bg-background px-3.5 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               placeholder="مثال: dareen_app"
               dir="ltr"
             />
@@ -87,14 +87,14 @@ export const BlogHeader = ({
         <div className="flex justify-end gap-2">
           <button
             onClick={handleCancelSettings}
-            className="flex h-9 items-center rounded-lg px-4 text-xs font-semibold text-muted transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-9 items-center rounded-lg px-4 text-xs font-light text-muted transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             إلغاء
           </button>
           <button
             onClick={handleSaveSettings}
             disabled={savingSettings}
-            className="flex h-9 items-center gap-1.5 rounded-lg bg-primary px-4 text-xs font-semibold text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+            className="flex h-9 items-center gap-1.5 rounded-lg bg-primary px-4 text-xs font-light text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
           >
             {savingSettings ? 'جاري الحفظ...' : 'حفظ'}
           </button>

@@ -419,7 +419,7 @@ export const Forum = () => {
                   <div className="min-w-0">
                     <p
                       className={cn(
-                        'font-dash text-lg font-black tabular-nums leading-none md:text-2xl',
+                        'font-dash text-lg font-medium tabular-nums leading-none md:text-2xl',
                         kpi.fg,
                       )}
                     >
@@ -427,13 +427,13 @@ export const Forum = () => {
                     </p>
                     <p
                       className={cn(
-                        'mt-1 hidden text-[11px] font-bold opacity-80 sm:block',
+                        'mt-1 hidden text-[11px] font-normal opacity-80 sm:block',
                         kpi.fg,
                       )}
                     >
                       {kpi.label}
                     </p>
-                    <p className={cn('mt-1 text-[10px] font-bold opacity-80 sm:hidden', kpi.fg)}>
+                    <p className={cn('mt-1 text-[10px] font-normal opacity-80 sm:hidden', kpi.fg)}>
                       {kpi.short}
                     </p>
                   </div>
@@ -455,7 +455,7 @@ export const Forum = () => {
               onClick={() => setSortMode(opt.value)}
               aria-pressed={sortMode === opt.value}
               className={cn(
-                'flex-1 rounded-full border px-2 py-1.5 text-micro font-bold outline-none transition-all duration-fast focus-visible:ring-2 focus-visible:ring-focus',
+                'flex-1 rounded-full border px-2 py-1.5 text-micro font-normal outline-none transition-all duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                 sortMode === opt.value
                   ? cn(SORT_TONE[opt.value], 'shadow-soft')
                   : cn('border-border bg-surface text-muted', SORT_TONE_IDLE[opt.value]),
@@ -470,7 +470,7 @@ export const Forum = () => {
         {sortMode !== 'latest' && (
           <div
             className={cn(
-              'mb-3 flex items-center justify-between gap-2 rounded-2xl border p-3 text-xs font-bold',
+              'mb-3 flex items-center justify-between gap-2 rounded-2xl border p-3 text-xs font-normal',
               SORT_BANNER[sortMode].box,
             )}
           >
@@ -585,7 +585,7 @@ export const Forum = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-bold text-main shadow-soft">
+                <span className="whitespace-nowrap rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-normal text-main shadow-soft">
                   {action.label}
                 </span>
                 <button

@@ -68,13 +68,13 @@ export const PresenceGrid = memo(function PresenceGrid({
             <Users size={16} className="text-success" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-main">الحضور المباشر</h3>
+            <h3 className="text-sm font-medium text-main">الحضور المباشر</h3>
             <p className="text-[10px] text-muted">المتصلون الآن</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5 rounded-lg border border-border bg-success-soft px-2 py-0.5">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
-          <span className="text-[10px] font-bold tabular-nums text-success">
+          <span className="text-[10px] font-normal tabular-nums text-success">
             {onlineCount}/{total}
           </span>
         </div>
@@ -100,13 +100,13 @@ export const PresenceGrid = memo(function PresenceGrid({
               </span>
               <span
                 className={cn(
-                  'text-xl font-black tabular-nums leading-none',
+                  'text-xl font-medium tabular-nums leading-none',
                   count > 0 ? 'text-main' : 'text-dim',
                 )}
               >
                 {count}
               </span>
-              <span className="text-[10px] font-bold text-muted">{tile.label}</span>
+              <span className="text-[10px] font-normal text-muted">{tile.label}</span>
             </div>
           )
         })}

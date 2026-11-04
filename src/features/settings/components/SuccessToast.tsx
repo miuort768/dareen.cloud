@@ -15,7 +15,7 @@ export const SuccessToast = ({ showSuccess, message }: SuccessToastProps) => {
           <CheckCircle2 size={16} className="text-success" />
         </div>
         <div className="flex-1">
-          <p className="text-xs font-bold leading-snug text-main">
+          <p className="text-xs font-normal leading-snug text-main">
             {message || 'تمت العملية بنجاح'}
           </p>
         </div>

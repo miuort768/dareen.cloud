@@ -87,8 +87,8 @@ export const AttendanceModal = ({
               <TrendingUp size={20} className="text-on-success" />
             </div>
             <div className="text-start">
-              <h2 className="text-lg font-black leading-none">{name}</h2>
-              <p className="mt-1 text-micro font-bold uppercase tracking-widest text-white/80">
+              <h2 className="text-lg font-medium leading-none">{name}</h2>
+              <p className="mt-1 text-micro font-normal uppercase tracking-widest text-white/80">
                 تقرير نسب الحضور والانصراف لكل المواد
               </p>
             </div>

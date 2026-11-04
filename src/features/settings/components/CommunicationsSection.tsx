@@ -61,7 +61,7 @@ export const CommunicationsSection = ({
               rows={4}
               placeholder="أهلاً {student}، تذكير بحصة {subject} غداً الساعة {time}"
             />
-            <p className="mt-2 text-[11px] font-bold text-muted">
+            <p className="mt-2 text-[11px] font-normal text-muted">
               المتغيرات المتاحة: <span className="font-mono text-primary">{'{student}'}</span> اسم
               الطالب · <span className="font-mono text-primary">{'{subject}'}</span> المادة ·{' '}
               <span className="font-mono text-primary">{'{teacher}'}</span> المعلمة ·{' '}

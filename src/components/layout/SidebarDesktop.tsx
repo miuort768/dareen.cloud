@@ -49,7 +49,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
         'group relative flex items-center gap-2.5 overflow-visible rounded-xl text-sm transition-all duration-normal',
         collapsed ? 'mx-1 my-0 justify-center px-0 py-1.5' : 'mx-2 my-0.5 px-3 py-2',
         isActive
-          ? 'bg-primary/10 font-semibold text-primary'
+          ? 'bg-primary/10 font-light text-primary'
           : 'text-muted hover:bg-hover hover:text-main',
       )
     }
@@ -126,7 +126,7 @@ export const SidebarDesktop = ({
         </div>
         <span
           className={cn(
-            'whitespace-nowrap text-sm font-bold text-main transition-all duration-slow',
+            'whitespace-nowrap text-sm font-normal text-main transition-all duration-slow',
             collapsed ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
           )}
         >
@@ -140,7 +140,7 @@ export const SidebarDesktop = ({
             collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100',
           )}
         >
-          <span className="flex items-center gap-1 whitespace-nowrap rounded-lg bg-primary-soft px-2 py-1 text-[10px] font-bold text-primary">
+          <span className="flex items-center gap-1 whitespace-nowrap rounded-lg bg-primary-soft px-2 py-1 text-[10px] font-normal text-primary">
             <CalendarDays size={11} />
             {academicYear}
           </span>
@@ -164,7 +164,7 @@ export const SidebarDesktop = ({
               collapsed ? 'h-0 opacity-0' : 'h-auto opacity-100',
             )}
           >
-            <span className="block px-5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted">
+            <span className="block px-5 py-1.5 text-[10px] font-normal uppercase tracking-widest text-muted">
               {section.label}
             </span>
           </div>
@@ -202,7 +202,7 @@ export const SidebarDesktop = ({
             {user.avatar ? (
               <AvatarImage src={user.avatar} alt={user.name} />
             ) : (
-              <AvatarFallback className="bg-primary/10 text-xs font-bold text-primary">
+              <AvatarFallback className="bg-primary/10 text-xs font-normal text-primary">
                 {user.name?.charAt(0)}
               </AvatarFallback>
             )}
@@ -213,7 +213,7 @@ export const SidebarDesktop = ({
               collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100',
             )}
           >
-            <p className="truncate text-xs font-semibold leading-tight text-main">{user.name}</p>
+            <p className="truncate text-xs font-light leading-tight text-main">{user.name}</p>
             <p className="truncate text-[10px] leading-tight text-muted">
               {roleLabels[user.role] || user.role}
             </p>

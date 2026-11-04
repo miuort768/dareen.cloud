@@ -221,7 +221,7 @@ export const NotificationDropdown = ({
         />
         {showLabel && <span className="hidden text-xs font-medium sm:inline">الإشعارات</span>}
         {notificationsEnabled && unreadCount > 0 && (
-          <span className="absolute -start-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-surface bg-error px-1 text-micro font-bold text-on-error shadow-elevation-3">
+          <span className="absolute -start-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-surface bg-error px-1 text-micro font-normal text-on-error shadow-elevation-3">
             {unreadCount}
           </span>
         )}
@@ -271,15 +271,15 @@ export const NotificationDropdown = ({
                       <Bell size={17} />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="flex items-center gap-2 text-sm font-black text-main">
+                      <h3 className="flex items-center gap-2 text-sm font-medium text-main">
                         الإشعارات
                         {unreadCount > 0 && (
-                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error px-1.5 text-micro font-black leading-none text-on-error">
+                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-error px-1.5 text-micro font-medium leading-none text-on-error">
                             {unreadCount}
                           </span>
                         )}
                       </h3>
-                      <p className="mt-0.5 truncate text-[11px] font-bold text-muted">
+                      <p className="mt-0.5 truncate text-[11px] font-normal text-muted">
                         {unreadCount > 0 ? `${unreadCount} غير مقروء` : 'لا توجد إشعارات جديدة'}
                       </p>
                     </div>
@@ -292,7 +292,7 @@ export const NotificationDropdown = ({
                         <button
                           onClick={markAllAsRead}
                           disabled={markReadMutation.isPending}
-                          className="flex min-h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-primary bg-primary-soft px-3.5 text-xs font-bold leading-none text-primary outline-none transition-colors hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 md:min-h-0 md:flex-none md:px-3 md:py-1.5 md:text-micro"
+                          className="flex min-h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-primary bg-primary-soft px-3.5 text-xs font-normal leading-none text-primary outline-none transition-colors hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 md:min-h-0 md:flex-none md:px-3 md:py-1.5 md:text-micro"
                         >
                           <CheckCheck size={13} />
                           تحديد الكل
@@ -302,7 +302,7 @@ export const NotificationDropdown = ({
                         <button
                           onClick={clearAll}
                           disabled={clearAllMutation.isPending}
-                          className="flex min-h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-error bg-error-soft px-3.5 text-xs font-bold leading-none text-error outline-none transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 md:min-h-0 md:flex-none md:px-3 md:py-1.5 md:text-micro"
+                          className="flex min-h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-error bg-error-soft px-3.5 text-xs font-normal leading-none text-error outline-none transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 md:min-h-0 md:flex-none md:px-3 md:py-1.5 md:text-micro"
                         >
                           <Trash2 size={13} />
                           حذف الكل
@@ -320,7 +320,7 @@ export const NotificationDropdown = ({
                         <AlertCircle size={26} />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-main">الإشعارات معطلة</p>
+                        <p className="text-sm font-normal text-main">الإشعارات معطلة</p>
                         <p className="mt-1 text-xs text-muted">يمكنك تفعيلها من صفحة الإعدادات</p>
                       </div>
                     </div>
@@ -361,13 +361,13 @@ export const NotificationDropdown = ({
                                 <h4
                                   className={cn(
                                     'min-w-0 text-sm leading-snug text-main',
-                                    isUnread ? 'font-black' : 'font-bold',
+                                    isUnread ? 'font-medium' : 'font-normal',
                                   )}
                                 >
                                   {n.title}
                                 </h4>
                                 {count > 1 && (
-                                  <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-primary-soft px-1.5 text-[10px] font-black leading-none text-primary">
+                                  <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-primary-soft px-1.5 text-[10px] font-medium leading-none text-primary">
                                     ×{count}
                                   </span>
                                 )}
@@ -376,7 +376,7 @@ export const NotificationDropdown = ({
                                 {n.message}
                               </p>
                               <div className="mt-2.5 flex items-center justify-between gap-2">
-                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-dim">
+                                <span className="inline-flex items-center gap-1 text-[11px] font-normal text-dim">
                                   <Clock size={11} />
                                   {formatDistanceToNow(new Date(n.time), {
                                     addSuffix: true,
@@ -407,7 +407,7 @@ export const NotificationDropdown = ({
                         <Bell size={26} />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-main">لا توجد إشعارات</p>
+                        <p className="text-sm font-normal text-main">لا توجد إشعارات</p>
                         <p className="mt-1 text-xs text-muted">ستظهر هنا كل الإشعارات الجديدة</p>
                       </div>
                     </div>

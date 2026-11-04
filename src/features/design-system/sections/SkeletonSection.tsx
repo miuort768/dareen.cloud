@@ -9,7 +9,7 @@ import {
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="space-y-4">
-    <h3 className="text-xs font-bold tracking-wider text-main">{title}</h3>
+    <h3 className="text-xs font-normal tracking-wider text-main">{title}</h3>
     <div className="rounded-card border border-border bg-card p-6">{children}</div>
   </div>
 )
@@ -17,7 +17,7 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 export const SkeletonSection = () => (
   <div className="space-y-10">
     <div className="mb-6">
-      <h2 className="text-section font-bold text-main">Skeleton Loading</h2>
+      <h2 className="text-section font-normal text-main">Skeleton Loading</h2>
       <p className="mt-1 text-sm text-muted">مكونات التحميل المؤقت مع تأثير النبض</p>
     </div>
 

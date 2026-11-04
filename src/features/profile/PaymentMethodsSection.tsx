@@ -224,7 +224,7 @@ export const PaymentMethodsSection = () => {
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className={cn('min-h-11 px-3.5 py-2 text-micro font-bold', PRIMARY_BUTTON)}
+            className={cn('min-h-11 px-3.5 py-2 text-micro font-normal', PRIMARY_BUTTON)}
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -242,10 +242,10 @@ export const PaymentMethodsSection = () => {
       {/* خطأ الجلب */}
       {!loading && fetchError && (
         <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-8 text-center">
-          <p className="text-xs font-bold text-main">تعذر تحميل طرق الدفع</p>
+          <p className="text-xs font-normal text-main">تعذر تحميل طرق الدفع</p>
           <button
             onClick={() => window.location.reload()}
-            className={cn('mx-auto mt-3 min-h-11 px-4 py-2 text-micro font-bold', PRIMARY_BUTTON)}
+            className={cn('mx-auto mt-3 min-h-11 px-4 py-2 text-micro font-normal', PRIMARY_BUTTON)}
           >
             إعادة المحاولة
           </button>
@@ -258,14 +258,14 @@ export const PaymentMethodsSection = () => {
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-jade-soft ring-1 ring-jade-soft">
             <CreditCard size={22} className="text-jade" />
           </div>
-          <p className="text-sm font-black text-main">لا توجد طرق دفع</p>
+          <p className="text-sm font-medium text-main">لا توجد طرق دفع</p>
           <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
             أضف طريقة دفع حتى تتمكن من استلام مستحقاتك.
           </p>
           <button
             onClick={openAdd}
             className={cn(
-              'mt-5 min-h-11 px-5 py-2.5 text-micro font-bold sm:text-xs',
+              'mt-5 min-h-11 px-5 py-2.5 text-micro font-normal sm:text-xs',
               PRIMARY_BUTTON,
             )}
           >
@@ -305,19 +305,19 @@ export const PaymentMethodsSection = () => {
             </div>
             <div className="relative flex items-center justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-micro font-bold uppercase tracking-widest text-white/70">
+                <p className="text-micro font-normal uppercase tracking-widest text-white/70">
                   طريقة استلام المستحقات
                 </p>
-                <p className="mt-1 truncate text-sm font-black text-on-primary">
+                <p className="mt-1 truncate text-sm font-medium text-on-primary">
                   {methodMeta?.label}
                   {setting.method === 'wallet' && setting.walletProvider && (
-                    <span className="font-bold text-white/80">
+                    <span className="font-normal text-white/80">
                       {' '}
                       — {WALLET_LABELS[setting.walletProvider] || setting.walletProvider}
                     </span>
                   )}
                 </p>
-                <p className="mt-1 font-mono text-xs font-bold tabular-nums text-white/90">
+                <p className="mt-1 font-mono text-xs font-normal tabular-nums text-white/90">
                   {setting.method === 'wallet'
                     ? setting.walletPhone
                     : setting.method === 'instapay'
@@ -338,8 +338,8 @@ export const PaymentMethodsSection = () => {
                   {methodMeta && <methodMeta.icon size={15} className="text-jade" />}
                 </div>
                 <div className="min-w-0">
-                  <p className="truncate text-xs font-bold text-main">{methodMeta?.label}</p>
-                  <span className="mt-0.5 flex w-fit items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-micro font-bold text-success-strong">
+                  <p className="truncate text-xs font-normal text-main">{methodMeta?.label}</p>
+                  <span className="mt-0.5 flex w-fit items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-micro font-normal text-success-strong">
                     <BadgeCheck size={10} />
                     طريقة الاستلام الرئيسية
                   </span>
@@ -389,7 +389,7 @@ export const PaymentMethodsSection = () => {
             <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                className={cn('min-h-11 w-full py-2 text-micro font-bold', PRIMARY_BUTTON)}
+                className={cn('min-h-11 w-full py-2 text-micro font-normal', PRIMARY_BUTTON)}
               >
                 <PencilLine size={12} /> تعديل البيانات
               </button>
@@ -489,7 +489,7 @@ const PaymentMethodForm = ({
                   {isEdit ? <PencilLine size={17} /> : <Plus size={18} />}
                 </span>
                 <div className="min-w-0">
-                  <h3 className="truncate text-sm font-black text-jade-on md:text-base">
+                  <h3 className="truncate text-sm font-medium text-jade-on md:text-base">
                     {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
                   </h3>
                   <p className="mt-0.5 text-micro text-jade-on opacity-80">
@@ -513,7 +513,7 @@ const PaymentMethodForm = ({
           >
             {/* اختيار النوع */}
             <div>
-              <label className="mb-2 block text-xs font-bold text-muted">نوع طريقة الدفع</label>
+              <label className="mb-2 block text-xs font-normal text-muted">نوع طريقة الدفع</label>
               <div className="grid grid-cols-3 gap-2">
                 {METHODS.map((m) => {
                   const active = form.method === m.id
@@ -531,7 +531,7 @@ const PaymentMethodForm = ({
                       )}
                     >
                       <m.icon size={17} strokeWidth={active ? 2.3 : 1.8} />
-                      <span className="text-center text-micro font-bold leading-tight">
+                      <span className="text-center text-micro font-normal leading-tight">
                         {m.label}
                       </span>
                     </button>
@@ -544,7 +544,7 @@ const PaymentMethodForm = ({
             {form.method === 'wallet' && (
               <>
                 <div>
-                  <label htmlFor="pm-provider" className="mb-2 block text-xs font-bold text-muted">
+                  <label htmlFor="pm-provider" className="mb-2 block text-xs font-normal text-muted">
                     شركة المحفظة
                   </label>
                   <div className="grid grid-cols-3 gap-1.5">
@@ -555,7 +555,7 @@ const PaymentMethodForm = ({
                         onClick={() => setForm({ walletProvider: w })}
                         aria-pressed={form.walletProvider === w}
                         className={cn(
-                          'rounded-lg border py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                          'rounded-lg border py-2 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                           form.walletProvider === w
                             ? 'border-jade bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1'
                             : 'border-border bg-surface text-muted hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep',
@@ -640,7 +640,7 @@ const PaymentMethodForm = ({
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="rounded-full border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+              className="rounded-full border border-border bg-surface py-3 text-xs font-normal text-main transition-all hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
             >
               إلغاء
             </button>
@@ -649,7 +649,7 @@ const PaymentMethodForm = ({
               onClick={(e) => onSubmit(e)}
               disabled={submitting}
               className={cn(
-                'gap-2 py-3 text-xs font-bold disabled:cursor-not-allowed',
+                'gap-2 py-3 text-xs font-normal disabled:cursor-not-allowed',
                 PRIMARY_BUTTON,
               )}
             >
@@ -676,7 +676,7 @@ interface FieldProps {
 
 const Field = ({ id, label, value, onChange, placeholder, inputMode, mono }: FieldProps) => (
   <div className="space-y-1.5">
-    <label htmlFor={id} className="text-xs font-bold text-muted">
+    <label htmlFor={id} className="text-xs font-normal text-muted">
       {label}
     </label>
     <input
@@ -688,7 +688,7 @@ const Field = ({ id, label, value, onChange, placeholder, inputMode, mono }: Fie
       placeholder={placeholder}
       autoComplete="off"
       className={cn(
-        'w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-bold text-main outline-none transition-all placeholder:font-medium placeholder:text-muted focus-visible:border-jade focus-visible:ring-2 focus-visible:ring-focus',
+        'w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-normal text-main outline-none transition-all placeholder:font-medium placeholder:text-muted focus-visible:border-jade focus-visible:ring-2 focus-visible:ring-focus',
         mono && 'font-mono tabular-nums',
       )}
     />

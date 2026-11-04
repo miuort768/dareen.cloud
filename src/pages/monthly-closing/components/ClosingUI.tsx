@@ -31,7 +31,7 @@ export const SectionTitle = ({
       <Icon size={15} />
     </div>
     <div>
-      <p className="text-sm font-bold text-main">{label}</p>
+      <p className="text-sm font-normal text-main">{label}</p>
       {sub && <p className="mt-0.5 text-[10px] text-muted">{sub}</p>}
     </div>
   </div>
@@ -55,7 +55,7 @@ export const PrimaryBtn = ({
       'flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
       'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
       'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
-      'px-4 py-2 text-xs font-bold',
+      'px-4 py-2 text-xs font-normal',
       'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
       'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',
@@ -78,7 +78,7 @@ export const SecondaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-xs font-bold text-muted shadow-button',
+      'flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-xs font-normal text-muted shadow-button',
       'hover:border-border-strong hover:bg-surface hover:text-main hover:shadow-button-hover',
       'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
       'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
@@ -148,7 +148,7 @@ export const KpiCard = ({
           <motion.p
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-lg font-bold tabular-nums leading-none text-main"
+            className="text-lg font-normal tabular-nums leading-none text-main"
           >
             {value}
           </motion.p>
@@ -156,7 +156,7 @@ export const KpiCard = ({
         {trend && (
           <div
             className={cn(
-              'inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-xs font-bold',
+              'inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-xs font-normal',
               trend.positive ? 'bg-success-soft text-success' : 'bg-error-soft text-error',
             )}
           >

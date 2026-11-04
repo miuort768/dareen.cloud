@@ -55,8 +55,8 @@ export const QuizResult = ({
           <Award size={16} />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-bold text-on-primary">{title}</p>
-          <p className="truncate text-[10px] font-bold text-white/75">النتيجة النهائية</p>
+          <p className="truncate text-sm font-normal text-on-primary">{title}</p>
+          <p className="truncate text-[10px] font-normal text-white/75">النتيجة النهائية</p>
         </div>
         <button
           type="button"
@@ -103,7 +103,7 @@ export const QuizResult = ({
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-3xl font-bold tabular-nums text-main">
+            <span className="text-3xl font-normal tabular-nums text-main">
               <CountUp value={pct} format={(n) => `${n}٪`} />
             </span>
           </div>
@@ -125,20 +125,20 @@ export const QuizResult = ({
         </div>
 
         <div>
-          <p className="text-sm font-bold text-main">{resultMessage(correct, total)}</p>
-          <p className="mt-1 text-xs font-bold text-muted">
+          <p className="text-sm font-normal text-main">{resultMessage(correct, total)}</p>
+          <p className="mt-1 text-xs font-normal text-muted">
             أجبتَ إجابة صحيحة على {correct} من {total} أسئلة
           </p>
         </div>
 
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-3 py-1 text-xs font-bold tabular-nums text-warning-strong">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-3 py-1 text-xs font-normal tabular-nums text-warning-strong">
           <Zap size={13} />
           {xp} نقطة مكتسبة
         </span>
 
         {showLevels && (
           <div className="mt-1 w-full">
-            <p className="mb-2 text-center text-[10px] font-semibold text-muted">
+            <p className="mb-2 text-center text-[10px] font-light text-muted">
               المستوى المقترح لك
             </p>
             <div className="grid grid-cols-3 gap-2">
@@ -146,7 +146,7 @@ export const QuizResult = ({
                 <span
                   key={levelTitle}
                   className={cn(
-                    'flex h-9 items-center justify-center rounded-xl px-2 text-[10px] font-semibold',
+                    'flex h-9 items-center justify-center rounded-xl px-2 text-[10px] font-light',
                     idx === suggested
                       ? 'bg-primary text-on-primary'
                       : 'bg-surface text-muted ring-1 ring-border',
@@ -164,7 +164,7 @@ export const QuizResult = ({
             <button
               type="button"
               onClick={onNext}
-              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-success px-5 text-xs font-bold text-on-success shadow-elevation-1 outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-success px-5 text-xs font-normal text-on-success shadow-elevation-1 outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               <CheckCircle2 size={15} />
               المستوى التالي
@@ -174,7 +174,7 @@ export const QuizResult = ({
             <button
               type="button"
               onClick={() => onStartLevel(suggested)}
-              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-5 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               ابدأ {levelTitles?.[suggested] ?? 'المستوى'}
               <ChevronLeft size={14} />
@@ -183,7 +183,7 @@ export const QuizResult = ({
           <button
             type="button"
             onClick={onRestart}
-            className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-bold text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+            className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-normal text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
           >
             <RotateCcw size={14} />
             إعادة المحاولة
@@ -191,7 +191,7 @@ export const QuizResult = ({
           <button
             type="button"
             onClick={onExit}
-            className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-bold text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+            className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-normal text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
           >
             <X size={14} />
             اختيار اختبار آخر

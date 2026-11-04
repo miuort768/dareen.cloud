@@ -26,10 +26,10 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
   return (
     <section aria-label="المواد الدراسية" className="space-y-3">
       <div className="flex items-center gap-2 px-1">
-        <h3 className="rounded-lg bg-primary px-3 py-1.5 text-xs font-black text-on-primary shadow-elevation-1">
+        <h3 className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-on-primary shadow-elevation-1">
           موادي الدراسية
         </h3>
-        <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
+        <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-medium tabular-nums text-primary">
           {subjects.length} {subjects.length === 1 ? 'مادة' : 'مواد'}
         </span>
       </div>
@@ -59,8 +59,8 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                     <BookOpen size={19} />
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-black text-main">{sub.subject}</p>
-                    <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-bold text-muted">
+                    <p className="truncate text-sm font-medium text-main">{sub.subject}</p>
+                    <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-normal text-muted">
                       <User size={9} className="shrink-0" />
                       {sub.teacher}
                     </p>
@@ -68,13 +68,13 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                 </div>
 
                 {sub.isFrozen ? (
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2 py-1 text-[10px] font-black text-muted">
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2 py-1 text-[10px] font-medium text-muted">
                     <Snowflake size={10} /> مجمّدة
                   </span>
                 ) : (
                   <span
                     className={cn(
-                      'shrink-0 font-dash text-2xl font-black tabular-nums leading-none',
+                      'shrink-0 font-dash text-2xl font-medium tabular-nums leading-none',
                       accent.text,
                     )}
                   >
@@ -86,10 +86,10 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               {!sub.isFrozen && (
                 <>
                   <div className="mt-4 flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-black text-muted">المنهج</span>
-                    <span className="flex items-baseline gap-1 text-xs font-black tabular-nums text-main">
+                    <span className="text-[11px] font-medium text-muted">المنهج</span>
+                    <span className="flex items-baseline gap-1 text-xs font-medium tabular-nums text-main">
                       {sub.used}
-                      <span className="text-[10px] font-bold text-muted">/ {sub.total} حصة</span>
+                      <span className="text-[10px] font-normal text-muted">/ {sub.total} حصة</span>
                     </span>
                   </div>
                   <div className="mt-1.5">
@@ -103,7 +103,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                   {sub.weekDays.map((d, i) => (
                     <span
                       key={`${sub.id}-day-${i}`}
-                      className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-black text-primary"
+                      className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-medium text-primary"
                     >
                       <CalendarDays size={9} />
                       {d}
@@ -113,13 +113,13 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               )}
 
               {sub.notes && (
-                <p className="mt-3 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-bold leading-relaxed text-main">
+                <p className="mt-3 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-normal leading-relaxed text-main">
                   <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                   {sub.notes}
                 </p>
               )}
 
-              <span className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-2xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-soft transition-all duration-normal group-hover:bg-primary-hover group-hover:shadow">
+              <span className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-2xl bg-primary px-4 py-2.5 text-xs font-normal text-on-primary shadow-soft transition-all duration-normal group-hover:bg-primary-hover group-hover:shadow">
                 عرض الجدول الدراسي
                 <ArrowLeft
                   size={13}

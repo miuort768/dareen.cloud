@@ -93,7 +93,7 @@ export const EvaluationCard = ({
       <div className="flex items-center gap-3 border-b border-border p-4 pb-3">
         <div
           className={cn(
-            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-bold shadow-elevation-2 ring-2 ring-primary/10 transition-transform duration-slow group-hover:scale-105',
+            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-normal shadow-elevation-2 ring-2 ring-primary/10 transition-transform duration-slow group-hover:scale-105',
             gradient.g,
             gradient.on,
           )}
@@ -101,15 +101,15 @@ export const EvaluationCard = ({
           {(student.name || '?').charAt(0)}
         </div>
         <div className="min-w-0 flex-1">
-          <h4 className="truncate text-sm font-black text-main">{student.name}</h4>
+          <h4 className="truncate text-sm font-medium text-main">{student.name}</h4>
           <div className="mt-1 flex flex-wrap items-center gap-1.5">
             {student.grade && (
-              <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5 text-[10px] font-bold text-warning ring-1 ring-warning-light">
+              <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5 text-[10px] font-normal text-warning ring-1 ring-warning-light">
                 <GraduationCap size={11} className="text-warning" />
                 {student.grade}
               </span>
             )}
-            <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary dark:bg-primary/10">
+            <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-normal text-primary dark:bg-primary/10">
               <Award size={10} />
               {totalStudentXP} XP
             </span>
@@ -123,14 +123,14 @@ export const EvaluationCard = ({
           <>
             <div className="rounded-xl border border-border bg-surface p-2.5">
               <div className="flex items-center justify-between gap-2">
-                <span className="flex shrink-0 items-center gap-1 text-[10px] font-bold text-muted">
+                <span className="flex shrink-0 items-center gap-1 text-[10px] font-normal text-muted">
                   <Star size={10} /> آخر تقييم
                 </span>
                 <div className="flex min-w-0 items-center gap-1.5">
                   {lastRating && (
                     <span
                       className={cn(
-                        'flex shrink-0 items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-bold',
+                        'flex shrink-0 items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-normal',
                         lastRating.pill,
                       )}
                     >
@@ -151,11 +151,11 @@ export const EvaluationCard = ({
             <div className="grid grid-cols-3 gap-1.5">
               {statCells.map((cell, i) => (
                 <div key={cell.label} className={cn('rounded-xl p-2 text-center', cell.bg)}>
-                  <p className="text-[10px] font-bold text-muted">{cell.label}</p>
+                  <p className="text-[10px] font-normal text-muted">{cell.label}</p>
                   <p
                     className={cn(
                       'tabular-nums',
-                      i === 0 ? 'font-dash text-lg font-black md:text-xl' : 'text-xs font-black',
+                      i === 0 ? 'font-dash text-lg font-medium md:text-xl' : 'text-xs font-medium',
                       cell.text,
                     )}
                   >
@@ -191,15 +191,15 @@ export const EvaluationCard = ({
               <Award size={18} className="text-primary" />
             </div>
             <div>
-              <p className="text-xs font-bold text-main">ابدأ أول تقييم</p>
+              <p className="text-xs font-normal text-main">ابدأ أول تقييم</p>
               <p className="mt-0.5 text-[10px] text-muted">كل تقييم يزيد XP ويسجل في السجل</p>
             </div>
             {totalEnrollments > 0 && (
               <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5">
-                <span className="inline-flex items-center gap-1 rounded-lg bg-surface px-2 py-1 text-[10px] font-bold text-muted ring-1 ring-border">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-surface px-2 py-1 text-[10px] font-normal text-muted ring-1 ring-border">
                   <BookOpen size={9} /> {totalEnrollments} مواد
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2 py-1 text-[10px] font-bold text-info-strong">
+                <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2 py-1 text-[10px] font-normal text-info-strong">
                   <TrendingUp size={9} /> {progress}% حضور
                 </span>
               </div>
@@ -220,7 +220,7 @@ export const EvaluationCard = ({
             onClick={() => togglePanel('evaluate')}
             aria-label={`إضافة تقييم لـ ${student.name}`}
             aria-expanded={expanded === 'evaluate'}
-            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-normal text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={13} /> تقييم
           </button>
@@ -229,7 +229,7 @@ export const EvaluationCard = ({
           onClick={() => togglePanel('history')}
           aria-expanded={expanded === 'history'}
           className={cn(
-            'flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+            'flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             isParent
               ? 'bg-primary text-on-primary shadow-button hover:bg-primary-hover'
               : expanded === 'history'
@@ -238,7 +238,7 @@ export const EvaluationCard = ({
           )}
         >
           <History size={12} /> السجل
-          <span className="me-0.5 rounded-md bg-card px-1 py-0.5 text-[10px] font-black tabular-nums">
+          <span className="me-0.5 rounded-md bg-card px-1 py-0.5 text-[10px] font-medium tabular-nums">
             {studentEvals.length}
           </span>
         </button>
@@ -248,7 +248,7 @@ export const EvaluationCard = ({
             aria-label={`عرض ملف ${student.name}`}
             aria-expanded={expanded === 'profile'}
             className={cn(
-              'shadow-xs flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+              'shadow-xs flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
               expanded === 'profile'
                 ? 'border border-primary bg-primary-soft text-primary'
                 : 'border border-border bg-surface text-main hover:border-primary/30 hover:bg-hover hover:text-primary',

@@ -146,15 +146,15 @@ export const MobileAppointments = () => {
               className={cn(
                 'relative flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 activeTab === tab.key
-                  ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
-                  : 'font-bold text-muted hover:text-main',
+                  ? 'bg-primary font-normal text-on-primary shadow-elevation-1'
+                  : 'font-normal text-muted hover:text-main',
               )}
             >
               <tab.icon size={14} strokeWidth={1.7} />
               <span className="text-micro">{tab.label}</span>
               <span
                 className={cn(
-                  'inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-black tabular-nums leading-none',
+                  'inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-medium tabular-nums leading-none',
                   activeTab === tab.key
                     ? 'bg-white/25 text-on-primary ring-1 ring-white/20'
                     : 'bg-border text-main',
@@ -187,10 +187,10 @@ export const MobileAppointments = () => {
         ) : isError ? (
           <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-10 text-center">
             <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
-            <p className="text-xs font-bold text-main">تعذر تحميل المواعيد</p>
+            <p className="text-xs font-normal text-main">تعذر تحميل المواعيد</p>
             <button
               onClick={() => refetch()}
-              className="mx-auto mt-3 block rounded-2xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="mx-auto mt-3 block rounded-2xl bg-primary px-4 py-2 text-micro font-normal text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة المحاولة
             </button>

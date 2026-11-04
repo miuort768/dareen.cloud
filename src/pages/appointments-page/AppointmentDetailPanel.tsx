@@ -31,14 +31,14 @@ export const AppointmentDetailPanel = ({
                 <CalendarDays size={16} className="text-white" />
               </div>
               <div>
-                <p className="text-micro font-bold text-white/80">تفاصيل الموعد</p>
-                <h3 className="text-sm font-black text-on-primary">{appointment.day}</h3>
+                <p className="text-micro font-normal text-white/80">تفاصيل الموعد</p>
+                <h3 className="text-sm font-medium text-on-primary">{appointment.day}</h3>
               </div>
             </div>
             <button
               onClick={onClose}
               aria-label="إغلاق"
-              className="flex h-8 items-center gap-1.5 rounded-xl bg-error px-2.5 text-micro font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="flex h-8 items-center gap-1.5 rounded-xl bg-error px-2.5 text-micro font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <X size={13} />
               <span>إغلاق</span>
@@ -49,7 +49,7 @@ export const AppointmentDetailPanel = ({
           <AppointmentDetailBody appointment={appointment} />
           <button
             onClick={onClose}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             عودة <ArrowRight size={13} />
           </button>

@@ -96,12 +96,12 @@ export const TeacherDetails = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center bg-white/15">
-              <span className="text-xl font-bold text-on-primary">
+              <span className="text-xl font-normal text-on-primary">
                 {(teacher.name || '?').charAt(0)}
               </span>
             </div>
             <div className="min-w-0">
-              <h3 className="truncate text-sm font-bold text-on-primary">{teacher.name}</h3>
+              <h3 className="truncate text-sm font-normal text-on-primary">{teacher.name}</h3>
               <span className="bg-error-soft px-2 py-0.5 text-[10px] text-error">
                 {teacher.subject}
               </span>

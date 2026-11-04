@@ -136,7 +136,7 @@ export const StartLiveSessionDialog = ({
         {started ? (
           <div className="space-y-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-main">بدأت الحصة!</h3>
+              <h3 className="text-lg font-normal text-main">بدأت الحصة!</h3>
               <button
                 onClick={onClose}
                 className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
@@ -150,7 +150,7 @@ export const StartLiveSessionDialog = ({
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-success-soft">
                 <CheckCircle2 size={26} className="text-success" />
               </div>
-              <p className="text-sm font-bold leading-relaxed text-main">
+              <p className="text-sm font-normal leading-relaxed text-main">
                 تم إشعار الطالب وولي الأمر بأن الحصة جارية الآن
               </p>
               <p className="text-[11px] font-medium text-muted">
@@ -160,7 +160,7 @@ export const StartLiveSessionDialog = ({
 
             <div className="flex items-center gap-2 rounded-xl border border-border bg-background p-3 dark:border-border dark:bg-hover">
               <div className="min-w-0 flex-1">
-                <p className="mb-0.5 text-[10px] font-bold text-muted">رابط الحصة</p>
+                <p className="mb-0.5 text-[10px] font-normal text-muted">رابط الحصة</p>
                 <p
                   className="truncate text-[11px] font-medium text-primary dark:text-primary"
                   dir="ltr"
@@ -170,7 +170,7 @@ export const StartLiveSessionDialog = ({
               </div>
               <button
                 onClick={copyLink}
-                className="flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3 text-[11px] font-bold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-primary dark:text-on-primary dark:hover:bg-primary-active"
+                className="flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3 text-[11px] font-normal text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-primary dark:text-on-primary dark:hover:bg-primary-active"
                 aria-label="نسخ الرابط"
               >
                 {copied ? <CheckCircle2 size={13} /> : <Copy size={13} />}
@@ -180,7 +180,7 @@ export const StartLiveSessionDialog = ({
                 href={started.meetingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-success px-3 text-[11px] font-bold text-on-success transition-opacity hover:opacity-90 dark:bg-success dark:text-on-success"
+                className="flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-success px-3 text-[11px] font-normal text-on-success transition-opacity hover:opacity-90 dark:bg-success dark:text-on-success"
               >
                 <ExternalLink size={12} />
                 الدخول
@@ -189,7 +189,7 @@ export const StartLiveSessionDialog = ({
 
             <Button
               onClick={onClose}
-              className="h-11 w-full rounded-xl bg-primary text-xs font-bold text-on-primary dark:bg-primary dark:text-on-primary"
+              className="h-11 w-full rounded-xl bg-primary text-xs font-normal text-on-primary dark:bg-primary dark:text-on-primary"
             >
               تم
             </Button>
@@ -202,7 +202,7 @@ export const StartLiveSessionDialog = ({
                   <Radio size={16} className="text-primary dark:text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-main">بدء حصة مباشرة</h3>
+                  <h3 className="text-base font-normal text-main">بدء حصة مباشرة</h3>
                   <p className="mt-0.5 text-[10px] text-muted">
                     اختر الطالب ثم ضع الرابط ليصل له وولي أمره
                   </p>
@@ -220,7 +220,7 @@ export const StartLiveSessionDialog = ({
             <div>
               <label
                 htmlFor="start-live-student"
-                className="mb-2 block text-xs font-bold text-muted"
+                className="mb-2 block text-xs font-normal text-muted"
               >
                 الطالب <span className="text-error">*</span>
               </label>
@@ -245,7 +245,7 @@ export const StartLiveSessionDialog = ({
                 </select>
               </div>
               {!loadingStudents && ownStudents.length === 0 && (
-                <p className="mt-1 flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                <p className="mt-1 flex items-center gap-1.5 text-[11px] font-normal text-muted">
                   <Users size={12} />
                   لا يوجد طلاب مضافون لك حالياً.
                 </p>
@@ -255,7 +255,7 @@ export const StartLiveSessionDialog = ({
             <div>
               <label
                 htmlFor="start-live-subject"
-                className="mb-2 block text-xs font-bold text-muted"
+                className="mb-2 block text-xs font-normal text-muted"
               >
                 المادة
               </label>
@@ -270,14 +270,14 @@ export const StartLiveSessionDialog = ({
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-muted">نوع الاجتماع</label>
+              <label className="mb-2 block text-xs font-normal text-muted">نوع الاجتماع</label>
               <div className="flex gap-2">
                 {PROVIDERS.map((p) => (
                   <button
                     key={p.value}
                     onClick={() => setProvider(p.value)}
                     className={cn(
-                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       provider === p.value
                         ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10 dark:text-primary'
                         : 'border-border text-muted hover:border-primary/30 dark:border-border dark:text-muted',
@@ -292,7 +292,7 @@ export const StartLiveSessionDialog = ({
             <div>
               <label
                 htmlFor="start-live-meeting-url"
-                className="mb-2 block text-xs font-bold text-muted"
+                className="mb-2 block text-xs font-normal text-muted"
               >
                 رابط الاجتماع <span className="text-error">*</span>
               </label>
@@ -316,7 +316,7 @@ export const StartLiveSessionDialog = ({
                     href="https://meet.google.com/new"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success"
+                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-normal text-success transition-colors hover:bg-success"
                     title="إنشاء رابط Google Meet جديد"
                   >
                     <LinkIcon size={14} /> إنشاء
@@ -325,20 +325,20 @@ export const StartLiveSessionDialog = ({
               </div>
             </div>
 
-            {error && <p className="text-xs font-bold text-error">{error}</p>}
+            {error && <p className="text-xs font-normal text-error">{error}</p>}
 
             <div className="flex gap-3 pt-2">
               <Button
                 variant="outline"
                 onClick={onClose}
-                className="h-11 flex-1 rounded-xl text-xs font-bold"
+                className="h-11 flex-1 rounded-xl text-xs font-normal"
               >
                 إلغاء
               </Button>
               <Button
                 onClick={handleStart}
                 disabled={startMutation.isPending || !studentId || !meetingUrl.trim()}
-                className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary dark:bg-primary dark:text-on-primary"
+                className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-normal text-on-primary dark:bg-primary dark:text-on-primary"
               >
                 {startMutation.isPending ? (
                   <>

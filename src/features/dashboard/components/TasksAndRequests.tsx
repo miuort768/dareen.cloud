@@ -21,7 +21,7 @@ export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) =>
         title="المهام والطلبات"
         afterTitle={
           urgentCount > 0 ? (
-            <span className="rounded-md bg-error-soft px-1.5 py-0.5 text-[10px] font-bold text-error-strong">
+            <span className="rounded-md bg-error-soft px-1.5 py-0.5 text-[10px] font-normal text-error-strong">
               {urgentCount} عاجلة
             </span>
           ) : null
@@ -70,7 +70,7 @@ export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) =>
                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-bold text-main">{task.title}</p>
+                <p className="truncate text-sm font-normal text-main">{task.title}</p>
                 <div className="mt-0.5 flex items-center gap-2">
                   <span className="text-[11px] font-medium text-muted">{task.dueDate}</span>
                   {task.priority === 'high' && (
@@ -87,7 +87,7 @@ export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) =>
             <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
               <ListTodo size={18} className="text-dim" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد مهام نشطة حالياً</p>
+            <p className="text-xs font-normal text-muted">لا توجد مهام نشطة حالياً</p>
           </div>
         )}
       </div>

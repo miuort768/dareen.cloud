@@ -58,7 +58,7 @@ export const AppointmentListView = ({
                 <div className="sticky top-16 z-10 flex items-center gap-2 px-1">
                   <span
                     className={cn(
-                      'rounded-2xl px-2 py-1 text-micro font-bold',
+                      'rounded-2xl px-2 py-1 text-micro font-normal',
                       isToday
                         ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'bg-info text-on-info',
@@ -68,13 +68,13 @@ export const AppointmentListView = ({
                     {isToday && ' · اليوم'}
                   </span>
                   <span className="h-px flex-1 bg-border" />
-                  <span className="text-micro font-bold tabular-nums text-muted">
+                  <span className="text-micro font-normal tabular-nums text-muted">
                     {appointments.length} حصة
                   </span>
                 </div>
 
                 {appointments.length === 0 ? (
-                  <div className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-error-soft bg-surface py-3 text-micro font-bold text-error">
+                  <div className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-error-soft bg-surface py-3 text-micro font-normal text-error">
                     <span className="h-1.5 w-1.5 rounded-full bg-error" />
                     لا توجد مواعيد في هذا اليوم
                   </div>
@@ -114,7 +114,7 @@ export const AppointmentListView = ({
                         >
                           <span
                             className={cn(
-                              'text-lg font-black tabular-nums leading-none',
+                              'text-lg font-medium tabular-nums leading-none',
                               done ? 'text-muted' : 'text-primary',
                             )}
                           >
@@ -122,7 +122,7 @@ export const AppointmentListView = ({
                           </span>
                           <span
                             className={cn(
-                              'mt-1 text-micro font-bold leading-none',
+                              'mt-1 text-micro font-normal leading-none',
                               done ? 'text-muted' : 'text-primary/70',
                             )}
                           >
@@ -135,25 +135,25 @@ export const AppointmentListView = ({
                           <div className="flex items-center gap-1.5">
                             <p
                               className={cn(
-                                'truncate text-base font-black text-main',
+                                'truncate text-base font-medium text-main',
                                 done && 'line-through decoration-2 opacity-60',
                               )}
                             >
                               {app.studentName}
                             </p>
                             {app.studentGrade && (
-                              <span className="shrink-0 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-bold text-muted ring-1 ring-border">
+                              <span className="shrink-0 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-normal text-muted ring-1 ring-border">
                                 {app.studentGrade}
                               </span>
                             )}
                           </div>
                           <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                            <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
+                            <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-primary-soft px-1.5 py-0.5 text-micro font-normal text-primary">
                               <BookOpen size={10} className="shrink-0" strokeWidth={1.7} />
                               <span className="truncate">{app.subject}</span>
                             </span>
                             {app.teacherName && (
-                              <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-bold text-info ring-1 ring-border">
+                              <span className="inline-flex max-w-full items-center gap-1 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-normal text-info ring-1 ring-border">
                                 <ShieldCheck size={10} className="shrink-0" strokeWidth={1.7} />
                                 <span className="truncate">{app.teacherName}</span>
                               </span>
@@ -164,7 +164,7 @@ export const AppointmentListView = ({
                         {/* الإجراء */}
                         <div className="flex shrink-0 flex-col justify-center">
                           {done ? (
-                            <span className="flex items-center gap-1 rounded-2xl bg-success-soft px-2 py-1.5 text-micro font-bold text-success">
+                            <span className="flex items-center gap-1 rounded-2xl bg-success-soft px-2 py-1.5 text-micro font-normal text-success">
                               <CheckCircle2 size={11} strokeWidth={1.7} /> تم
                             </span>
                           ) : canComplete ? (
@@ -173,7 +173,7 @@ export const AppointmentListView = ({
                                 onClick={(e) => onComplete(app.id, e)}
                                 disabled={isPending}
                                 aria-label={`إتمام حصة ${app.studentName}`}
-                                className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-2 text-micro font-bold text-on-success transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                                className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-2 text-micro font-normal text-on-success transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                               >
                                 <CheckCircle2 size={11} strokeWidth={1.7} /> إتمام
                               </button>

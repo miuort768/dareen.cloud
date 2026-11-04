@@ -67,13 +67,13 @@ export const AttentionTiles = memo(function AttentionTiles({ stats }: { stats: E
             <span className="min-w-0 flex-1">
               <span
                 className={cn(
-                  'block font-dash text-lg font-black tabular-nums leading-none',
+                  'block font-dash text-lg font-medium tabular-nums leading-none',
                   tile.text,
                 )}
               >
                 {(tile.value ?? 0).toLocaleString('en-US')}
               </span>
-              <span className="mt-1 block truncate text-[10px] font-bold text-muted">
+              <span className="mt-1 block truncate text-[10px] font-normal text-muted">
                 {tile.label}
               </span>
             </span>

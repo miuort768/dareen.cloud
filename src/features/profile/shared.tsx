@@ -125,7 +125,7 @@ export const AccountHero = ({
       <span
         key={chip}
         className={cn(
-          'inline-flex items-center rounded-full font-bold ring-1',
+          'inline-flex items-center rounded-full font-normal ring-1',
           CHIP_SOFT[tone],
           chipsBold
             ? cn(
@@ -202,10 +202,10 @@ export const AccountHero = ({
 
             <div className="min-w-0 flex-1 pb-0.5">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="min-w-0 break-words text-xl font-black leading-tight text-main md:text-2xl lg:text-3xl">
+                <h1 className="min-w-0 break-words text-xl font-medium leading-tight text-main md:text-2xl lg:text-3xl">
                   {name}
                 </h1>
-                <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-0.5 text-[9px] font-bold text-jade-on ring-1 ring-white/20 md:px-2.5 md:py-1 md:text-micro">
+                <span className="flex items-center gap-1 rounded-full bg-jade-deep px-2 py-0.5 text-[9px] font-normal text-jade-on ring-1 ring-white/20 md:px-2.5 md:py-1 md:text-micro">
                   <BadgeCheck size={10} />
                   {roleLabel}
                 </span>
@@ -213,13 +213,13 @@ export const AccountHero = ({
                   <div className="hidden flex-wrap items-center gap-1.5 md:flex">{chipNodes}</div>
                 )}
               </div>
-              {subtitle && <p className="mt-1 text-xs font-bold text-muted">{subtitle}</p>}
+              {subtitle && <p className="mt-1 text-xs font-normal text-muted">{subtitle}</p>}
             </div>
 
             {onEdit && (
               <button
                 onClick={onEdit}
-                className="hidden min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-bold text-jade-on shadow-elevation-1 transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:flex md:px-5 md:text-xs"
+                className="hidden min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-normal text-jade-on shadow-elevation-1 transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:flex md:px-5 md:text-xs"
               >
                 <PencilLine size={13} /> تعديل البيانات
               </button>
@@ -241,7 +241,7 @@ export const AccountHero = ({
           {onEdit && (
             <button
               onClick={onEdit}
-              className="mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-bold text-jade-on shadow-elevation-1 transition-all hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:hidden"
+              className="mt-3 flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep px-4 py-2.5 text-xs font-normal text-jade-on shadow-elevation-1 transition-all hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:hidden"
             >
               <PencilLine size={13} /> تعديل البيانات
             </button>
@@ -269,10 +269,10 @@ export const AccountHero = ({
                     </span>
                   )}
                   <div className="min-w-0">
-                    <p className="truncate font-dash text-xl font-black tabular-nums leading-none text-inherit sm:text-2xl">
+                    <p className="truncate font-dash text-xl font-medium tabular-nums leading-none text-inherit sm:text-2xl">
                       {q.value}
                     </p>
-                    <p className="mt-1 truncate text-[9px] font-bold text-inherit opacity-80 sm:text-micro">
+                    <p className="mt-1 truncate text-[9px] font-normal text-inherit opacity-80 sm:text-micro">
                       {q.label}
                     </p>
                   </div>
@@ -341,7 +341,7 @@ export const SectionCard = ({
             </div>
           )}
           <div className="min-w-0">
-            <h2 className="truncate text-sm font-black leading-tight">{title}</h2>
+            <h2 className="truncate text-sm font-medium leading-tight">{title}</h2>
             {description && (
               <p className={cn('mt-0.5 text-micro opacity-80', descClassName)}>{description}</p>
             )}
@@ -364,7 +364,7 @@ export const SectionCard = ({
             </div>
           )}
           <div className="min-w-0">
-            <h2 className="truncate text-sm font-black leading-tight text-main">{title}</h2>
+            <h2 className="truncate text-sm font-medium leading-tight text-main">{title}</h2>
             {description && (
               <p className={cn('mt-0.5 text-micro text-muted', descClassName)}>{description}</p>
             )}
@@ -397,14 +397,14 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
         </span>
       )}
       <div className="min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 py-2 transition-colors duration-normal hover:border-jade-light dark:bg-background sm:rounded-xl">
-        <p className="text-micro font-bold text-muted">{label}</p>
+        <p className="text-micro font-normal text-muted">{label}</p>
         {empty ? (
-          <p className="mt-0.5 text-xs font-bold text-muted sm:text-sm">—</p>
+          <p className="mt-0.5 text-xs font-normal text-muted sm:text-sm">—</p>
         ) : (
           <p
             title={tooltip}
             className={cn(
-              'mt-0.5 min-w-0 break-words text-xs font-bold leading-snug text-main sm:text-sm',
+              'mt-0.5 min-w-0 break-words text-xs font-normal leading-snug text-main sm:text-sm',
               mono && 'font-mono tabular-nums',
             )}
           >
@@ -436,17 +436,17 @@ export const InfoTile = ({ label, value, icon: Icon, tone = 'primary' }: InfoTil
     <div className="relative mx-auto mb-2.5 flex h-11 w-11 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/25">
       <Icon size={18} />
     </div>
-    <p className="relative truncate font-dash text-2xl font-black tabular-nums leading-none">
+    <p className="relative truncate font-dash text-2xl font-medium tabular-nums leading-none">
       {value}
     </p>
-    <p className="relative mt-1.5 text-micro font-bold opacity-80">{label}</p>
+    <p className="relative mt-1.5 text-micro font-normal opacity-80">{label}</p>
   </div>
 )
 
 /* ---------- شارة الحالة «نشط» الموحدة ---------- */
 
 export const StatusBadge = () => (
-  <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-2.5 py-1 text-micro font-bold text-success-strong ring-1 ring-success-soft">
+  <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-2.5 py-1 text-micro font-normal text-success-strong ring-1 ring-success-soft">
     <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
     نشط
   </span>
@@ -488,14 +488,14 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
           href={`https://wa.me/${supportPhone}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-jade-deep px-4 py-3 text-xs font-normal text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           <MessageCircle size={14} /> تواصل مع الدعم الفني
         </a>
       )}
       <button
         onClick={handleLogout}
-        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-bold text-on-error shadow-soft transition-all hover:-translate-y-0.5 hover:bg-error-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-error px-4 py-3 text-xs font-normal text-on-error shadow-soft transition-all hover:-translate-y-0.5 hover:bg-error-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
       >
         <LogOut size={14} /> تسجيل الخروج
       </button>
@@ -528,11 +528,11 @@ interface ErrorBlockProps {
 export const ErrorBlock = ({ onRetry }: ErrorBlockProps) => (
   <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
     <AlertTriangle size={30} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
-    <p className="text-sm font-bold text-main">تعذر تحميل بيانات الحساب</p>
+    <p className="text-sm font-normal text-main">تعذر تحميل بيانات الحساب</p>
     <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
     <button
       onClick={onRetry}
-      className="mx-auto mt-4 flex min-h-11 items-center rounded-full bg-jade-deep px-6 py-2.5 text-xs font-bold text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+      className="mx-auto mt-4 flex min-h-11 items-center rounded-full bg-jade-deep px-6 py-2.5 text-xs font-normal text-jade-on shadow-soft transition-all hover:-translate-y-0.5 hover:bg-jade hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
     >
       إعادة المحاولة
     </button>

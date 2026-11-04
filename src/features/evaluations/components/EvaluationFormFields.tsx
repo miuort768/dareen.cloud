@@ -29,7 +29,7 @@ export const EvaluationFormFields = ({
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
       {/* Column 1: Rating */}
       <div className="space-y-2">
-        <label className="block text-xs font-bold text-muted">مستوى التميز</label>
+        <label className="block text-xs font-normal text-muted">مستوى التميز</label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {RATING_OPTIONS.map((opt) => {
             const isSelected = formData.rating === opt.value
@@ -58,7 +58,7 @@ export const EvaluationFormFields = ({
                   </motion.span>
                 )}
                 <OptIcon size={22} strokeWidth={isSelected ? 2.4 : 1.9} />
-                <span className="text-center text-xs font-extrabold leading-snug">{opt.value}</span>
+                <span className="text-center text-xs font-normal leading-snug">{opt.value}</span>
               </button>
             )
           })}
@@ -70,7 +70,7 @@ export const EvaluationFormFields = ({
         {/* XP Points */}
         <div>
           <div className="mb-2 flex items-center justify-between">
-            <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
+            <label className="text-xs font-normal text-muted">نقاط المكافأة (XP)</label>
           </div>
           <div className="mb-2 flex flex-nowrap gap-1.5">
             {[5, 15, 25, 40, 50].map((p) => {
@@ -82,9 +82,9 @@ export const EvaluationFormFields = ({
                   onClick={() => onChange({ ...formData, points: p })}
                   aria-pressed={isSelected}
                   className={cn(
-                    'min-w-0 flex-1 rounded-lg border px-0 py-1.5 text-center text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    'min-w-0 flex-1 rounded-lg border px-0 py-1.5 text-center text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                     isSelected
-                      ? 'border-primary bg-primary-soft font-black text-primary shadow-elevation-1 dark:bg-primary/10'
+                      ? 'border-primary bg-primary-soft font-medium text-primary shadow-elevation-1 dark:bg-primary/10'
                       : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-primary',
                   )}
                 >
@@ -110,7 +110,7 @@ export const EvaluationFormFields = ({
               min="0"
               max="50"
               aria-label="عدد النقاط من 0 إلى 50"
-              className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-bold tabular-nums text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+              className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-normal tabular-nums text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
             />
             <span className="text-micro text-muted">/ 50</span>
           </div>
@@ -118,7 +118,7 @@ export const EvaluationFormFields = ({
 
         {/* Notes */}
         <div>
-          <label htmlFor="eval-notes" className="mb-1.5 block text-xs font-bold text-muted">
+          <label htmlFor="eval-notes" className="mb-1.5 block text-xs font-normal text-muted">
             رسالة الإشادة (تظهر لولي الأمر)
           </label>
           <textarea
@@ -139,7 +139,7 @@ export const EvaluationFormFields = ({
         <button
           type="button"
           onClick={onCancel}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-error px-5 py-3 text-xs font-black text-on-error shadow-button transition-all hover:bg-error-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-error px-5 py-3 text-xs font-medium text-on-error shadow-button transition-all hover:bg-error-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           إلغاء
         </button>
@@ -147,7 +147,7 @@ export const EvaluationFormFields = ({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-xs font-medium text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
       >
         <CheckCircle2 size={15} /> {isSubmitting ? 'جاري الإرسال...' : submitLabel}
       </button>

@@ -176,13 +176,13 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
               </div>
             </div>
             <div>
-              <h3 className="text-sm font-bold text-on-primary">
+              <h3 className="text-sm font-normal text-on-primary">
                 {lead.studentName || 'عميل بدون اسم'}
               </h3>
               <div className="mt-0.5 flex items-center gap-1.5">
                 <span
                   className={cn(
-                    'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-bold',
+                    'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-normal',
                     cfg.bg,
                     cfg.color,
                     cfg.darkBg,
@@ -194,7 +194,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                 </span>
                 <span
                   className={cn(
-                    'rounded-lg px-2 py-0.5 text-[9px] font-bold',
+                    'rounded-lg px-2 py-0.5 text-[9px] font-normal',
                     age.color,
                     'bg-white/15 text-white/80',
                   )}
@@ -219,46 +219,46 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
           <div className="mb-4 space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-xl border border-primary-soft bg-primary-soft p-3">
-                <div className="mb-1 text-[10px] font-bold text-primary">الهاتف</div>
+                <div className="mb-1 text-[10px] font-normal text-primary">الهاتف</div>
                 {isEditing ? (
                   <input
                     aria-label="الهاتف"
                     value={editData.phone}
                     onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
-                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-normal text-main outline-none focus:border-primary"
                     dir="ltr"
                     style={{ textAlign: 'right' }}
                   />
                 ) : (
-                  <p className="font-mono text-sm font-bold text-main" dir="ltr">
+                  <p className="font-mono text-sm font-normal text-main" dir="ltr">
                     {lead.phone}
                   </p>
                 )}
               </div>
               <div className="rounded-xl border border-success-soft bg-success-soft p-3">
-                <div className="mb-1 text-[10px] font-bold text-success">المادة</div>
+                <div className="mb-1 text-[10px] font-normal text-success">المادة</div>
                 {isEditing ? (
                   <input
                     aria-label="المادة"
                     value={editData.subject}
                     onChange={(e) => setEditData({ ...editData, subject: e.target.value })}
-                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-normal text-main outline-none focus:border-primary"
                   />
                 ) : (
-                  <p className="text-sm font-bold text-main">{lead.subject || '—'}</p>
+                  <p className="text-sm font-normal text-main">{lead.subject || '—'}</p>
                 )}
               </div>
               <div className="rounded-xl border border-info-soft bg-info-soft p-3">
-                <div className="mb-1 text-[10px] font-bold text-info">المنهج</div>
+                <div className="mb-1 text-[10px] font-normal text-info">المنهج</div>
                 {isEditing ? (
                   <input
                     aria-label="المنهج"
                     value={editData.curriculum}
                     onChange={(e) => setEditData({ ...editData, curriculum: e.target.value })}
-                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-normal text-main outline-none focus:border-primary"
                   />
                 ) : (
-                  <p className="text-sm font-bold text-main">{lead.curriculum || '—'}</p>
+                  <p className="text-sm font-normal text-main">{lead.curriculum || '—'}</p>
                 )}
               </div>
               <div className="rounded-xl bg-surface p-3">
@@ -266,7 +266,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                 <div className="flex items-center gap-1.5">
                   <span
                     className={cn(
-                      'rounded-lg px-2 py-0.5 text-[10px] font-bold',
+                      'rounded-lg px-2 py-0.5 text-[10px] font-normal',
                       priority.bg,
                       priority.color,
                       priority.darkBg,
@@ -279,14 +279,14 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
               </div>
             </div>
             <div className="rounded-xl border border-warning-soft bg-warning-soft p-3">
-              <div className="mb-1 text-[10px] font-bold text-warning">ملاحظات</div>
+              <div className="mb-1 text-[10px] font-normal text-warning">ملاحظات</div>
               {isEditing ? (
                 <textarea
                   aria-label="ملاحظات"
                   value={editData.notes}
                   onChange={(e) => setEditData({ ...editData, notes: e.target.value })}
                   rows={2}
-                  className="w-full resize-none rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
+                  className="w-full resize-none rounded-lg border border-border bg-card px-2 py-1 text-sm font-normal text-main outline-none focus:border-primary"
                 />
               ) : (
                 <p className="text-sm leading-relaxed text-main">
@@ -354,7 +354,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
 
         {/* Timeline */}
         <div className="px-4 pb-4">
-          <h4 className="mb-2 text-[11px] font-bold text-muted">النشاطات</h4>
+          <h4 className="mb-2 text-[11px] font-normal text-muted">النشاطات</h4>
           <div className="space-y-2">
             {timeline.map((event) => {
               const Icon = event.icon
@@ -369,7 +369,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                     <Icon size={12} className={event.color} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-bold text-main">{event.label}</p>
+                    <p className="text-[11px] font-normal text-main">{event.label}</p>
                     <p className="mt-0.5 text-[10px] text-muted">
                       {formatRelativeTime(event.date)}
                     </p>

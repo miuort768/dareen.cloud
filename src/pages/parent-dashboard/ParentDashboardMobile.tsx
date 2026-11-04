@@ -115,7 +115,7 @@ export const ParentDashboardMobile = ({
         animate={{ height: isRefreshing ? 44 : pullDistance }}
         className="flex items-center justify-center overflow-hidden"
       >
-        <div className="flex items-center gap-2 text-xs font-bold text-primary">
+        <div className="flex items-center gap-2 text-xs font-normal text-primary">
           {isRefreshing ? (
             <>
               <Loader2 size={16} className="animate-spin" />
@@ -202,9 +202,9 @@ export const ParentDashboardMobile = ({
                 <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
                   <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
-                <h3 className="text-sm font-black text-main">الأبناء المميزون</h3>
+                <h3 className="text-sm font-medium text-main">الأبناء المميزون</h3>
               </div>
-              <span className="text-xs font-bold text-accent">{kids.length} أبناء</span>
+              <span className="text-xs font-normal text-accent">{kids.length} أبناء</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2.5">
@@ -233,7 +233,7 @@ export const ParentDashboardMobile = ({
                     visual={
                       <div className="flex flex-col items-center justify-center gap-1 text-primary">
                         <User size={26} strokeWidth={1.8} />
-                        <span className="line-clamp-1 text-[9px] font-black text-main">
+                        <span className="line-clamp-1 text-[9px] font-medium text-main">
                           {child.name}
                         </span>
                       </div>

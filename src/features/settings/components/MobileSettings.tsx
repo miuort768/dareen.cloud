@@ -120,57 +120,57 @@ export const MobileSettings = ({
         <div className="space-y-2 text-xs text-muted">
           <p>
             • الصفحة الرئيسية:{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               طلب حصة مجانية
             </span>
             ،{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               احجز حصتك المجانية الآن
             </span>
             ،{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               ابدأ رحلة التميز
             </span>
             ،{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               ابدأ الحفظ الآن
             </span>
             ،{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               سجل الآن
             </span>
           </p>
           <p>
             • صفحة الدورات:{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               تواصل عبر واتساب
             </span>
           </p>
           <p>
             • الزر الجانبي:{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               تواصل معانا
             </span>
           </p>
           <p>
             • سياسة الخصوصية:{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               تواصل مع الدعم الفني
             </span>
           </p>
           <p>
             • سياسة الاسترجاع:{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               تواصل مع قسم الحسابات
             </span>
           </p>
           <p>
             • قوانين العمل:{' '}
-            <span dir="ltr" className="font-bold">
+            <span dir="ltr" className="font-normal">
               تواصل مع إدارة المعهد
             </span>
           </p>
-          <p className="mt-2 text-xs font-bold text-info">
+          <p className="mt-2 text-xs font-normal text-info">
             أي label غير موجود يستخدم رقم المسؤول (adminPhone) كبديل.
           </p>
         </div>

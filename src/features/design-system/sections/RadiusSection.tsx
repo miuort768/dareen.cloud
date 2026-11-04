@@ -12,7 +12,7 @@ const RADII = [
 export function RadiusSection() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الزوايا — Border Radius</h2>
+      <h2 className="mb-4 text-lg font-normal">الزوايا — Border Radius</h2>
       <div className="flex flex-wrap gap-4">
         {RADII.map((r) => (
           <div key={r.label} className="flex flex-col items-center gap-2">

@@ -182,12 +182,12 @@ export const StatCard = ({
           <div className="mb-3 flex items-start justify-between">
             <p
               className={cn(
-                'text-3xl font-black tabular-nums leading-none tracking-tight',
+                'text-3xl font-medium tabular-nums leading-none tracking-tight',
                 s.value,
               )}
             >
               {value ?? '—'}
-              {unit && <span className={cn('ms-1 text-sm font-bold', s.title)}>{unit}</span>}
+              {unit && <span className={cn('ms-1 text-sm font-normal', s.title)}>{unit}</span>}
             </p>
             {Icon && !watermark && (
               <div
@@ -202,7 +202,7 @@ export const StatCard = ({
             {badge && (
               <span
                 className={cn(
-                  'shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
+                  'shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-normal uppercase tracking-wider',
                   s.title,
                   'border border-current',
                 )}
@@ -213,14 +213,14 @@ export const StatCard = ({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <p className={cn('truncate text-sm font-bold tracking-wide', s.title)}>{title}</p>
+            <p className={cn('truncate text-sm font-normal tracking-wide', s.title)}>{title}</p>
 
             {(subtitle || trend) && (
               <div className="mt-1 flex items-center gap-2">
                 {trend && (
                   <div
                     className={cn(
-                      'flex items-center gap-1 rounded-md bg-white/10 px-1.5 py-0.5 text-xs font-semibold',
+                      'flex items-center gap-1 rounded-md bg-white/10 px-1.5 py-0.5 text-xs font-light',
                       soft
                         ? trend.isUp
                           ? 'bg-success-soft text-success-strong'

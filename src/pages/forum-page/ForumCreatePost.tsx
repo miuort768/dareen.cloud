@@ -72,8 +72,8 @@ export const ForumCreatePost = ({
             <PenLine size={18} />
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-black">شارك فكرتك</p>
-            <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-bold opacity-80">
+            <p className="text-sm font-medium">شارك فكرتك</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-normal opacity-80">
               <ShieldCheck size={11} />
               نشر متوافق مع سياسات المنصة
             </p>
@@ -101,7 +101,7 @@ export const ForumCreatePost = ({
                 onClick={() => setPostType(opt.value)}
                 aria-pressed={active}
                 className={cn(
-                  'flex min-h-11 flex-col items-center justify-center gap-1 rounded-2xl border px-1 py-2 text-[10px] font-bold outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                  'flex min-h-11 flex-col items-center justify-center gap-1 rounded-2xl border px-1 py-2 text-[10px] font-normal outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                   active
                     ? cn(opt.tone, 'shadow-soft hover:brightness-110')
                     : 'border-border bg-background text-muted hover:bg-hover hover:text-main',
@@ -118,7 +118,7 @@ export const ForumCreatePost = ({
           <button
             onClick={() => handleCreatePost(postType)}
             disabled={!newPostContent.trim()}
-            className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-30"
+            className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-medium text-on-primary shadow-elevation-1 outline-none transition-all hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-30"
           >
             <Send size={13} /> نشر
           </button>

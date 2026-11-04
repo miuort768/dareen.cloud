@@ -70,9 +70,9 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
             <Activity size={14} />
           </div>
-          <h3 className="text-sm font-black text-main">آخر النشاطات</h3>
+          <h3 className="text-sm font-medium text-main">آخر النشاطات</h3>
         </div>
-        <span className="shrink-0 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-black tabular-nums text-primary">
+        <span className="shrink-0 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-medium tabular-nums text-primary">
           {items.length}
         </span>
       </div>
@@ -97,15 +97,15 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
               </span>
 
               <div className="min-w-0 flex-1">
-                <p className="truncate text-xs font-black text-main">{item.title}</p>
+                <p className="truncate text-xs font-medium text-main">{item.title}</p>
                 {item.meta && (
-                  <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
+                  <p className="flex items-center gap-1 text-[10px] font-normal text-muted">
                     <Clock size={8} />
                     {item.meta}
                   </p>
                 )}
                 {item.detail && (
-                  <p className="mt-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-bold leading-relaxed text-main">
+                  <p className="mt-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-normal leading-relaxed text-main">
                     {item.detail}
                   </p>
                 )}
@@ -114,7 +114,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
               {item.amount !== undefined && (
                 <span
                   className={cn(
-                    'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-black tabular-nums',
+                    'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-medium tabular-nums',
                     item.amount >= 0
                       ? 'bg-success-soft text-success-dark'
                       : 'bg-error-soft text-error-dark',

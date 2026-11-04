@@ -38,7 +38,7 @@ export const AttendanceHeader = ({
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
           </span>
-          <span className="text-[10px] font-black text-success">مباشر</span>
+          <span className="text-[10px] font-medium text-success">مباشر</span>
         </span>
 
         {!isTeacher && (
@@ -49,14 +49,14 @@ export const AttendanceHeader = ({
               aria-label="التاريخ"
               value={date}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-28 cursor-pointer border-none bg-transparent p-0 text-[11px] font-bold text-main outline-none hover:text-primary focus-visible:ring-0"
+              className="w-28 cursor-pointer border-none bg-transparent p-0 text-[11px] font-normal text-main outline-none hover:text-primary focus-visible:ring-0"
             />
           </label>
         )}
 
         <span className="hidden items-center gap-1.5 rounded-2xl bg-surface px-2.5 py-1.5 md:flex">
           <Clock size={11} className="text-dim" />
-          <span className="text-[10px] font-bold text-muted">آخر مزامنة {lastSync}</span>
+          <span className="text-[10px] font-normal text-muted">آخر مزامنة {lastSync}</span>
         </span>
       </div>
 
@@ -64,14 +64,14 @@ export const AttendanceHeader = ({
         {!isTeacher && teacherCount > 0 && (
           <span className="hidden items-center gap-1.5 rounded-2xl bg-surface px-2.5 py-1.5 md:flex">
             <Users size={11} className="text-dim" />
-            <span className="text-[10px] font-bold tabular-nums text-muted">
+            <span className="text-[10px] font-normal tabular-nums text-muted">
               {teacherCount} معلمة
             </span>
           </span>
         )}
         <span className="flex items-center gap-1.5 rounded-2xl bg-primary-soft px-2.5 py-1.5">
           <Activity size={11} className="text-primary" />
-          <span className="text-[10px] font-black tabular-nums text-primary">
+          <span className="text-[10px] font-medium tabular-nums text-primary">
             {stats.todayTotal} حصة اليوم
           </span>
         </span>

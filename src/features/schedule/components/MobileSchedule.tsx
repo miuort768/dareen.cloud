@@ -130,7 +130,7 @@ const SessionCountdown = ({ hour, period }: { hour: string; period: string }) =>
       ) : (
         <Clock size={12} className="shrink-0 text-white/80" />
       )}
-      <span className="font-mono text-xs font-black tabular-nums leading-none tracking-wider">
+      <span className="font-mono text-xs font-medium tabular-nums leading-none tracking-wider">
         {isNow ? 'الآن' : timeLeft || '--:--:--'}
       </span>
     </div>
@@ -302,11 +302,11 @@ export const MobileSchedule = () => {
 
             <div className="relative flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-micro font-bold text-white/80">
+                <p className="flex items-center gap-1.5 text-micro font-normal text-white/80">
                   <CalendarDays size={12} />
                   اليوم · {todayName}
                 </p>
-                <h1 className="mt-1 text-2xl font-black tracking-tight text-on-primary">
+                <h1 className="mt-1 text-2xl font-medium tracking-tight text-on-primary">
                   جدول الحصص
                 </h1>
               </div>
@@ -323,7 +323,7 @@ export const MobileSchedule = () => {
                 { value: uniqueTeachers.length, label: 'معلمة' },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center px-1 text-center">
-                  <span className="text-base font-black tabular-nums text-on-primary">
+                  <span className="text-base font-medium tabular-nums text-on-primary">
                     {s.value}
                   </span>
                   <span className="mt-0.5 text-micro font-medium text-white/90">{s.label}</span>
@@ -343,7 +343,7 @@ export const MobileSchedule = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                className="w-full rounded-xl border border-white/20 bg-white/15 py-2.5 pe-9 ps-9 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25"
+                className="w-full rounded-xl border border-white/20 bg-white/15 py-2.5 pe-9 ps-9 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25"
               />
               {searchTerm && (
                 <button
@@ -369,7 +369,7 @@ export const MobileSchedule = () => {
               aria-label="تصفية حسب اليوم"
               value={selectedDay}
               onChange={(e) => setSelectedDay(e.target.value)}
-              className={`h-11 w-full appearance-none rounded-2xl border bg-card pe-3 ps-9 text-xs font-bold text-main shadow-soft outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+              className={`h-11 w-full appearance-none rounded-2xl border bg-card pe-3 ps-9 text-xs font-normal text-main shadow-soft outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                 selectedDay !== 'all' ? 'border-primary text-primary' : 'border-border'
               }`}
             >
@@ -406,8 +406,8 @@ export const MobileSchedule = () => {
                       <Sparkles size={14} />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-micro font-bold text-white/80">الحصة القادمة</p>
-                      <p className="truncate text-sm font-black text-white">
+                      <p className="text-micro font-normal text-white/80">الحصة القادمة</p>
+                      <p className="truncate text-sm font-medium text-white">
                         {nextSession.studentName}
                       </p>
                     </div>
@@ -418,19 +418,19 @@ export const MobileSchedule = () => {
                 <div className="relative mt-2 grid grid-cols-3 gap-1.5">
                   <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-white/15 px-2 py-1.5">
                     <CalendarDays size={11} className="shrink-0 text-white/80" />
-                    <span className="min-w-0 flex-1 truncate text-xs font-black text-white">
+                    <span className="min-w-0 flex-1 truncate text-xs font-medium text-white">
                       {nextSession.day}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 rounded-lg bg-white/15 px-2 py-1.5">
                     <Clock size={11} className="shrink-0 text-white/80" />
-                    <span className="text-xs font-black tabular-nums text-white">
+                    <span className="text-xs font-medium tabular-nums text-white">
                       {nextSession.time}
                     </span>
                   </div>
                   <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-white/15 px-2 py-1.5">
                     <GraduationCap size={11} className="shrink-0 text-white/80" />
-                    <span className="min-w-0 flex-1 truncate text-xs font-black text-white">
+                    <span className="min-w-0 flex-1 truncate text-xs font-medium text-white">
                       {nextSession.teacherName || 'غير محددة'}
                     </span>
                   </div>
@@ -447,10 +447,10 @@ export const MobileSchedule = () => {
           ) : dayEvents.length > 0 ? (
             <div className="space-y-2">
               <div className="mb-2 flex items-center justify-between px-1">
-                <span className="rounded-full bg-surface px-3 py-1 text-micro font-bold text-muted">
+                <span className="rounded-full bg-surface px-3 py-1 text-micro font-normal text-muted">
                   {selectedDay === 'all' ? 'كل الحصص' : `حصص ${selectedDay}`}
                 </span>
-                <span className="rounded-full bg-surface px-2.5 py-1 text-micro font-bold tabular-nums text-muted">
+                <span className="rounded-full bg-surface px-2.5 py-1 text-micro font-normal tabular-nums text-muted">
                   {dayEvents.length}
                 </span>
               </div>
@@ -469,10 +469,10 @@ export const MobileSchedule = () => {
                     <div className="flex items-center gap-3 p-3">
                       {/* Time gutter */}
                       <div className="w-11 shrink-0 text-center">
-                        <p className="text-sm font-black tabular-nums leading-none text-main">
+                        <p className="text-sm font-medium tabular-nums leading-none text-main">
                           {event.time.split(':')[0]}
                         </p>
-                        <p className="mt-1 text-micro font-bold text-muted">
+                        <p className="mt-1 text-micro font-normal text-muted">
                           {event.time.includes('ص') ? 'صباحاً' : 'مساءً'}
                         </p>
                       </div>
@@ -481,12 +481,12 @@ export const MobileSchedule = () => {
                       <div
                         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1 ${ts.solid}`}
                       >
-                        <span className="text-sm font-black">{event.studentName.charAt(0)}</span>
+                        <span className="text-sm font-medium">{event.studentName.charAt(0)}</span>
                       </div>
 
                       {/* Info */}
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-bold leading-tight text-main">
+                        <p className="truncate text-sm font-normal leading-tight text-main">
                           {event.studentName}
                         </p>
                         <p className="mt-0.5 flex items-center gap-1 truncate text-micro font-medium text-muted">
@@ -496,13 +496,13 @@ export const MobileSchedule = () => {
                         </p>
                         <div className="mt-1.5 flex items-center gap-1.5">
                           <span
-                            className={`inline-flex max-w-full items-center gap-1 truncate rounded-lg px-1.5 py-0.5 text-micro font-bold ${ts.solid}`}
+                            className={`inline-flex max-w-full items-center gap-1 truncate rounded-lg px-1.5 py-0.5 text-micro font-normal ${ts.solid}`}
                           >
                             <GraduationCap size={10} className="shrink-0" />
                             <span className="truncate">{event.teacherName || 'غير محددة'}</span>
                           </span>
                           {event.studentGrade && (
-                            <span className="shrink-0 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
+                            <span className="shrink-0 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-normal text-muted">
                               {event.studentGrade}
                             </span>
                           )}
@@ -524,7 +524,7 @@ export const MobileSchedule = () => {
               <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-xl bg-primary-soft">
                 <CalendarDays size={26} className="text-primary" strokeWidth={1.5} />
               </div>
-              <p className="text-sm font-bold text-main">
+              <p className="text-sm font-normal text-main">
                 {searchTerm ? 'لا توجد نتائج مطابقة' : 'لا توجد حصص في هذا اليوم'}
               </p>
               <p className="mt-1 text-xs font-medium text-muted">

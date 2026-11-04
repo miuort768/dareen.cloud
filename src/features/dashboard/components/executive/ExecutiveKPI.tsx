@@ -65,10 +65,10 @@ export const OpsMetrics = memo(function OpsMetrics({ stats }: { stats: Executive
             <span className={cn('flex h-8 w-8 items-center justify-center rounded-lg', m.tone)}>
               <Icon size={15} strokeWidth={1.9} />
             </span>
-            <span className="font-dash text-lg font-black tabular-nums leading-none tracking-tight text-main md:text-xl">
+            <span className="font-dash text-lg font-medium tabular-nums leading-none tracking-tight text-main md:text-xl">
               {m.value}
             </span>
-            <span className="text-[10px] font-bold leading-tight text-muted">{m.label}</span>
+            <span className="text-[10px] font-normal leading-tight text-muted">{m.label}</span>
           </div>
         )
       })}

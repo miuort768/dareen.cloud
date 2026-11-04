@@ -128,7 +128,7 @@ export const StudentDashboardMobile = ({
         animate={{ height: isRefreshing ? 44 : pullDistance }}
         className="flex items-center justify-center overflow-hidden"
       >
-        <div className="flex items-center gap-2 text-xs font-bold text-primary">
+        <div className="flex items-center gap-2 text-xs font-normal text-primary">
           {isRefreshing ? (
             <>
               <Loader2 size={16} className="animate-spin" />
@@ -210,9 +210,9 @@ export const StudentDashboardMobile = ({
                 <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
                   <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
-                <h3 className="text-sm font-black text-main">موادي الدراسية المميزة</h3>
+                <h3 className="text-sm font-medium text-main">موادي الدراسية المميزة</h3>
               </div>
-              <span className="text-xs font-bold text-accent">{subjects.length} مواد مسجلة</span>
+              <span className="text-xs font-normal text-accent">{subjects.length} مواد مسجلة</span>
             </div>
 
             {filteredSubjects.length > 0 ? (
@@ -233,7 +233,7 @@ export const StudentDashboardMobile = ({
                     visual={
                       <div className="flex flex-col items-center justify-center gap-1 text-primary">
                         <BookOpen size={26} strokeWidth={1.8} />
-                        <span className="line-clamp-1 text-[9px] font-black text-main">
+                        <span className="line-clamp-1 text-[9px] font-medium text-main">
                           {sub.subject}
                         </span>
                       </div>
@@ -243,7 +243,7 @@ export const StudentDashboardMobile = ({
               </div>
             ) : (
               <div className="rounded-2xl border border-border bg-card p-5 text-center shadow-elevation-1">
-                <p className="text-xs font-bold text-muted">لا توجد مواد تطابق البحث</p>
+                <p className="text-xs font-normal text-muted">لا توجد مواد تطابق البحث</p>
               </div>
             )}
           </section>

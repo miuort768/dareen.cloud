@@ -100,7 +100,7 @@ export const ParentsHeader = ({
               type="button"
               onClick={onToggleAddForm}
               className={cn(
-                'flex h-11 items-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                'flex h-11 items-center gap-1.5 rounded-xl px-3 text-xs font-normal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'bg-error text-on-error hover:bg-error-hover'
                   : 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary-hover',
@@ -120,7 +120,7 @@ export const ParentsHeader = ({
               placeholder="ابحث بالاسم أو الهاتف..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             />
           </div>
           <FilterDropdown
@@ -140,10 +140,10 @@ export const ParentsHeader = ({
           icon={<Users size={20} />}
           meta={
             <>
-              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-bold tabular-nums text-muted">
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-normal tabular-nums text-muted">
                 {totalParents} ولي أمر
               </span>
-              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-bold tabular-nums text-muted">
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-normal tabular-nums text-muted">
                 {totalLinkedStudents} طالب مرتبط
               </span>
             </>
@@ -193,7 +193,7 @@ export const ParentsHeader = ({
                   placeholder="ابحث بالاسم أو الهاتف..."
                   value={searchTerm}
                   onChange={(e) => onSearchChange(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:h-10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:h-10"
                 />
               </div>
               <FilterDropdown
@@ -209,7 +209,7 @@ export const ParentsHeader = ({
               type="button"
               onClick={onToggleAddForm}
               className={cn(
-                'flex h-11 items-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:h-10',
+                'flex h-11 items-center gap-1.5 rounded-xl px-4 text-xs font-normal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:h-10',
                 showAddForm
                   ? 'bg-error text-on-error hover:bg-error-hover'
                   : 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary-hover',

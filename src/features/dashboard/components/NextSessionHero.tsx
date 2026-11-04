@@ -71,7 +71,7 @@ export const NextSessionHero = ({ timeline, framed = true }: NextSessionHeroProp
       <div className="relative z-10">
         <div className="mb-4 flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-success" />
-          <span className="text-micro font-bold text-on-primary opacity-80">الحصة القادمة</span>
+          <span className="text-micro font-normal text-on-primary opacity-80">الحصة القادمة</span>
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -80,19 +80,19 @@ export const NextSessionHero = ({ timeline, framed = true }: NextSessionHeroProp
           </div>
 
           <div className="min-w-0 flex-1">
-            <h2 className="mb-0.5 truncate text-lg font-black leading-tight text-on-primary md:text-xl">
+            <h2 className="mb-0.5 truncate text-lg font-medium leading-tight text-on-primary md:text-xl">
               {nextSession?.subject || ''}
             </h2>
-            <p className="truncate text-sm font-bold text-on-primary opacity-80">
+            <p className="truncate text-sm font-normal text-on-primary opacity-80">
               {nextSession?.studentName || ''}
             </p>
             {nextSession?.studentGrade && (
-              <p className="text-[10px] font-bold text-on-primary opacity-65">
+              <p className="text-[10px] font-normal text-on-primary opacity-65">
                 الصف: {nextSession.studentGrade}
               </p>
             )}
             {nextSession?.curriculum && (
-              <p className="truncate text-[10px] font-bold text-on-primary opacity-65">
+              <p className="truncate text-[10px] font-normal text-on-primary opacity-65">
                 {nextSession.curriculum}
               </p>
             )}
@@ -100,19 +100,19 @@ export const NextSessionHero = ({ timeline, framed = true }: NextSessionHeroProp
 
           <div className="flex shrink-0 items-center gap-2 rounded-2xl bg-white/15 px-3.5 py-2.5 backdrop-blur-sm">
             <Clock size={15} className="text-on-primary opacity-80" />
-            <span className="text-xl font-black tabular-nums tracking-wider text-on-primary">
+            <span className="text-xl font-medium tabular-nums tracking-wider text-on-primary">
               {isNow ? 'الآن' : timeLeft}
             </span>
           </div>
         </div>
 
         <div className="mt-4 flex items-center justify-between border-t border-white/15 pt-3">
-          <span className="flex items-center gap-1.5 text-sm font-bold text-on-primary opacity-75">
+          <span className="flex items-center gap-1.5 text-sm font-normal text-on-primary opacity-75">
             <Clock size={13} />
             {nextSession?.time || ''}
           </span>
           {isNow && (
-            <span className="rounded-lg bg-white/20 px-2.5 py-1 text-[10px] font-black text-on-primary">
+            <span className="rounded-lg bg-white/20 px-2.5 py-1 text-[10px] font-medium text-on-primary">
               جارية الآن
             </span>
           )}

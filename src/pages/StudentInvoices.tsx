@@ -58,7 +58,7 @@ const periodOptions = [
 type Period = (typeof periodOptions)[number]['value']
 
 const selectCls =
-  'h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
+  'h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
 
 export const StudentInvoices = () => {
   const academyName = useAcademyName()
@@ -194,7 +194,7 @@ export const StudentInvoices = () => {
         header: 'الطالب',
         mobileLabel: 'الطالب',
         render: (inv) => (
-          <span className="text-sm font-bold text-main">{inv.studentName || '—'}</span>
+          <span className="text-sm font-normal text-main">{inv.studentName || '—'}</span>
         ),
       })
     }
@@ -204,7 +204,7 @@ export const StudentInvoices = () => {
         header: 'البيان',
         mobileLabel: 'البيان',
         render: (inv) => (
-          <span className="text-sm font-bold text-main">{inv.description || '—'}</span>
+          <span className="text-sm font-normal text-main">{inv.description || '—'}</span>
         ),
       },
       {
@@ -213,7 +213,7 @@ export const StudentInvoices = () => {
         align: 'center',
         mobileLabel: 'المبلغ',
         render: (inv) => (
-          <span className="font-mono text-sm font-bold tabular-nums text-main">
+          <span className="font-mono text-sm font-normal tabular-nums text-main">
             {money(inv.amount).toLocaleString()}{' '}
             <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span>
           </span>
@@ -235,7 +235,7 @@ export const StudentInvoices = () => {
           const norm = normalizeInvoiceStatus(inv.status)
           return (
             <span
-              className={cn('text-xs', norm === 'overdue' ? 'font-bold text-error' : 'text-muted')}
+              className={cn('text-xs', norm === 'overdue' ? 'font-normal text-error' : 'text-muted')}
             >
               {formatDate(inv.dueDate)}
             </span>
@@ -254,7 +254,7 @@ export const StudentInvoices = () => {
           return (
             <span
               className={cn(
-                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold',
+                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-normal',
                 meta.bgCls,
                 meta.textCls,
               )}
@@ -354,7 +354,7 @@ export const StudentInvoices = () => {
                   placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-xs font-normal text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 {searchTerm && (
                   <button
@@ -396,7 +396,7 @@ export const StudentInvoices = () => {
         </motion.div>
 
         {mixedCount > 0 && (
-          <p className="mb-4 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning-strong">
+          <p className="mb-4 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-normal text-warning-strong">
             <AlertCircle size={13} className="shrink-0" />
             {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
           </p>
@@ -430,15 +430,15 @@ export const StudentInvoices = () => {
                       <Receipt size={14} className="text-primary" />
                     </div>
                     <div className="min-w-0">
-                      <p className="truncate text-xs font-black text-main">
+                      <p className="truncate text-xs font-medium text-main">
                         {inv.studentName || inv.description || '—'}
                       </p>
-                      <p className="truncate text-[10px] font-bold text-muted">
+                      <p className="truncate text-[10px] font-normal text-muted">
                         {inv.studentName ? inv.description : formatDate(inv.date)}
                       </p>
                       <p
                         className={cn(
-                          'mt-0.5 text-[10px] font-bold',
+                          'mt-0.5 text-[10px] font-normal',
                           overdue ? 'text-error' : 'text-muted',
                         )}
                       >
@@ -447,13 +447,13 @@ export const StudentInvoices = () => {
                     </div>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-1.5">
-                    <span className="font-mono text-sm font-black tabular-nums text-main">
+                    <span className="font-mono text-sm font-medium tabular-nums text-main">
                       {money(inv.amount).toLocaleString()}{' '}
-                      <span className="text-[10px] font-bold text-muted">{CURRENCY_SYMBOL}</span>
+                      <span className="text-[10px] font-normal text-muted">{CURRENCY_SYMBOL}</span>
                     </span>
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold',
+                        'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-normal',
                         meta.bgCls,
                         meta.textCls,
                       )}

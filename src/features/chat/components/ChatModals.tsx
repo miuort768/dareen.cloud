@@ -353,13 +353,13 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                   setShowDeleteConfirm(false)
                   setItemToDelete(null)
                 }}
-                className="flex-1 rounded-lg bg-surface py-3 font-bold text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover dark:text-muted dark:hover:text-main"
+                className="flex-1 rounded-lg bg-surface py-3 font-normal text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover dark:text-muted dark:hover:text-main"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleDeleteAction}
-                className="flex-1 rounded-lg bg-error py-3 font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                className="flex-1 rounded-lg bg-error py-3 font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 حذف الآن
               </button>

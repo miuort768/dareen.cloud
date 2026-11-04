@@ -84,7 +84,7 @@ export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: Activit
               <Clock size={16} className="text-info" />
             </div>
             <div>
-              <h3 className="text-sm font-black text-main">سجل النشاطات</h3>
+              <h3 className="text-sm font-medium text-main">سجل النشاطات</h3>
               <p className="text-[10px] text-muted">آخر العمليات المسجلة</p>
             </div>
           </div>
@@ -104,7 +104,7 @@ export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: Activit
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
             <Clock size={24} className="text-primary-200" />
           </div>
-          <p className="text-xs font-bold text-muted">لا توجد نشاطات مؤخراً</p>
+          <p className="text-xs font-normal text-muted">لا توجد نشاطات مؤخراً</p>
           <p className="mt-1 text-[11px] text-dim">ستظهر الأنشطة عند تسجيلها</p>
         </div>
       ) : (
@@ -126,7 +126,7 @@ export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: Activit
                   </div>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h4 className="truncate text-[11px] font-bold text-main">{item.title}</h4>
+                  <h4 className="truncate text-[11px] font-normal text-main">{item.title}</h4>
                   <div className="mt-0.5 flex items-center gap-1.5">
                     <Clock size={9} className="shrink-0 text-muted dark:text-dim" />
                     <span className="text-[10px] text-muted">{item.time}</span>

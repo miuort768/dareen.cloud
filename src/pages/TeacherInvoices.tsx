@@ -418,7 +418,7 @@ export const TeacherInvoices = () => {
                 <GraduationCap size={22} className="text-on-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-black leading-tight text-main">فواتير المعلمات</h1>
+                <h1 className="text-xl font-medium leading-tight text-main">فواتير المعلمات</h1>
                 <p className="mt-0.5 text-xs text-muted">إدارة مستحقات المعلمات المالية</p>
               </div>
             </div>
@@ -427,22 +427,22 @@ export const TeacherInvoices = () => {
 
             <div className="grid flex-1 grid-cols-2 gap-2">
               <div className="rounded-xl border border-primary-soft bg-primary-soft px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-primary">
+                <p className="text-lg font-medium tabular-nums leading-none text-primary">
                   {stats.totalAmount.toLocaleString()}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {CURRENCY_SYMBOL}</p>
+                <p className="mt-1 text-[10px] font-normal text-muted">الإجمالي {CURRENCY_SYMBOL}</p>
               </div>
               <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-success">
+                <p className="text-lg font-medium tabular-nums leading-none text-success">
                   {filteredInvoices.length}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">فاتورة</p>
+                <p className="mt-1 text-[10px] font-normal text-muted">فاتورة</p>
               </div>
             </div>
           </div>
 
           {mixedCount > 0 && (
-            <p className="relative z-10 mt-3 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning">
+            <p className="relative z-10 mt-3 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-normal text-warning">
               <AlertCircle size={13} className="shrink-0" />
               {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
             </p>
@@ -535,7 +535,7 @@ export const TeacherInvoices = () => {
                   transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                   className="flex items-center gap-2"
                 >
-                  <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                  <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                     {action.label}
                   </span>
                   <button

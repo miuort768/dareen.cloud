@@ -80,12 +80,12 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
             <Bell size={16} className="text-warning" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-main">التنبيهات</h3>
+            <h3 className="text-sm font-medium text-main">التنبيهات</h3>
             <p className="text-[10px] text-muted">مراقبة الأنظمة</p>
           </div>
         </div>
         {counts.critical > 0 && (
-          <span className="rounded-lg border border-border bg-error-soft px-2 py-0.5 text-[10px] font-bold text-error">
+          <span className="rounded-lg border border-border bg-error-soft px-2 py-0.5 text-[10px] font-normal text-error">
             {counts.critical} حرج
           </span>
         )}
@@ -99,7 +99,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
               key={key}
               onClick={() => setFilter(key)}
               className={cn(
-                'whitespace-nowrap rounded-lg px-2.5 py-1 text-[10px] font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+                'whitespace-nowrap rounded-lg px-2.5 py-1 text-[10px] font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
                 isActive ? 'bg-primary text-on-primary' : 'bg-surface text-muted hover:text-main',
               )}
             >
@@ -115,7 +115,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
               <Info size={16} className="text-success" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد تنبيهات</p>
+            <p className="text-xs font-normal text-muted">لا توجد تنبيهات</p>
           </div>
         )}
         {filtered.map((alert, i) => {
@@ -132,17 +132,17 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-bold leading-relaxed text-main">{alert.message}</p>
+                <p className="text-[11px] font-normal leading-relaxed text-main">{alert.message}</p>
                 {alert.time && <p className="mt-0.5 text-[10px] text-muted">{alert.time}</p>}
               </div>
               {actionTo ? (
-                <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold text-primary">
+                <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-normal text-primary">
                   متابعة
                   <ChevronLeft size={11} />
                 </span>
               ) : (
                 alert.count && (
-                  <span className="shrink-0 text-[10px] font-bold text-muted">+{alert.count}</span>
+                  <span className="shrink-0 text-[10px] font-normal text-muted">+{alert.count}</span>
                 )
               )}
             </>

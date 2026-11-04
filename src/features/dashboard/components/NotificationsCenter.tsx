@@ -145,7 +145,7 @@ export const NotificationsCenter = ({
             aria-selected={activeTab === 'smart'}
             onClick={() => setActiveTab('smart')}
             className={cn(
-              'flex min-h-9 items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+              'flex min-h-9 items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               activeTab === 'smart'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
                 : 'text-muted hover:text-main dark:text-muted',
@@ -159,7 +159,7 @@ export const NotificationsCenter = ({
             aria-selected={activeTab === 'room'}
             onClick={() => setActiveTab('room')}
             className={cn(
-              'flex min-h-9 items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+              'flex min-h-9 items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               activeTab === 'room'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
                 : 'text-muted hover:text-main dark:text-muted',
@@ -211,7 +211,7 @@ export const NotificationsCenter = ({
                     }}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className="text-[11px] font-bold text-main">{alert.title}</h3>
+                      <h3 className="text-[11px] font-normal text-main">{alert.title}</h3>
                     </div>
                     <p className="mt-0.5 line-clamp-1 text-[10px] text-muted">{alert.desc}</p>
                   </div>
@@ -225,7 +225,7 @@ export const NotificationsCenter = ({
               </div>
               <div className="min-w-0 flex-1 rounded-xl border border-border bg-success-soft p-3 dark:border-border dark:bg-success-soft">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-[11px] font-bold text-success">كل الأنظمة تعمل</h3>
+                  <h3 className="text-[11px] font-normal text-success">كل الأنظمة تعمل</h3>
                   <span className="shrink-0 text-[9px] text-muted dark:text-dim">الآن</span>
                 </div>
                 <p className="mt-0.5 text-[10px] text-muted">لا توجد مشاكل في النظام</p>
@@ -248,7 +248,7 @@ export const NotificationsCenter = ({
                   </div>
                   <div className="min-w-0 flex-1 rounded-xl border border-border bg-card p-3 transition-colors hover:bg-surface dark:border-border dark:bg-card dark:hover:bg-hover">
                     <div className="mb-1 flex items-center justify-between gap-2">
-                      <h4 className="truncate text-[11px] font-bold text-main">{alert.title}</h4>
+                      <h4 className="truncate text-[11px] font-normal text-main">{alert.title}</h4>
                     </div>
                     <p className="line-clamp-1 text-[10px] text-muted">{alert.description}</p>
                     <div className="mt-2 flex gap-1.5">
@@ -256,7 +256,7 @@ export const NotificationsCenter = ({
                         <Button
                           onClick={alert.action}
                           size="sm"
-                          className="h-6 rounded-lg bg-success px-2.5 text-[9px] font-bold text-on-success"
+                          className="h-6 rounded-lg bg-success px-2.5 text-[9px] font-normal text-on-success"
                         >
                           واتساب
                         </Button>
@@ -265,7 +265,7 @@ export const NotificationsCenter = ({
                           onClick={alert.action}
                           variant="outline"
                           size="sm"
-                          className="h-6 rounded-lg px-2.5 text-[9px] font-bold"
+                          className="h-6 rounded-lg px-2.5 text-[9px] font-normal"
                         >
                           عرض
                         </Button>
@@ -282,7 +282,7 @@ export const NotificationsCenter = ({
               </div>
               <div className="min-w-0 flex-1 rounded-xl border border-border bg-success-soft p-3 dark:border-border dark:bg-success-soft">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-[11px] font-bold text-success">كل الأنظمة تعمل</h3>
+                  <h3 className="text-[11px] font-normal text-success">كل الأنظمة تعمل</h3>
                   <span className="shrink-0 text-[9px] text-muted dark:text-dim">الآن</span>
                 </div>
                 <p className="mt-0.5 text-[10px] text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>

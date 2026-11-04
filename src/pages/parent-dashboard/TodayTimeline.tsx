@@ -66,8 +66,8 @@ const Detail = ({
       <Icon size={12} />
     </span>
     <div className="min-w-0">
-      <p className={cn('text-[10px] font-black', labelClass)}>{label}</p>
-      <p className="text-[11px] font-bold leading-relaxed text-main">{value}</p>
+      <p className={cn('text-[10px] font-medium', labelClass)}>{label}</p>
+      <p className="text-[11px] font-normal leading-relaxed text-main">{value}</p>
     </div>
   </div>
 )
@@ -85,14 +85,14 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
           <CalendarCheck size={compact ? 16 : 18} />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className={cn('font-black text-main', compact ? 'text-xs' : 'text-sm')}>حصص اليوم</h3>
-          <p className={cn('font-bold text-muted', compact ? 'text-[10px]' : 'text-[11px]')}>
+          <h3 className={cn('font-medium text-main', compact ? 'text-xs' : 'text-sm')}>حصص اليوم</h3>
+          <p className={cn('font-normal text-muted', compact ? 'text-[10px]' : 'text-[11px]')}>
             متابعة جلسات أبنائك لهذا اليوم
           </p>
         </div>
         <span
           className={cn(
-            'shrink-0 rounded-full bg-primary-soft font-black tabular-nums text-primary',
+            'shrink-0 rounded-full bg-primary-soft font-medium tabular-nums text-primary',
             compact ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-[11px]',
           )}
         >
@@ -105,7 +105,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
           <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
             <CalendarCheck size={22} />
           </span>
-          <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة لأبنائك</p>
+          <p className="text-xs font-normal text-muted">يوم مريح — لا توجد حصص مجدولة لأبنائك</p>
         </div>
       ) : (
         <ol
@@ -144,7 +144,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                       <div className={cn(compact ? 'flex items-center gap-2' : 'block')}>
                         <p
                           className={cn(
-                            'truncate font-black text-main',
+                            'truncate font-medium text-main',
                             compact ? 'text-sm' : 'text-xs',
                           )}
                         >
@@ -153,7 +153,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                         {compact && (
                           <span
                             className={cn(
-                              'inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-black',
+                              'inline-flex shrink-0 items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-medium',
                               meta.chip,
                             )}
                           >
@@ -162,7 +162,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                           </span>
                         )}
                       </div>
-                      <p className="truncate text-[11px] font-bold text-muted">
+                      <p className="truncate text-[11px] font-normal text-muted">
                         {item.subject}
                         {item.teacher ? ` · ${item.teacher}` : ''}
                       </p>
@@ -170,13 +170,13 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                     <div className="inline-flex shrink-0 items-baseline justify-center gap-1 rounded-lg border border-border bg-surface px-2.5">
                       <span
                         className={cn(
-                          'font-dash font-black tabular-nums leading-none text-main',
+                          'font-dash font-medium tabular-nums leading-none text-main',
                           compact ? 'py-1 text-sm' : 'py-1.5 text-base',
                         )}
                       >
                         {item.hour}
                       </span>
-                      <span className="text-[9px] font-bold text-muted">
+                      <span className="text-[9px] font-normal text-muted">
                         {periodLabel(item.period)}
                       </span>
                     </div>
@@ -185,7 +185,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                   {!compact && (
                     <span
                       className={cn(
-                        'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black',
+                        'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium',
                         meta.chip,
                       )}
                     >

@@ -27,11 +27,11 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
       <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-16">
         <div className="space-y-12 lg:col-span-7">
           <div>
-            <h2 className="mb-4 text-2xl font-bold uppercase tracking-tighter md:text-4xl">
+            <h2 className="mb-4 text-2xl font-normal uppercase tracking-tighter md:text-4xl">
               الملخص المالي الاستراتيجي
             </h2>
             <div className="h-1.5 w-20 bg-primary"></div>
-            <p className="mt-6 max-w-lg text-xs font-bold uppercase leading-relaxed tracking-widest text-muted opacity-80">
+            <p className="mt-6 max-w-lg text-xs font-normal uppercase leading-relaxed tracking-widest text-muted opacity-80">
               تقرير تحليلي شامل يوضح التوازن الجوهري بين التدفقات النقدية المحصلة والالتزامات
               التعليمية المنفذة خلال الدورة المالية الحالية.
             </p>
@@ -39,14 +39,14 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
             <div className="group transition-all">
-              <p className="mb-3 text-micro font-semibold uppercase tracking-label text-success">
+              <p className="mb-3 text-micro font-light uppercase tracking-label text-success">
                 صافي الربح المتوقع
               </p>
               <div className="flex items-baseline gap-2">
-                <p className="origin-right text-3xl font-bold italic tracking-tighter transition-transform group-hover:scale-105 md:text-6xl">
+                <p className="origin-right text-3xl font-normal italic tracking-tighter transition-transform group-hover:scale-105 md:text-6xl">
                   {netProjectedProfit.toLocaleString()}
                 </p>
-                <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+                <span className="text-xs font-light uppercase tracking-widest text-muted">
                   {reportCurrency}
                 </span>
               </div>
@@ -61,14 +61,14 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
             </div>
 
             <div className="group transition-all">
-              <p className="mb-3 text-micro font-semibold uppercase tracking-label text-primary">
+              <p className="mb-3 text-micro font-light uppercase tracking-label text-primary">
                 إجمالي عوائد المنظومة
               </p>
               <div className="flex items-baseline gap-2">
-                <p className="origin-right text-3xl font-bold italic tracking-tighter transition-transform group-hover:scale-105 md:text-6xl">
+                <p className="origin-right text-3xl font-normal italic tracking-tighter transition-transform group-hover:scale-105 md:text-6xl">
                   {totalProjectedIncome.toLocaleString()}
                 </p>
-                <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+                <span className="text-xs font-light uppercase tracking-widest text-muted">
                   {reportCurrency}
                 </span>
               </div>
@@ -82,10 +82,10 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
                 <TrendingUp size={16} className="text-success" />
               </div>
               <div>
-                <p className="text-micro font-semibold uppercase tracking-widest text-muted">
+                <p className="text-micro font-light uppercase tracking-widest text-muted">
                   معدل التحصيل
                 </p>
-                <p className="text-sm font-semibold">
+                <p className="text-sm font-light">
                   {totalProjectedIncome > 0
                     ? ((totalActualCollections / totalProjectedIncome) * 100).toFixed(1)
                     : 0}
@@ -98,10 +98,10 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
                 <Receipt size={16} className="text-error" />
               </div>
               <div>
-                <p className="text-micro font-semibold uppercase tracking-widest text-muted">
+                <p className="text-micro font-light uppercase tracking-widest text-muted">
                   التزامات الرواتب
                 </p>
-                <p className="text-sm font-semibold">
+                <p className="text-sm font-light">
                   {totalTeacherPayout.toLocaleString()} {reportCurrency}
                 </p>
               </div>
@@ -115,25 +115,25 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
             <div className="absolute bottom-0 end-0 h-2 w-2 translate-x-1/2 translate-y-1/2 bg-primary"></div>
 
             <div>
-              <h3 className="mb-10 flex items-center gap-3 text-xs font-semibold uppercase tracking-label text-primary">
+              <h3 className="mb-10 flex items-center gap-3 text-xs font-light uppercase tracking-label text-primary">
                 <span className="h-px w-6 bg-primary"></span>
                 ملاحظات التدقيق المالي
               </h3>
               <div className="space-y-10">
                 <div className="flex gap-6">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-card text-xs font-semibold italic text-main">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-card text-xs font-light italic text-main">
                     01
                   </div>
-                  <p className="text-xs font-bold italic leading-relaxed text-muted">
+                  <p className="text-xs font-normal italic leading-relaxed text-muted">
                     تمت مراجعة وتدقيق كافة الجلسات التعليمية المنفذة ومطابقتها يدوياً وآلياً مع
                     سجلات الدفع والتحصيل النقدي الفعلي لضمان أعلى درجات الدقة.
                   </p>
                 </div>
                 <div className="flex gap-6">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-xs font-semibold italic text-on-primary">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-xs font-light italic text-on-primary">
                     02
                   </div>
-                  <p className="text-xs font-bold italic leading-relaxed text-muted">
+                  <p className="text-xs font-normal italic leading-relaxed text-muted">
                     إجمالي السيولة النقدية المتوفرة حالياً تغطي التزامات رواتب المعلمات بنسبة{' '}
                     {(totalTeacherPayout > 0
                       ? (totalActualCollections / totalTeacherPayout) * 100
@@ -146,10 +146,10 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
             </div>
 
             <div className="mt-12 rounded-xl border-s-2 border-primary bg-white/[0.03] p-6">
-              <p className="mb-2 text-micro font-semibold uppercase italic tracking-widest text-muted">
+              <p className="mb-2 text-micro font-light uppercase italic tracking-widest text-muted">
                 حالة التقرير
               </p>
-              <p className="flex items-center gap-2 text-xs font-semibold text-success">
+              <p className="flex items-center gap-2 text-xs font-light text-success">
                 <CheckCircle2 size={14} /> معتمد وجاهز للتقفيل النهائي
               </p>
             </div>

@@ -47,9 +47,9 @@ export const DayDropdown = ({
         <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
           <CalendarDays size={14} />
         </span>
-        <span className="flex-1 truncate text-xs font-black text-main">{selectedLabel}</span>
+        <span className="flex-1 truncate text-xs font-medium text-main">{selectedLabel}</span>
         {selectedDay !== 'all' && (
-          <span className="rounded-full bg-primary-soft px-2 py-0.5 text-micro font-black tabular-nums text-primary">
+          <span className="rounded-full bg-primary-soft px-2 py-0.5 text-micro font-medium tabular-nums text-primary">
             {dayCounts[selectedDay] || 0}
           </span>
         )}
@@ -82,7 +82,7 @@ export const DayDropdown = ({
                 aria-selected={selected}
                 className={cn(
                   'flex h-11 w-full items-center gap-2.5 px-3.5 text-start outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus',
-                  selected ? 'bg-primary-soft font-black text-primary' : 'text-main hover:bg-hover',
+                  selected ? 'bg-primary-soft font-medium text-primary' : 'text-main hover:bg-hover',
                 )}
               >
                 {isToday && opt.value !== 'all' && (
@@ -91,11 +91,11 @@ export const DayDropdown = ({
                     <span className="relative h-1.5 w-1.5 rounded-full bg-primary" />
                   </span>
                 )}
-                <span className="flex-1 truncate text-xs font-bold">{opt.label}</span>
+                <span className="flex-1 truncate text-xs font-normal">{opt.label}</span>
                 {opt.value !== 'all' && (
                   <span
                     className={cn(
-                      'rounded-full px-1.5 py-0.5 text-micro font-black tabular-nums leading-none',
+                      'rounded-full px-1.5 py-0.5 text-micro font-medium tabular-nums leading-none',
                       count > 0 ? 'bg-info text-on-info' : 'bg-surface text-muted',
                     )}
                   >

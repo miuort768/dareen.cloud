@@ -105,14 +105,14 @@ export const BackupSection = ({
       </div>
 
       <div className="mb-6">
-        <h4 className="mb-3 flex items-center gap-2 text-xs font-bold text-muted">
+        <h4 className="mb-3 flex items-center gap-2 text-xs font-normal text-muted">
           <History size={14} /> سجل النسخ الاحتياطي
         </h4>
         {loading ? (
           <p className="text-xs text-muted">جاري التحميل...</p>
         ) : backupHistory.length === 0 ? (
           <div className="py-8 text-center text-muted">
-            <p className="text-xs font-bold text-muted">لا توجد نسخ احتياطية سابقة</p>
+            <p className="text-xs font-normal text-muted">لا توجد نسخ احتياطية سابقة</p>
             <p className="mt-1 text-xs text-muted">قم بإنشاء أول نسخة احتياطية الآن</p>
           </div>
         ) : (
@@ -129,7 +129,7 @@ export const BackupSection = ({
                   </span>
                   <span
                     className={cn(
-                      'rounded-lg px-2 py-0.5 text-[11px] font-bold',
+                      'rounded-lg px-2 py-0.5 text-[11px] font-normal',
                       b.status === 'completed'
                         ? 'bg-success-soft text-success'
                         : 'bg-warning-soft text-warning-dark',
@@ -147,7 +147,7 @@ export const BackupSection = ({
 
       <div className="flex items-center justify-between border-t border-divider pt-5">
         <div>
-          <p className="text-xs font-bold text-error">منطقة خطرة</p>
+          <p className="text-xs font-normal text-error">منطقة خطرة</p>
           <p className="text-[11px] text-muted">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
         </div>
         <div className="flex gap-2">

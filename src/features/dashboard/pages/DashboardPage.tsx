@@ -45,14 +45,14 @@ export const Dashboard = () => {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-error-soft">
             <AlertCircle size={28} className="text-error" />
           </div>
-          <h2 className="mb-2 text-lg font-bold text-main">لا تملك صلاحية الوصول</h2>
+          <h2 className="mb-2 text-lg font-normal text-main">لا تملك صلاحية الوصول</h2>
           <p className="mb-4 text-sm text-muted">
             ليس لديك صلاحية لعرض لوحة التحكم. يرجى التواصل مع مدير النظام.
           </p>
           <button
             type="button"
             onClick={() => window.history.back()}
-            className="inline-flex h-8 items-center justify-center rounded-lg border-2 border-primary/30 px-3.5 text-xs font-semibold text-primary transition-all duration-normal hover:border-primary/60 hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="inline-flex h-8 items-center justify-center rounded-lg border-2 border-primary/30 px-3.5 text-xs font-light text-primary transition-all duration-normal hover:border-primary/60 hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             العودة
           </button>

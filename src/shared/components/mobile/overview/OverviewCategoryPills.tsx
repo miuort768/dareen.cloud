@@ -42,7 +42,7 @@ export const OverviewCategoryPills: React.FC<OverviewCategoryPillsProps> = ({
             className={cn(
               'group relative flex min-w-[76px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-[20px] p-2.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]',
               isActive
-                ? 'bg-accent font-black text-on-accent shadow-elevation-2'
+                ? 'bg-accent font-medium text-on-accent shadow-elevation-2'
                 : 'border border-border bg-card text-muted shadow-elevation-1 hover:border-border-strong hover:text-main',
             )}
           >
@@ -65,7 +65,7 @@ export const OverviewCategoryPills: React.FC<OverviewCategoryPillsProps> = ({
             {typeof cat.count === 'number' && (
               <span
                 className={cn(
-                  'font-dash text-[9px] font-black leading-none',
+                  'font-dash text-[9px] font-medium leading-none',
                   isActive ? 'opacity-90' : 'text-dim',
                 )}
               >

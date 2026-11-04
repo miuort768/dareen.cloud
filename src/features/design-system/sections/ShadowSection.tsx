@@ -11,7 +11,7 @@ const SHADOWS = [
 export function ShadowSection() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الظلال — Shadows</h2>
+      <h2 className="mb-4 text-lg font-normal">الظلال — Shadows</h2>
       <div className="flex flex-wrap gap-6">
         {SHADOWS.map((s) => (
           <div key={s.label} className="flex flex-col items-center gap-2">

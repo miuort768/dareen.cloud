@@ -23,7 +23,7 @@ const variantStyles = {
     container: 'flex gap-4 border-b border-border',
     tab: (isActive: boolean) =>
       cn(
-        'px-2 py-3 text-sm font-semibold border-b-2 transition-colors duration-normal -mb-px',
+        'px-2 py-3 text-sm font-light border-b-2 transition-colors duration-normal -mb-px',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-inset',
         isActive
           ? 'text-primary border-primary'
@@ -34,7 +34,7 @@ const variantStyles = {
     container: 'flex gap-1 p-1 bg-surface rounded-xl',
     tab: (isActive: boolean) =>
       cn(
-        'px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-normal ease-out',
+        'px-4 py-2 text-sm font-light rounded-lg transition-all duration-normal ease-out',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
         'active:scale-[0.985] active:duration-fast',
         isActive
@@ -46,7 +46,7 @@ const variantStyles = {
     container: 'flex gap-2',
     tab: (isActive: boolean) =>
       cn(
-        'px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-normal ease-out',
+        'px-4 py-2 text-sm font-light rounded-xl transition-all duration-normal ease-out',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
         'active:scale-[0.985] active:duration-fast',
         isActive
@@ -85,7 +85,7 @@ export const Tabs: React.FC<TabsProps> = ({
         {tab.badge !== undefined && (
           <span
             className={cn(
-              'ms-1 min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-[10px] font-bold',
+              'ms-1 min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-[10px] font-normal',
               isActive
                 ? variant === 'buttons'
                   ? 'bg-card text-primary'

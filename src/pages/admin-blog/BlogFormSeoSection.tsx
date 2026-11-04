@@ -8,12 +8,12 @@ interface BlogFormSeoSectionProps {
 
 export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionProps) => (
   <div className="rounded-2xl border border-primary/10 bg-primary-soft p-4">
-    <p className="mb-4 text-micro font-bold text-primary">
+    <p className="mb-4 text-micro font-normal text-primary">
       إعدادات SEO — ظهور المقال في محركات البحث
     </p>
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       <div>
-        <label htmlFor="bf-seo-title" className="mb-1 block text-micro font-bold text-muted">
+        <label htmlFor="bf-seo-title" className="mb-1 block text-micro font-normal text-muted">
           عنوان SEO
         </label>
         <input
@@ -21,12 +21,12 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.seoTitle || ''}
           onChange={(e) => onSet('seoTitle', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="عنوان SEO مخصص..."
         />
       </div>
       <div>
-        <label htmlFor="bf-seo-desc" className="mb-1 block text-micro font-bold text-muted">
+        <label htmlFor="bf-seo-desc" className="mb-1 block text-micro font-normal text-muted">
           الوصف في SEO
         </label>
         <input
@@ -34,12 +34,12 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.seoDescription || ''}
           onChange={(e) => onSet('seoDescription', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="وصف مخصص لظهور في Google..."
         />
       </div>
       <div>
-        <label htmlFor="bf-og" className="mb-1 block text-micro font-bold text-muted">
+        <label htmlFor="bf-og" className="mb-1 block text-micro font-normal text-muted">
           صورة OG
         </label>
         <input
@@ -47,13 +47,13 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.ogImage || ''}
           onChange={(e) => onSet('ogImage', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="https://..."
           dir="ltr"
         />
       </div>
       <div>
-        <label htmlFor="bf-focus-kw" className="mb-1 block text-micro font-bold text-muted">
+        <label htmlFor="bf-focus-kw" className="mb-1 block text-micro font-normal text-muted">
           الكلمة المفتاحية الأساسية
         </label>
         <input
@@ -61,12 +61,12 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.focusKeyword || ''}
           onChange={(e) => onSet('focusKeyword', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="مثال: مدرس خصوصي الكويت"
         />
       </div>
       <div>
-        <label htmlFor="bf-tags" className="mb-1 block text-micro font-bold text-muted">
+        <label htmlFor="bf-tags" className="mb-1 block text-micro font-normal text-muted">
           الوسوم (Tags)
         </label>
         <input
@@ -74,12 +74,12 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.tags || ''}
           onChange={(e) => onSet('tags', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="رياضيات, قدرات, تأسيس"
         />
       </div>
       <div>
-        <label htmlFor="bf-canonical" className="mb-1 block text-micro font-bold text-muted">
+        <label htmlFor="bf-canonical" className="mb-1 block text-micro font-normal text-muted">
           Canonical URL
         </label>
         <input
@@ -87,7 +87,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.canonicalUrl || ''}
           onChange={(e) => onSet('canonicalUrl', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="https://..."
           dir="ltr"
         />
@@ -101,7 +101,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           onChange={(e) => onSet('robotsIndex', e.target.checked)}
           className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
         />
-        <span className="text-micro font-bold text-muted">السماح بفهرسة المقال</span>
+        <span className="text-micro font-normal text-muted">السماح بفهرسة المقال</span>
       </label>
       <label className="flex cursor-pointer items-center gap-2 hover:opacity-80">
         <input
@@ -110,7 +110,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           onChange={(e) => onSet('isFeatured', e.target.checked)}
           className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
         />
-        <span className="flex items-center gap-1 text-micro font-bold text-muted">
+        <span className="flex items-center gap-1 text-micro font-normal text-muted">
           <Star size={12} className="text-warning" /> مقال مميز
         </span>
       </label>

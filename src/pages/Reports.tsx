@@ -85,7 +85,7 @@ export const Reports = () => {
             <button
               onClick={() => window.print()}
               aria-label="طباعة التقرير"
-              className="no-print inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+              className="no-print inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-light text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <Download size={14} />
               طباعة / تصدير PDF
@@ -104,7 +104,7 @@ export const Reports = () => {
               <button
                 key={tab.id}
                 onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                className={`flex min-h-11 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus sm:min-h-0 ${isActive ? 'shadow-xs bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
+                className={`flex min-h-11 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus sm:min-h-0 ${isActive ? 'shadow-xs bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
               >
                 <Icon size={15} /> {tab.label}
               </button>
@@ -123,24 +123,24 @@ export const Reports = () => {
                       <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-soft">
                         <BarChart3 size={16} className="text-primary" />
                       </div>
-                      <h2 className="text-base font-bold text-main">ملخص الأداء العام</h2>
+                      <h2 className="text-base font-normal text-main">ملخص الأداء العام</h2>
                     </div>
-                    <p className="max-w-md text-xs font-bold leading-relaxed text-muted">
+                    <p className="max-w-md text-xs font-normal leading-relaxed text-muted">
                       تقرير شامل يوضح الحالة الأكاديمية والمالية للمؤسسة. تم تحليل{' '}
                       {state.totalEnrollments} اشتراك نشط عبر {uniqueSubjects} مادة دراسية.
                     </p>
                   </div>
                   <div className="flex items-center gap-4 rounded-xl border border-border bg-surface p-4">
                     <div>
-                      <p className="text-xs font-bold text-primary">نسبة الحضور</p>
-                      <p className="mt-1 font-mono text-2xl font-bold leading-none text-main">
+                      <p className="text-xs font-normal text-primary">نسبة الحضور</p>
+                      <p className="mt-1 font-mono text-2xl font-normal leading-none text-main">
                         {state.attendanceRate}%
                       </p>
                     </div>
                     <div className="h-10 w-px bg-border" />
                     <div>
-                      <p className="text-xs font-bold text-success">النمو الشهري</p>
-                      <p className="mt-1 font-mono text-2xl font-bold leading-none text-main">
+                      <p className="text-xs font-normal text-success">النمو الشهري</p>
+                      <p className="mt-1 font-mono text-2xl font-normal leading-none text-main">
                         {state.revenueGrowth >= 0
                           ? `+${state.revenueGrowth}%`
                           : `${state.revenueGrowth}%`}
@@ -169,8 +169,8 @@ export const Reports = () => {
                           >
                             <Icon size={18} className={v.text} />
                           </div>
-                          <p className={`text-xs font-bold ${v.text}`}>{tab.label}</p>
-                          <p className={`mt-1 text-micro font-bold ${v.text} opacity-60`}>
+                          <p className={`text-xs font-normal ${v.text}`}>{tab.label}</p>
+                          <p className={`mt-1 text-micro font-normal ${v.text} opacity-60`}>
                             عرض التقرير التفصيلي
                           </p>
                         </div>
@@ -256,10 +256,10 @@ export const Reports = () => {
                       <stat.icon size={15} className={stat.textClass} />
                     </div>
                     <div className="mt-3">
-                      <p className={`font-mono text-base font-bold leading-none ${stat.textClass}`}>
+                      <p className={`font-mono text-base font-normal leading-none ${stat.textClass}`}>
                         {stat.value}
                       </p>
-                      <p className="mt-1.5 truncate text-xs font-bold text-muted">{stat.label}</p>
+                      <p className="mt-1.5 truncate text-xs font-normal text-muted">{stat.label}</p>
                     </div>
                   </div>
                 ))}
@@ -271,9 +271,9 @@ export const Reports = () => {
                     <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-soft">
                       <BarChart3 size={16} className="text-primary" />
                     </div>
-                    <h3 className="text-xs font-bold text-main">توزيع الاشتراكات حسب المادة</h3>
+                    <h3 className="text-xs font-normal text-main">توزيع الاشتراكات حسب المادة</h3>
                   </div>
-                  <span className="rounded-xl bg-success-soft px-2.5 py-1 text-micro font-bold text-success">
+                  <span className="rounded-xl bg-success-soft px-2.5 py-1 text-micro font-normal text-success">
                     تحليل مباشر
                   </span>
                 </div>
@@ -300,9 +300,9 @@ export const Reports = () => {
                       >
                         <div className="flex items-center justify-between">
                           <div className={`h-2.5 w-2.5 rounded-sm ${cc.bg}`} />
-                          <p className={`font-mono text-micro font-bold ${cc.text}`}>{pct}%</p>
+                          <p className={`font-mono text-micro font-normal ${cc.text}`}>{pct}%</p>
                         </div>
-                        <p className="truncate text-xs font-bold text-main">{s.name}</p>
+                        <p className="truncate text-xs font-normal text-main">{s.name}</p>
                         <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface">
                           <div
                             className={`h-full rounded-full transition-all ${cc.bg}`}

@@ -66,7 +66,7 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
         {badge ? (
           <span
             className={cn(
-              'inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-black',
+              'inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-medium',
               BADGE_TONES[badge.tone || 'accent'],
             )}
           >
@@ -100,14 +100,14 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
 
       {/* Content */}
       <div className="mt-2.5 space-y-1">
-        <h4 className="truncate text-xs font-black leading-tight text-main transition-colors group-hover:text-primary">
+        <h4 className="truncate text-xs font-medium leading-tight text-main transition-colors group-hover:text-primary">
           {title}
         </h4>
 
         {subtitle && <p className="truncate text-[10px] font-medium text-muted">{subtitle}</p>}
 
         {meta && (
-          <p className="flex items-center gap-1 truncate text-[9px] font-semibold text-dim">
+          <p className="flex items-center gap-1 truncate text-[9px] font-light text-dim">
             <MapPin size={11} className="shrink-0 text-accent" />
             <span>{meta}</span>
           </p>
@@ -117,14 +117,14 @@ export const OverviewFeaturedCard: React.FC<OverviewFeaturedCardProps> = ({
       {/* Bottom Highlight Row */}
       <div className="border-border/50 mt-2.5 flex items-center justify-between border-t pt-2">
         <div className="min-w-0">
-          <p className="truncate font-dash text-xs font-black text-accent">{highlight}</p>
+          <p className="truncate font-dash text-xs font-medium text-accent">{highlight}</p>
           {highlightLabel && (
-            <p className="truncate text-[9px] font-bold text-muted">{highlightLabel}</p>
+            <p className="truncate text-[9px] font-normal text-muted">{highlightLabel}</p>
           )}
         </div>
 
         {actionLabel ? (
-          <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-accent transition-transform group-hover:translate-x-[-2px]">
+          <span className="inline-flex items-center gap-0.5 text-[9px] font-normal text-accent transition-transform group-hover:translate-x-[-2px]">
             <span>{actionLabel}</span>
             <ChevronLeft size={12} />
           </span>

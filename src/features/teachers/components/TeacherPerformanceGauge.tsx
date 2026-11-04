@@ -14,7 +14,7 @@ export const TeacherPerformanceGauge = ({ monthlySessions, prevMonthSessions, pe
             <div>
                 <p className="text-xs text-muted mb-1">الإنتاجية (الحالية)</p>
                 <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-bold text-main">{monthlySessions}</span>
+                    <span className="text-2xl font-normal text-main">{monthlySessions}</span>
                     <span className="text-xs text-muted">جلسة منجزة</span>
                 </div>
             </div>

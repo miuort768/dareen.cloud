@@ -80,10 +80,10 @@ const FALLBACK_STYLE: CountryStyle = {
 const getCountryStyle = (country: string) => COUNTRY_STYLES[country] || FALLBACK_STYLE
 
 const CONTACT_LINK_CLASS =
-  'inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success shadow-button transition-all duration-normal ease-out hover:bg-success hover:text-on-success hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed'
+  'inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-normal text-success shadow-button transition-all duration-normal ease-out hover:bg-success hover:text-on-success hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed'
 
 const FILTER_CHIP_CLASS =
-  'flex h-10 items-center justify-center whitespace-nowrap rounded-xl px-3.5 text-xs font-semibold transition-all duration-normal ease-out shadow-button hover:shadow-button-hover active:scale-[0.985] active:shadow-button-pressed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:h-9'
+  'flex h-10 items-center justify-center whitespace-nowrap rounded-xl px-3.5 text-xs font-light transition-all duration-normal ease-out shadow-button hover:shadow-button-hover active:scale-[0.985] active:shadow-button-pressed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus sm:h-9'
 
 export const AdminBlogCustomers = () => {
   const academyName = useAcademyName()
@@ -220,10 +220,10 @@ export const AdminBlogCustomers = () => {
             icon={<Mail size={22} />}
             meta={
               <>
-                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-normal tabular-nums text-muted">
                   الإجمالي: {customers.length}
                 </span>
-                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-normal tabular-nums text-success-strong">
                   اليوم: {todayCount}
                 </span>
               </>
@@ -254,7 +254,7 @@ export const AdminBlogCustomers = () => {
                     </div>
                   </div>
                   <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <p className="text-2xl font-normal text-main">{kpi.value}</p>
                 </motion.div>
               )
             })}
@@ -275,7 +275,7 @@ export const AdminBlogCustomers = () => {
                 aria-label="ابحث في عملاء المدونة"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -351,11 +351,11 @@ export const AdminBlogCustomers = () => {
                 <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-error-soft">
                   <AlertCircle size={20} className="text-error" />
                 </div>
-                <p className="text-xs font-bold text-error">{error}</p>
+                <p className="text-xs font-normal text-error">{error}</p>
                 <button
                   type="button"
                   onClick={() => void refetch()}
-                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-light text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   إعادة المحاولة
                 </button>
@@ -369,7 +369,7 @@ export const AdminBlogCustomers = () => {
                 <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
                   <Inbox size={22} className="text-primary" />
                 </div>
-                <p className="text-base font-bold text-main">لا يوجد عملاء</p>
+                <p className="text-base font-normal text-main">لا يوجد عملاء</p>
                 <p className="mt-1.5 text-xs text-muted">سيظهر عملاء النشرة البريدية هنا</p>
               </motion.div>
             ) : (
@@ -397,7 +397,7 @@ export const AdminBlogCustomers = () => {
                               <Globe size={15} className={style.iconColor} />
                             </div>
                             <div className="min-w-0">
-                              <h3 className="text-sm font-bold text-main">{cust.country}</h3>
+                              <h3 className="text-sm font-normal text-main">{cust.country}</h3>
                               <p className="truncate text-[11px] text-muted">
                                 {COUNTRY_CURRICULUM[cust.country] || 'دولة أخرى'}
                               </p>
@@ -423,7 +423,7 @@ export const AdminBlogCustomers = () => {
                             <button
                               type="button"
                               onClick={() => handleDelete(cust.id)}
-                              className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-error-soft px-2.5 py-2 text-[10px] font-semibold text-error transition-colors hover:bg-error-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                              className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-error-soft px-2.5 py-2 text-[10px] font-light text-error transition-colors hover:bg-error-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                               aria-label="حذف العميل"
                             >
                               <Trash2 size={13} />
@@ -433,7 +433,7 @@ export const AdminBlogCustomers = () => {
 
                         <div className="flex flex-wrap items-center gap-1.5">
                           <span
-                            className="inline-flex items-center gap-1 rounded-lg bg-gradient-to-b from-success-soft via-background to-background px-2 py-1 text-[10px] font-bold text-main"
+                            className="inline-flex items-center gap-1 rounded-lg bg-gradient-to-b from-success-soft via-background to-background px-2 py-1 text-[10px] font-normal text-main"
                             dir="ltr"
                           >
                             <span className="max-w-[140px] truncate">{cust.phone}</span>
@@ -441,7 +441,7 @@ export const AdminBlogCustomers = () => {
                           </span>
                           <span
                             className={cn(
-                              'inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold',
+                              'inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-normal',
                               style.badge,
                             )}
                           >
@@ -450,7 +450,7 @@ export const AdminBlogCustomers = () => {
                             </span>
                             <BookOpen size={10} />
                           </span>
-                          <span className="hidden items-center gap-1 rounded-lg bg-gradient-to-b from-success-soft via-background to-background px-2 py-1 text-[10px] font-bold text-muted sm:inline-flex">
+                          <span className="hidden items-center gap-1 rounded-lg bg-gradient-to-b from-success-soft via-background to-background px-2 py-1 text-[10px] font-normal text-muted sm:inline-flex">
                             <span>{formatDate(cust.createdAt)}</span>
                             <Clock size={10} />
                           </span>

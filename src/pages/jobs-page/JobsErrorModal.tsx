@@ -35,12 +35,12 @@ export const JobsErrorModal = ({ errorMsg, onClose }: JobsErrorModalProps) => (
           <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-card bg-error-soft">
             <AlertTriangle size={32} className="text-error" />
           </div>
-          <h3 className="mb-2 font-heading text-lg font-bold text-main">عذراً</h3>
+          <h3 className="mb-2 font-heading text-lg font-normal text-main">عذراً</h3>
           <p className="text-sm leading-relaxed text-muted">{errorMsg}</p>
           <button
             type="button"
             onClick={onClose}
-            className="mt-6 w-full rounded-card bg-error py-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus"
+            className="mt-6 w-full rounded-card bg-error py-3 text-xs font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             حسناً
           </button>

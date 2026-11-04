@@ -15,9 +15,9 @@ const SummaryCard = ({ icon, label, value, sub }: { icon: ReactNode; label: stri
             <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary/10">
                 {icon}
             </div>
-            <p className="text-xs font-bold text-muted">{label}</p>
+            <p className="text-xs font-normal text-muted">{label}</p>
         </div>
-        <p className="text-sm font-bold text-main leading-snug">{value}</p>
+        <p className="text-sm font-normal text-main leading-snug">{value}</p>
         {sub && <p className="text-[11px] text-muted mt-1 leading-snug">{sub}</p>}
     </div>
 );

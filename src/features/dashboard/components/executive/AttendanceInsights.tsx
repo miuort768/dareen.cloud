@@ -55,7 +55,7 @@ const Card = ({
       >
         <Icon size={12} />
       </span>
-      <h4 className="text-[10px] font-black leading-tight text-muted">{title}</h4>
+      <h4 className="text-[10px] font-medium leading-tight text-muted">{title}</h4>
     </div>
     <div className="flex-1 space-y-1">{children}</div>
   </div>
@@ -78,18 +78,18 @@ const RankRow = ({
     <div className="flex min-w-0 items-center gap-1.5">
       <span
         className={cn(
-          'flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl text-[9px] font-black tabular-nums',
+          'flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl text-[9px] font-medium tabular-nums',
           badgeBg,
           badgeText,
         )}
       >
         {index + 1}
       </span>
-      <span className="truncate text-[11px] font-bold text-main">{name}</span>
+      <span className="truncate text-[11px] font-normal text-main">{name}</span>
     </div>
-    <span className="shrink-0 text-[11px] font-black tabular-nums text-main">
+    <span className="shrink-0 text-[11px] font-medium tabular-nums text-main">
       {count}
-      <span className="ms-1 text-[9px] font-bold text-dim">حصة</span>
+      <span className="ms-1 text-[9px] font-normal text-dim">حصة</span>
     </span>
   </div>
 )
@@ -150,17 +150,17 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
           <div className="flex h-7 w-7 items-center justify-center rounded-2xl bg-primary-soft">
             <CalendarCheck size={13} className="text-primary" />
           </div>
-          <h4 className="text-xs font-black text-main">تحليلات الحضور</h4>
+          <h4 className="text-xs font-medium text-main">تحليلات الحضور</h4>
         </div>
         {analytics.totalCompleted > 0 && (
-          <span className="rounded-2xl bg-surface px-1.5 py-0.5 text-[9px] font-black tabular-nums text-muted">
+          <span className="rounded-2xl bg-surface px-1.5 py-0.5 text-[9px] font-medium tabular-nums text-muted">
             {analytics.totalCompleted} حصة مسجلة
           </span>
         )}
       </div>
 
       {!analytics.hasData ? (
-        <p className="rounded-2xl border border-dashed border-border bg-surface py-4 text-center text-[10px] font-bold text-dim">
+        <p className="rounded-2xl border border-dashed border-border bg-surface py-4 text-center text-[10px] font-normal text-dim">
           لا توجد بيانات حضور بعد
         </p>
       ) : (
@@ -209,14 +209,14 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl bg-card text-error">
                   <UserMinus size={12} />
                 </span>
-                <p className="truncate text-[11px] font-bold text-main">
+                <p className="truncate text-[11px] font-normal text-main">
                   أقل معلمة تسجيل حضور:{' '}
-                  <span className="font-black text-error">{analytics.leastTeacher.name}</span>
+                  <span className="font-medium text-error">{analytics.leastTeacher.name}</span>
                 </p>
               </div>
-              <span className="shrink-0 text-[11px] font-black tabular-nums text-error">
+              <span className="shrink-0 text-[11px] font-medium tabular-nums text-error">
                 {analytics.leastTeacher.count}
-                <span className="ms-1 text-[9px] font-bold">حصة</span>
+                <span className="ms-1 text-[9px] font-normal">حصة</span>
               </span>
             </div>
           )}
@@ -257,19 +257,19 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
                   <div className="flex min-w-0 items-center gap-1.5">
                     <span
                       className={cn(
-                        'flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl text-[9px] font-black tabular-nums',
+                        'flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl text-[9px] font-medium tabular-nums',
                         i === 0 ? 'bg-warning text-on-warning' : 'bg-warning-soft text-warning',
                       )}
                     >
                       {i + 1}
                     </span>
-                    <span className="truncate text-[11px] font-black text-main">
+                    <span className="truncate text-[11px] font-medium text-main">
                       {formatHourLabel(h.hour)}
                     </span>
                   </div>
-                  <span className="shrink-0 text-[11px] font-black tabular-nums text-main">
+                  <span className="shrink-0 text-[11px] font-medium tabular-nums text-main">
                     {h.count}
-                    <span className="ms-1 text-[9px] font-bold text-dim">حصة</span>
+                    <span className="ms-1 text-[9px] font-normal text-dim">حصة</span>
                   </span>
                 </div>
               ))}

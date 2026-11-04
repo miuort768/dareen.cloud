@@ -33,12 +33,12 @@ export const DeleteUserModal = ({
             <Trash2 size={18} className="text-error" />
           </div>
           <div>
-            <p className="text-sm font-bold text-main">تأكيد حذف المستخدم</p>
+            <p className="text-sm font-normal text-main">تأكيد حذف المستخدم</p>
             <p className="mt-0.5 text-micro text-muted">هذا الإجراء نهائي</p>
           </div>
         </div>
         <p className="mb-4 text-xs text-muted">
-          هل أنت متأكد من حذف"<span className="font-bold text-main">{target.username}</span>"؟
+          هل أنت متأكد من حذف"<span className="font-normal text-main">{target.username}</span>"؟
         </p>
         <div className="flex gap-2">
           <SecondaryBtn onClick={() => setShowDeleteModal(false)} className="flex-1">
@@ -50,7 +50,7 @@ export const DeleteUserModal = ({
               setShowDeleteModal(false)
               showNotify('تم حذف المستخدم')
             }}
-            className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="flex-1 rounded-xl bg-error py-2.5 text-xs font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             تأكيد الحذف
           </button>

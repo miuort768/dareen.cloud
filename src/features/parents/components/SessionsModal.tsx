@@ -111,7 +111,7 @@ export const SessionsModal = ({
                 <Calendar size={20} className="text-on-primary" />
               </div>
               <div className="min-w-0 text-start">
-                <h2 className="truncate text-base font-black leading-tight tracking-tight">
+                <h2 className="truncate text-base font-medium leading-tight tracking-tight">
                   {viewingStudent.name}
                 </h2>
                 <p className="mt-0.5 truncate text-micro font-normal uppercase tracking-widest text-white/80">
@@ -289,7 +289,7 @@ export const SessionsModal = ({
                               )}
                               {session.topics && (
                                 <div className="mt-2 border-t border-border pt-2">
-                                  <p className="text-micro font-bold text-main">
+                                  <p className="text-micro font-normal text-main">
                                     <span className="text-success">✓</span> تم إنجازه:{' '}
                                     <span className="font-normal text-muted">{session.topics}</span>
                                   </p>
@@ -297,7 +297,7 @@ export const SessionsModal = ({
                               )}
                               {session.homework && (
                                 <div className="mt-1.5">
-                                  <p className="text-micro font-bold text-main">
+                                  <p className="text-micro font-normal text-main">
                                     <span className="text-warning dark:text-primary">★</span>{' '}
                                     الواجب:{' '}
                                     <span className="font-normal text-muted">

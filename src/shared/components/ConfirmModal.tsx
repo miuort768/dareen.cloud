@@ -140,7 +140,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             </div>
 
             {/* Title */}
-            <h3 className="mb-2 text-lg font-bold text-main">{title}</h3>
+            <h3 className="mb-2 text-lg font-normal text-main">{title}</h3>
 
             {/* Message */}
             <p className="mb-6 max-w-[280px] text-sm leading-relaxed text-muted">{message}</p>
@@ -167,7 +167,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     }}
                     placeholder={passwordPlaceholder}
                     className={cn(
-                      'w-full rounded-2xl border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
+                      'w-full rounded-2xl border bg-surface py-2.5 pe-3 ps-9 text-xs font-normal text-main outline-none transition-all focus:ring-2',
                       passwordError
                         ? 'border-error focus:border-error focus:ring-error-soft'
                         : 'border-border focus:border-primary focus-visible:ring-focus',
@@ -175,7 +175,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                   />
                 </div>
                 {passwordError && (
-                  <p className="mt-1.5 flex items-center gap-1 text-[11px] font-bold text-error">
+                  <p className="mt-1.5 flex items-center gap-1 text-[11px] font-normal text-error">
                     <AlertCircle size={11} />
                     {passwordError}
                   </p>

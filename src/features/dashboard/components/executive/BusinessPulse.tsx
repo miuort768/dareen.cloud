@@ -65,11 +65,11 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
             <Activity size={13} className="text-primary" />
           </span>
-          <h3 className="text-xs font-bold text-main">مؤشر الأداء</h3>
+          <h3 className="text-xs font-normal text-main">مؤشر الأداء</h3>
         </div>
         <span
           className={cn(
-            'inline-flex shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-[10px] font-bold',
+            'inline-flex shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-[10px] font-normal',
             PULSE_BADGE[pulse.status] || 'border-border bg-surface text-muted',
           )}
         >
@@ -100,15 +100,15 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
           />
         </svg>
         <div className="absolute inset-x-0 bottom-0.5 flex flex-col items-center">
-          <span className={cn('text-[32px] font-black tabular-nums leading-none', scoreColor)}>
+          <span className={cn('text-[32px] font-medium tabular-nums leading-none', scoreColor)}>
             {score}
           </span>
-          <span className="mt-1 text-[9px] font-bold text-muted">من 100</span>
+          <span className="mt-1 text-[9px] font-normal text-muted">من 100</span>
         </div>
       </div>
 
       {/* Scale */}
-      <div className="mx-auto flex w-full max-w-[210px] justify-between px-2 text-[9px] font-bold text-dim">
+      <div className="mx-auto flex w-full max-w-[210px] justify-between px-2 text-[9px] font-normal text-dim">
         <span>0</span>
         <span>100</span>
       </div>

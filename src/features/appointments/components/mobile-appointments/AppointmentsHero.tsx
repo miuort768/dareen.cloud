@@ -94,19 +94,19 @@ export const AppointmentsHero = ({
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-base font-black tabular-nums leading-none text-on-primary">
+              <span className="text-base font-medium tabular-nums leading-none text-on-primary">
                 {rate}%
               </span>
-              <span className="mt-0.5 text-micro font-bold text-white/90">اليوم</span>
+              <span className="mt-0.5 text-micro font-normal text-white/90">اليوم</span>
             </div>
           </div>
 
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 text-white/90">
               <CalendarClock size={12} strokeWidth={1.7} />
-              <p className="text-xs font-bold">{todayName}</p>
+              <p className="text-xs font-normal">{todayName}</p>
             </div>
-            <p className="mt-0.5 text-micro font-bold text-white/90">
+            <p className="mt-0.5 text-micro font-normal text-white/90">
               بقي {remainingToday} من {todayTotal} حصة
             </p>
             <div className="mt-2.5 grid grid-cols-3 gap-2">
@@ -115,11 +115,11 @@ export const AppointmentsHero = ({
                   key={chip.label}
                   className="rounded-2xl bg-white/10 px-1 py-2 text-center ring-1 ring-white/15 backdrop-blur-sm"
                 >
-                  <p className="flex items-center justify-center gap-1 text-sm font-black tabular-nums leading-none text-on-primary">
+                  <p className="flex items-center justify-center gap-1 text-sm font-medium tabular-nums leading-none text-on-primary">
                     <chip.icon size={11} strokeWidth={2} />
                     {chip.value}
                   </p>
-                  <p className="mt-1 text-micro font-bold text-white/90">{chip.label}</p>
+                  <p className="mt-1 text-micro font-normal text-white/90">{chip.label}</p>
                 </div>
               ))}
             </div>

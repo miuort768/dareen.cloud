@@ -102,10 +102,10 @@ export const BlogFormEducationalSection = ({
 
   return (
     <div className="rounded-2xl border border-primary-soft bg-primary-soft p-4">
-      <p className="mb-4 text-micro font-bold text-primary">تصنيف تعليمي — سيظهر في صفحة المواد</p>
+      <p className="mb-4 text-micro font-normal text-primary">تصنيف تعليمي — سيظهر في صفحة المواد</p>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         <div>
-          <label htmlFor="bf-ctype" className="mb-1 block text-micro font-bold text-muted">
+          <label htmlFor="bf-ctype" className="mb-1 block text-micro font-normal text-muted">
             نوع المحتوى
           </label>
           <select
@@ -122,7 +122,7 @@ export const BlogFormEducationalSection = ({
               }))
             }}
             aria-label="نوع المحتوى"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <option value="notes">مذكرات</option>
             <option value="solutions">حل كتب</option>
@@ -131,7 +131,7 @@ export const BlogFormEducationalSection = ({
           </select>
         </div>
         <div>
-          <label htmlFor="bf-cur" className="mb-1 block text-micro font-bold text-muted">
+          <label htmlFor="bf-cur" className="mb-1 block text-micro font-normal text-muted">
             المنهج
           </label>
           <select
@@ -140,7 +140,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => handleCurriculumChange(e.target.value)}
             disabled={isDisabled}
             aria-label="المنهج الدراسي"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             <option value="kuwait">الكويت</option>
@@ -152,7 +152,7 @@ export const BlogFormEducationalSection = ({
           </select>
         </div>
         <div>
-          <label htmlFor="bf-level" className="mb-1 block text-micro font-bold text-muted">
+          <label htmlFor="bf-level" className="mb-1 block text-micro font-normal text-muted">
             المرحلة
           </label>
           <select
@@ -161,7 +161,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => handleLevelChange(e.target.value)}
             disabled={isDisabled}
             aria-label="المرحلة الدراسية"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             {(curriculum ? gradesMap[curriculum] || [] : []).map((l) => (
@@ -172,7 +172,7 @@ export const BlogFormEducationalSection = ({
           </select>
         </div>
         <div>
-          <label htmlFor="bf-grade" className="mb-1 block text-micro font-bold text-muted">
+          <label htmlFor="bf-grade" className="mb-1 block text-micro font-normal text-muted">
             الصف
           </label>
           <select
@@ -181,7 +181,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => handleGradeChange(e.target.value)}
             disabled={isDisabled}
             aria-label="الصف الدراسي"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             {gradeOptions.map((g) => (
@@ -192,7 +192,7 @@ export const BlogFormEducationalSection = ({
           </select>
         </div>
         <div>
-          <label htmlFor="bf-term" className="mb-1 block text-micro font-bold text-muted">
+          <label htmlFor="bf-term" className="mb-1 block text-micro font-normal text-muted">
             الفصل
           </label>
           <select
@@ -201,7 +201,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('term', e.target.value)}
             disabled={isDisabled}
             aria-label="الفصل الدراسي"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون</option>
             <option value="1">الفصل الأول</option>
@@ -209,7 +209,7 @@ export const BlogFormEducationalSection = ({
           </select>
         </div>
         <div>
-          <label htmlFor="bf-subject" className="mb-1 block text-micro font-bold text-muted">
+          <label htmlFor="bf-subject" className="mb-1 block text-micro font-normal text-muted">
             المادة
           </label>
           <select
@@ -218,7 +218,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('subject', e.target.value)}
             disabled={isDisabled}
             aria-label="المادة الدراسية"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             {subjectOptions.map((s) => (

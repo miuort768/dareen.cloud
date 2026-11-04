@@ -128,14 +128,14 @@ const Toast = ({ id, type, message, duration = 4500, onClose }: ToastProps) => {
         <div className="mb-1 flex items-center gap-2">
           <span
             className={cn(
-              'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-black leading-none',
+              'inline-flex items-center rounded-full border px-2.5 py-0.5 text-[10px] font-medium leading-none',
               badgeCls,
             )}
           >
             {badgeText}
           </span>
         </div>
-        <p className="line-clamp-3 text-xs font-bold leading-relaxed text-main">{message}</p>
+        <p className="line-clamp-3 text-xs font-normal leading-relaxed text-main">{message}</p>
       </div>
 
       {/* Close button */}

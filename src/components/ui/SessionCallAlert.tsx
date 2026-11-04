@@ -140,7 +140,7 @@ export const SessionCallAlert = () => {
       <div className="relative flex items-center justify-between gap-3 bg-gradient-to-r from-primary via-primary-deep to-primary-hover px-4 py-3">
         <div className="flex min-w-0 items-center gap-2.5 text-on-primary">
           <Radio size={20} className="shrink-0 animate-pulse" />
-          <span className="truncate text-sm font-black">حصة مباشرة الآن</span>
+          <span className="truncate text-sm font-medium">حصة مباشرة الآن</span>
         </div>
         <button
           onClick={handleDismiss}
@@ -152,33 +152,33 @@ export const SessionCallAlert = () => {
       </div>
 
       <div className="p-4 sm:p-5">
-        <h4 className="text-base font-black leading-snug text-main">
+        <h4 className="text-base font-medium leading-snug text-main">
           المعلمة {session.teacherName} بانتظارك!
         </h4>
 
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-          <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-black text-primary">
+          <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-medium text-primary">
             الحصة: {session.subject}
           </span>
-          <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-bold text-muted">
+          <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-normal text-muted">
             عبر {PROVIDER_NAMES[session.meetingProvider] || session.meetingProvider}
           </span>
         </div>
 
-        {linkUpdated && <p className="mt-2 text-micro font-black text-success">تم تحديث الرابط!</p>}
+        {linkUpdated && <p className="mt-2 text-micro font-medium text-success">تم تحديث الرابط!</p>}
 
         <div className="mt-4 grid grid-cols-2 gap-3">
           <a
             href={session.meetingUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary text-xs font-medium text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             الدخول للحصة <ExternalLink size={14} />
           </a>
           <button
             onClick={handleDismiss}
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-border bg-card px-4 text-xs font-bold text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border border-border bg-card px-4 text-xs font-normal text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             لاحقاً
           </button>

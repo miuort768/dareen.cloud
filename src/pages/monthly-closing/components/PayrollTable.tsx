@@ -42,11 +42,11 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
         mobileLabel: 'المعلمة',
         render: (item) => (
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-micro font-bold text-primary">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-micro font-normal text-primary">
               {item.name.charAt(0)}
             </div>
             <div className="min-w-0">
-              <span className="block text-xs font-bold leading-tight text-main">{item.name}</span>
+              <span className="block text-xs font-normal leading-tight text-main">{item.name}</span>
               <span className="text-micro font-medium text-muted">{item.subject}</span>
             </div>
           </div>
@@ -58,7 +58,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
         align: 'center',
         mobileLabel: 'الحصص',
         render: (item) => (
-          <span className="text-xs font-bold text-muted">{item.sessionsCount}</span>
+          <span className="text-xs font-normal text-muted">{item.sessionsCount}</span>
         ),
       },
       {
@@ -67,7 +67,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
         align: 'center',
         hideOnMobile: true,
         render: (item) => (
-          <span className="text-xs font-bold text-muted">{item.baseAmount.toLocaleString()}</span>
+          <span className="text-xs font-normal text-muted">{item.baseAmount.toLocaleString()}</span>
         ),
       },
       {
@@ -81,7 +81,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
             aria-label="قيمة التعديل"
             value={teacherAdjustments[item.id] || ''}
             onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-            className="w-16 rounded-xl border border-border bg-surface p-1 text-center text-micro font-bold outline-none focus:border-primary"
+            className="w-16 rounded-xl border border-border bg-surface p-1 text-center text-micro font-normal outline-none focus:border-primary"
             placeholder="0"
           />
         ),
@@ -93,7 +93,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
         mobileLabel: 'الصافي',
         render: (item) => (
           <div className="flex flex-col items-center gap-1">
-            <span className="text-xs font-bold text-success-strong">
+            <span className="text-xs font-normal text-success-strong">
               {item.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}
             </span>
             <button
@@ -101,7 +101,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
                 e.stopPropagation()
                 setSelectedTeacherForSlip(item)
               }}
-              className="flex items-center gap-1 text-micro font-bold text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-focus"
+              className="flex items-center gap-1 text-micro font-normal text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-focus"
             >
               <Receipt size={10} /> القسيمة
             </button>

@@ -21,7 +21,7 @@ export const MobileSectionHeader = ({ title, subtitle, icon: Icon, action, class
             </div>
         )}
         <div className="flex-1 min-w-0">
-            <h2 className="text-xs font-bold text-main truncate">{title}</h2>
+            <h2 className="text-xs font-normal text-main truncate">{title}</h2>
             {subtitle && <p className="text-[10px] font-medium text-muted truncate">{subtitle}</p>}
         </div>
         {action}

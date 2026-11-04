@@ -62,10 +62,10 @@ export const AppointmentsHeader = ({
         icon={<Calendar size={24} />}
         meta={
           <>
-            <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-micro font-bold tabular-nums text-muted">
+            <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2 py-0.5 text-micro font-normal tabular-nums text-muted">
               {stats.total} موعد
             </span>
-            <span className="inline-flex items-center rounded-lg bg-success px-2 py-0.5 text-micro font-bold tabular-nums text-on-success">
+            <span className="inline-flex items-center rounded-lg bg-success px-2 py-0.5 text-micro font-normal tabular-nums text-on-success">
               {stats.completed} مكتملة
             </span>
           </>

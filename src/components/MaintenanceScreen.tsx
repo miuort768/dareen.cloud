@@ -46,7 +46,7 @@ export const MaintenanceScreen = () => {
 
           {/* Heading */}
           <div className="mb-5 animate-[fadeUp_0.8s_ease-out_0.1s_both]">
-            <h1 className="mb-2 text-xl font-black leading-snug text-main md:mb-3 md:text-4xl">
+            <h1 className="mb-2 text-xl font-medium leading-snug text-main md:mb-3 md:text-4xl">
               نحن بصدد إجراء
               <br />
               <span className="text-primary">تحديثات جذرية</span>
@@ -59,8 +59,8 @@ export const MaintenanceScreen = () => {
           {/* Progress Bar */}
           <div className="mb-5 w-full max-w-xs animate-[fadeUp_0.8s_ease-out_0.2s_both] md:mb-8">
             <div className="mb-1.5 flex items-center justify-between">
-              <span className="text-[11px] font-bold text-muted">التقدم</span>
-              <span className="text-[11px] font-bold tabular-nums text-primary">{progress}%</span>
+              <span className="text-[11px] font-normal text-muted">التقدم</span>
+              <span className="text-[11px] font-normal tabular-nums text-primary">{progress}%</span>
             </div>
             <div className="h-2 overflow-hidden rounded-full bg-surface">
               <div
@@ -70,7 +70,7 @@ export const MaintenanceScreen = () => {
             </div>
             <div className="mt-1.5 flex items-center justify-center gap-1.5">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-              <p className="text-[11px] font-bold text-primary">جارٍ التحديث...</p>
+              <p className="text-[11px] font-normal text-primary">جارٍ التحديث...</p>
             </div>
           </div>
 
@@ -79,7 +79,7 @@ export const MaintenanceScreen = () => {
             <div className="rounded-xl border border-border bg-card p-3 shadow-elevation-1 md:rounded-2xl md:p-5">
               <div className="mb-2 flex items-center justify-center gap-2 md:mb-3 md:justify-start">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-warning" />
-                <span className="text-xs font-bold text-main md:text-sm">العمل جاري الآن</span>
+                <span className="text-xs font-normal text-main md:text-sm">العمل جاري الآن</span>
               </div>
               <div className="flex gap-2 md:grid md:grid-cols-3 md:gap-2.5">
                 {FEATURES.map((f) => (
@@ -90,7 +90,7 @@ export const MaintenanceScreen = () => {
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
                       <f.icon size={14} className="text-primary" />
                     </div>
-                    <p className="text-[11px] font-bold text-main md:mt-1 md:text-center md:text-xs">
+                    <p className="text-[11px] font-normal text-main md:mt-1 md:text-center md:text-xs">
                       {f.label}
                     </p>
                   </div>
@@ -106,7 +106,7 @@ export const MaintenanceScreen = () => {
                 href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-xs font-bold text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-4 hover:shadow-primary/25 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:px-8 md:py-3.5 md:text-sm"
+                className="group inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-xs font-normal text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-4 hover:shadow-primary/25 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:px-8 md:py-3.5 md:text-sm"
               >
                 <MessageCircle
                   size={16}
@@ -115,7 +115,7 @@ export const MaintenanceScreen = () => {
                 تواصل مع الدعم
               </a>
             ) : (
-              <span className="inline-flex items-center gap-2 rounded-2xl bg-primary/10 px-6 py-3 text-xs font-bold text-primary md:px-8 md:py-3.5 md:text-sm">
+              <span className="inline-flex items-center gap-2 rounded-2xl bg-primary/10 px-6 py-3 text-xs font-normal text-primary md:px-8 md:py-3.5 md:text-sm">
                 <Clock size={16} className="md:h-5 md:w-5" />
                 سنكون متاحين قريبًا
               </span>
@@ -129,13 +129,13 @@ export const MaintenanceScreen = () => {
         {/* Footer */}
         <div className="w-full animate-[fadeUp_0.8s_ease-out_0.5s_both] border-t border-border">
           <div className="mx-auto flex max-w-2xl flex-col items-center py-4 text-center md:py-6">
-            <p className="mb-0.5 text-xs font-bold text-main md:mb-1 md:text-sm">
+            <p className="mb-0.5 text-xs font-normal text-main md:mb-1 md:text-sm">
               شكرًا لصبركم وثقتكم
             </p>
             <p className="mb-1 text-[10px] text-muted md:mb-2 md:text-xs">
               معًا نصنع تجربة تعليمية أفضل
             </p>
-            <p className="text-[10px] font-bold text-primary/60 md:text-xs">dareen.online</p>
+            <p className="text-[10px] font-normal text-primary/60 md:text-xs">dareen.online</p>
           </div>
         </div>
       </div>

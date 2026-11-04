@@ -62,7 +62,7 @@ export const EvaluationsHeader = ({
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-white/15 dark:bg-primary/20">
                       <item.icon size={11} className="text-on-primary" />
                     </span>
-                    <span className="truncate text-sm font-black tabular-nums leading-none text-on-primary">
+                    <span className="truncate text-sm font-medium tabular-nums leading-none text-on-primary">
                       {item.value}
                     </span>
                   </div>
@@ -92,7 +92,7 @@ export const EvaluationsHeader = ({
               placeholder="ابحث بالاسم أو الصف..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card px-3 py-2.5 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:font-medium placeholder:text-dim hover:border-primary/40 focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:bg-surface"
+              className="w-full rounded-xl border border-border bg-card px-3 py-2.5 ps-9 text-xs font-normal text-main outline-none transition-all placeholder:font-medium placeholder:text-dim hover:border-primary/40 focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:bg-surface"
             />
             {searchTerm && (
               <button
@@ -111,13 +111,13 @@ export const EvaluationsHeader = ({
                 aria-label="تصفية حسب الحالة"
                 value={filterStatus}
                 onChange={(e) => onFilterStatusChange(e.target.value)}
-                className="shadow-xs h-10 w-full cursor-pointer appearance-none rounded-xl border border-border bg-card pe-8 ps-3 text-xs font-bold text-main outline-none transition-all hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:bg-surface"
+                className="shadow-xs h-10 w-full cursor-pointer appearance-none rounded-xl border border-border bg-card pe-8 ps-3 text-xs font-normal text-main outline-none transition-all hover:border-primary focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:bg-surface"
               >
                 {filterItems.map((item) => (
                   <option
                     key={item.key}
                     value={item.key}
-                    className="bg-card py-1.5 font-bold text-main dark:bg-surface"
+                    className="bg-card py-1.5 font-normal text-main dark:bg-surface"
                   >
                     {item.label}
                   </option>
@@ -131,15 +131,15 @@ export const EvaluationsHeader = ({
             <div className="hidden items-center justify-between gap-2 sm:justify-start lg:flex">
               <div className="shadow-xs flex h-10 items-center gap-1 rounded-xl border border-primary/20 bg-primary-soft px-3 dark:bg-primary/10">
                 <Award size={12} className="text-primary" />
-                <span className="text-xs font-black tabular-nums text-primary">
+                <span className="text-xs font-medium tabular-nums text-primary">
                   {stats.totalXP.toLocaleString()}
                 </span>
-                <span className="text-micro font-black text-primary">XP</span>
+                <span className="text-micro font-medium text-primary">XP</span>
               </div>
               {showAddButton && (
                 <button
                   onClick={onAddClick}
-                  className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-normal text-on-primary shadow-button transition-all hover:bg-primary-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <Plus size={13} /> تقييم
                 </button>

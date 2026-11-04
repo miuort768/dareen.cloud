@@ -43,15 +43,15 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
             <Trophy size={14} />
           </div>
-          <h3 className="text-sm font-black text-main">رحلة الرتب</h3>
+          <h3 className="text-sm font-medium text-main">رحلة الرتب</h3>
         </div>
         <div className="flex min-w-0 items-center gap-2.5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
             <RankIcon size={19} />
           </div>
           <div className="min-w-0 text-end">
-            <p className="truncate text-sm font-black text-main">{rank.name}</p>
-            <p className="text-[11px] font-bold text-muted">رتبتك الحالية</p>
+            <p className="truncate text-sm font-medium text-main">{rank.name}</p>
+            <p className="text-[11px] font-normal text-muted">رتبتك الحالية</p>
           </div>
         </div>
       </div>
@@ -59,9 +59,9 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
       <div className="mb-4 rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover px-4 py-3 text-center shadow-elevation-1">
         <CountUp
           value={points}
-          className="block font-dash text-2xl font-black tabular-nums leading-none text-on-primary"
+          className="block font-dash text-2xl font-medium tabular-nums leading-none text-on-primary"
         />
-        <p className="mt-1 text-[10px] font-bold text-white/80">نقطة</p>
+        <p className="mt-1 text-[10px] font-normal text-white/80">نقطة</p>
       </div>
 
       {nextRankName ? (
@@ -74,17 +74,17 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
               transition={{ duration: 0.9, ease: 'easeOut' }}
             />
           </div>
-          <p className="mt-2 flex items-center justify-between gap-2 text-[11px] font-bold">
+          <p className="mt-2 flex items-center justify-between gap-2 text-[11px] font-normal">
             <span className="truncate text-muted">
-              التالي: <span className="font-black text-main">{nextRankName}</span>
+              التالي: <span className="font-medium text-main">{nextRankName}</span>
             </span>
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-black text-primary">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-medium text-primary">
               {pointsNeeded} نقطة متبقية
             </span>
           </p>
         </>
       ) : (
-        <p className="rounded-2xl bg-success py-3 text-center text-[11px] font-black text-on-success">
+        <p className="rounded-2xl bg-success py-3 text-center text-[11px] font-medium text-on-success">
           أعلى رتبة — أنت الأسطورة!
         </p>
       )}
@@ -107,7 +107,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
               <Icon size={15} className={cn('mx-auto', unlocked ? badge.text : 'text-muted')} />
               <p
                 className={cn(
-                  'mt-1 text-[9px] font-black leading-tight',
+                  'mt-1 text-[9px] font-medium leading-tight',
                   unlocked ? badge.text : 'text-muted',
                 )}
               >

@@ -151,7 +151,7 @@ const MultiEventModal = ({
               <Layers size={13} className="text-primary" />
             </div>
             <div>
-              <p className="text-xs font-bold text-main">مواعيد متعددة</p>
+              <p className="text-xs font-normal text-main">مواعيد متعددة</p>
               <p className="text-[10px] text-muted">{events.length} مواعيد في نفس الوقت</p>
             </div>
           </div>
@@ -166,7 +166,7 @@ const MultiEventModal = ({
         {/* Time badge */}
         <div className="flex items-center gap-1.5 border-b border-border bg-surface px-4 py-2">
           <Clock size={11} className="text-muted" />
-          <span className="text-[11px] font-bold text-muted">
+          <span className="text-[11px] font-normal text-muted">
             {events[0]?.time} — {events[0]?.day}
           </span>
         </div>
@@ -187,7 +187,7 @@ const MultiEventModal = ({
                 <div className="min-w-0 flex-1">
                   <div className="mb-0.5 flex items-center gap-2">
                     <span
-                      className={`rounded-md px-1.5 py-0.5 text-[10px] font-bold ${c.soft} ${c.text}`}
+                      className={`rounded-md px-1.5 py-0.5 text-[10px] font-normal ${c.soft} ${c.text}`}
                     >
                       {event.subject}
                     </span>
@@ -195,7 +195,7 @@ const MultiEventModal = ({
                       <span className="text-[9px] text-muted">{event.studentGrade}</span>
                     )}
                   </div>
-                  <p className="truncate text-xs font-bold text-main">{event.studentName}</p>
+                  <p className="truncate text-xs font-normal text-main">{event.studentName}</p>
                   <p className="mt-0.5 flex items-center gap-1 text-[10px] text-muted">
                     <GraduationCap size={9} />
                     {event.teacherName}
@@ -228,24 +228,24 @@ const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => 
         <div className="mb-1 flex items-center gap-1.5">
           <span className={`flex items-center gap-1 px-1.5 py-0.5 ${c.soft}`}>
             <span className={`h-1.5 w-1.5 rounded-full ${c.bar}`} />
-            <span className={`text-micro font-bold ${c.text} leading-none`}>{event.subject}</span>
+            <span className={`text-micro font-normal ${c.text} leading-none`}>{event.subject}</span>
           </span>
-          <span className="me-auto flex items-center gap-1 text-micro font-bold tabular-nums text-muted">
+          <span className="me-auto flex items-center gap-1 text-micro font-normal tabular-nums text-muted">
             <Clock size={8} />
             {event.time}
           </span>
         </div>
-        <p className="truncate text-[10px] font-black leading-tight text-main">
+        <p className="truncate text-[10px] font-medium leading-tight text-main">
           {event.studentName}
         </p>
         <div className="mt-1 flex min-w-0 items-center gap-1.5">
-          <span className="flex min-w-0 items-center gap-1 truncate text-[9px] font-bold text-muted">
+          <span className="flex min-w-0 items-center gap-1 truncate text-[9px] font-normal text-muted">
             <UserRound size={8} className="opacity-60" />
             <span className="truncate">{event.teacherName || event.studentGrade}</span>
           </span>
           {event.teacherName && event.studentGrade && (
             <span
-              className={`ms-auto shrink-0 rounded-sm px-1 py-px text-[9px] font-black ${c.soft} ${c.text}`}
+              className={`ms-auto shrink-0 rounded-sm px-1 py-px text-[9px] font-medium ${c.soft} ${c.text}`}
             >
               {event.studentGrade}
             </span>
@@ -274,9 +274,9 @@ const MultiCard = ({
     <div className="p-1.5 pt-2">
       <div className="mb-1 flex items-center gap-1.5">
         <Layers size={9} className="shrink-0 text-primary" />
-        <span className="text-[9px] font-bold text-primary">مواعيد متعددة</span>
+        <span className="text-[9px] font-normal text-primary">مواعيد متعددة</span>
       </div>
-      <p className="text-[9px] font-bold text-main">{events.length} مواعيد</p>
+      <p className="text-[9px] font-normal text-main">{events.length} مواعيد</p>
       <p className="mt-0.5 flex items-center gap-1 text-[9px] text-muted">
         <BookOpen size={7} />
         {Array.from(new Set(events.map((e) => e.subject)))
@@ -314,7 +314,7 @@ const CurrentTimeLine = ({ containerHeight }: { containerHeight: number }) => {
       <div className="flex items-center gap-1.5">
         <div className="h-2 w-2 shrink-0 rounded-full bg-error" />
         <div className="h-px flex-1 bg-error" />
-        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-micro font-bold text-error shadow-elevation-1">
+        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-micro font-normal text-error shadow-elevation-1">
           {nowLabel}
         </span>
       </div>
@@ -381,7 +381,7 @@ export const ScheduleGrid = ({
           <div className="relative min-w-[1000px]">
             {/* Sticky header row */}
             <div className="shadow-xs sticky top-0 z-30 grid grid-cols-[100px_repeat(7,1fr)] border-b border-border bg-surface">
-              <div className="sticky start-0 z-10 flex items-center justify-center gap-1 border-e border-border bg-surface p-2 text-[9px] font-bold text-muted">
+              <div className="sticky start-0 z-10 flex items-center justify-center gap-1 border-e border-border bg-surface p-2 text-[9px] font-normal text-muted">
                 <Clock size={9} />
                 <span>الوقت</span>
               </div>
@@ -394,7 +394,7 @@ export const ScheduleGrid = ({
                     className={`border-e border-border p-2.5 text-center last:border-e-0 ${isTodayCol ? 'border-b-0 bg-primary' : 'bg-surface'}`}
                   >
                     <div
-                      className={`text-xs font-bold ${isTodayCol ? 'text-on-primary' : 'text-main'}`}
+                      className={`text-xs font-normal ${isTodayCol ? 'text-on-primary' : 'text-main'}`}
                     >
                       {day}
                     </div>
@@ -403,7 +403,7 @@ export const ScheduleGrid = ({
                     >
                       {count > 0 && (
                         <span
-                          className={`min-w-4 rounded-full px-1 py-px text-[9px] font-black tabular-nums ${isTodayCol ? 'bg-white/25 text-on-primary' : 'bg-border text-main'}`}
+                          className={`min-w-4 rounded-full px-1 py-px text-[9px] font-medium tabular-nums ${isTodayCol ? 'bg-white/25 text-on-primary' : 'bg-border text-main'}`}
                         >
                           {count}
                         </span>
@@ -431,7 +431,7 @@ export const ScheduleGrid = ({
                     {/* Time label */}
                     <div className="sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e border-border bg-surface p-1.5">
                       <Clock size={10} className="text-muted" />
-                      <span className="mt-0.5 text-[10px] font-bold tabular-nums text-muted">
+                      <span className="mt-0.5 text-[10px] font-normal tabular-nums text-muted">
                         {slot.label}
                       </span>
                     </div>
@@ -494,7 +494,7 @@ export const ScheduleGrid = ({
 
         {/* Legend */}
         <div className="no-print flex flex-wrap items-center gap-2 border-t border-border bg-surface p-3">
-          <span className="ms-1 text-[9px] font-bold text-muted">دليل المواد:</span>
+          <span className="ms-1 text-[9px] font-normal text-muted">دليل المواد:</span>
           {Object.entries(SUBJECT_COLORS)
             .slice(0, 8)
             .map(([subject, colors]) => (
@@ -503,12 +503,12 @@ export const ScheduleGrid = ({
                 className="flex items-center gap-1 rounded-2xl border border-border bg-card px-1.5 py-0.5"
               >
                 <div className={`h-1.5 w-1.5 rounded-full ${colors.bar}`} />
-                <span className="text-micro font-bold text-muted">{subject}</span>
+                <span className="text-micro font-normal text-muted">{subject}</span>
               </div>
             ))}
           {uniqueTeachers.length > 0 && (
             <>
-              <span className="me-1 ms-2 text-[9px] font-bold text-muted">|</span>
+              <span className="me-1 ms-2 text-[9px] font-normal text-muted">|</span>
               <span className="flex items-center gap-1 text-micro text-muted">
                 <GraduationCap size={8} />
                 {uniqueTeachers.length} معلمة

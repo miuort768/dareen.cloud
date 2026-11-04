@@ -41,7 +41,7 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
   useEffect(() => {
     motionValue.set(value)
   }, [value, motionValue])
-  return <motion.span className="text-3xl font-bold tracking-tight">{displayValue}</motion.span>
+  return <motion.span className="text-3xl font-normal tracking-tight">{displayValue}</motion.span>
 }
 
 export const Attendance = () => {
@@ -251,10 +251,10 @@ export const Attendance = () => {
                     key={s.label}
                     className="rounded-2xl border border-white/20 bg-white/10 px-2 py-2.5 text-center backdrop-blur-sm"
                   >
-                    <p className="text-lg font-black tabular-nums leading-none text-on-primary">
+                    <p className="text-lg font-medium tabular-nums leading-none text-on-primary">
                       {s.value.toLocaleString('ar-EG')}
                     </p>
-                    <p className="mt-1 text-[10px] font-bold text-white/90">{s.label}</p>
+                    <p className="mt-1 text-[10px] font-normal text-white/90">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -289,7 +289,7 @@ export const Attendance = () => {
                       <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
                     </div>
                     <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                    <p className="text-2xl font-bold text-main">
+                    <p className="text-2xl font-normal text-main">
                       <AnimatedCounter value={kpi.value} />
                     </p>
                   </motion.div>
@@ -379,7 +379,7 @@ export const Attendance = () => {
                       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-on-primary">
                         <Activity size={16} />
                       </div>
-                      <p className="text-sm font-black leading-none text-on-primary">
+                      <p className="text-sm font-medium leading-none text-on-primary">
                         حصص الطلاب المقررة
                       </p>
                     </div>
@@ -394,7 +394,7 @@ export const Attendance = () => {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث باسم الطالب أو المادة..."
-                        className="w-full rounded-2xl border border-white/20 bg-white/15 py-2 pe-4 ps-10 text-xs font-bold text-on-primary outline-none transition-all placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25"
+                        className="w-full rounded-2xl border border-white/20 bg-white/15 py-2 pe-4 ps-10 text-xs font-normal text-on-primary outline-none transition-all placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25"
                       />
                     </div>
                   </div>
@@ -448,7 +448,7 @@ export const Attendance = () => {
                   ) : (
                     <div className="col-span-full py-16 text-center">
                       <Users className="mx-auto mb-2 text-muted" size={32} strokeWidth={1.5} />
-                      <p className="text-xs font-bold text-muted">لا يوجد طلاب متاحون</p>
+                      <p className="text-xs font-normal text-muted">لا يوجد طلاب متاحون</p>
                     </div>
                   )}
                 </div>
@@ -539,7 +539,7 @@ export const Attendance = () => {
                     }}
                     className="flex items-center gap-2"
                   >
-                    <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                    <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                       {action.label}
                     </span>
                     <button

@@ -43,7 +43,7 @@ interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 const Label = ({ children, className, ...props }: LabelProps) => {
   const { id, required } = useFormField()
   return (
-    <label htmlFor={id} className={cn('text-xs font-bold text-main', className)} {...props}>
+    <label htmlFor={id} className={cn('text-xs font-normal text-main', className)} {...props}>
       {children}
       {required && (
         <span className="ms-1 text-error" aria-hidden="true">
@@ -69,7 +69,7 @@ interface ErrorProps {
 }
 
 const ErrorMsg = ({ children, className }: ErrorProps) => (
-  <span className={cn('flex items-center gap-1 text-xs font-bold text-error', className)}>
+  <span className={cn('flex items-center gap-1 text-xs font-normal text-error', className)}>
     <svg
       className="h-3.5 w-3.5 shrink-0"
       viewBox="0 0 24 24"

@@ -62,20 +62,20 @@ export const GreetingStrip = ({
       <div className="relative z-10 p-5 sm:p-6 lg:flex lg:items-center lg:justify-between lg:gap-8">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
+            <p className="flex items-center gap-1.5 text-xs font-normal text-muted">
               <CalendarDays size={13} className="text-primary" />
               <span className="font-dash">{today}</span>
             </p>
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-3 py-1 text-[10px] font-black text-primary-active shadow-none">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-3 py-1 text-[10px] font-medium text-primary-active shadow-none">
               <GraduationCap size={11} />
               {grade || 'طالب'}
             </span>
           </div>
 
-          <h1 className="mt-3 font-student-heading text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
+          <h1 className="mt-3 font-student-heading text-xl font-medium leading-tight text-main md:text-2xl xl:text-3xl">
             {getGreeting()}، {firstName}
           </h1>
-          <p className="mt-1 text-xs font-bold leading-relaxed text-muted sm:text-sm xl:text-base">
+          <p className="mt-1 text-xs font-normal leading-relaxed text-muted sm:text-sm xl:text-base">
             مستقبلك يبدأ بخطوة .. وأنتِ على الطريق الصحيح
           </p>
         </div>
@@ -87,21 +87,21 @@ export const GreetingStrip = ({
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft text-success-strong">
                 <CheckCircle2 size={16} />
               </span>
-              <span className="font-dash text-lg font-black tabular-nums leading-none text-main">
+              <span className="font-dash text-lg font-medium tabular-nums leading-none text-main">
                 {attendanceRate}%
               </span>
-              <span className="text-[10px] font-bold text-muted">نسبة الحضور</span>
+              <span className="text-[10px] font-normal text-muted">نسبة الحضور</span>
             </div>
 
             <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-5 py-4 shadow-soft">
               <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <CalendarCheck size={16} />
               </span>
-              <span className="font-dash text-lg font-black tabular-nums leading-none text-main">
+              <span className="font-dash text-lg font-medium tabular-nums leading-none text-main">
                 {sessionsUsed}
-                <span className="text-[10px] font-bold text-muted"> / {sessionsTotal}</span>
+                <span className="text-[10px] font-normal text-muted"> / {sessionsTotal}</span>
               </span>
-              <span className="text-[10px] font-bold text-muted">حصص منفذة</span>
+              <span className="text-[10px] font-normal text-muted">حصص منفذة</span>
             </div>
 
             <div className="flex min-w-28 flex-col items-center gap-2 rounded-2xl border border-border bg-card px-5 py-4 shadow-soft">
@@ -110,13 +110,13 @@ export const GreetingStrip = ({
               </span>
               <span
                 className={cn(
-                  'max-w-24 truncate text-sm font-black leading-none text-main',
+                  'max-w-24 truncate text-sm font-medium leading-none text-main',
                   !nextSessionLabel && 'text-dim',
                 )}
               >
                 {nextSessionLabel || 'لا حصص'}
               </span>
-              <span className="text-[10px] font-bold text-muted">الحصة القادمة</span>
+              <span className="text-[10px] font-normal text-muted">الحصة القادمة</span>
             </div>
           </div>
         )}

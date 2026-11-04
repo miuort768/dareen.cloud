@@ -42,12 +42,12 @@ export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = '
                     <SectionCard key={idx} className="p-5">
                         <div className="flex items-center gap-3 mb-3">
                             <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft text-primary">
-                                <span className="text-xs font-semibold">{String(subj.name).charAt(0)}</span>
+                                <span className="text-xs font-light">{String(subj.name).charAt(0)}</span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h3 className="text-xs font-bold text-main truncate">{subj.name}</h3>
+                                <h3 className="text-xs font-normal text-main truncate">{subj.name}</h3>
                                 {subj.hasMixedCurrency && (
-                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-warning mt-0.5">
+                                    <span className="inline-flex items-center gap-1 text-[10px] font-normal text-warning mt-0.5">
                                         <AlertTriangle size={9} /> عملات متعددة
                                     </span>
                                 )}
@@ -55,14 +55,14 @@ export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = '
                         </div>
                         <div className="space-y-2">
                             <div className="flex justify-between items-center text-micro">
-                                <span className="text-muted font-bold">صافي الربح</span>
-                                <span className={`font-semibold ${subj.hasMixedCurrency ? 'text-warning' : 'text-primary'}`}>
+                                <span className="text-muted font-normal">صافي الربح</span>
+                                <span className={`font-light ${subj.hasMixedCurrency ? 'text-warning' : 'text-primary'}`}>
                                     {subj.profit.toLocaleString()} {subj.hasMixedCurrency ? '~' : ''}{reportCurrency}
                                 </span>
                             </div>
                             <ProgressBar value={subj.income > 0 ? Math.min(100, (subj.profit / subj.income) * 100) : 0} variant="primary" size="sm" />
                             <div className="flex justify-between items-center text-micro text-muted mt-1">
-                                <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>
+                                <span className="font-normal">النشاط: {subj.sessionsCount} حصة</span>
                             </div>
                         </div>
                     </SectionCard>

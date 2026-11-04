@@ -38,7 +38,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
             {isLast(index) ? (
               <span
                 aria-current="page"
-                className="inline-flex max-w-[200px] items-center gap-1 truncate text-sm font-bold text-primary"
+                className="inline-flex max-w-[200px] items-center gap-1 truncate text-sm font-normal text-primary"
               >
                 {item.icon && <span className="shrink-0">{item.icon}</span>}
                 {item.label}

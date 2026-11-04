@@ -10,7 +10,7 @@ const SPACING = [
 export function SpacingSection() {
   return (
     <section>
-      <h2 className="text-lg font-bold mb-4">المسافات — Spacing</h2>
+      <h2 className="text-lg font-normal mb-4">المسافات — Spacing</h2>
       <div className="space-y-3">
         {SPACING.map(s => (
           <div key={s.label} className="flex items-center gap-4">

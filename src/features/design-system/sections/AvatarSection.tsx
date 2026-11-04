@@ -3,11 +3,11 @@ import { Avatar } from '../../../shared/components/ui';
 export function AvatarSection() {
     return (
         <section>
-            <h2 className="text-lg font-bold text-main mb-4">الصور الشخصية — Avatars</h2>
+            <h2 className="text-lg font-normal text-main mb-4">الصور الشخصية — Avatars</h2>
 
             <div className="space-y-6">
                 <div>
-                    <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider">Sizes</h3>
+                    <h3 className="text-xs font-normal text-muted mb-3 uppercase tracking-wider">Sizes</h3>
                     <div className="flex items-end gap-6">
                         <div className="flex flex-col items-center gap-2">
                             <Avatar size="sm" name="أحمد" />
@@ -29,7 +29,7 @@ export function AvatarSection() {
                 </div>
 
                 <div>
-                    <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider">حالة الاتصال</h3>
+                    <h3 className="text-xs font-normal text-muted mb-3 uppercase tracking-wider">حالة الاتصال</h3>
                     <div className="flex items-center gap-6">
                         <div className="flex flex-col items-center gap-2">
                             <Avatar size="md" name="عمر" indicator="online" />
@@ -47,7 +47,7 @@ export function AvatarSection() {
                 </div>
 
                 <div>
-                    <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider">مع صورة</h3>
+                    <h3 className="text-xs font-normal text-muted mb-3 uppercase tracking-wider">مع صورة</h3>
                     <div className="flex items-center gap-6">
                         <Avatar size="md" src="https://i.pravatar.cc/80?img=1" alt="User" />
                         <Avatar size="md" src="https://i.pravatar.cc/80?img=5" alt="User" />

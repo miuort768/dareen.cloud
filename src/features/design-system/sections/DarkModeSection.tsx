@@ -17,7 +17,7 @@ export function DarkModeSection() {
 
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الوضع الغامق — Dark Mode</h2>
+      <h2 className="mb-4 text-lg font-normal">الوضع الغامق — Dark Mode</h2>
       <div className="rounded-card border p-6 text-center">
         <p className="mb-4 text-sm text-muted">
           الحالي: <strong className="text-main">{isDark ? 'Dark' : 'Light'}</strong>

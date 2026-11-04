@@ -25,7 +25,7 @@ const STATUS_COLORS: Record<string, string> = {
 export function AccessibilitySection() {
   return (
     <section>
-      <h2 className="text-lg font-bold mb-4">إمكانية الوصول — Accessibility</h2>
+      <h2 className="text-lg font-normal mb-4">إمكانية الوصول — Accessibility</h2>
       <p className="text-sm text-muted mb-4">
         نتائج Gate 3 — آخر تحديث: 2026-07-01
       </p>
@@ -33,7 +33,7 @@ export function AccessibilitySection() {
         {CHECKS.map(check => (
           <div key={check.label} className={`rounded-md border px-4 py-3 ${STATUS_COLORS[check.status]}`}>
             <div className="flex items-center justify-between mb-1">
-              <strong className="text-sm font-bold">{check.label}</strong>
+              <strong className="text-sm font-normal">{check.label}</strong>
               <span className="text-xs px-2 py-0.5 rounded-full bg-white/50">
                 {STATUS_LABELS[check.status]}
               </span>

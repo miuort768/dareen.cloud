@@ -26,8 +26,8 @@ export const SectionTitle = ({
       <Icon size={16} />
     </div>
     <div>
-      <p className="text-sm font-bold leading-none text-main">{label}</p>
-      {sub && <p className="mt-1 text-micro font-bold text-muted">{sub}</p>}
+      <p className="text-sm font-normal leading-none text-main">{label}</p>
+      {sub && <p className="mt-1 text-micro font-normal text-muted">{sub}</p>}
     </div>
   </div>
 )

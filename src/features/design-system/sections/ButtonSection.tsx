@@ -25,11 +25,11 @@ const SIZES = [
 export function ButtonSection() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الأزرار — Buttons</h2>
+      <h2 className="mb-4 text-lg font-normal">الأزرار — Buttons</h2>
       <div className="space-y-6">
         {VARIANTS.map((variant) => (
           <div key={variant.label}>
-            <h3 className="mb-3 text-sm font-semibold text-muted">{variant.label}</h3>
+            <h3 className="mb-3 text-sm font-light text-muted">{variant.label}</h3>
             <div className="flex flex-wrap items-center gap-3">
               {SIZES.map((size) => (
                 <button

@@ -72,10 +72,10 @@ export const ScheduleHeader = ({
                 key={s.label}
                 className="rounded-xl border border-white/20 bg-white/10 px-2 py-2.5 text-center backdrop-blur-sm"
               >
-                <p className="text-lg font-black tabular-nums leading-none text-on-primary">
+                <p className="text-lg font-medium tabular-nums leading-none text-on-primary">
                   {s.value}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-white/90">{s.label}</p>
+                <p className="mt-1 text-[10px] font-normal text-white/90">{s.label}</p>
               </div>
             ))}
           </div>
@@ -95,7 +95,7 @@ export const ScheduleHeader = ({
               placeholder="بحث عن طالب، معلمة، أو مادة..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="h-9 w-full rounded-lg border border-border bg-surface px-9 text-xs font-bold text-main outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20"
+              className="h-9 w-full rounded-lg border border-border bg-surface px-9 text-xs font-normal text-main outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20"
             />
           </div>
 
@@ -108,7 +108,7 @@ export const ScheduleHeader = ({
             >
               <ChevronRight size={14} />
             </button>
-            <span className="min-w-[110px] px-2 text-center text-[11px] font-bold text-main">
+            <span className="min-w-[110px] px-2 text-center text-[11px] font-normal text-main">
               {weekLabel}
             </span>
             <button
@@ -123,7 +123,7 @@ export const ScheduleHeader = ({
 
         {/* Row 2: Filters */}
         <div className="flex flex-wrap items-center gap-2 px-4 py-2.5">
-          <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+          <div className="flex items-center gap-1.5 text-[11px] font-normal text-muted">
             <Filter size={11} />
             <span>تصفية:</span>
           </div>
@@ -131,7 +131,7 @@ export const ScheduleHeader = ({
           {/* Today button */}
           <button
             onClick={() => onDayChange(filterDay === todayDayName ? 'all' : todayDayName)}
-            className={`flex h-8 items-center gap-1.5 rounded-lg border px-3 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
+            className={`flex h-8 items-center gap-1.5 rounded-lg border px-3 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterDay === todayDayName
                 ? 'border-primary bg-primary text-on-primary'
                 : 'border-border bg-surface text-main hover:bg-hover'
@@ -151,7 +151,7 @@ export const ScheduleHeader = ({
               aria-label="تصفية حسب اليوم"
               value={filterDay}
               onChange={(e) => onDayChange(e.target.value)}
-              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-normal text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                 filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
               }`}
             >
@@ -177,7 +177,7 @@ export const ScheduleHeader = ({
                 aria-label="تصفية حسب المعلمة"
                 value={filterTeacher}
                 onChange={(e) => onTeacherChange(e.target.value)}
-                className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+                className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-normal text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                   filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
                 }`}
               >
@@ -204,7 +204,7 @@ export const ScheduleHeader = ({
                 aria-label="تصفية حسب المادة"
                 value={filterSubject}
                 onChange={(e) => onSubjectChange(e.target.value)}
-                className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+                className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-normal text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                   filterSubject !== 'all' ? 'border-primary text-primary' : 'border-border'
                 }`}
               >
@@ -229,7 +229,7 @@ export const ScheduleHeader = ({
                 onSubjectChange('all')
                 onSearchChange('')
               }}
-              className="flex h-8 items-center gap-1 rounded-lg border border-error-soft bg-error-soft px-3 text-xs font-bold text-error outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
+              className="flex h-8 items-center gap-1 rounded-lg border border-error-soft bg-error-soft px-3 text-xs font-normal text-error outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
             >
               <span>مسح ({activeFiltersCount})</span>
             </button>

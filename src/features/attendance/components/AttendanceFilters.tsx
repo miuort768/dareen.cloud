@@ -76,7 +76,7 @@ export const AttendanceFilters = ({
             <div className="flex h-7 w-7 items-center justify-center rounded-2xl bg-primary-soft text-primary">
               <SlidersHorizontal size={12} />
             </div>
-            <span className="text-xs font-bold text-main">فلترة السجلات</span>
+            <span className="text-xs font-normal text-main">فلترة السجلات</span>
           </div>
           <div className="flex items-center gap-2">
             {/* Segmented Control */}
@@ -88,7 +88,7 @@ export const AttendanceFilters = ({
                     <button
                       key={key}
                       onClick={() => onPeriodChange(key)}
-                      className={`relative whitespace-nowrap rounded-2xl px-2.5 py-1 text-[9px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${isActive ? 'text-on-primary' : 'text-muted hover:text-main'}`}
+                      className={`relative whitespace-nowrap rounded-2xl px-2.5 py-1 text-[9px] font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${isActive ? 'text-on-primary' : 'text-muted hover:text-main'}`}
                     >
                       {isActive && (
                         <motion.div
@@ -111,7 +111,7 @@ export const AttendanceFilters = ({
                   onTeacherChange('all')
                   onSubjectChange?.('all')
                 }}
-                className="flex items-center gap-1 rounded-2xl bg-error-soft px-2 py-1 text-[9px] font-bold text-error transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex items-center gap-1 rounded-2xl bg-error-soft px-2 py-1 text-[9px] font-normal text-error transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={10} /> مسح
               </button>
@@ -126,21 +126,21 @@ export const AttendanceFilters = ({
             animate={{ height: 'auto', opacity: 1 }}
             className="mb-3 flex flex-wrap items-center gap-2 border-b border-border pb-3"
           >
-            <span className="text-[9px] font-bold text-muted">من</span>
+            <span className="text-[9px] font-normal text-muted">من</span>
             <input
               aria-label="تاريخ البداية"
               type="date"
               value={customStartDate || ''}
               onChange={(e) => onCustomStartChange?.(e.target.value)}
-              className="rounded-2xl border border-border bg-surface px-2 py-1.5 text-[9px] font-bold outline-none transition-all focus-visible:border-primary"
+              className="rounded-2xl border border-border bg-surface px-2 py-1.5 text-[9px] font-normal outline-none transition-all focus-visible:border-primary"
             />
-            <span className="text-[9px] font-bold text-muted">إلى</span>
+            <span className="text-[9px] font-normal text-muted">إلى</span>
             <input
               aria-label="تاريخ النهاية"
               type="date"
               value={customEndDate || ''}
               onChange={(e) => onCustomEndChange?.(e.target.value)}
-              className="rounded-2xl border border-border bg-surface px-2 py-1.5 text-[9px] font-bold outline-none transition-all focus-visible:border-primary"
+              className="rounded-2xl border border-border bg-surface px-2 py-1.5 text-[9px] font-normal outline-none transition-all focus-visible:border-primary"
             />
           </motion.div>
         )}

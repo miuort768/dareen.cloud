@@ -48,10 +48,10 @@ export class SectionErrorBoundary extends Component<Props, State> {
           >
             <div>
               <AlertTriangle size={20} className="mx-auto mb-2 text-error" />
-              <p className="text-sm font-bold text-muted">حدث خطأ في هذا القسم</p>
+              <p className="text-sm font-normal text-muted">حدث خطأ في هذا القسم</p>
               <button
                 onClick={this.handleReset}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-error outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-normal text-error outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <RotateCcw size={12} /> إعادة المحاولة
               </button>
@@ -72,11 +72,11 @@ export class SectionErrorBoundary extends Component<Props, State> {
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-error-soft">
               <AlertTriangle size={24} className="text-error" />
             </div>
-            <p className="mb-2 text-sm font-bold text-main">عذراً، حدث خطأ غير متوقع</p>
+            <p className="mb-2 text-sm font-normal text-main">عذراً، حدث خطأ غير متوقع</p>
             <p className="mb-4 text-xs text-muted">تعذر تحميل هذا القسم. يرجى المحاولة مرة أخرى.</p>
             <button
               onClick={this.handleReset}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-normal text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <RotateCcw size={14} /> إعادة المحاولة
             </button>

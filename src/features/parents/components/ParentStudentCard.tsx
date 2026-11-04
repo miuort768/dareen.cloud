@@ -98,7 +98,7 @@ export const ParentStudentCard = ({
               <User size={20} className="md:size-7" />
             </div>
             <div className="min-w-0">
-              <h3 className={cn('truncate text-base font-black leading-tight md:text-lg', tone.on)}>
+              <h3 className={cn('truncate text-base font-medium leading-tight md:text-lg', tone.on)}>
                 {(student as { name: string }).name}
               </h3>
               <p className="mt-0.5 text-micro font-medium uppercase tracking-widest text-white/80">
@@ -109,7 +109,7 @@ export const ParentStudentCard = ({
           {totalPoints > 0 && (
             <div className="flex shrink-0 flex-col items-center gap-0.5 rounded-xl border border-white/25 bg-white/20 px-1.5 py-1 text-white backdrop-blur-sm">
               <Star size={12} className="fill-current md:size-4" />
-              <span className="text-micro font-bold">{totalPoints}</span>
+              <span className="text-micro font-normal">{totalPoints}</span>
             </div>
           )}
         </div>

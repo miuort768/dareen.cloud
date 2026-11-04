@@ -51,7 +51,7 @@ export const BlogForm = ({
             <Save size={16} className="text-on-error" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-on-error">
+            <h2 className="text-sm font-normal text-on-error">
               {currentPost.id ? 'تعديل المقال' : 'إضافة مقال جديد'}
             </h2>
             <p className="text-[10px] text-white/90">
@@ -74,7 +74,7 @@ export const BlogForm = ({
       >
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
-            <label htmlFor="bf-title" className="mb-1.5 block text-micro font-bold text-muted">
+            <label htmlFor="bf-title" className="mb-1.5 block text-micro font-normal text-muted">
               عنوان المقال
             </label>
             <input
@@ -83,12 +83,12 @@ export const BlogForm = ({
               type="text"
               value={currentPost.title}
               onChange={(e) => set('title', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
               placeholder="مثال: أفضل نصائح الدراسة..."
             />
           </div>
           <div>
-            <label htmlFor="bf-slug" className="mb-1.5 block text-micro font-bold text-muted">
+            <label htmlFor="bf-slug" className="mb-1.5 block text-micro font-normal text-muted">
               الرابط المختصر (Slug) — حروف وأرقام وشرطات
             </label>
             <div className="relative">
@@ -99,7 +99,7 @@ export const BlogForm = ({
                 type="text"
                 value={currentPost.slug}
                 onChange={(e) => set('slug', e.target.value.trim().replace(/\s+/g, '-'))}
-                className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 dir="ltr"
                 placeholder="article-slug أو رابط-المقال"
                 maxLength={100}
@@ -110,7 +110,7 @@ export const BlogForm = ({
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           <div>
-            <label className="mb-1.5 block text-micro font-bold text-muted">التصنيف</label>
+            <label className="mb-1.5 block text-micro font-normal text-muted">التصنيف</label>
             <div className="relative">
               <Tag className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
               <input
@@ -118,13 +118,13 @@ export const BlogForm = ({
                 aria-label="التصنيف"
                 value={currentPost.category}
                 onChange={(e) => set('category', e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface py-3 ps-10 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface py-3 ps-10 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="مثل: نصائح دراسية"
               />
             </div>
           </div>
           <div>
-            <label htmlFor="bf-author" className="mb-1.5 block text-micro font-bold text-muted">
+            <label htmlFor="bf-author" className="mb-1.5 block text-micro font-normal text-muted">
               الكاتب
             </label>
             <input
@@ -132,11 +132,11 @@ export const BlogForm = ({
               type="text"
               value={currentPost.author}
               onChange={(e) => set('author', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
           <div>
-            <label htmlFor="bf-date" className="mb-1.5 block text-micro font-bold text-muted">
+            <label htmlFor="bf-date" className="mb-1.5 block text-micro font-normal text-muted">
               التاريخ
             </label>
             <input
@@ -144,7 +144,7 @@ export const BlogForm = ({
               type="date"
               value={currentPost.date?.split('T')[0]}
               onChange={(e) => set('date', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
         </div>
@@ -158,7 +158,7 @@ export const BlogForm = ({
         {(currentPost.contentType === 'foundation' || currentPost.contentType === 'notes') && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label className="mb-1 block text-micro font-bold text-muted">رابط المصدر</label>
+              <label className="mb-1 block text-micro font-normal text-muted">رابط المصدر</label>
               <div className="relative">
                 <LinkIcon
                   className="absolute end-4 top-1/2 -translate-y-1/2 text-muted"
@@ -169,20 +169,20 @@ export const BlogForm = ({
                   aria-label="رابط المصدر"
                   value={currentPost.source || ''}
                   onChange={(e) => set('source', e.target.value)}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   dir="ltr"
                   placeholder="https://..."
                 />
               </div>
             </div>
             <div>
-              <label className="mb-1 block text-micro font-bold text-muted">حجم الملف</label>
+              <label className="mb-1 block text-micro font-normal text-muted">حجم الملف</label>
               <input
                 type="text"
                 aria-label="حجم الملف"
                 value={currentPost.fileSize || ''}
                 onChange={(e) => set('fileSize', e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="2.5 MB"
               />
             </div>
@@ -190,7 +190,7 @@ export const BlogForm = ({
         )}
 
         <div>
-          <label htmlFor="bf-cover" className="mb-1.5 block text-micro font-bold text-muted">
+          <label htmlFor="bf-cover" className="mb-1.5 block text-micro font-normal text-muted">
             رابط الصورة الرئيسية (اختياري)
           </label>
           <div className="relative">
@@ -200,7 +200,7 @@ export const BlogForm = ({
               type="text"
               value={currentPost.coverImage}
               onChange={(e) => set('coverImage', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
               dir="ltr"
               placeholder="https://... (اختياري)"
             />
@@ -213,7 +213,7 @@ export const BlogForm = ({
         </div>
 
         <div>
-          <label htmlFor="bf-keywords" className="mb-1.5 block text-micro font-bold text-muted">
+          <label htmlFor="bf-keywords" className="mb-1.5 block text-micro font-normal text-muted">
             الكلمات المفتاحية (Keywords) — مفصولة بفواصل
           </label>
           <input
@@ -221,13 +221,13 @@ export const BlogForm = ({
             type="text"
             value={currentPost.keywords}
             onChange={(e) => set('keywords', e.target.value)}
-            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
             placeholder="دراسة, نصائح, تفوق"
           />
         </div>
 
         <div>
-          <label htmlFor="bf-excerpt" className="mb-1.5 block text-micro font-bold text-muted">
+          <label htmlFor="bf-excerpt" className="mb-1.5 block text-micro font-normal text-muted">
             وصف مختصر (يظهر في محركات البحث)
           </label>
           <textarea
@@ -235,18 +235,18 @@ export const BlogForm = ({
             rows={2}
             value={currentPost.excerpt}
             onChange={(e) => set('excerpt', e.target.value)}
-            className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
             placeholder="وصف قصير يظهر في نتائج البحث..."
           />
         </div>
 
         <div>
-          <label className="mb-1.5 block text-micro font-bold text-muted">
+          <label className="mb-1.5 block text-micro font-normal text-muted">
             محتوى المقال (كود HTML)
           </label>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label htmlFor="bf-c1" className="mb-1.5 block text-micro font-bold text-muted">
+              <label htmlFor="bf-c1" className="mb-1.5 block text-micro font-normal text-muted">
                 الجزء الأول
               </label>
               <textarea
@@ -255,13 +255,13 @@ export const BlogForm = ({
                 required
                 value={contentPart1}
                 onChange={(e) => setContentPart1(e.target.value)}
-                className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="الجزء الأول من المحتوى..."
               />
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between rounded-xl border border-border bg-surface p-3">
-                <span className="text-micro font-bold text-muted">
+                <span className="text-micro font-normal text-muted">
                   إظهار أزرار التحميل والمشاهدة
                 </span>
                 <button
@@ -280,7 +280,7 @@ export const BlogForm = ({
               <div>
                 <label
                   htmlFor="bf-dl"
-                  className="mb-1.5 block flex items-center gap-1.5 text-micro font-bold text-muted"
+                  className="mb-1.5 block flex items-center gap-1.5 text-micro font-normal text-muted"
                 >
                   <Download size={12} /> رابط التحميل
                 </label>
@@ -294,14 +294,14 @@ export const BlogForm = ({
                     type="text"
                     value={currentPost.downloadLink || ''}
                     onChange={(e) => set('downloadLink', e.target.value)}
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     dir="ltr"
                     placeholder="https://..."
                   />
                 </div>
                 <label
                   htmlFor="bf-dlt"
-                  className="mb-1.5 mt-2 block text-micro font-bold text-muted"
+                  className="mb-1.5 mt-2 block text-micro font-normal text-muted"
                 >
                   نص زر التحميل
                 </label>
@@ -310,14 +310,14 @@ export const BlogForm = ({
                   type="text"
                   value={currentPost.downloadButtonText || ''}
                   onChange={(e) => set('downloadButtonText', e.target.value)}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   placeholder="تحميل الملف"
                 />
               </div>
               <div>
                 <label
                   htmlFor="bf-wl"
-                  className="mb-1.5 block flex items-center gap-1.5 text-micro font-bold text-muted"
+                  className="mb-1.5 block flex items-center gap-1.5 text-micro font-normal text-muted"
                 >
                   <Eye size={12} /> رابط المشاهدة
                 </label>
@@ -331,14 +331,14 @@ export const BlogForm = ({
                     type="text"
                     value={currentPost.watchLink || ''}
                     onChange={(e) => set('watchLink', e.target.value)}
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     dir="ltr"
                     placeholder="https://..."
                   />
                 </div>
                 <label
                   htmlFor="bf-wlt"
-                  className="mb-1.5 mt-2 block text-micro font-bold text-muted"
+                  className="mb-1.5 mt-2 block text-micro font-normal text-muted"
                 >
                   نص زر المشاهدة
                 </label>
@@ -347,12 +347,12 @@ export const BlogForm = ({
                   type="text"
                   value={currentPost.watchButtonText || ''}
                   onChange={(e) => set('watchButtonText', e.target.value)}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   placeholder="مشاهدة الملف"
                 />
               </div>
               <div className="flex-1">
-                <label htmlFor="bf-c2" className="mb-1.5 block text-micro font-bold text-muted">
+                <label htmlFor="bf-c2" className="mb-1.5 block text-micro font-normal text-muted">
                   الجزء الثاني
                 </label>
                 <textarea
@@ -360,7 +360,7 @@ export const BlogForm = ({
                   rows={6}
                   value={contentPart2}
                   onChange={(e) => setContentPart2(e.target.value)}
-                  className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-normal outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   placeholder="الجزء الثاني من المحتوى..."
                 />
               </div>
@@ -377,14 +377,14 @@ export const BlogForm = ({
           <button
             type="button"
             onClick={() => setIsModalOpen(false)}
-            className="h-11 rounded-xl border border-border bg-surface px-5 text-xs font-bold text-main transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="h-11 rounded-xl border border-border bg-surface px-5 text-xs font-normal text-main transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إلغاء
           </button>
           <button
             type="submit"
             disabled={submitting}
-            className="flex h-11 items-center gap-2 rounded-xl bg-primary px-6 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-11 items-center gap-2 rounded-xl bg-primary px-6 text-xs font-normal text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save size={16} />}
             {currentPost.id ? 'حفظ التعديلات' : 'نشر المقال'}

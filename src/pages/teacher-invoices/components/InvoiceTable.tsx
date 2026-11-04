@@ -24,7 +24,7 @@ const statusVariant: Record<string, 'success' | 'warning' | 'error' | 'info'> = 
 }
 
 const AvatarLetter = ({ name }: { name: string }) => (
-  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary-soft text-micro font-bold text-primary">
+  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-primary-soft text-micro font-normal text-primary">
     {(name || '?').charAt(0).toUpperCase()}
   </div>
 )
@@ -67,7 +67,7 @@ export const InvoiceTable = memo(
           render: (inv) => (
             <div className="flex items-center gap-2">
               <AvatarLetter name={inv.teacher} />
-              <span className="text-xs font-bold text-main">{inv.teacher}</span>
+              <span className="text-xs font-normal text-main">{inv.teacher}</span>
             </div>
           ),
         },
@@ -85,7 +85,7 @@ export const InvoiceTable = memo(
           align: 'center',
           mobileLabel: 'المبلغ',
           render: (inv) => (
-            <span className="font-mono text-xs font-bold text-muted">
+            <span className="font-mono text-xs font-normal text-muted">
               {inv.amount.toLocaleString()} {CURRENCY_SYMBOL}
             </span>
           ),
@@ -170,7 +170,7 @@ export const InvoiceTable = memo(
                 <div className="flex items-center gap-2">
                   <AvatarLetter name={inv.teacher} />
                   <div>
-                    <p className="text-xs font-bold text-main">{inv.teacher}</p>
+                    <p className="text-xs font-normal text-main">{inv.teacher}</p>
                     <p className="text-micro text-muted">{inv.specialization}</p>
                   </div>
                 </div>
@@ -178,15 +178,15 @@ export const InvoiceTable = memo(
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div>
-                    <p className="mb-0.5 text-micro font-bold uppercase text-muted">المبلغ</p>
-                    <span className="font-mono text-sm font-bold text-main">
+                    <p className="mb-0.5 text-micro font-normal uppercase text-muted">المبلغ</p>
+                    <span className="font-mono text-sm font-normal text-main">
                       {inv.amount.toLocaleString()} {CURRENCY_SYMBOL}
                     </span>
                   </div>
                   <div className="h-6 w-px bg-border" />
                   <div>
-                    <p className="mb-0.5 text-micro font-bold uppercase text-muted">الصافي</p>
-                    <span className="text-xs font-bold text-success-dark">
+                    <p className="mb-0.5 text-micro font-normal uppercase text-muted">الصافي</p>
+                    <span className="text-xs font-normal text-success-dark">
                       {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()}{' '}
                       {CURRENCY_SYMBOL}
                     </span>

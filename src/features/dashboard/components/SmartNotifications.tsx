@@ -111,7 +111,7 @@ export const SmartNotifications = ({
           urgencyLabel ? (
             <span
               className={cn(
-                'rounded-full px-2 py-0.5 text-[10px] font-black',
+                'rounded-full px-2 py-0.5 text-[10px] font-medium',
                 expired.length > 0
                   ? 'border border-error-soft bg-error-soft text-error-strong'
                   : 'border border-warning-soft bg-warning-soft text-warning-strong',
@@ -122,7 +122,7 @@ export const SmartNotifications = ({
           ) : null
         }
         action={
-          <span className="shrink-0 rounded-full border border-border bg-card px-2.5 py-0.5 text-[11px] font-black text-muted shadow-elevation-1">
+          <span className="shrink-0 rounded-full border border-border bg-card px-2.5 py-0.5 text-[11px] font-medium text-muted shadow-elevation-1">
             {alerts.length} تنبيه
           </span>
         }
@@ -149,7 +149,7 @@ export const SmartNotifications = ({
                 <alert.icon size={16} />
               </div>
               <div className="min-w-0">
-                <p className={cn('mb-0.5 text-xs font-black', alert.titleColor)}>{alert.title}</p>
+                <p className={cn('mb-0.5 text-xs font-medium', alert.titleColor)}>{alert.title}</p>
                 <p
                   className={cn(
                     'line-clamp-2 text-[11px] font-medium leading-relaxed',

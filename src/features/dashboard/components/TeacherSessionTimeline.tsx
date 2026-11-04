@@ -47,7 +47,7 @@ export const TeacherSessionTimeline = ({
         title="الجدول الزمني"
         description="جدول الحصص اليومية"
         action={
-          <div className="flex shrink-0 items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success-strong">
+          <div className="flex shrink-0 items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-normal text-success-strong">
             <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
             مباشر
           </div>
@@ -88,7 +88,7 @@ export const TeacherSessionTimeline = ({
                 <div className="mb-3 flex items-center justify-between">
                   <div
                     className={cn(
-                      'rounded-lg px-2 py-0.5 text-[11px] font-bold tabular-nums',
+                      'rounded-lg px-2 py-0.5 text-[11px] font-normal tabular-nums',
                       isCompleted
                         ? 'bg-success-soft text-success-strong'
                         : isCancelled
@@ -103,7 +103,7 @@ export const TeacherSessionTimeline = ({
                   {isOngoing && <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />}
                 </div>
 
-                <h4 className="mb-1 truncate text-xs font-bold text-main">{session.studentName}</h4>
+                <h4 className="mb-1 truncate text-xs font-normal text-main">{session.studentName}</h4>
 
                 <div className="flex items-center gap-1.5">
                   <div
@@ -118,7 +118,7 @@ export const TeacherSessionTimeline = ({
                 <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5">
                   <span
                     className={cn(
-                      'text-[11px] font-bold',
+                      'text-[11px] font-normal',
                       isCompleted
                         ? 'text-success-strong'
                         : isCancelled

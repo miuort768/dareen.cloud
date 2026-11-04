@@ -94,7 +94,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 <ShieldCheck size={20} />
               </div>
               <div>
-                <h3 className="text-sm font-black text-on-primary">تسجيل حضور مؤكد</h3>
+                <h3 className="text-sm font-medium text-on-primary">تسجيل حضور مؤكد</h3>
                 <p className="text-[11px] font-medium text-white/90">كلمة مرور المشرف مطلوبة</p>
               </div>
             </div>
@@ -112,8 +112,8 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           {/* Student info */}
           <div className="mb-5 rounded-2xl border border-border bg-surface p-3.5 text-center">
             <p className="mb-1 text-[11px] font-medium text-muted">تسجيل للطالب</p>
-            <h4 className="text-base font-black text-main">{studentName}</h4>
-            <span className="mt-1 inline-block rounded-xl border border-primary/30 bg-primary-soft px-2.5 py-1 text-[11px] font-black text-primary">
+            <h4 className="text-base font-medium text-main">{studentName}</h4>
+            <span className="mt-1 inline-block rounded-xl border border-primary/30 bg-primary-soft px-2.5 py-1 text-[11px] font-medium text-primary">
               بتاريخ: {date}
             </span>
           </div>
@@ -133,7 +133,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 size={22}
                 className={status === 'completed' ? 'text-success' : 'text-dim'}
               />
-              <span className="text-xs font-bold">حضور</span>
+              <span className="text-xs font-normal">حضور</span>
             </button>
             <button
               onClick={() => setStatus('cancelled')}
@@ -145,7 +145,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               )}
             >
               <XCircle size={22} className={status === 'cancelled' ? 'text-error' : 'text-dim'} />
-              <span className="text-xs font-bold">غياب</span>
+              <span className="text-xs font-normal">غياب</span>
             </button>
           </div>
 
@@ -155,7 +155,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               <div className="space-y-1.5">
                 <label
                   htmlFor="attendance-topics"
-                  className="flex items-center gap-1.5 text-[11px] font-bold text-muted"
+                  className="flex items-center gap-1.5 text-[11px] font-normal text-muted"
                 >
                   <BookOpen size={12} className="text-success" /> ما تم إنجازه في الحصة
                 </label>
@@ -171,7 +171,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               <div className="space-y-1.5">
                 <label
                   htmlFor="attendance-homework"
-                  className="flex items-center gap-1.5 text-[11px] font-bold text-muted"
+                  className="flex items-center gap-1.5 text-[11px] font-normal text-muted"
                 >
                   <Star size={12} className="text-warning dark:text-primary" /> الواجب المطلوب
                 </label>
@@ -198,7 +198,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                   className="h-4 w-4 cursor-pointer rounded accent-error"
                 />
                 <div>
-                  <p className="text-xs font-bold text-main">تحتاج لحصة تعويض؟</p>
+                  <p className="text-xs font-normal text-main">تحتاج لحصة تعويض؟</p>
                   <p className="text-[10px] text-muted">
                     سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً
                   </p>
@@ -211,7 +211,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           <div className="mb-5 space-y-1.5">
             <label
               htmlFor="attendance-password"
-              className="flex items-center gap-1.5 text-[11px] font-bold text-muted"
+              className="flex items-center gap-1.5 text-[11px] font-normal text-muted"
             >
               <Lock size={12} /> كلمة المرور للتأكيد
             </label>
@@ -232,7 +232,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               )}
               autoFocus
             />
-            {error && <p className="text-center text-[11px] font-bold text-error">{error}</p>}
+            {error && <p className="text-center text-[11px] font-normal text-error">{error}</p>}
           </div>
 
           {/* Submit */}

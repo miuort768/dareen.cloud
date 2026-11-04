@@ -29,7 +29,7 @@ const Counter = ({ value, suffix = '' }: { value: number; suffix?: string }) => 
     className="tabular-nums"
   >
     {value.toLocaleString('ar-EG')}
-    {suffix && <span className="me-1 text-micro font-bold text-muted">{suffix}</span>}
+    {suffix && <span className="me-1 text-micro font-normal text-muted">{suffix}</span>}
   </motion.span>
 )
 
@@ -39,7 +39,7 @@ const TrendBadge = ({ value, label }: { value: number; label: string }) => {
   return (
     <div
       className={cn(
-        'mt-0.5 flex items-center gap-0.5 rounded-2xl px-1.5 py-0.5 text-[9px] font-bold',
+        'mt-0.5 flex items-center gap-0.5 rounded-2xl px-1.5 py-0.5 text-[9px] font-normal',
         isUp ? 'bg-success-soft text-success' : 'bg-error-soft text-error',
       )}
     >
@@ -65,7 +65,7 @@ const TooltipWrap = ({ text, children }: { text: string; children: React.ReactNo
         <motion.div
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute -top-1 start-1/2 z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-2xl bg-main px-2 py-1 text-[9px] font-bold text-inverse shadow-elevation-3"
+          className="absolute -top-1 start-1/2 z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-2xl bg-main px-2 py-1 text-[9px] font-normal text-inverse shadow-elevation-3"
         >
           {text}
           <div className="absolute start-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-4 border-r-4 border-t-4 border-transparent border-t-main" />
@@ -95,13 +95,13 @@ export const AttendanceStats = ({
           <div className="pointer-events-none absolute -end-14 -top-16 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative z-10">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-[11px] font-bold text-muted">نسبة الإنجاز الإجمالية</span>
+              <span className="text-[11px] font-normal text-muted">نسبة الإنجاز الإجمالية</span>
               <TooltipWrap text="نسبة الحصص المنعقدة من إجمالي المطلوبة">
                 <Info size={11} className="text-dim" />
               </TooltipWrap>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-black tabular-nums text-primary md:text-4xl">
+              <span className="text-3xl font-medium tabular-nums text-primary md:text-4xl">
                 <Counter value={teacherStats.rate} suffix="%" />
               </span>
             </div>
@@ -123,10 +123,10 @@ export const AttendanceStats = ({
                 <Info size={9} className="text-muted" />
               </TooltipWrap>
             </div>
-            <p className="text-lg font-bold text-main">
+            <p className="text-lg font-normal text-main">
               <Counter value={teacherStats.expected} />
             </p>
-            <p className="mt-0.5 text-micro font-bold text-muted">الحصص المتوقعة</p>
+            <p className="mt-0.5 text-micro font-normal text-muted">الحصص المتوقعة</p>
           </div>
           <div className="rounded-2xl border border-border bg-card p-4">
             <div className="mb-2 flex items-center justify-between">
@@ -135,10 +135,10 @@ export const AttendanceStats = ({
                 <Info size={9} className="text-muted" />
               </TooltipWrap>
             </div>
-            <p className="text-lg font-bold text-success">
+            <p className="text-lg font-normal text-success">
               <Counter value={teacherStats.used} />
             </p>
-            <p className="mt-0.5 text-micro font-bold text-muted">المنعقدة</p>
+            <p className="mt-0.5 text-micro font-normal text-muted">المنعقدة</p>
           </div>
           <div className="rounded-2xl border border-border bg-card p-4">
             <div className="mb-2 flex items-center justify-between">
@@ -147,10 +147,10 @@ export const AttendanceStats = ({
                 <Info size={9} className="text-muted" />
               </TooltipWrap>
             </div>
-            <p className="text-lg font-bold text-warning dark:text-primary">
+            <p className="text-lg font-normal text-warning dark:text-primary">
               <Counter value={teacherStats.remaining} />
             </p>
-            <p className="mt-0.5 text-micro font-bold text-muted">المتبقية</p>
+            <p className="mt-0.5 text-micro font-normal text-muted">المتبقية</p>
           </div>
         </div>
       </motion.div>
@@ -189,7 +189,7 @@ export const AttendanceStats = ({
         <div className="pointer-events-none absolute -end-14 -top-16 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
         <div className="relative z-10">
           <div className="mb-2 flex items-center justify-between">
-            <span className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+            <span className="flex items-center gap-1.5 text-[11px] font-normal text-muted">
               <Users size={12} />
               إحصائيات الفترة ({periodLabel || 'اليوم'})
             </span>
@@ -198,21 +198,21 @@ export const AttendanceStats = ({
             </TooltipWrap>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-black tabular-nums text-main md:text-4xl">
+            <span className="text-3xl font-medium tabular-nums text-main md:text-4xl">
               <Counter value={total} />
             </span>
-            <span className="text-xs font-bold text-muted">حصة</span>
+            <span className="text-xs font-normal text-muted">حصة</span>
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="flex items-center gap-1 rounded-2xl bg-success-soft px-2 py-1 text-[10px] font-bold text-success">
+            <span className="flex items-center gap-1 rounded-2xl bg-success-soft px-2 py-1 text-[10px] font-normal text-success">
               <CheckCircle2 size={10} />
               {stats.todayCompleted} حضور
             </span>
-            <span className="flex items-center gap-1 rounded-2xl bg-error-soft px-2 py-1 text-[10px] font-bold text-error">
+            <span className="flex items-center gap-1 rounded-2xl bg-error-soft px-2 py-1 text-[10px] font-normal text-error">
               <XCircle size={10} />
               {stats.todayCancelled} غياب
             </span>
-            <span className="flex items-center gap-1 rounded-2xl bg-warning-soft px-2 py-1 text-[10px] font-bold text-warning dark:bg-primary-soft dark:text-primary">
+            <span className="flex items-center gap-1 rounded-2xl bg-warning-soft px-2 py-1 text-[10px] font-normal text-warning dark:bg-primary-soft dark:text-primary">
               <Calendar size={10} />
               {stats.todayScheduled} مجدولة
             </span>
@@ -238,8 +238,8 @@ export const AttendanceStats = ({
             />
           </div>
           <div className="mt-1.5 flex items-center justify-between">
-            <span className="text-[9px] font-bold text-dim">نسبة الإنجاز: {completedPct}%</span>
-            <span className="text-[9px] font-bold text-dim">
+            <span className="text-[9px] font-normal text-dim">نسبة الإنجاز: {completedPct}%</span>
+            <span className="text-[9px] font-normal text-dim">
               إجمالي الكل: <Counter value={stats.totalCompleted} />
             </span>
           </div>
@@ -253,11 +253,11 @@ export const AttendanceStats = ({
             <CheckCircle2 size={14} className="text-success" />
             <TrendBadge value={trendCompleted} label="مقارنة" />
           </div>
-          <p className="text-2xl font-bold tabular-nums text-success">
+          <p className="text-2xl font-normal tabular-nums text-success">
             {attendanceRate}
             <span className="text-sm">%</span>
           </p>
-          <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الحضور</p>
+          <p className="mt-0.5 text-[10px] font-normal text-muted">نسبة الحضور</p>
           <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-card">
             <motion.div
               initial={{ width: 0 }}
@@ -272,11 +272,11 @@ export const AttendanceStats = ({
             <XCircle size={14} className="text-error" />
             <TrendBadge value={trendCancelled} label="مقارنة" />
           </div>
-          <p className="text-2xl font-bold tabular-nums text-error">
+          <p className="text-2xl font-normal tabular-nums text-error">
             {absenceRate}
             <span className="text-sm">%</span>
           </p>
-          <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الغياب</p>
+          <p className="mt-0.5 text-[10px] font-normal text-muted">نسبة الغياب</p>
           <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-card">
             <motion.div
               initial={{ width: 0 }}
@@ -294,19 +294,19 @@ export const AttendanceStats = ({
           <div className="mb-2 flex items-center justify-between">
             <CheckCircle2 size={14} className="text-success" />
           </div>
-          <p className="text-lg font-bold text-success">
+          <p className="text-lg font-normal text-success">
             <Counter value={stats.todayCompleted} />
           </p>
-          <p className="mt-0.5 text-[10px] font-bold text-muted">حضور</p>
+          <p className="mt-0.5 text-[10px] font-normal text-muted">حضور</p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
             <XCircle size={14} className="text-error" />
           </div>
-          <p className="text-lg font-bold text-error">
+          <p className="text-lg font-normal text-error">
             <Counter value={stats.todayCancelled} />
           </p>
-          <p className="mt-0.5 text-[10px] font-bold text-muted">غياب</p>
+          <p className="mt-0.5 text-[10px] font-normal text-muted">غياب</p>
         </div>
         <div className="rounded-2xl border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
@@ -315,10 +315,10 @@ export const AttendanceStats = ({
               <Info size={9} className="text-muted" />
             </TooltipWrap>
           </div>
-          <p className="text-lg font-bold text-warning dark:text-primary">
+          <p className="text-lg font-normal text-warning dark:text-primary">
             <Counter value={stats.todayScheduled} />
           </p>
-          <p className="mt-0.5 text-[10px] font-bold text-muted">مجدولة</p>
+          <p className="mt-0.5 text-[10px] font-normal text-muted">مجدولة</p>
         </div>
       </div>
     </motion.div>

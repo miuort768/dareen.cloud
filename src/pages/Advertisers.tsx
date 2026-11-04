@@ -53,7 +53,7 @@ const FieldLabel = ({
   icon: typeof Monitor
   children: React.ReactNode
 }) => (
-  <span className="mb-1.5 flex items-center gap-1.5 text-[11px] font-black text-main">
+  <span className="mb-1.5 flex items-center gap-1.5 text-[11px] font-medium text-main">
     <Icon size={12} className="text-primary" />
     {children}
   </span>
@@ -133,8 +133,8 @@ const SlotCard = ({
         {icon}
       </div>
       <div>
-        <h3 className="text-sm font-black text-main">{title}</h3>
-        <p className="text-[11px] font-bold text-muted">{desc}</p>
+        <h3 className="text-sm font-medium text-main">{title}</h3>
+        <p className="text-[11px] font-normal text-muted">{desc}</p>
       </div>
     </div>
     {children}
@@ -204,7 +204,7 @@ const AdSenseSlotEditor = ({
         </div>
         <div className="space-y-2.5">
           <div className="rounded-xl border border-dashed border-border bg-surface p-3.5">
-            <p className="text-[10px] font-bold leading-relaxed text-muted">
+            <p className="text-[10px] font-normal leading-relaxed text-muted">
               الصق كود وحدة أدسنس كاملًا كما نسخته من لوحة تحكم جوجل.
               {meta.desktopOnly
                 ? ' هذا الموضع يظهر على الكمبيوتر فقط.'
@@ -214,13 +214,13 @@ const AdSenseSlotEditor = ({
           {showWarning && (
             <div className="flex items-start gap-2 rounded-xl border border-warning bg-warning-soft p-3">
               <AlertTriangle size={14} className="mt-0.5 shrink-0 text-warning" />
-              <p className="text-[10px] font-bold leading-relaxed text-warning">
+              <p className="text-[10px] font-normal leading-relaxed text-warning">
                 النص الملصوق لا يبدو ككود أدسنس (ينقصه &lt;ins&gt; أو adsbygoogle) — تأكد قبل الحفظ.
               </p>
             </div>
           )}
           {(desktopCode.trim() || mobileCode.trim()) && (
-            <p className="text-[10px] font-bold text-muted">
+            <p className="text-[10px] font-normal text-muted">
               {(desktopCode + mobileCode).length} حرف
             </p>
           )}
@@ -286,7 +286,7 @@ const OfferEditor = ({
           onChange={(v) => onChange({ linkMobile: v })}
           placeholder="https://example.com/offer-mobile"
         />
-        <p className="text-[10px] font-bold leading-relaxed text-muted">
+        <p className="text-[10px] font-normal leading-relaxed text-muted">
           عند الضغط على صورة العرض يُفتح رابط الجهاز المناسب — التابلت يرجع لرابط الكمبيوتر تلقائيًا
           إن تُرك فارغًا.
         </p>
@@ -376,7 +376,7 @@ const ExternalSlotEditor = ({
       <div className="space-y-2.5">
         <SlotPreview url={data.desktop ?? ''} />
         {slot.withMobile && <SlotPreview url={data.mobile ?? ''} tall />}
-        <p className="text-[10px] font-bold leading-relaxed text-muted">
+        <p className="text-[10px] font-normal leading-relaxed text-muted">
           {slot.desktopHint}
           {slot.mobileHint ? ` · ${slot.mobileHint}` : ''}
         </p>
@@ -403,8 +403,8 @@ const SectionHeading = ({
       <Icon size={20} />
     </div>
     <div>
-      <h2 className="text-sm font-black text-main sm:text-base">{title}</h2>
-      <p className="text-[11px] font-bold text-muted">{sub}</p>
+      <h2 className="text-sm font-medium text-main sm:text-base">{title}</h2>
+      <p className="text-[11px] font-normal text-muted">{sub}</p>
     </div>
   </div>
 )
@@ -531,7 +531,7 @@ export const Advertisers = () => {
       onClick={handleSave}
       disabled={saveState === 'saving'}
       className={cn(
-        'inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 text-sm font-semibold shadow-elevation-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]',
+        'inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 text-sm font-light shadow-elevation-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]',
         saveState === 'saved'
           ? 'bg-success text-on-success'
           : saveState === 'error'
@@ -569,7 +569,7 @@ export const Advertisers = () => {
           icon={<Megaphone size={22} />}
           meta={
             filledCount > 0 ? (
-              <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-0.5 text-[10px] font-extrabold text-success">
+              <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-0.5 text-[10px] font-normal text-success">
                 <CheckCircle2 size={10} />
                 {filledCount} موضع معبأ
               </span>
@@ -654,12 +654,12 @@ export const Advertisers = () => {
 
         <div className="rounded-2xl border border-dashed border-border p-4">
           <div className="mx-auto max-w-2xl space-y-1.5 text-center">
-            <p className="text-[11px] font-bold leading-relaxed text-muted">
+            <p className="text-[11px] font-normal leading-relaxed text-muted">
               <ImageIcon size={11} className="me-1 inline" />
               في المواضع الصورية: ترك الموضع فارغًا يخفي إطاره تلقائيًا — ورابط صورة واحد (كمبيوتر
               أو هاتف) يُستخدم للجهازين.
             </p>
-            <p className="text-[11px] font-bold leading-relaxed text-muted">
+            <p className="text-[11px] font-normal leading-relaxed text-muted">
               <ExternalLink size={11} className="me-1 inline" />
               في أدسنس: مكتبة جوجل تُحمَّل تلقائيًا بمعرّف ناشرك من أول كود تلصقه — تأكد من أن
               النطاق مُعتمد في حساب أدسنس.

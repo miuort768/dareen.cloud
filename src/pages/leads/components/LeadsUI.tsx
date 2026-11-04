@@ -33,7 +33,7 @@ export const GradientAvatar = ({
   return (
     <div
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-xl font-bold text-on-primary',
+        'flex shrink-0 items-center justify-center rounded-xl font-normal text-on-primary',
         bg,
         ring,
         sizes[size],
@@ -117,7 +117,7 @@ export const StatCard = ({
         {trend && (
           <span
             className={cn(
-              'flex items-center gap-0.5 text-[10px] font-bold',
+              'flex items-center gap-0.5 text-[10px] font-normal',
               trend.up ? 'text-success' : 'text-error',
             )}
           >
@@ -125,7 +125,7 @@ export const StatCard = ({
           </span>
         )}
       </div>
-      <p className="font-outfit text-2xl font-black tabular-nums leading-none text-main">
+      <p className="font-outfit text-2xl font-medium tabular-nums leading-none text-main">
         {typeof value === 'string' && isNaN(Number(value)) ? value : animatedValue}
       </p>
       <p className="mt-1.5 text-[11px] font-medium text-muted">{title}</p>
@@ -162,7 +162,7 @@ export const statusColors: Record<
 > = {
   new: {
     label: 'جديد',
-    color: 'text-info font-bold',
+    color: 'text-info font-normal',
     bg: 'bg-info-soft',
     activeBg: 'bg-info',
     activeText: 'text-on-info',
@@ -172,7 +172,7 @@ export const statusColors: Record<
   },
   contacted: {
     label: 'تم الاتصال',
-    color: 'text-warning font-bold',
+    color: 'text-warning font-normal',
     bg: 'bg-warning-soft',
     activeBg: 'bg-warning',
     activeText: 'text-on-warning',
@@ -182,7 +182,7 @@ export const statusColors: Record<
   },
   interested: {
     label: 'مهتم',
-    color: 'text-success font-bold',
+    color: 'text-success font-normal',
     bg: 'bg-success-soft',
     activeBg: 'bg-success',
     activeText: 'text-on-success',
@@ -192,7 +192,7 @@ export const statusColors: Record<
   },
   trial: {
     label: 'حصة تجريبية',
-    color: 'text-primary font-bold',
+    color: 'text-primary font-normal',
     bg: 'bg-primary-soft',
     activeBg: 'bg-primary',
     activeText: 'text-on-primary',
@@ -202,7 +202,7 @@ export const statusColors: Record<
   },
   converted: {
     label: 'محول',
-    color: 'text-info font-bold',
+    color: 'text-info font-normal',
     bg: 'bg-info-soft',
     activeBg: 'bg-info',
     activeText: 'text-on-info',
@@ -212,7 +212,7 @@ export const statusColors: Record<
   },
   lost: {
     label: 'مفقود',
-    color: 'text-error font-bold',
+    color: 'text-error font-normal',
     bg: 'bg-error-soft',
     activeBg: 'bg-error',
     activeText: 'text-on-error',
@@ -227,7 +227,7 @@ export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?:
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-lg font-bold transition-all',
+        'inline-flex items-center gap-1.5 rounded-lg font-normal transition-all',
         size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs',
         cfg.bg,
         cfg.color,
@@ -310,7 +310,7 @@ export const PrimaryBtn = ({
       'inline-flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
       'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
       'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
-      'px-4 py-2.5 text-xs font-bold',
+      'px-4 py-2.5 text-xs font-normal',
       'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
       'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',

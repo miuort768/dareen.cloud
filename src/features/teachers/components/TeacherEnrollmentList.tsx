@@ -22,7 +22,7 @@ export const TeacherEnrollmentList = ({
   <div className="space-y-4">
     <div className="flex items-center gap-3 border-b border-border pb-2">
       <div className="rounded-lg bg-primary-soft px-3 py-1">
-        <span className="text-xs font-bold text-primary">{enrolledStudents.length}</span>
+        <span className="text-xs font-normal text-primary">{enrolledStudents.length}</span>
       </div>
       <h4 className="text-xs text-muted">الطلاب المسجلون</h4>
     </div>

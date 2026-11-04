@@ -12,7 +12,7 @@ export const JobsHeroBanner = () => (
             className="mb-3 inline-flex items-center gap-2 rounded-card bg-white/15 px-3 py-1 md:mb-4 md:px-4 md:py-1.5"
           >
             <Sparkles size={12} className="text-on-primary" />
-            <span className="text-xs font-bold text-on-primary md:text-sm">
+            <span className="text-xs font-normal text-on-primary md:text-sm">
               خطوة لتكوني من العائلة
             </span>
           </motion.div>
@@ -20,7 +20,7 @@ export const JobsHeroBanner = () => (
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-2 font-heading text-2xl font-bold leading-tight text-on-primary md:mb-3 md:text-5xl"
+            className="mb-2 font-heading text-2xl font-normal leading-tight text-on-primary md:mb-3 md:text-5xl"
           >
             فرصة للانضمام <span className="text-accent">إلى دارين السابعة</span>
           </motion.h1>
@@ -47,7 +47,7 @@ export const JobsHeroBanner = () => (
           <div className="flex h-40 w-40 items-center justify-center rounded-card bg-white/15 md:h-52 md:w-52">
             <div className="text-center">
               <GraduationCap size={56} className="mx-auto mb-2 text-on-primary" />
-              <span className="block text-xs font-bold text-white/90">نحن ننتظرك</span>
+              <span className="block text-xs font-normal text-white/90">نحن ننتظرك</span>
             </div>
           </div>
         </motion.div>

@@ -135,33 +135,33 @@ export const ForumPostCard = ({
       {/* Post Header */}
       <div className="flex items-start justify-between rounded-t-3xl p-4 md:p-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-soft text-sm font-bold text-primary ring-2 ring-primary/10 transition-transform duration-300 group-hover/card:scale-105">
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-soft text-sm font-normal text-primary ring-2 ring-primary/10 transition-transform duration-300 group-hover/card:scale-105">
             {(displayAuthorName[0] || '').toUpperCase()}
           </div>
           <div>
             <div className="mb-0.5 flex items-center gap-2">
-              <h4 className="text-sm font-bold text-main">{displayAuthorName}</h4>
-              <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+              <h4 className="text-sm font-normal text-main">{displayAuthorName}</h4>
+              <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-0.5 text-micro font-normal text-muted">
                 <TypeIcon size={9} strokeWidth={2.2} />
                 {typeMeta.label}
               </span>
               {post.authorRole === 'admin' && (
-                <span className="rounded-full border border-error bg-error px-2 py-0.5 text-micro font-bold text-on-error">
+                <span className="rounded-full border border-error bg-error px-2 py-0.5 text-micro font-normal text-on-error">
                   إدارة
                 </span>
               )}
               {post.authorRole === 'teacher' && (
-                <span className="rounded-full border border-success bg-success px-2 py-0.5 text-micro font-bold text-on-success">
+                <span className="rounded-full border border-success bg-success px-2 py-0.5 text-micro font-normal text-on-success">
                   معلمة
                 </span>
               )}
               {post.authorRole === 'student' && (
-                <span className="rounded-full border border-info bg-info px-2 py-0.5 text-micro font-bold text-on-info">
+                <span className="rounded-full border border-info bg-info px-2 py-0.5 text-micro font-normal text-on-info">
                   طالب
                 </span>
               )}
               {(post.authorRole === 'parent' || (post.authorRole as string) === 'ولي أمر') && (
-                <span className="rounded-full border border-primary bg-primary px-2 py-0.5 text-micro font-bold text-on-primary">
+                <span className="rounded-full border border-primary bg-primary px-2 py-0.5 text-micro font-normal text-on-primary">
                   شريك النجاح
                 </span>
               )}
@@ -211,7 +211,7 @@ export const ForumPostCard = ({
       <div className="px-4 pb-5">
         {isEditingPost ? (
           <div className="space-y-2 rounded-xl border border-border bg-surface p-3">
-            <label className="block text-micro font-bold text-primary">
+            <label className="block text-micro font-normal text-primary">
               تعديل نص المنشور (مدير النظام)
             </label>
             <textarea
@@ -224,13 +224,13 @@ export const ForumPostCard = ({
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsEditingPost(false)}
-                className="rounded-lg border border-border px-3 py-1.5 text-xs font-bold text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+                className="rounded-lg border border-border px-3 py-1.5 text-xs font-normal text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleSavePostEdit}
-                className="flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <Check size={13} /> حفظ التعديل
               </button>
@@ -248,7 +248,7 @@ export const ForumPostCard = ({
         <button
           onClick={() => onVote(post.id, 'upvote')}
           className={cn(
-            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-normal outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             isLiked ? 'bg-primary text-on-primary' : 'text-muted hover:bg-surface hover:text-muted',
           )}
         >
@@ -257,7 +257,7 @@ export const ForumPostCard = ({
         </button>
         <button
           onClick={() => onToggleComments(post.id)}
-          className="mx-1 flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-muted outline-none transition-colors duration-fast hover:bg-surface hover:text-muted focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="mx-1 flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-normal text-muted outline-none transition-colors duration-fast hover:bg-surface hover:text-muted focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <MessageSquare size={15} />
           <span>{post.commentCount || 0} تعليق</span>
@@ -267,7 +267,7 @@ export const ForumPostCard = ({
           disabled={isReported}
           aria-label={isReported ? 'تم الإبلاغ عن هذا المنشور' : 'الإبلاغ عن هذا المنشور'}
           className={cn(
-            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
+            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-normal outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
             isReported
               ? 'cursor-default bg-warning-soft text-warning-strong'
               : 'text-warning-strong hover:bg-warning hover:text-on-warning active:scale-95',
@@ -290,30 +290,30 @@ export const ForumPostCard = ({
               return (
                 <div key={node.comment.id} className="group/comment">
                   <div className="flex gap-3 rounded-2xl p-3 transition-colors duration-fast hover:bg-surface">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-normal text-primary ring-2 ring-primary/10">
                       {(commentAuthorName[0] || '').toUpperCase()}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="mb-1 flex items-center gap-2">
-                        <h5 className="text-xs font-bold text-main">{commentAuthorName}</h5>
+                        <h5 className="text-xs font-normal text-main">{commentAuthorName}</h5>
                         {node.comment.authorRole === 'admin' && (
-                          <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
+                          <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-normal text-on-error">
                             إدارة
                           </span>
                         )}
                         {node.comment.authorRole === 'teacher' && (
-                          <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
+                          <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-normal text-on-success">
                             معلمة
                           </span>
                         )}
                         {node.comment.authorRole === 'student' && (
-                          <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
+                          <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-normal text-on-info">
                             طالب
                           </span>
                         )}
                         {(node.comment.authorRole === 'parent' ||
                           (node.comment.authorRole as string) === 'ولي أمر') && (
-                          <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
+                          <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-normal text-on-primary">
                             شريك النجاح
                           </span>
                         )}
@@ -348,7 +348,7 @@ export const ForumPostCard = ({
                             </button>
                             <button
                               onClick={() => handleSaveCommentEdit(node.comment.id)}
-                              className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                              className="rounded bg-primary px-2.5 py-1 text-micro font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                             >
                               حفظ
                             </button>
@@ -368,7 +368,7 @@ export const ForumPostCard = ({
                             }))
                             document.getElementById(`comment-input-${post.id}`)?.focus()
                           }}
-                          className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                          className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-normal text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                         >
                           <CornerDownLeft size={11} />
                           رد
@@ -381,7 +381,7 @@ export const ForumPostCard = ({
                               setEditingCommentId(node.comment.id)
                               setEditCommentText(node.comment.content)
                             }}
-                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-normal text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                             aria-label="تعديل التعليق"
                             title="تعديل التعليق (خاص بالمدير)"
                           >
@@ -393,7 +393,7 @@ export const ForumPostCard = ({
                         {(isAdmin || currentUserId === node.comment.authorId) && (
                           <button
                             onClick={() => onDeleteComment(post.id, node.comment.id)}
-                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-normal text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                           >
                             <Trash2 size={10} />
                             حذف
@@ -416,30 +416,30 @@ export const ForumPostCard = ({
                             key={replyNode.comment.id}
                             className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-fast hover:bg-surface"
                           >
-                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-bold text-primary">
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-normal text-primary">
                               {(replyAuthorName[0] || '').toUpperCase()}
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="mb-0.5 flex items-center gap-2">
-                                <h5 className="text-xs font-bold text-main">{replyAuthorName}</h5>
+                                <h5 className="text-xs font-normal text-main">{replyAuthorName}</h5>
                                 {replyNode.comment.authorRole === 'admin' && (
-                                  <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
+                                  <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-normal text-on-error">
                                     إدارة
                                   </span>
                                 )}
                                 {replyNode.comment.authorRole === 'teacher' && (
-                                  <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
+                                  <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-normal text-on-success">
                                     معلمة
                                   </span>
                                 )}
                                 {replyNode.comment.authorRole === 'student' && (
-                                  <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
+                                  <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-normal text-on-info">
                                     طالب
                                   </span>
                                 )}
                                 {(replyNode.comment.authorRole === 'parent' ||
                                   (replyNode.comment.authorRole as string) === 'ولي أمر') && (
-                                  <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
+                                  <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-normal text-on-primary">
                                     شريك النجاح
                                   </span>
                                 )}
@@ -473,7 +473,7 @@ export const ForumPostCard = ({
                                     </button>
                                     <button
                                       onClick={() => handleSaveCommentEdit(replyNode.comment.id)}
-                                      className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                                      className="rounded bg-primary px-2.5 py-1 text-micro font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                                     >
                                       حفظ
                                     </button>
@@ -495,7 +495,7 @@ export const ForumPostCard = ({
                                     }))
                                     document.getElementById(`comment-input-${post.id}`)?.focus()
                                   }}
-                                  className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                                  className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-normal text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                                 >
                                   <CornerDownLeft size={9} />
                                   رد
@@ -508,7 +508,7 @@ export const ForumPostCard = ({
                                       setEditingCommentId(replyNode.comment.id)
                                       setEditCommentText(replyNode.comment.content)
                                     }}
-                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-normal text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                                     aria-label="تعديل الرد"
                                     title="تعديل التعليق (خاص بالمدير)"
                                   >
@@ -520,7 +520,7 @@ export const ForumPostCard = ({
                                 {(isAdmin || currentUserId === replyNode.comment.authorId) && (
                                   <button
                                     onClick={() => onDeleteComment(post.id, replyNode.comment.id)}
-                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-normal text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                                   >
                                     <Trash2 size={9} />
                                     حذف
@@ -539,7 +539,7 @@ export const ForumPostCard = ({
           </div>
 
           <div className="mt-3 flex items-center gap-3 border-t border-border pt-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-bold text-primary ring-2 ring-primary/10">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-xs font-normal text-primary ring-2 ring-primary/10">
               {currentUserName?.[0]?.toUpperCase() || <User size={14} />}
             </div>
             <div className="relative flex-1">
@@ -574,18 +574,18 @@ export const ForumPostCard = ({
         <div className="flex items-center justify-between rounded-b-3xl border-t border-warning-soft bg-warning-soft p-3.5">
           <div className="flex items-center gap-2 text-warning-strong">
             <AlertTriangle size={13} />
-            <span className="text-micro font-bold">هذا المنشور ينتظر الموافقة</span>
+            <span className="text-micro font-normal">هذا المنشور ينتظر الموافقة</span>
           </div>
           <div className="flex gap-2">
             <button
               onClick={() => onUpdateStatus(post.id, 'approved')}
-              className="rounded-full bg-success px-3.5 py-1.5 text-micro font-bold text-on-success outline-none transition-all duration-fast hover:-translate-y-0.5 hover:shadow-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="rounded-full bg-success px-3.5 py-1.5 text-micro font-normal text-on-success outline-none transition-all duration-fast hover:-translate-y-0.5 hover:shadow-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               موافقة
             </button>
             <button
               onClick={() => onDelete(post.id)}
-              className="rounded-full bg-error px-3.5 py-1.5 text-micro font-bold text-on-error outline-none transition-all duration-fast hover:-translate-y-0.5 hover:shadow-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="rounded-full bg-error px-3.5 py-1.5 text-micro font-normal text-on-error outline-none transition-all duration-fast hover:-translate-y-0.5 hover:shadow-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               حذف
             </button>

@@ -26,7 +26,7 @@ const statusFilters = [
 ]
 
 const ADD_BUTTON =
-  'flex items-center gap-1.5 rounded-full bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
+  'flex items-center gap-1.5 rounded-full bg-primary px-4 text-xs font-normal text-on-primary shadow-elevation-2 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
 
 interface TasksStat {
   title: string
@@ -126,14 +126,14 @@ export const TasksHeader = ({
               placeholder="ابحث في المهام..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             />
           </div>
           <select
             value={filterStatus}
             onChange={(e) => onFilterStatusChange(e.target.value as StatusFilter)}
             aria-label="تصفية المهام حسب الحالة"
-            className="h-11 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+            className="h-11 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
           >
             {statusFilters.map((f) => (
               <option key={f.value} value={f.value}>
@@ -157,11 +157,11 @@ export const TasksHeader = ({
               </span>
               <div className="min-w-0">
                 <p
-                  className={cn('font-dash text-lg font-black tabular-nums leading-none', item.on)}
+                  className={cn('font-dash text-lg font-medium tabular-nums leading-none', item.on)}
                 >
                   {item.value}
                 </p>
-                <p className={cn('mt-0.5 truncate text-micro font-bold opacity-80', item.on)}>
+                <p className={cn('mt-0.5 truncate text-micro font-normal opacity-80', item.on)}>
                   {item.title}
                 </p>
               </div>
@@ -187,7 +187,7 @@ export const TasksHeader = ({
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-white/15">
                       <tile.icon size={11} className="text-on-primary" />
                     </span>
-                    <span className="truncate text-sm font-black tabular-nums leading-none text-on-primary">
+                    <span className="truncate text-sm font-medium tabular-nums leading-none text-on-primary">
                       {tile.value}
                     </span>
                   </div>
@@ -209,7 +209,7 @@ export const TasksHeader = ({
                 placeholder="ابحث في المهام..."
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="h-10 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                className="h-10 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -222,7 +222,7 @@ export const TasksHeader = ({
                     onClick={() => onFilterStatusChange(f.value as StatusFilter)}
                     aria-pressed={active}
                     className={cn(
-                      'whitespace-nowrap rounded-full px-3.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      'whitespace-nowrap rounded-full px-3.5 py-1.5 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                       active
                         ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'border border-border bg-card text-muted hover:border-primary/20 hover:text-main',

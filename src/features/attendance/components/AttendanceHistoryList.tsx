@@ -130,21 +130,21 @@ export const AttendanceHistoryList = ({
       {/* Tags */}
       <div className="flex items-center gap-1.5 border-b border-border bg-surface px-4 py-2">
         {studentGrade && (
-          <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
+          <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-normal text-primary">
             الصف {studentGrade}
           </span>
         )}
         {studentSubject && (
-          <span className="rounded bg-success-soft px-1.5 py-0.5 text-[9px] font-bold text-success">
+          <span className="rounded bg-success-soft px-1.5 py-0.5 text-[9px] font-normal text-success">
             {studentSubject}
           </span>
         )}
         {studentCurriculum && (
-          <span className="rounded bg-info-soft px-1.5 py-0.5 text-[9px] font-bold text-info">
+          <span className="rounded bg-info-soft px-1.5 py-0.5 text-[9px] font-normal text-info">
             {studentCurriculum}
           </span>
         )}
-        <span className="me-auto rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
+        <span className="me-auto rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-normal text-primary">
           {history.length} سجل
         </span>
       </div>
@@ -179,7 +179,7 @@ export const AttendanceHistoryList = ({
                           date: e.target.value,
                         })
                       }
-                      className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                     />
                     <select
                       value={editingSession.status}
@@ -190,7 +190,7 @@ export const AttendanceHistoryList = ({
                         })
                       }
                       aria-label="حالة الحضور"
-                      className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                     >
                       <option value="completed">حضور</option>
                       <option value="cancelled">غياب</option>
@@ -230,8 +230,8 @@ export const AttendanceHistoryList = ({
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5">
                           <Calendar size={10} className="text-muted" />
-                          <span className="text-[10px] font-bold text-main">{session.date}</span>
-                          <span className="rounded bg-surface px-1 py-0.5 text-[9px] font-bold text-muted">
+                          <span className="text-[10px] font-normal text-main">{session.date}</span>
+                          <span className="rounded bg-surface px-1 py-0.5 text-[9px] font-normal text-muted">
                             {session.day}
                           </span>
                         </div>
@@ -248,7 +248,7 @@ export const AttendanceHistoryList = ({
                     <div className="flex shrink-0 items-center gap-1">
                       <span
                         className={cn(
-                          'rounded px-1.5 py-0.5 text-[9px] font-bold',
+                          'rounded px-1.5 py-0.5 text-[9px] font-normal',
                           isPresent(session)
                             ? 'bg-success-soft text-success'
                             : 'bg-error-soft text-error',
@@ -286,7 +286,7 @@ export const AttendanceHistoryList = ({
         ) : (
           <div className="flex flex-col items-center py-8 text-center">
             <AlertCircle size={20} className="mb-1.5 text-muted" />
-            <p className="text-xs font-bold text-muted">لا يوجد سجلات حضور سابقة</p>
+            <p className="text-xs font-normal text-muted">لا يوجد سجلات حضور سابقة</p>
           </div>
         )}
       </div>

@@ -90,8 +90,8 @@ export const ScheduleEditorModal = ({
               <CalendarDays size={16} className="text-on-primary" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-on-primary">إدارة الجدول الأسبوعي</h3>
-              <p className="text-micro font-bold text-white/90">
+              <h3 className="text-sm font-normal text-on-primary">إدارة الجدول الأسبوعي</h3>
+              <p className="text-micro font-normal text-white/90">
                 {schedule.length} {schedule.length === 1 ? 'موعد' : 'مواعيد'} مسجلة
               </p>
             </div>
@@ -120,12 +120,12 @@ export const ScheduleEditorModal = ({
                     }`}
                   >
                     <div className="flex min-w-0 items-center gap-2">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-card text-micro font-black tabular-nums text-primary shadow-elevation-1">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-card text-micro font-medium tabular-nums text-primary shadow-elevation-1">
                         {i + 1}
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate text-xs font-bold text-main">{slot.day}</p>
-                        <p className="text-micro font-bold tabular-nums text-muted">
+                        <p className="truncate text-xs font-normal text-main">{slot.day}</p>
+                        <p className="text-micro font-normal tabular-nums text-muted">
                           الساعة {slot.hour} {periodLabel(slot.period)}
                         </p>
                       </div>
@@ -143,7 +143,7 @@ export const ScheduleEditorModal = ({
                         }}
                         disabled={isBusy}
                         aria-label={isEditingThis ? 'إلغاء التعديل' : `تعديل الموعد ${i + 1}`}
-                        className={`rounded-2xl px-2.5 py-1.5 text-micro font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 ${
+                        className={`rounded-2xl px-2.5 py-1.5 text-micro font-normal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 ${
                           isEditingThis
                             ? 'bg-error-soft text-error'
                             : 'bg-primary-soft text-primary hover:bg-primary hover:text-on-primary'
@@ -167,24 +167,24 @@ export const ScheduleEditorModal = ({
           ) : (
             <div className="rounded-2xl border border-dashed border-border py-8 text-center">
               <CalendarDays size={24} className="mx-auto mb-2 text-muted" strokeWidth={1.5} />
-              <p className="text-xs font-bold text-muted">لا يوجد جدول محدد — أضف أول موعد</p>
+              <p className="text-xs font-normal text-muted">لا يوجد جدول محدد — أضف أول موعد</p>
             </div>
           )}
 
           {/* نموذج الإضافة/التعديل */}
           <div className="mt-4 rounded-2xl border border-border bg-surface p-3">
-            <p className="mb-2.5 flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-primary">
+            <p className="mb-2.5 flex items-center gap-1.5 text-micro font-normal uppercase tracking-wider text-primary">
               <Plus size={12} />
               {editSlotIndex !== null ? `تعديل الموعد رقم ${editSlotIndex + 1}` : 'إضافة موعد جديد'}
             </p>
             <div className="grid grid-cols-3 gap-2">
               <label className="space-y-1">
-                <span className="block text-micro font-bold text-muted">اليوم</span>
+                <span className="block text-micro font-normal text-muted">اليوم</span>
                 <select
                   value={tempSlot.day}
                   onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })}
                   aria-label="اختر اليوم"
-                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-normal text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   {DAYS.map((d) => (
                     <option key={d} value={d}>
@@ -194,7 +194,7 @@ export const ScheduleEditorModal = ({
                 </select>
               </label>
               <label className="space-y-1">
-                <span className="block text-micro font-bold text-muted">الساعة</span>
+                <span className="block text-micro font-normal text-muted">الساعة</span>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -204,16 +204,16 @@ export const ScheduleEditorModal = ({
                   }
                   placeholder="مثال: 4"
                   aria-label="الساعة"
-                  className="w-full rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-2xl border border-border bg-card px-2 py-2 text-micro font-normal text-main outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </label>
               <label className="space-y-1">
-                <span className="block text-micro font-bold text-muted">الفترة</span>
+                <span className="block text-micro font-normal text-muted">الفترة</span>
                 <select
                   value={normalizePeriod(tempSlot.period)}
                   onChange={(e) => setTempSlot({ ...tempSlot, period: e.target.value })}
                   aria-label="اختر الفترة"
-                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-normal text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <option value="am">صباحاً</option>
                   <option value="pm">مساءً</option>
@@ -223,7 +223,7 @@ export const ScheduleEditorModal = ({
             <button
               onClick={handleSave}
               disabled={!tempSlot.hour.trim() || isBusy}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+              className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-2.5 text-xs font-normal text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
             >
               {isBusy ? (
                 <>

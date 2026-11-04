@@ -38,12 +38,12 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
             <Calendar size={16} className="text-info" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-main">الجلسات القادمة</h3>
+            <h3 className="text-sm font-medium text-main">الجلسات القادمة</h3>
             <p className="text-[10px] text-muted">الجدول الزمني</p>
           </div>
         </div>
         {sorted.length > 0 && (
-          <span className="rounded-lg bg-info-soft px-2 py-0.5 text-[10px] font-black tabular-nums text-info">
+          <span className="rounded-lg bg-info-soft px-2 py-0.5 text-[10px] font-medium tabular-nums text-info">
             {sorted.length} جلسة
           </span>
         )}
@@ -55,7 +55,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
               <Calendar size={16} className="text-success" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد جلسات قادمة</p>
+            <p className="text-xs font-normal text-muted">لا توجد جلسات قادمة</p>
             <p className="mt-0.5 text-[10px] text-dim">ستظهر الجلسات هنا حسب الجدول</p>
           </div>
         )}
@@ -76,7 +76,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
               <div className="hover:border-info/40 mb-2.5 flex min-w-0 flex-1 items-center gap-3 rounded-2xl border border-border bg-card p-3 shadow-elevation-1 transition-all duration-normal hover:-translate-x-0.5 hover:shadow-elevation-2">
                 <span
                   className={cn(
-                    'flex h-10 w-12 shrink-0 flex-col items-center justify-center rounded-lg text-[11px] font-black tabular-nums leading-none',
+                    'flex h-10 w-12 shrink-0 flex-col items-center justify-center rounded-lg text-[11px] font-medium tabular-nums leading-none',
                     URGENCY_TIME[session.urgency] || 'bg-surface text-muted',
                   )}
                 >
@@ -85,7 +85,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
                 </span>
 
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-bold text-main">{session.subject}</p>
+                  <p className="truncate text-xs font-normal text-main">{session.subject}</p>
                   <p className="mt-0.5 flex items-center gap-1 truncate text-[10px] text-muted">
                     <User size={9} className="shrink-0" />
                     <span className="truncate">{session.studentName}</span>
@@ -95,7 +95,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
                   </p>
                 </div>
 
-                <span className="shrink-0 rounded-lg bg-surface px-2 py-1 text-[10px] font-black tabular-nums text-muted">
+                <span className="shrink-0 rounded-lg bg-surface px-2 py-1 text-[10px] font-medium tabular-nums text-muted">
                   {session.minutesUntil < 60
                     ? `${session.minutesUntil}د`
                     : `${Math.round(session.minutesUntil / 60)}س`}

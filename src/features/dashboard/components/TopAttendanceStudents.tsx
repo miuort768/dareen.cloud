@@ -88,13 +88,13 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                   >
                     {i === 0 ? <Trophy size={14} /> : <Medal size={14} />}
                   </div>
-                  <p className="truncate text-sm font-black text-main">{stu.name}</p>
+                  <p className="truncate text-sm font-medium text-main">{stu.name}</p>
                 </div>
                 <div className="flex shrink-0 items-baseline gap-1">
-                  <span className="font-dash text-base font-black tabular-nums text-main">
+                  <span className="font-dash text-base font-medium tabular-nums text-main">
                     {stu.count}
                   </span>
-                  <span className="text-[10px] font-bold text-muted">حصة</span>
+                  <span className="text-[10px] font-normal text-muted">حصة</span>
                 </div>
               </div>
               <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-hover">
@@ -111,15 +111,15 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
             <div className="mb-1.5 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
               <User size={14} className="text-dim" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد سجلات حالياً</p>
+            <p className="text-xs font-normal text-muted">لا توجد سجلات حالياً</p>
           </div>
         )}
       </div>
 
       <div className="mt-3 flex items-center justify-between rounded-xl bg-gradient-to-l from-warning to-warning-hover p-3">
         <div>
-          <p className="text-[11px] font-bold text-on-warning">إجمالي حصص الشهر</p>
-          <p className="font-dash text-base font-black tabular-nums text-on-warning">
+          <p className="text-[11px] font-normal text-on-warning">إجمالي حصص الشهر</p>
+          <p className="font-dash text-base font-medium tabular-nums text-on-warning">
             {totalMonthSessions}
           </p>
         </div>

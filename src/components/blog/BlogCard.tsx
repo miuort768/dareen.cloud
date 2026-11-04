@@ -72,14 +72,14 @@ export const FoundationCard = ({
         <div className="flex flex-1 flex-col p-5">
           <div className="mb-3 flex items-center gap-2">
             <span
-              className={`inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r px-2.5 py-1 text-[10px] font-semibold text-on-primary ${cardStyle.gradient}`}
+              className={`inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r px-2.5 py-1 text-[10px] font-light text-on-primary ${cardStyle.gradient}`}
             >
               <cardStyle.icon size={10} />
               {cardStyle.badge}
             </span>
             {(post.fileSize || post.file_size) && (
               <span
-                className={`inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 ${cardStyle.fileSizeBadge} border text-[10px] font-bold`}
+                className={`inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 ${cardStyle.fileSizeBadge} border text-[10px] font-normal`}
               >
                 <FileText size={10} />
                 {post.fileSize || post.file_size}
@@ -87,7 +87,7 @@ export const FoundationCard = ({
             )}
           </div>
 
-          <h3 className="mb-2 font-heading text-sm font-bold leading-snug text-main sm:text-base">
+          <h3 className="mb-2 font-heading text-sm font-normal leading-snug text-main sm:text-base">
             {post.title}
           </h3>
 
@@ -96,7 +96,7 @@ export const FoundationCard = ({
               href={post.source}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-1.5 text-[11px] font-bold ${cardStyle.sourceText} mb-3 w-fit transition-colors`}
+              className={`inline-flex items-center gap-1.5 text-[11px] font-normal ${cardStyle.sourceText} mb-3 w-fit transition-colors`}
               onClick={(e) => e.stopPropagation()}
             >
               <ExternalLink size={10} />
@@ -123,7 +123,7 @@ export const FoundationCard = ({
                     (foundationBtnState.postId !== post.id ||
                       foundationBtnState.type !== 'download')
                   }
-                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-warning py-2.5 text-[11px] font-semibold text-on-warning outline-none transition-all duration-200 hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-warning py-2.5 text-[11px] font-light text-on-warning outline-none transition-all duration-200 hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Download size={13} />
                   <span>
@@ -147,7 +147,7 @@ export const FoundationCard = ({
                     foundationBtnState !== null &&
                     (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')
                   }
-                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary py-2.5 text-[11px] font-semibold text-on-primary outline-none transition-all duration-200 hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary py-2.5 text-[11px] font-light text-on-primary outline-none transition-all duration-200 hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Eye size={13} />
                   <span>
@@ -167,7 +167,7 @@ export const FoundationCard = ({
             <Link
               to={`/books/${post.slug}`}
               onClick={() => window.scrollTo(0, 0)}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-semibold text-on-success transition-all duration-200 hover:bg-success-hover active:scale-[0.98]"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-light text-on-success transition-all duration-200 hover:bg-success-hover active:scale-[0.98]"
             >
               <span>اقرأ المقال</span>
             </Link>
@@ -202,7 +202,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
             />
             <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent" />
             <div className="absolute start-3 top-3 z-10">
-              <span className="rounded-xl border border-border bg-card px-2.5 py-1 text-[10px] font-semibold text-primary backdrop-blur-sm">
+              <span className="rounded-xl border border-border bg-card px-2.5 py-1 text-[10px] font-light text-primary backdrop-blur-sm">
                 {subjectNameMap[post.subject ?? ''] || post.category}
               </span>
             </div>
@@ -212,12 +212,12 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
         <div className="flex flex-1 flex-col p-4">
           {isCoursesStyle && (
             <div className="mb-3 flex items-center gap-2">
-              <span className="rounded-xl bg-gradient-to-br from-error to-primary px-2.5 py-1 text-[10px] font-semibold text-on-primary">
+              <span className="rounded-xl bg-gradient-to-br from-error to-primary px-2.5 py-1 text-[10px] font-light text-on-primary">
                 {subjectNameMap[post.subject ?? ''] || post.category}
               </span>
             </div>
           )}
-          <div className="mb-2 flex items-center gap-3 text-[11px] font-bold text-muted">
+          <div className="mb-2 flex items-center gap-3 text-[11px] font-normal text-muted">
             <span className="flex items-center gap-1">
               <Calendar size={11} />
               <span>{post.date?.split('T')[0]}</span>
@@ -229,7 +229,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
               </span>
             )}
           </div>
-          <h2 className="mb-2 font-heading text-sm font-bold leading-snug text-main transition-colors group-hover:text-primary sm:text-base">
+          <h2 className="mb-2 font-heading text-sm font-normal leading-snug text-main transition-colors group-hover:text-primary sm:text-base">
             {post.title}
           </h2>
           <p className="line-clamp-2 flex-1 text-[11px] leading-relaxed text-muted sm:text-xs">
@@ -237,12 +237,12 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
           </p>
 
           {isCoursesStyle ? (
-            <div className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-semibold text-on-success transition-all duration-200 hover:bg-success-hover active:scale-[0.98]">
+            <div className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-light text-on-success transition-all duration-200 hover:bg-success-hover active:scale-[0.98]">
               <ArrowLeft size={13} />
               <span>اقرأ المقال</span>
             </div>
           ) : (
-            <div className="group/link mt-4 inline-flex items-center gap-1.5 text-[11px] font-semibold text-primary">
+            <div className="group/link mt-4 inline-flex items-center gap-1.5 text-[11px] font-light text-primary">
               <span>اقرأ المقال</span>
               <ArrowLeft
                 size={13}

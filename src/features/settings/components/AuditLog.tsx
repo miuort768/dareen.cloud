@@ -14,8 +14,8 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
           <Activity size={16} className="text-primary" />
         </div>
         <div>
-          <p className="text-sm font-bold text-main">سجل الرقابة</p>
-          <p className="mt-0.5 text-[11px] font-bold text-muted">سجل تدقيق النشاط العام</p>
+          <p className="text-sm font-normal text-main">سجل الرقابة</p>
+          <p className="mt-0.5 text-[11px] font-normal text-muted">سجل تدقيق النشاط العام</p>
         </div>
       </div>
       <SecondaryBtn onClick={fetchLogs}>
@@ -28,13 +28,13 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
       <table className="w-full text-start text-sm">
         <thead>
           <tr className="bg-background">
-            <th scope="col" className="px-4 py-3 text-[11px] font-bold text-muted">
+            <th scope="col" className="px-4 py-3 text-[11px] font-normal text-muted">
               التوقيت
             </th>
-            <th scope="col" className="px-4 py-3 text-[11px] font-bold text-muted">
+            <th scope="col" className="px-4 py-3 text-[11px] font-normal text-muted">
               المسؤول
             </th>
-            <th scope="col" className="px-4 py-3 text-[11px] font-bold text-muted">
+            <th scope="col" className="px-4 py-3 text-[11px] font-normal text-muted">
               الإجراء
             </th>
           </tr>
@@ -51,10 +51,10 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-[11px] font-bold text-primary">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-[11px] font-normal text-primary">
                       {log.username?.[0]?.toUpperCase() || 'A'}
                     </div>
-                    <span className="text-xs font-bold text-main">{log.username}</span>
+                    <span className="text-xs font-normal text-main">{log.username}</span>
                   </div>
                 </td>
                 <td className="px-4 py-3">
@@ -69,7 +69,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
             <tr>
               <td colSpan={3} className="py-16 text-center">
                 <CheckCircle2 className="mx-auto mb-2 text-success" size={24} />
-                <p className="text-xs font-bold text-muted">لا توجد سجلات</p>
+                <p className="text-xs font-normal text-muted">لا توجد سجلات</p>
                 <p className="mt-1 text-xs text-muted">لا يوجد نشاط مسجل حتى الآن</p>
               </td>
             </tr>
@@ -85,10 +85,10 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
           <div key={idx} className="rounded-xl border border-divider bg-background p-3.5">
             <div className="flex items-center justify-between gap-2">
               <div className="flex min-w-0 items-center gap-2">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-[11px] font-bold text-primary">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-[11px] font-normal text-primary">
                   {log.username?.[0]?.toUpperCase() || 'A'}
                 </div>
-                <span className="truncate text-xs font-bold text-main">{log.username}</span>
+                <span className="truncate text-xs font-normal text-main">{log.username}</span>
               </div>
               <span className="shrink-0 font-mono text-[10px] text-muted" dir="ltr">
                 {new Date(log.timestamp).toLocaleString('ar-EG', {
@@ -106,7 +106,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
       ) : (
         <div className="rounded-xl border border-divider py-14 text-center">
           <CheckCircle2 className="mx-auto mb-2 text-success" size={24} />
-          <p className="text-xs font-bold text-muted">لا توجد سجلات</p>
+          <p className="text-xs font-normal text-muted">لا توجد سجلات</p>
           <p className="mt-1 text-xs text-muted">لا يوجد نشاط مسجل حتى الآن</p>
         </div>
       )}

@@ -95,7 +95,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
             {initialData ? <Edit size={24} /> : <UserPlus size={24} />}
           </div>
           <div>
-            <h3 className="text-xl font-bold tracking-tight text-on-primary">
+            <h3 className="text-xl font-normal tracking-tight text-on-primary">
               {initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}
             </h3>
             <p className="mt-1 text-micro font-normal text-white/80">
@@ -121,7 +121,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-info-soft ring-1 ring-info-soft">
               <Info size={16} className="text-primary" />
             </div>
-            <h4 className="text-xs font-bold uppercase tracking-tight text-main">
+            <h4 className="text-xs font-normal uppercase tracking-tight text-main">
               بيانات التعريف الأساسية
             </h4>
           </div>
@@ -197,7 +197,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
             <div className="flex h-8 w-8 items-center justify-center bg-success-soft">
               <Shield size={16} className="text-success" />
             </div>
-            <h4 className="text-xs font-bold uppercase tracking-tight text-main">
+            <h4 className="text-xs font-normal uppercase tracking-tight text-main">
               إدارة الوصول للمنصة
             </h4>
           </div>
@@ -266,7 +266,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         <div className="flex items-center justify-end border-t border-border pt-6">
           <button
             type="submit"
-            className="flex items-center gap-2 rounded-xl bg-primary px-10 py-3 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-2 rounded-xl bg-primary px-10 py-3 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Save size={16} />
             {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}

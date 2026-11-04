@@ -510,7 +510,7 @@ export const TrialSessions = () => {
                   <CalendarDays size={20} className="text-on-primary" />
                 </div>
                 <div>
-                  <h1 className="font-outfit text-lg font-black text-main">جلسات المراجعة</h1>
+                  <h1 className="font-outfit text-lg font-medium text-main">جلسات المراجعة</h1>
                   <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
                 </div>
               </div>
@@ -520,14 +520,14 @@ export const TrialSessions = () => {
                   resetForm()
                   setShowModal(true)
                 }}
-                className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all hover:shadow-elevation-3 hover:shadow-primary/30 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-normal text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all hover:shadow-elevation-3 hover:shadow-primary/30 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 <Plus size={16} /> جدولة جديدة
               </button>
               <div className="mt-2 grid grid-cols-2 gap-2">
                 <button
                   onClick={handleExportReport}
-                  className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main outline-none transition-all hover:border-primary/20 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-normal text-main outline-none transition-all hover:border-primary/20 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <Download size={16} /> تحميل التقرير
                 </button>
@@ -536,7 +536,7 @@ export const TrialSessions = () => {
                     setConfirmDeleteAll(true)
                     setDeleteAllTyped('')
                   }}
-                  className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-normal text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <Trash2 size={16} /> حذف الكل
                 </button>
@@ -550,14 +550,14 @@ export const TrialSessions = () => {
                   <CalendarDays size={22} className="text-on-primary" />
                 </div>
                 <div>
-                  <h1 className="font-outfit text-xl font-black text-main">جلسات المراجعة</h1>
+                  <h1 className="font-outfit text-xl font-medium text-main">جلسات المراجعة</h1>
                   <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleExportReport}
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main outline-none transition-all hover:border-primary/20 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-normal text-main outline-none transition-all hover:border-primary/20 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <Download size={15} /> تحميل التقرير
                 </button>
@@ -566,7 +566,7 @@ export const TrialSessions = () => {
                     setConfirmDeleteAll(true)
                     setDeleteAllTyped('')
                   }}
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-normal text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <Trash2 size={15} /> حذف الكل
                 </button>
@@ -576,7 +576,7 @@ export const TrialSessions = () => {
                     resetForm()
                     setShowModal(true)
                   }}
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all hover:shadow-elevation-3 hover:shadow-primary/30 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-normal text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all hover:shadow-elevation-3 hover:shadow-primary/30 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <Plus size={15} /> جدولة جديدة
                 </button>
@@ -636,14 +636,14 @@ export const TrialSessions = () => {
               )}
             >
               <div className="mb-3 flex items-center justify-between">
-                <span className="truncate text-xs font-bold text-main">{stat.label}</span>
+                <span className="truncate text-xs font-normal text-main">{stat.label}</span>
                 <div
                   className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.iconBg)}
                 >
                   <stat.icon size={14} className={stat.color} />
                 </div>
               </div>
-              <div className={cn('font-outfit text-2xl font-black tabular-nums', stat.color)}>
+              <div className={cn('font-outfit text-2xl font-medium tabular-nums', stat.color)}>
                 {typeof stat.value === 'number' ? <Counter value={stat.value} /> : stat.value}
               </div>
               <div className="mt-1 text-[10px] font-medium text-muted">{stat.sub}</div>
@@ -684,7 +684,7 @@ export const TrialSessions = () => {
               <button
                 onClick={() => setShowPaid(!showPaid)}
                 className={cn(
-                  'flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
+                  'flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-normal outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
                   showPaid
                     ? 'border-success-soft bg-success-soft text-success'
                     : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
@@ -704,7 +704,7 @@ export const TrialSessions = () => {
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
                   aria-label="تصفية حسب الحالة"
-                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 >
                   {statusFilterItems.map((item) => (
                     <option key={item.key || 'all'} value={item.key}>
@@ -721,7 +721,7 @@ export const TrialSessions = () => {
                     value={filterSubject}
                     onChange={(e) => setFilterSubject(e.target.value)}
                     aria-label="تصفية حسب المادة"
-                    className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                    className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                   >
                     <option value="">كل المواد</option>
                     {subjects.map((s) => (
@@ -739,7 +739,7 @@ export const TrialSessions = () => {
                   value={filterTeacher}
                   onChange={(e) => setFilterTeacher(e.target.value)}
                   aria-label="فلترة حسب المعلمة"
-                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 >
                   <option value="">كل المعلمات</option>
                   {teacherNames.map((n) => (
@@ -758,7 +758,7 @@ export const TrialSessions = () => {
                     setSortBy(e.target.value as 'date-desc' | 'date-asc' | 'created-desc')
                   }
                   aria-label="ترتيب النتائج"
-                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 >
                   <option value="date-desc">تاريخ الحصة (الأحدث)</option>
                   <option value="date-asc">تاريخ الحصة (الأقدم)</option>
@@ -769,13 +769,13 @@ export const TrialSessions = () => {
 
             {/* ملخص النتائج + مسح الفلاتر */}
             <div className="mt-3 flex items-center justify-between gap-2">
-              <span className="text-[11px] font-bold text-muted">
+              <span className="text-[11px] font-normal text-muted">
                 {filtered.length} من {trials.length} حصة
               </span>
               {hasActiveFilters && (
                 <button
                   onClick={clearAllFilters}
-                  className="flex h-9 items-center gap-1 rounded-xl border border-error-soft bg-error-soft px-3 text-[11px] font-bold text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-9 items-center gap-1 rounded-xl border border-error-soft bg-error-soft px-3 text-[11px] font-normal text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <X size={12} /> مسح الفلاتر
                 </button>
@@ -842,7 +842,7 @@ export const TrialSessions = () => {
                   hasActiveFilters ? (
                     <button
                       onClick={clearAllFilters}
-                      className="inline-flex h-11 items-center gap-2 rounded-xl border border-error-soft bg-error-soft px-5 text-xs font-bold text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:h-9"
+                      className="inline-flex h-11 items-center gap-2 rounded-xl border border-error-soft bg-error-soft px-5 text-xs font-normal text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:h-9"
                     >
                       <X size={14} /> مسح الفلاتر
                     </button>
@@ -852,7 +852,7 @@ export const TrialSessions = () => {
                         resetForm()
                         setShowModal(true)
                       }}
-                      className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:h-9"
+                      className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-xs font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:h-9"
                     >
                       <Plus size={14} /> إضافة حصة
                     </button>
@@ -866,7 +866,7 @@ export const TrialSessions = () => {
                     {sessions.length > 1 && (
                       <div className="mb-2 flex items-center gap-2 px-3 py-1.5">
                         <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                        <span className="text-[11px] font-bold text-primary" dir="ltr">
+                        <span className="text-[11px] font-normal text-primary" dir="ltr">
                           {phone}
                         </span>
                         <span className="text-[10px] text-muted">({sessions.length} حصص)</span>
@@ -910,7 +910,7 @@ export const TrialSessions = () => {
                     key={page}
                     onClick={() => setCurrentPage(page)}
                     className={cn(
-                      'flex h-11 w-11 items-center justify-center rounded-xl text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:h-9 md:w-9',
+                      'flex h-11 w-11 items-center justify-center rounded-xl text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:h-9 md:w-9',
                       page === currentPage
                         ? 'bg-primary text-on-primary shadow-elevation-1 shadow-primary/10'
                         : 'border border-border bg-surface text-muted hover:bg-hover',
@@ -975,17 +975,17 @@ export const TrialSessions = () => {
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 md:h-9 md:w-9">
                     <AlertTriangle size={20} className="text-on-error" />
                   </div>
-                  <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                  <h3 className="text-sm font-normal text-on-error">تأكيد الحذف</h3>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm font-bold text-main">هل أنت متأكد من حذف هذه الحصة؟</p>
+                  <p className="text-sm font-normal text-main">هل أنت متأكد من حذف هذه الحصة؟</p>
                   <p className="mt-1 text-[11px] text-muted">لا يمكن التراجع عن هذا الإجراء</p>
                 </div>
                 <div className="flex gap-2 px-5 pb-8">
                   <button
                     type="button"
                     onClick={() => setConfirmId(null)}
-                    className="flex-1 rounded-xl bg-surface py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                    className="flex-1 rounded-xl bg-surface py-3 text-xs font-normal text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     إلغاء
                   </button>
@@ -995,7 +995,7 @@ export const TrialSessions = () => {
                       if (confirmId) deleteMutation.mutate(confirmId)
                     }}
                     disabled={deleteMutation.isPending}
-                    className="flex-1 rounded-xl bg-error py-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-error py-3 text-xs font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
                   >
                     {deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}
                   </button>
@@ -1013,7 +1013,7 @@ export const TrialSessions = () => {
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 md:h-9 md:w-9">
                       <AlertTriangle size={20} className="text-on-error" />
                     </div>
-                    <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                    <h3 className="text-sm font-normal text-on-error">تأكيد الحذف</h3>
                   </div>
                   <button
                     onClick={() => setConfirmId(null)}
@@ -1024,13 +1024,13 @@ export const TrialSessions = () => {
                   </button>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm font-bold text-main">هل أنت متأكد من الحذف؟</p>
+                  <p className="text-sm font-normal text-main">هل أنت متأكد من الحذف؟</p>
                 </div>
                 <div className="flex gap-2 px-5 pb-5">
                   <button
                     type="button"
                     onClick={() => setConfirmId(null)}
-                    className="flex-1 rounded-xl bg-surface py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                    className="flex-1 rounded-xl bg-surface py-3 text-xs font-normal text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     إلغاء
                   </button>
@@ -1040,7 +1040,7 @@ export const TrialSessions = () => {
                       if (confirmId) deleteMutation.mutate(confirmId)
                     }}
                     disabled={deleteMutation.isPending}
-                    className="flex-1 rounded-xl bg-error py-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-error py-3 text-xs font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
                   >
                     {deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}
                   </button>
@@ -1070,7 +1070,7 @@ export const TrialSessions = () => {
                       <Trash2 size={18} className="text-on-error" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-on-error">حذف جميع الحصص</h3>
+                      <h3 className="text-sm font-normal text-on-error">حذف جميع الحصص</h3>
                       <p className="mt-0.5 text-[10px] text-white/90">
                         لا يمكن التراجع عن هذا الإجراء
                       </p>
@@ -1085,18 +1085,18 @@ export const TrialSessions = () => {
                   </button>
                 </div>
                 <div className="p-5">
-                  <p className="mb-1 text-sm font-bold text-main">
+                  <p className="mb-1 text-sm font-normal text-main">
                     هل أنت متأكد من حذف جميع الحصص؟
                   </p>
                   <p className="text-xs leading-relaxed text-muted">
                     سيتم{' '}
-                    <span className="font-bold text-error">حذف جميع جلسات المراجعة نهائيًا</span>{' '}
+                    <span className="font-normal text-error">حذف جميع جلسات المراجعة نهائيًا</span>{' '}
                     ولن يمكن استعادتها.
                   </p>
                   <div className="mt-4">
-                    <label className="mb-1.5 block text-[11px] font-bold text-muted">
+                    <label className="mb-1.5 block text-[11px] font-normal text-muted">
                       اكتب{' '}
-                      <span dir="ltr" className="font-black text-error">
+                      <span dir="ltr" className="font-medium text-error">
                         dareen
                       </span>{' '}
                       للتأكيد
@@ -1106,7 +1106,7 @@ export const TrialSessions = () => {
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"
-                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-black tracking-widest text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
+                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-medium tracking-widest text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && deleteAllTyped.trim().toLowerCase() === 'dareen')
                           deleteAllMutation.mutate()
@@ -1119,7 +1119,7 @@ export const TrialSessions = () => {
                   <button
                     type="button"
                     onClick={() => setConfirmDeleteAll(false)}
-                    className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                    className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-normal text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     إلغاء
                   </button>
@@ -1130,7 +1130,7 @@ export const TrialSessions = () => {
                       deleteAllMutation.isPending ||
                       deleteAllTyped.trim().toLowerCase() !== 'dareen'
                     }
-                    className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-error py-3.5 text-xs font-normal text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {deleteAllMutation.isPending ? 'جاري الحذف...' : 'حذف الكل'}
                   </button>

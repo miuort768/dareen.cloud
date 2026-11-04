@@ -60,10 +60,10 @@ export const InvoicesStrip = () => {
         <Receipt size={17} className="text-primary" />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-xs font-black text-main">الفواتير</p>
-        <p className="text-[11px] font-bold text-muted">{pending.length} فاتورة معلقة</p>
+        <p className="text-xs font-medium text-main">الفواتير</p>
+        <p className="text-[11px] font-normal text-muted">{pending.length} فاتورة معلقة</p>
       </div>
-      <div className="shrink-0 rounded-full bg-primary-soft px-3 py-1.5 text-[11px] font-black tabular-nums text-primary">
+      <div className="shrink-0 rounded-full bg-primary-soft px-3 py-1.5 text-[11px] font-medium tabular-nums text-primary">
         {totalPending.toFixed(3)} {CURRENCY_SYMBOL}
       </div>
       <span

@@ -45,8 +45,8 @@ export const ReportStudentTable = React.memo(
               <Activity size={15} className="text-chart-4" />
             </div>
             <div>
-              <p className="text-xs font-bold text-main">تقرير تقدم الطلاب</p>
-              <p className="mt-0.5 text-micro font-bold text-muted">
+              <p className="text-xs font-normal text-main">تقرير تقدم الطلاب</p>
+              <p className="mt-0.5 text-micro font-normal text-muted">
                 {sortedStudents.length} طالب • صفحة {page} من {totalPages}
               </p>
             </div>
@@ -59,7 +59,7 @@ export const ReportStudentTable = React.memo(
               placeholder="ابحث عن طالب أو صف..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:border-chart-4"
+              className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-9 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus:border-chart-4"
             />
           </div>
         </div>
@@ -70,43 +70,43 @@ export const ReportStudentTable = React.memo(
               <tr className="bg-chart-4 text-on-primary">
                 <th
                   scope="col"
-                  className="px-5 py-3 text-micro font-bold text-on-primary opacity-70"
+                  className="px-5 py-3 text-micro font-normal text-on-primary opacity-70"
                 >
                   #
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 text-start text-micro font-bold text-on-primary opacity-70"
+                  className="px-5 py-3 text-start text-micro font-normal text-on-primary opacity-70"
                 >
                   اسم الطالب
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                 >
                   الصف
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                 >
                   الاشتراكات
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                 >
                   المتوقعة
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                 >
                   المستخدمة
                 </th>
                 <th
                   scope="col"
-                  className="w-40 px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  className="w-40 px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                 >
                   التقدم
                 </th>
@@ -127,14 +127,14 @@ export const ReportStudentTable = React.memo(
                       </td>
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="flex h-7 w-7 items-center justify-center rounded-xl text-micro font-semibold text-chart-4">
+                          <div className="flex h-7 w-7 items-center justify-center rounded-xl text-micro font-light text-chart-4">
                             {student.name.charAt(0)}
                           </div>
-                          <span className="text-xs font-bold text-main">{student.name}</span>
+                          <span className="text-xs font-normal text-main">{student.name}</span>
                         </div>
                       </td>
                       <td className="px-5 py-3 text-center">
-                        <span className="inline-flex rounded-lg px-2 py-0.5 text-micro font-bold text-chart-4">
+                        <span className="inline-flex rounded-lg px-2 py-0.5 text-micro font-normal text-chart-4">
                           {student.grade}
                         </span>
                       </td>
@@ -172,7 +172,7 @@ export const ReportStudentTable = React.memo(
                     <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-hover">
                       <Users size={22} className="text-muted" />
                     </div>
-                    <p className="text-xs font-bold text-muted">لا توجد نتائج</p>
+                    <p className="text-xs font-normal text-muted">لا توجد نتائج</p>
                   </td>
                 </tr>
               )}
@@ -188,24 +188,24 @@ export const ReportStudentTable = React.memo(
               const { progBg, progText } = renderProgressBar(prog)
               return (
                 <div key={student.id} className="flex items-center gap-3 p-4">
-                  <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-chart-4">
+                  <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-light text-chart-4">
                     {student.name.charAt(0)}
-                    <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-chart-4 text-micro font-bold text-on-primary">
+                    <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-chart-4 text-micro font-normal text-on-primary">
                       {globalIdx}
                     </span>
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center justify-between">
-                      <p className="truncate text-xs font-bold text-main">{student.name}</p>
-                      <span className={cn('me-2 shrink-0 text-micro font-bold', progText)}>
+                      <p className="truncate text-xs font-normal text-main">{student.name}</p>
+                      <span className={cn('me-2 shrink-0 text-micro font-normal', progText)}>
                         {prog}%
                       </span>
                     </div>
                     <div className="mb-1.5 flex items-center gap-2">
-                      <span className="rounded-lg px-1.5 py-0.5 text-micro font-bold text-chart-4">
+                      <span className="rounded-lg px-1.5 py-0.5 text-micro font-normal text-chart-4">
                         {student.grade}
                       </span>
-                      <span className="text-micro font-bold text-muted">
+                      <span className="text-micro font-normal text-muted">
                         {student.usedSessions}/{student.totalSessions} حصة
                       </span>
                     </div>
@@ -224,14 +224,14 @@ export const ReportStudentTable = React.memo(
               <div className="mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-xl bg-hover">
                 <Users size={20} className="text-muted" />
               </div>
-              <p className="text-xs font-bold text-muted">لا توجد نتائج</p>
+              <p className="text-xs font-normal text-muted">لا توجد نتائج</p>
             </div>
           )}
         </div>
 
         {totalPages > 1 && (
           <div className="flex items-center justify-between border-t border-border bg-surface px-5 py-3">
-            <p className="text-micro font-bold text-muted">
+            <p className="text-micro font-normal text-muted">
               {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, sortedStudents.length)} من{' '}
               {sortedStudents.length}
             </p>
@@ -248,7 +248,7 @@ export const ReportStudentTable = React.memo(
                   key={`page-${i}`}
                   onClick={() => setPage(i + 1)}
                   className={cn(
-                    'h-8 w-8 rounded-xl border text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                    'h-8 w-8 rounded-xl border text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                     page === i + 1
                       ? 'border-chart-4 bg-chart-4 text-on-primary'
                       : 'border-border bg-card text-muted',
@@ -257,7 +257,7 @@ export const ReportStudentTable = React.memo(
                   {i + 1}
                 </button>
               ))}
-              {totalPages > 7 && <span className="px-1 text-xs font-bold text-muted">...</span>}
+              {totalPages > 7 && <span className="px-1 text-xs font-normal text-muted">...</span>}
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}

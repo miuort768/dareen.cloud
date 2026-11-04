@@ -56,8 +56,8 @@ const SectionHeader = ({
       <Icon size={15} className="text-chart-3" />
     </div>
     <div>
-      <p className="text-xs font-bold text-main">{label}</p>
-      {sub && <p className="mt-0.5 text-micro font-bold text-muted">{sub}</p>}
+      <p className="text-xs font-normal text-main">{label}</p>
+      {sub && <p className="mt-0.5 text-micro font-normal text-muted">{sub}</p>}
     </div>
   </div>
 )
@@ -158,9 +158,9 @@ export const AttendanceReport = React.memo(
               >
                 <item.icon size={16} className={item.textClass} />
               </div>
-              <p className={`font-mono text-xl font-bold ${item.textClass}`}>{item.value}</p>
-              <p className="mt-1 text-micro font-bold text-muted">{item.label}</p>
-              <p className="mt-0.5 text-micro font-bold text-muted">{item.sub}</p>
+              <p className={`font-mono text-xl font-normal ${item.textClass}`}>{item.value}</p>
+              <p className="mt-1 text-micro font-normal text-muted">{item.label}</p>
+              <p className="mt-0.5 text-micro font-normal text-muted">{item.sub}</p>
             </div>
           ))}
         </div>
@@ -249,7 +249,7 @@ export const AttendanceReport = React.memo(
             ].map((l, i) => (
               <div key={`report-${i}`} className="flex items-center gap-1.5">
                 <div className={`h-0.5 w-5 rounded-full ${l.bgClass}`} />
-                <span className="text-micro font-bold text-muted">{l.label}</span>
+                <span className="text-micro font-normal text-muted">{l.label}</span>
               </div>
             ))}
           </div>
@@ -270,37 +270,37 @@ export const AttendanceReport = React.memo(
                 <tr className="bg-chart-4 text-on-primary">
                   <th
                     scope="col"
-                    className="px-5 py-3 text-micro font-bold text-on-primary opacity-70"
+                    className="px-5 py-3 text-micro font-normal text-on-primary opacity-70"
                   >
                     #
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 text-start text-micro font-bold text-on-primary opacity-70"
+                    className="px-5 py-3 text-start text-micro font-normal text-on-primary opacity-70"
                   >
                     اسم المعلمة
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                    className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                   >
                     المتوقعة
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                    className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                   >
                     مكتملة
                   </th>
                   <th
                     scope="col"
-                    className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                    className="px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                   >
                     ملغية
                   </th>
                   <th
                     scope="col"
-                    className="w-44 px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                    className="w-44 px-5 py-3 text-center text-micro font-normal text-on-primary opacity-70"
                   >
                     معدل الحضور
                   </th>
@@ -332,10 +332,10 @@ export const AttendanceReport = React.memo(
                         </td>
                         <td className="px-5 py-3">
                           <div className="flex items-center gap-2.5">
-                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-semibold text-chart-3">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-light text-chart-3">
                               {teacher.teacher.charAt(0)}
                             </div>
-                            <span className="text-xs font-bold text-main">{teacher.teacher}</span>
+                            <span className="text-xs font-normal text-main">{teacher.teacher}</span>
                           </div>
                         </td>
                         <td className="px-5 py-3 text-center font-mono text-xs font-medium text-muted">
@@ -389,7 +389,7 @@ export const AttendanceReport = React.memo(
                   ) : null
                 return (
                   <div key={index} className="flex items-center gap-3 p-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-chart-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-light text-chart-3">
                       {medalIcon || teacher.teacher.charAt(0)}
                     </div>
                     <div className="min-w-0 flex-1">

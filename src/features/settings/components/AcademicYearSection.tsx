@@ -132,7 +132,7 @@ export const AcademicYearSection = ({
         </div>
       </div>
 
-      <div className="mt-5 flex items-center gap-2 rounded-lg bg-info-soft px-4 py-3 text-[11px] font-bold text-info-dark">
+      <div className="mt-5 flex items-center gap-2 rounded-lg bg-info-soft px-4 py-3 text-[11px] font-normal text-info-dark">
         <Info size={13} className="shrink-0" />
         تظهر السنة الدراسية الحالية في لوحات التحكم والقائمة الجانبية لجميع المستخدمين.
       </div>

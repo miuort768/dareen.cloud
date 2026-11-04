@@ -49,8 +49,8 @@ export const AnnouncementsBanner = ({
         <Megaphone size={18} />
       </span>
       <span className="relative min-w-0 flex-1">
-        <span className="block text-xs font-black">{label}</span>
-        <span className="mt-0.5 block truncate text-[11px] font-bold opacity-80">
+        <span className="block text-xs font-medium">{label}</span>
+        <span className="mt-0.5 block truncate text-[11px] font-normal opacity-80">
           {description}
         </span>
       </span>

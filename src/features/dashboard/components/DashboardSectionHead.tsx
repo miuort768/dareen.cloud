@@ -28,7 +28,7 @@ interface DashboardSectionHeadProps {
 
 /**
  * Single section headline for the dashboard cards.
- * 40px square icon tile (rounded-xl) + text-sm font-black title.
+ * 40px square icon tile (rounded-xl) + text-sm font-medium title.
  * Replaces the four competing scales each card used to carry on its own
  * (h-8 / h-9 / h-11 tiles, text-xs / text-sm / text-base titles).
  */
@@ -50,7 +50,7 @@ export const DashboardSectionHead = ({
       </div>
       <div className="min-w-0">
         <div className="flex items-center gap-2">
-          <h3 className="truncate text-sm font-black text-main">{title}</h3>
+          <h3 className="truncate text-sm font-medium text-main">{title}</h3>
           {afterTitle}
         </div>
         {description && <p className="mt-0.5 text-[11px] font-medium text-muted">{description}</p>}

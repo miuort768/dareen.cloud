@@ -112,7 +112,7 @@ export const Finance = () => {
                 <TrendingUp size={22} className="text-success-strong" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold leading-tight tracking-tight text-main">
+                <h1 className="text-2xl font-normal leading-tight tracking-tight text-main">
                   الإدارة المالية
                 </h1>
                 <p className="mt-1 text-sm text-muted">نظرة شاملة على التدفقات المالية للمعهد</p>
@@ -152,9 +152,9 @@ export const Finance = () => {
                     key={s.label}
                     className={`rounded-2xl border border-border px-3 py-3.5 ${s.bg}`}
                   >
-                    <p className={cn('text-xl font-black tabular-nums leading-none', s.tone)}>
+                    <p className={cn('text-xl font-medium tabular-nums leading-none', s.tone)}>
                       {s.value}
-                      <span className="ms-1 text-[10px] font-bold text-muted">
+                      <span className="ms-1 text-[10px] font-normal text-muted">
                         {getCurrencySymbol(state.reportCurrency)}
                       </span>
                     </p>
@@ -263,7 +263,7 @@ export const Finance = () => {
                 transition={{ delay: 0.05 * i }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                   {item.label}
                 </span>
                 <button

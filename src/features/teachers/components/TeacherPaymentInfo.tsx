@@ -55,7 +55,7 @@ export const TeacherPaymentInfo = ({ teacherId }: { teacherId: string }) => {
   if (loading) {
     return (
       <div
-        className="flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-xs font-bold text-muted"
+        className="flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-xs font-normal text-muted"
         aria-busy="true"
       >
         <Loader2 size={13} className="animate-spin" />
@@ -102,8 +102,8 @@ export const TeacherPaymentInfo = ({ teacherId }: { teacherId: string }) => {
             <Icon size={15} className="text-primary" />
           </div>
           <div className="min-w-0">
-            <p className="truncate text-xs font-bold text-main">{meta.label}</p>
-            <span className="mt-0.5 flex w-fit items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success-strong">
+            <p className="truncate text-xs font-normal text-main">{meta.label}</p>
+            <span className="mt-0.5 flex w-fit items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-micro font-normal text-success-strong">
               <BadgeCheck size={10} />
               طريقة الاستلام الرئيسية
             </span>
@@ -117,10 +117,10 @@ export const TeacherPaymentInfo = ({ teacherId }: { teacherId: string }) => {
           .filter((r) => r.value)
           .map((r) => (
             <div key={r.label} className="flex items-center justify-between gap-3 py-2.5">
-              <span className="shrink-0 text-[11px] font-bold text-muted">{r.label}</span>
+              <span className="shrink-0 text-[11px] font-normal text-muted">{r.label}</span>
               <span
                 className={cn(
-                  'min-w-0 truncate text-end text-xs font-bold text-main',
+                  'min-w-0 truncate text-end text-xs font-normal text-main',
                   r.mono && 'font-mono tabular-nums',
                 )}
               >

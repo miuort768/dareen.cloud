@@ -236,14 +236,14 @@ export const AdminContacts = () => {
               <>
                 <button
                   onClick={handleExportPdf}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-light text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Download size={14} />
                   <span className="hidden sm:inline">تصدير</span>
                 </button>
                 <button
                   onClick={handleDeleteAll}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-light text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Trash2 size={14} />
                   <span className="hidden sm:inline">حذف الكل</span>
@@ -251,7 +251,7 @@ export const AdminContacts = () => {
               </>
             }
             meta={
-              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-normal tabular-nums text-muted">
                 {messages.length} رسالة
               </span>
             }
@@ -268,7 +268,7 @@ export const AdminContacts = () => {
                     placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
+                    className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-normal text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
                   />
                   {search && (
                     <button
@@ -288,7 +288,7 @@ export const AdminContacts = () => {
                       onClick={() => setFilterRead(pill.key)}
                       aria-pressed={filterRead === pill.key}
                       className={cn(
-                        'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:min-h-0',
+                        'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-normal outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:min-h-0',
                         filterRead === pill.key
                           ? 'bg-primary text-on-primary'
                           : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',
@@ -337,7 +337,7 @@ export const AdminContacts = () => {
                       <Icon size={16} />
                     </div>
                   </div>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <p className="text-2xl font-normal text-main">{kpi.value}</p>
                   <p className="mt-1 text-micro text-muted">{kpi.label}</p>
                 </motion.div>
               )
@@ -379,11 +379,11 @@ export const AdminContacts = () => {
                 <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-error-soft">
                   <AlertTriangle size={20} className="text-error" />
                 </div>
-                <p className="text-xs font-bold text-error">{error}</p>
+                <p className="text-xs font-normal text-error">{error}</p>
                 <button
                   type="button"
                   onClick={retryFetch}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   إعادة تحميل
                 </button>
@@ -397,7 +397,7 @@ export const AdminContacts = () => {
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Inbox size={24} className="text-primary" />
                 </div>
-                <p className="mb-1 text-sm font-bold text-main">
+                <p className="mb-1 text-sm font-normal text-main">
                   {messages.length === 0 ? 'لا توجد رسائل' : 'لا توجد نتائج'}
                 </p>
                 <p className="text-xs text-muted">
@@ -440,11 +440,11 @@ export const AdminContacts = () => {
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-2">
-                                <h3 className="truncate text-sm font-bold text-main">
+                                <h3 className="truncate text-sm font-normal text-main">
                                   {msg.name || 'بدون اسم'}
                                 </h3>
                                 {isMsgRead && (
-                                  <span className="rounded-lg bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success">
+                                  <span className="rounded-lg bg-success-soft px-1.5 py-0.5 text-micro font-normal text-success">
                                     مقروءة
                                   </span>
                                 )}
@@ -500,21 +500,21 @@ export const AdminContacts = () => {
                         </div>
 
                         <div className="mb-3 rounded-xl border border-divider bg-gradient-to-b from-info-soft via-background to-background p-3.5">
-                          <p className="whitespace-pre-wrap text-xs font-bold leading-relaxed text-main">
+                          <p className="whitespace-pre-wrap text-xs font-normal leading-relaxed text-main">
                             {msg.message || 'لا توجد رسالة'}
                           </p>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-success px-2 py-1 text-micro font-bold text-on-success">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-success px-2 py-1 text-micro font-normal text-on-success">
                             <span className="max-w-[120px] truncate">{safePhone}</span>
                             <Phone size={10} />
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-2 py-1 text-micro font-bold text-on-primary">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-2 py-1 text-micro font-normal text-on-primary">
                             <span className="max-w-[100px] truncate">{msg.curriculum || '-'}</span>
                             <BookOpen size={10} />
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-info px-2 py-1 text-micro font-bold text-on-info">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-info px-2 py-1 text-micro font-normal text-on-info">
                             <span>{formatDateNumeric(msg.createdAt)}</span>
                             <Clock size={10} />
                           </span>

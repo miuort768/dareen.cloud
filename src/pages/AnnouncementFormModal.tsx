@@ -29,7 +29,7 @@ const TYPE_OPTIONS: {
 ]
 
 const inputClass =
-  'w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
+  'w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
 
 export const AnnouncementFormModal = ({
   isOpen,
@@ -74,10 +74,10 @@ export const AnnouncementFormModal = ({
                   <Megaphone size={16} className="text-on-primary" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-on-primary">
+                  <h3 className="text-sm font-normal text-on-primary">
                     {editingAnnouncement ? 'تعديل الإعلان الحالي' : 'إضافة إعلان جديد'}
                   </h3>
-                  <p className="text-micro font-bold text-white/90">
+                  <p className="text-micro font-normal text-white/90">
                     {editingAnnouncement
                       ? 'حدّث بيانات الإعلان ثم احفظ'
                       : 'سيظهر الإعلان لجميع المستخدمين'}
@@ -96,7 +96,7 @@ export const AnnouncementFormModal = ({
             {/* Form */}
             <form onSubmit={onSubmit} className="space-y-4 p-5">
               <div>
-                <label htmlFor="ann-title" className="mb-1.5 block text-micro font-bold text-muted">
+                <label htmlFor="ann-title" className="mb-1.5 block text-micro font-normal text-muted">
                   عنوان الإعلان / النبأ
                 </label>
                 <input
@@ -111,7 +111,7 @@ export const AnnouncementFormModal = ({
               </div>
 
               <div>
-                <span className="mb-1.5 block text-micro font-bold text-muted">نوع الإعلان</span>
+                <span className="mb-1.5 block text-micro font-normal text-muted">نوع الإعلان</span>
                 <div className="grid grid-cols-4 gap-2">
                   {TYPE_OPTIONS.map((opt) => (
                     <button
@@ -120,7 +120,7 @@ export const AnnouncementFormModal = ({
                       onClick={() => onChange({ type: opt.value })}
                       aria-pressed={formData.type === opt.value}
                       className={cn(
-                        'flex h-10 items-center justify-center rounded-xl border font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                        'flex h-10 items-center justify-center rounded-xl border font-normal transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                         formData.type === opt.value
                           ? opt.activeClass
                           : 'border-border bg-surface text-muted hover:bg-hover',
@@ -133,14 +133,14 @@ export const AnnouncementFormModal = ({
               </div>
 
               <div>
-                <span className="mb-1.5 block text-micro font-bold text-muted">حالة النشر</span>
+                <span className="mb-1.5 block text-micro font-normal text-muted">حالة النشر</span>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => onChange({ isActive: true })}
                     aria-pressed={formData.isActive}
                     className={cn(
-                      'flex h-11 items-center justify-center gap-1.5 rounded-xl border font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
+                      'flex h-11 items-center justify-center gap-1.5 rounded-xl border font-normal transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
                       formData.isActive
                         ? 'border-success bg-success text-on-success'
                         : 'border-border bg-surface text-muted hover:bg-hover',
@@ -154,7 +154,7 @@ export const AnnouncementFormModal = ({
                     onClick={() => onChange({ isActive: false })}
                     aria-pressed={!formData.isActive}
                     className={cn(
-                      'flex h-11 items-center justify-center gap-1.5 rounded-xl border font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
+                      'flex h-11 items-center justify-center gap-1.5 rounded-xl border font-normal transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
                       !formData.isActive
                         ? 'border-warning bg-warning text-on-warning'
                         : 'border-border bg-surface text-muted hover:bg-hover',
@@ -169,7 +169,7 @@ export const AnnouncementFormModal = ({
               <div>
                 <label
                   htmlFor="ann-content"
-                  className="mb-1.5 block text-micro font-bold text-muted"
+                  className="mb-1.5 block text-micro font-normal text-muted"
                 >
                   محتوى الإعلان
                 </label>
@@ -191,13 +191,13 @@ export const AnnouncementFormModal = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="h-12 flex-1 rounded-xl border border-border bg-surface text-xs font-bold text-main transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                  className="h-12 flex-1 rounded-xl border border-border bg-surface text-xs font-normal text-main transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                 >
                   إلغاء
                 </button>
                 <button
                   type="submit"
-                  className="flex h-12 flex-[1.6] items-center justify-center gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary shadow-elevation-1 transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                  className="flex h-12 flex-[1.6] items-center justify-center gap-2 rounded-xl bg-primary text-xs font-normal text-on-primary shadow-elevation-1 transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                 >
                   <CheckCircle2 size={16} />
                   {editingAnnouncement ? 'حفظ التعديلات' : 'نشر الإعلان'}

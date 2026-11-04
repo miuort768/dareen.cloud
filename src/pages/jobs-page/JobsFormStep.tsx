@@ -46,7 +46,7 @@ export const JobsFormStep = ({
       {step === 1 && (
         <>
           <div className="mb-4">
-            <h3 className="flex items-center gap-2 font-heading text-base font-bold text-main md:text-lg">
+            <h3 className="flex items-center gap-2 font-heading text-base font-normal text-main md:text-lg">
               <User size={16} className="text-primary" /> المعلومات الشخصية
             </h3>
             <p className="mt-0.5 text-xs text-muted">البيانات الأساسية للتواصل معك</p>
@@ -91,7 +91,7 @@ export const JobsFormStep = ({
       {step === 2 && (
         <>
           <div className="mb-4">
-            <h3 className="flex items-center gap-2 font-heading text-base font-bold text-main md:text-lg">
+            <h3 className="flex items-center gap-2 font-heading text-base font-normal text-main md:text-lg">
               <GraduationCap size={16} className="text-primary" /> المؤهلات والوظيفة
             </h3>
             <p className="mt-0.5 text-xs text-muted">مؤهلاتك العلمية والوظيفة المطلوبة</p>
@@ -131,7 +131,7 @@ export const JobsFormStep = ({
       {step === 3 && (
         <>
           <div className="mb-4">
-            <h3 className="flex items-center gap-2 font-heading text-base font-bold text-main md:text-lg">
+            <h3 className="flex items-center gap-2 font-heading text-base font-normal text-main md:text-lg">
               <BookMarked size={16} className="text-primary" /> المادة التي تدرسها
             </h3>
             <p className="mt-0.5 text-xs text-muted">
@@ -151,7 +151,7 @@ export const JobsFormStep = ({
                   {form.subject === s && <div className="h-2.5 w-2.5 rounded-full bg-primary" />}
                 </div>
                 <span
-                  className={`text-sm font-bold leading-tight ${form.subject === s ? 'text-primary' : 'text-muted'}`}
+                  className={`text-sm font-normal leading-tight ${form.subject === s ? 'text-primary' : 'text-muted'}`}
                 >
                   {s}
                 </span>
@@ -163,7 +163,7 @@ export const JobsFormStep = ({
       {step === 4 && (
         <>
           <div className="mb-4">
-            <h3 className="flex items-center gap-2 font-heading text-base font-bold text-main md:text-lg">
+            <h3 className="flex items-center gap-2 font-heading text-base font-normal text-main md:text-lg">
               <Award size={16} className="text-primary" /> الخبرات
             </h3>
             <p className="mt-0.5 text-xs text-muted">خبراتك السابقة والمناهج التي درستيها</p>

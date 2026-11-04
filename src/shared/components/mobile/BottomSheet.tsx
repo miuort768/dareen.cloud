@@ -71,7 +71,7 @@ export const BottomSheet = ({
             <div className="min-w-0">
               <SheetPrimitive.Title
                 data-slot="bst-title"
-                className="truncate text-base font-bold text-main"
+                className="truncate text-base font-normal text-main"
               >
                 {title}
               </SheetPrimitive.Title>

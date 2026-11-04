@@ -189,13 +189,13 @@ export const StudentDrawer = ({
             <div className="flex items-center justify-between p-4">
               <button
                 onClick={onClose}
-                className="flex h-10 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-bold text-on-primary outline-none transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus md:h-8"
+                className="flex h-10 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-normal text-on-primary outline-none transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus md:h-8"
                 aria-label="رجوع"
               >
                 <ChevronLeft size={14} />
                 رجوع
               </button>
-              <span className="text-xs font-bold text-on-primary">بيانات الطالب</span>
+              <span className="text-xs font-normal text-on-primary">بيانات الطالب</span>
               <div className="w-8" />
             </div>
           </div>
@@ -209,15 +209,15 @@ export const StudentDrawer = ({
                   gradient.g,
                 )}
               >
-                <span className={cn('text-xl font-bold', gradient.on)}>
+                <span className={cn('text-xl font-normal', gradient.on)}>
                   {student.name?.charAt(0) || 'ط'}
                 </span>
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h2 className="truncate text-base font-bold text-main">{student.name}</h2>
+                  <h2 className="truncate text-base font-normal text-main">{student.name}</h2>
                   {streakDays >= 3 && (
-                    <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-warning-soft px-1.5 py-0.5 text-[9px] font-bold text-warning">
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-warning-soft px-1.5 py-0.5 text-[9px] font-normal text-warning">
                       <Flame size={9} /> {streakDays}
                     </span>
                   )}
@@ -225,19 +225,19 @@ export const StudentDrawer = ({
                 <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold ring-1',
+                      'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-normal ring-1',
                       gradeStyle,
                     )}
                   >
                     <GraduationCap size={10} />
                     {student.grade}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5 text-[10px] font-bold text-warning">
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5 text-[10px] font-normal text-warning">
                     <Star size={10} />
                     {points.toLocaleString()} XP
                   </span>
                   {student.enrollments && student.enrollments.length > 0 && (
-                    <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2 py-0.5 text-[10px] font-bold text-info">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2 py-0.5 text-[10px] font-normal text-info">
                       <BookOpen size={10} />
                       {student.enrollments.length} برامج
                     </span>
@@ -258,7 +258,7 @@ export const StudentDrawer = ({
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
                     className={cn(
-                      'relative flex flex-1 items-center justify-center gap-1.5 py-3 text-[10px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                      'relative flex flex-1 items-center justify-center gap-1.5 py-3 text-[10px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       isActive ? 'text-primary' : 'text-muted hover:text-main',
                     )}
                   >
@@ -288,12 +288,12 @@ export const StudentDrawer = ({
                         <Trophy size={16} className="text-on-warning" />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-main">{level.label}</p>
+                        <p className="text-xs font-normal text-main">{level.label}</p>
                         <p className="text-[9px] text-muted">المستوى الحالي</p>
                       </div>
                     </div>
                     <div className="text-end">
-                      <p className="text-base font-bold tabular-nums text-warning">
+                      <p className="text-base font-normal tabular-nums text-warning">
                         {points.toLocaleString()}
                       </p>
                       <p className="text-[9px] text-muted">إجمالي XP</p>
@@ -317,7 +317,7 @@ export const StudentDrawer = ({
                             {level.next - points} XP للمستوى التالي
                           </span>
                         </div>
-                        <span className="text-[9px] font-bold tabular-nums text-warning">
+                        <span className="text-[9px] font-normal tabular-nums text-warning">
                           {Math.round(level.progress)}%
                         </span>
                       </div>
@@ -328,7 +328,7 @@ export const StudentDrawer = ({
                     <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
                       <div className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-2.5 py-1.5">
                         <Flame size={14} className="text-warning" />
-                        <span className="text-[10px] font-bold text-warning">{streakDays} يوم</span>
+                        <span className="text-[10px] font-normal text-warning">{streakDays} يوم</span>
                       </div>
                       <span className="text-[9px] text-muted">
                         سلسلة متصلة <Flame size={9} className="inline text-warning" />
@@ -381,10 +381,10 @@ export const StudentDrawer = ({
                         >
                           <Icon size={14} />
                         </span>
-                        <p className="truncate text-sm font-black tabular-nums text-main">
+                        <p className="truncate text-sm font-medium tabular-nums text-main">
                           {item.value}
                         </p>
-                        <p className="mt-0.5 text-[10px] font-bold text-muted">{item.label}</p>
+                        <p className="mt-0.5 text-[10px] font-normal text-muted">{item.label}</p>
                       </div>
                     )
                   })}
@@ -393,7 +393,7 @@ export const StudentDrawer = ({
                 {/* Today's Sessions */}
                 {todaySessions.length > 0 && (
                   <div className="rounded-2xl border border-border bg-surface p-4">
-                    <h3 className="mb-3 flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                    <h3 className="mb-3 flex items-center gap-1.5 text-[11px] font-normal text-muted">
                       <Calendar size={12} />
                       حصص اليوم
                     </h3>
@@ -409,12 +409,12 @@ export const StudentDrawer = ({
                               sessionOutcome(s.status) === 'done' ? 'bg-success' : 'bg-warning',
                             )}
                           />
-                          <span className="flex-1 text-[10px] font-bold text-main">
+                          <span className="flex-1 text-[10px] font-normal text-main">
                             {s.subject}
                           </span>
                           <span
                             className={cn(
-                              'text-[9px] font-bold',
+                              'text-[9px] font-normal',
                               sessionOutcome(s.status) === 'done' ? 'text-success' : 'text-warning',
                             )}
                           >
@@ -428,12 +428,12 @@ export const StudentDrawer = ({
 
                 {/* Contact & Account */}
                 <div className="rounded-2xl border border-border bg-surface p-4">
-                  <h3 className="mb-3 text-[11px] font-bold text-muted">معلومات التواصل</h3>
+                  <h3 className="mb-3 text-[11px] font-normal text-muted">معلومات التواصل</h3>
                   <div className="space-y-2">
                     {student.parentPhone && (
                       <div className="flex items-center justify-between rounded-xl border border-border bg-card p-2.5">
                         <span className="text-[10px] text-muted">هاتف ولي الأمر</span>
-                        <span className="font-mono text-[10px] font-bold text-main" dir="ltr">
+                        <span className="font-mono text-[10px] font-normal text-main" dir="ltr">
                           {student.parentPhone}
                         </span>
                       </div>
@@ -441,7 +441,7 @@ export const StudentDrawer = ({
                     {student.studentPhone && (
                       <div className="flex items-center justify-between rounded-xl border border-border bg-card p-2.5">
                         <span className="text-[10px] text-muted">هاتف الطالب</span>
-                        <span className="font-mono text-[10px] font-bold text-main" dir="ltr">
+                        <span className="font-mono text-[10px] font-normal text-main" dir="ltr">
                           {student.studentPhone}
                         </span>
                       </div>
@@ -449,7 +449,7 @@ export const StudentDrawer = ({
                     {student.curriculum && (
                       <div className="flex items-center justify-between rounded-xl border border-border bg-card p-2.5">
                         <span className="text-[10px] text-muted">المنهج</span>
-                        <span className="text-[10px] font-bold text-main">
+                        <span className="text-[10px] font-normal text-main">
                           {normalizeCurriculum(student.curriculum)}
                         </span>
                       </div>
@@ -457,7 +457,7 @@ export const StudentDrawer = ({
                     {student.username && (
                       <div className="flex items-center justify-between rounded-xl border border-border bg-card p-2.5">
                         <span className="text-[10px] text-muted">اسم المستخدم</span>
-                        <span className="font-mono text-[10px] font-bold text-info">
+                        <span className="font-mono text-[10px] font-normal text-info">
                           @{student.username}
                         </span>
                       </div>
@@ -469,7 +469,7 @@ export const StudentDrawer = ({
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${student.parentPhone}`}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[11px] font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     <Phone size={13} /> اتصال
                   </a>
@@ -477,7 +477,7 @@ export const StudentDrawer = ({
                     href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-normal text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     <MessageSquare size={13} /> واتساب
                   </a>
@@ -490,7 +490,7 @@ export const StudentDrawer = ({
                 {enrollments.length === 0 ? (
                   <div className="py-12 text-center text-muted">
                     <BookOpen size={36} className="mx-auto mb-2 opacity-30" />
-                    <p className="text-xs font-bold text-muted">لا توجد برامج</p>
+                    <p className="text-xs font-normal text-muted">لا توجد برامج</p>
                     <p className="text-xs text-muted">لم يتم إضافة أي برامج لهذا الطالب</p>
                   </div>
                 ) : (
@@ -514,19 +514,19 @@ export const StudentDrawer = ({
                               <BookOpen size={14} />
                             </div>
                             <div>
-                              <h4 className="text-xs font-bold text-main">{en.subject}</h4>
+                              <h4 className="text-xs font-normal text-main">{en.subject}</h4>
                               <p className="text-[9px] text-muted">
                                 {enrollmentTeacherName(en) || '—'}
                               </p>
                               {en.curriculum ? (
-                                <span className="mt-1 inline-flex items-center gap-0.5 rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary ring-1 ring-primary/20">
+                                <span className="mt-1 inline-flex items-center gap-0.5 rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-normal text-primary ring-1 ring-primary/20">
                                   <BookOpen size={8} /> {normalizeCurriculum(en.curriculum)}
                                 </span>
                               ) : null}
                             </div>
                           </div>
                           {isLow && (
-                            <span className="animate-pulse rounded-lg bg-error-soft px-2 py-0.5 text-[9px] font-bold text-error ring-1 ring-error-soft">
+                            <span className="animate-pulse rounded-lg bg-error-soft px-2 py-0.5 text-[9px] font-normal text-error ring-1 ring-error-soft">
                               رصيد منخفض
                             </span>
                           )}
@@ -569,7 +569,7 @@ export const StudentDrawer = ({
                             </span>
                             <span
                               className={cn(
-                                'text-[10px] font-bold tabular-nums',
+                                'text-[10px] font-normal tabular-nums',
                                 isLow ? 'text-error' : 'text-success',
                               )}
                             >
@@ -581,27 +581,27 @@ export const StudentDrawer = ({
                         {/* Extra program stats */}
                         <div className="mt-2.5 grid grid-cols-3 gap-1.5 border-t border-border pt-2.5">
                           <div className="text-center">
-                            <p className="text-[10px] font-black tabular-nums text-success">
+                            <p className="text-[10px] font-medium tabular-nums text-success">
                               {used}
                             </p>
-                            <p className="text-[9px] font-bold text-muted">حصة منفذة</p>
+                            <p className="text-[9px] font-normal text-muted">حصة منفذة</p>
                           </div>
                           <div className="text-center">
                             <p
                               className={cn(
-                                'text-[10px] font-black tabular-nums',
+                                'text-[10px] font-medium tabular-nums',
                                 isLow ? 'text-error' : 'text-warning',
                               )}
                             >
                               {remaining}
                             </p>
-                            <p className="text-[9px] font-bold text-muted">حصة متبقية</p>
+                            <p className="text-[9px] font-normal text-muted">حصة متبقية</p>
                           </div>
                           <div className="text-center">
-                            <p className="text-[10px] font-black text-info">
+                            <p className="text-[10px] font-medium text-info">
                               {getCurrencySymbol(en.curr)}
                             </p>
-                            <p className="text-[9px] font-bold text-muted">العملة</p>
+                            <p className="text-[9px] font-normal text-muted">العملة</p>
                           </div>
                         </div>
                       </motion.div>
@@ -613,10 +613,10 @@ export const StudentDrawer = ({
                 {showAddProgram ? (
                   <div className="rounded-2xl border border-border bg-surface p-4">
                     <div className="mb-2 flex items-center justify-between">
-                      <p className="text-[11px] font-bold text-main">إضافة برنامج جديد</p>
+                      <p className="text-[11px] font-normal text-main">إضافة برنامج جديد</p>
                       <button
                         onClick={() => setShowAddProgram(false)}
-                        className="text-[10px] font-bold text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+                        className="text-[10px] font-normal text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                         aria-label="إغلاق نموذج إضافة برنامج"
                       >
                         إلغاء
@@ -632,7 +632,7 @@ export const StudentDrawer = ({
                 ) : (
                   <button
                     onClick={() => setShowAddProgram(true)}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-3 text-[10px] font-bold text-muted outline-none transition-all hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-3 text-[10px] font-normal text-muted outline-none transition-all hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <Plus size={13} /> إضافة برنامج جديد
                   </button>
@@ -645,7 +645,7 @@ export const StudentDrawer = ({
                 {sessions.length === 0 ? (
                   <div className="py-12 text-center text-muted">
                     <Clock size={36} className="mx-auto mb-2 opacity-30" />
-                    <p className="text-xs font-bold text-muted">لا توجد نشاطات</p>
+                    <p className="text-xs font-normal text-muted">لا توجد نشاطات</p>
                     <p className="text-xs text-muted">سيظهر هنا سجل الحصص والمدفوعات</p>
                   </div>
                 ) : (
@@ -687,10 +687,10 @@ export const StudentDrawer = ({
                           </div>
                           <div className="min-w-0 flex-1 pt-0.5">
                             <div className="flex items-center gap-2">
-                              <p className="text-[11px] font-bold text-main">{s.subject}</p>
+                              <p className="text-[11px] font-normal text-main">{s.subject}</p>
                               <span
                                 className={cn(
-                                  'text-[9px] font-bold',
+                                  'text-[9px] font-normal',
                                   isCompleted
                                     ? 'text-success'
                                     : isCancelled

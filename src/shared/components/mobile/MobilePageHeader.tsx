@@ -48,7 +48,7 @@ export const MobilePageHeader = ({
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <h1 className="font-outfit truncate text-lg font-black leading-tight text-main">{title}</h1>
+        <h1 className="font-outfit truncate text-lg font-medium leading-tight text-main">{title}</h1>
         {subtitle && <p className="truncate text-[11px] font-medium text-muted">{subtitle}</p>}
       </div>
       {action && <div className="shrink-0">{action}</div>}

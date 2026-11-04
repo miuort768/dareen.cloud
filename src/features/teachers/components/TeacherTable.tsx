@@ -66,7 +66,7 @@ const computeStatus = (teacher: Teacher, studentCounts: Record<string, number>) 
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="group relative">
     {children}
-    <div className="pointer-events-none absolute -top-8 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
+    <div className="pointer-events-none absolute -top-8 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-normal text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
       {label}
     </div>
   </div>
@@ -91,11 +91,11 @@ export const TeacherTable = memo(
         mobileLabel: 'المعلمة',
         render: (teacher) => (
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-on-primary shadow-elevation-1 dark:bg-accent dark:text-on-accent">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-normal text-on-primary shadow-elevation-1 dark:bg-accent dark:text-on-accent">
               {(teacher.name || '?').charAt(0)}
             </div>
             <div className="min-w-0">
-              <p className="truncate text-sm font-bold leading-tight text-main">
+              <p className="truncate text-sm font-normal leading-tight text-main">
                 {teacher.name || '—'}
               </p>
               <p className="mt-0.5 font-mono text-[10px] text-muted">
@@ -114,7 +114,7 @@ export const TeacherTable = memo(
         render: (teacher) => (
           <span
             className={cn(
-              'inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold',
+              'inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-normal',
               getSubjectStyle(teacher.subject),
             )}
           >
@@ -132,7 +132,7 @@ export const TeacherTable = memo(
           return (
             <span
               className={cn(
-                'inline-flex items-center gap-1 text-[11px] font-bold',
+                'inline-flex items-center gap-1 text-[11px] font-normal',
                 points > 0 ? 'text-warning-strong' : 'text-muted',
               )}
             >
@@ -152,7 +152,7 @@ export const TeacherTable = memo(
           return (
             <span
               className={cn(
-                'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-bold',
+                'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-normal',
                 status.text,
               )}
             >
@@ -169,7 +169,7 @@ export const TeacherTable = memo(
         align: 'center',
         hideOnMobile: true,
         render: (teacher) => (
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-info-soft text-xs font-bold text-info-strong">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-info-soft text-xs font-normal text-info-strong">
             {studentCounts[teacher.name] || 0}
           </span>
         ),
@@ -182,7 +182,7 @@ export const TeacherTable = memo(
         mobileLabel: 'التعريفة',
         render: (teacher) => (
           <div className="inline-flex items-center gap-1">
-            <span className="text-sm font-bold text-success-strong">{teacher.price}</span>
+            <span className="text-sm font-normal text-success-strong">{teacher.price}</span>
             <span className="text-[9px] text-muted">{getCurrencySymbol(teacher.currency)}</span>
           </div>
         ),
@@ -276,17 +276,17 @@ export const TeacherTable = memo(
               <>
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-base font-bold text-on-primary dark:bg-accent dark:text-on-accent">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-base font-normal text-on-primary dark:bg-accent dark:text-on-accent">
                       {(teacher.name || '?').charAt(0)}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <h4 className="truncate text-base font-bold leading-tight text-main">
+                        <h4 className="truncate text-base font-normal leading-tight text-main">
                           {teacher.name || '—'}
                         </h4>
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold',
+                            'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-normal',
                             status.text,
                           )}
                         >
@@ -296,7 +296,7 @@ export const TeacherTable = memo(
                       <div className="mt-1 flex items-center gap-2">
                         <span
                           className={cn(
-                            'inline-flex items-center rounded px-2 py-0.5 text-[9px] font-bold',
+                            'inline-flex items-center rounded px-2 py-0.5 text-[9px] font-normal',
                             subjectStyle,
                           )}
                         >
@@ -310,7 +310,7 @@ export const TeacherTable = memo(
                     </div>
                   </div>
                   <div className="ms-2 shrink-0 text-end">
-                    <span className="text-base font-bold text-success-strong">{teacher.price}</span>
+                    <span className="text-base font-normal text-success-strong">{teacher.price}</span>
                     <span className="mt-0.5 block text-[9px] text-muted">
                       {getCurrencySymbol(teacher.currency)} / حصة
                     </span>
@@ -322,7 +322,7 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onChat(teacher.id)
                     }}
-                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-info-soft text-[11px] font-bold text-info-strong outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-info-soft text-[11px] font-normal text-info-strong outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                     aria-label="مراسلة"
                   >
                     <MessageCircle size={13} /> مراسلة
@@ -332,7 +332,7 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onNotify(teacher)
                     }}
-                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-warning-soft text-[11px] font-bold text-warning-strong outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-warning-soft text-[11px] font-normal text-warning-strong outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                     aria-label="إرسال إشعار"
                   >
                     <Bell size={13} /> إشعار
@@ -342,7 +342,7 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onEdit(teacher)
                     }}
-                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-primary-soft text-[11px] font-bold text-primary outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-primary-soft text-[11px] font-normal text-primary outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                     aria-label="تعديل"
                   >
                     <Edit size={13} /> تعديل
@@ -352,7 +352,7 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onDelete(teacher.id)
                     }}
-                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-error-soft text-[11px] font-bold text-error outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-error-soft text-[11px] font-normal text-error outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                     aria-label="حذف"
                   >
                     <Trash2 size={13} /> حذف

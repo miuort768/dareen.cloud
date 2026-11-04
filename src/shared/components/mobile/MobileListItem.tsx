@@ -59,7 +59,7 @@ export const MobileListItem = ({
       {leading && <div className="shrink-0">{leading}</div>}
 
       <div className="min-w-0 flex-1">
-        <div className="truncate text-sm font-bold text-main">{title}</div>
+        <div className="truncate text-sm font-normal text-main">{title}</div>
         {subtitle && (
           <div className="mt-0.5 truncate text-[11px] font-medium text-muted">{subtitle}</div>
         )}

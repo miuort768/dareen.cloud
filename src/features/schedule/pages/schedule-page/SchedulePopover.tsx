@@ -129,7 +129,7 @@ export const SchedulePopover = ({
                     <BookOpen size={18} className="text-white" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-on-primary">{event.subject}</h3>
+                    <h3 className="text-sm font-normal text-on-primary">{event.subject}</h3>
                     <p className="mt-0.5 text-micro text-white/70">
                       {event.curriculum || 'المنهج العام'}
                     </p>
@@ -148,7 +148,7 @@ export const SchedulePopover = ({
                 <div className="relative z-10 mt-2 flex items-center gap-1.5">
                   <div className="flex items-center gap-1 rounded-lg bg-white/15 px-2 py-0.5">
                     <Star size={8} className="text-warning" fill="currentColor" />
-                    <span className="text-micro font-bold text-white">
+                    <span className="text-micro font-normal text-white">
                       {event.studentPoints} نقطة
                     </span>
                   </div>
@@ -161,13 +161,13 @@ export const SchedulePopover = ({
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-xl bg-surface p-3">
                   <User size={12} className="mb-1 text-muted" />
-                  <p className="text-micro font-bold text-muted">الطالب</p>
-                  <p className="mt-0.5 text-xs font-bold text-main">{event.studentName}</p>
+                  <p className="text-micro font-normal text-muted">الطالب</p>
+                  <p className="mt-0.5 text-xs font-normal text-main">{event.studentName}</p>
                 </div>
                 <div className="rounded-xl bg-surface p-3">
                   <GraduationCap size={12} className="mb-1 text-muted" />
-                  <p className="text-micro font-bold text-muted">المعلمة</p>
-                  <p className="mt-0.5 text-xs font-bold text-main">
+                  <p className="text-micro font-normal text-muted">المعلمة</p>
+                  <p className="mt-0.5 text-xs font-normal text-main">
                     {event.teacherName || 'غير محددة'}
                   </p>
                 </div>
@@ -175,8 +175,8 @@ export const SchedulePopover = ({
               <div className="flex items-center gap-2 rounded-xl bg-surface p-3">
                 <CalendarDays size={12} className="shrink-0 text-muted" />
                 <div>
-                  <p className="text-micro font-bold text-muted">الموعد</p>
-                  <p className="mt-0.5 text-xs font-bold text-main">
+                  <p className="text-micro font-normal text-muted">الموعد</p>
+                  <p className="mt-0.5 text-xs font-normal text-main">
                     {event.day} — {event.time}
                   </p>
                 </div>
@@ -185,8 +185,8 @@ export const SchedulePopover = ({
                 <div className="flex items-center gap-2 rounded-xl bg-surface p-3">
                   <Star size={12} className="shrink-0 text-muted" />
                   <div>
-                    <p className="text-micro font-bold text-muted">الصف</p>
-                    <p className="mt-0.5 text-xs font-bold text-main">{event.studentGrade}</p>
+                    <p className="text-micro font-normal text-muted">الصف</p>
+                    <p className="mt-0.5 text-xs font-normal text-main">{event.studentGrade}</p>
                   </div>
                 </div>
               )}
@@ -206,7 +206,7 @@ export const SchedulePopover = ({
                       onChange={(e) => setNoteText(e.target.value)}
                       placeholder="اكتب ملاحظتك هنا..."
                       rows={3}
-                      className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-xs font-bold text-main outline-none placeholder:font-normal placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20"
+                      className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-xs font-normal text-main outline-none placeholder:font-normal placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20"
                     />
                   </motion.div>
                 )}
@@ -222,7 +222,7 @@ export const SchedulePopover = ({
                     className="flex items-center gap-2 rounded-xl bg-success-soft p-3"
                   >
                     <CheckCircle2 size={14} className="shrink-0 text-success" />
-                    <span className="text-xs font-bold text-success">تم إرسال الملاحظة بنجاح</span>
+                    <span className="text-xs font-normal text-success">تم إرسال الملاحظة بنجاح</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -238,14 +238,14 @@ export const SchedulePopover = ({
                         setShowNoteInput(false)
                         setNoteText('')
                       }}
-                      className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main outline-none transition-colors duration-fast hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                      className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-micro font-normal text-main outline-none transition-colors duration-fast hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                     >
                       إلغاء
                     </button>
                     <button
                       onClick={handleSendNote}
                       disabled={!noteText.trim() || sendNoteMutation.isPending}
-                      className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                      className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                     >
                       <Send size={12} />
                       {sendNoteMutation.isPending ? 'جاري الإرسال...' : 'إرسال الملاحظة'}
@@ -254,7 +254,7 @@ export const SchedulePopover = ({
                 ) : (
                   <button
                     onClick={() => setShowNoteInput(true)}
-                    className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                    className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   >
                     <Send size={12} />
                     إرسال ملاحظة للطالب

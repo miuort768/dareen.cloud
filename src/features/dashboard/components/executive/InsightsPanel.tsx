@@ -158,19 +158,19 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
             <Lightbulb size={16} className="text-warning" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-main">تحليلات ذكية</h3>
+            <h3 className="text-sm font-medium text-main">تحليلات ذكية</h3>
             <p className="text-[10px] text-muted">رؤى مبنية على بيانات اليوم</p>
           </div>
         </div>
         <div className="flex items-center gap-1">
           {positives > 0 && (
-            <span className="flex items-center gap-0.5 rounded-2xl bg-success-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-success">
+            <span className="flex items-center gap-0.5 rounded-2xl bg-success-soft px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-success">
               <TrendingUp size={9} />
               {positives}
             </span>
           )}
           {negatives > 0 && (
-            <span className="flex items-center gap-0.5 rounded-2xl bg-error-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-error">
+            <span className="flex items-center gap-0.5 rounded-2xl bg-error-soft px-1.5 py-0.5 text-[10px] font-medium tabular-nums text-error">
               <TrendingDown size={9} />
               {negatives}
             </span>
@@ -184,7 +184,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-surface">
               <Sparkles size={16} className="text-dim" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد تحليلات بعد</p>
+            <p className="text-xs font-normal text-muted">لا توجد تحليلات بعد</p>
             <p className="mt-0.5 text-[10px] text-dim">ستظهر الرؤى عند توفر بيانات كافية</p>
           </div>
         )}

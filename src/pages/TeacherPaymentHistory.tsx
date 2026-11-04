@@ -231,7 +231,7 @@ export const TeacherPaymentHistory = () => {
         header: 'التخصص',
         mobileLabel: 'التخصص',
         render: (inv) => (
-          <span className="text-xs font-bold text-main">{inv.specialization || '—'}</span>
+          <span className="text-xs font-normal text-main">{inv.specialization || '—'}</span>
         ),
       },
       {
@@ -240,7 +240,7 @@ export const TeacherPaymentHistory = () => {
         align: 'center',
         mobileLabel: 'المبلغ',
         render: (inv) => (
-          <span className="font-mono text-xs font-bold tabular-nums text-main">
+          <span className="font-mono text-xs font-normal tabular-nums text-main">
             {inv.amount.toLocaleString()}{' '}
             <span className="text-[9px] text-muted">{inv.currency || primaryCurrency}</span>
           </span>
@@ -276,7 +276,7 @@ export const TeacherPaymentHistory = () => {
           return (
             <span
               className={cn(
-                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold',
+                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-normal',
                 meta.bgCls,
                 meta.textCls,
               )}
@@ -346,10 +346,10 @@ export const TeacherPaymentHistory = () => {
             subtitle="سجل المدفوعات والمستحقات المالية"
             end={
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-bold tabular-nums text-on-primary backdrop-blur-sm">
+                <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-normal tabular-nums text-on-primary backdrop-blur-sm">
                   الإجمالي: {stats.total.toLocaleString()} {primaryCurrency}
                 </span>
-                <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-bold tabular-nums text-on-primary backdrop-blur-sm">
+                <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-normal tabular-nums text-on-primary backdrop-blur-sm">
                   مدفوعة: {scopedStats.paidCount}
                 </span>
               </div>
@@ -388,7 +388,7 @@ export const TeacherPaymentHistory = () => {
         </motion.div>
 
         {mixedCount > 0 && (
-          <p className="mb-4 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning-strong">
+          <p className="mb-4 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-normal text-warning-strong">
             <AlertTriangle size={13} className="shrink-0" />
             {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
           </p>
@@ -409,7 +409,7 @@ export const TeacherPaymentHistory = () => {
                 placeholder="بحث بالتخصص أو طريقة الدفع أو المبلغ..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-normal text-main transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
             </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -422,7 +422,7 @@ export const TeacherPaymentHistory = () => {
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
                   aria-label="تصفية حسب الحالة"
-                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
+                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-normal text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
                 >
                   {STATUS_OPTIONS.map((o) => (
                     <option key={o.value} value={o.value}>
@@ -436,7 +436,7 @@ export const TeacherPaymentHistory = () => {
                   value={period}
                   onChange={(e) => setPeriod(e.target.value)}
                   aria-label="تصفية حسب الفترة"
-                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface px-3 text-xs font-bold text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
+                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface px-3 text-xs font-normal text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
                 >
                   {periodOptions.map((p) => (
                     <option key={p.value} value={p.value}>
@@ -474,10 +474,10 @@ export const TeacherPaymentHistory = () => {
                         <Wallet size={14} className="text-primary" />
                       </div>
                       <div className="min-w-0">
-                        <p className="truncate text-xs font-black text-main">
+                        <p className="truncate text-xs font-medium text-main">
                           {inv.specialization || 'بدون تخصص'}
                         </p>
-                        <p className="mt-0.5 text-[10px] font-bold text-muted">
+                        <p className="mt-0.5 text-[10px] font-normal text-muted">
                           {inv.date
                             ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar })
                             : '—'}
@@ -485,7 +485,7 @@ export const TeacherPaymentHistory = () => {
                       </div>
                     </div>
                     <div className="flex shrink-0 flex-col items-end gap-1.5">
-                      <span className="font-mono text-sm font-black tabular-nums text-main">
+                      <span className="font-mono text-sm font-medium tabular-nums text-main">
                         {inv.amount.toLocaleString()}{' '}
                         <span className="text-[10px] text-muted">
                           {inv.currency || primaryCurrency}
@@ -493,7 +493,7 @@ export const TeacherPaymentHistory = () => {
                       </span>
                       <span
                         className={cn(
-                          'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold',
+                          'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-normal',
                           meta.bgCls,
                           meta.textCls,
                         )}
@@ -527,7 +527,7 @@ export const TeacherPaymentHistory = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

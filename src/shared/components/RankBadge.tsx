@@ -28,7 +28,7 @@ export const RankBadge = ({ rank, className, showName = true, size = 'md' }: Ran
   return (
     <div
       className={cn(
-        'inline-flex items-center rounded-2xl font-bold uppercase text-on-primary shadow-elevation-1',
+        'inline-flex items-center rounded-2xl font-normal uppercase text-on-primary shadow-elevation-1',
         rank.badgeColor,
         sizeClasses[size],
         className,

@@ -163,7 +163,7 @@ const ExpenseCard = ({
             <Icon size={16} />
           </div>
           <div>
-            <span className="block text-xs font-bold text-main">{expense.name}</span>
+            <span className="block text-xs font-normal text-main">{expense.name}</span>
             <span className="block text-[10px] text-muted">مصروف تشغيلي</span>
           </div>
         </div>
@@ -175,14 +175,14 @@ const ExpenseCard = ({
             type="number"
             aria-label={`مبلغ ${expense.name}`}
             step="any"
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-main outline-none transition-all [appearance:textfield] focus:border-primary focus-visible:ring-2 focus-visible:ring-focus [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none transition-all [appearance:textfield] focus:border-primary focus-visible:ring-2 focus-visible:ring-focus [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             placeholder="0"
             value={val}
             onChange={(e) => setVal(e.target.value)}
             onBlur={() => onUpdate(expense.id, val)}
           />
         </div>
-        <span className="shrink-0 text-xs font-bold text-primary">{CURRENCY_SYMBOL}</span>
+        <span className="shrink-0 text-xs font-normal text-primary">{CURRENCY_SYMBOL}</span>
       </div>
 
       {Number(val) > 0 && (
@@ -215,10 +215,10 @@ export const FixedExpensesManager = ({
             <Building2 size={18} />
           </div>
           <div>
-            <h2 className="text-sm font-black text-main">المصروفات التشغيلية والتطوير</h2>
+            <h2 className="text-sm font-medium text-main">المصروفات التشغيلية والتطوير</h2>
             <p className="mt-0.5 text-xs text-muted">
               إجمالي المصروفات:{' '}
-              <span className="font-bold tabular-nums text-primary">{total.toLocaleString()}</span>{' '}
+              <span className="font-normal tabular-nums text-primary">{total.toLocaleString()}</span>{' '}
               {CURRENCY_SYMBOL}
             </p>
           </div>
@@ -226,13 +226,13 @@ export const FixedExpensesManager = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onConvertAll}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <RotateCcw size={13} /> ترحيل للمعاملات
           </button>
           <button
             onClick={onClearAll}
-            className="flex items-center gap-1.5 rounded-xl border border-error-soft bg-error-soft px-3 py-2 text-xs font-bold text-error outline-none transition-all hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl border border-error-soft bg-error-soft px-3 py-2 text-xs font-normal text-error outline-none transition-all hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Trash2 size={13} /> تصفير المبالغ
           </button>

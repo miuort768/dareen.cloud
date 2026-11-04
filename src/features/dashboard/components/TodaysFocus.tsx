@@ -54,10 +54,10 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
         <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
           <Sun size={24} strokeWidth={1.6} className="text-primary" />
         </div>
-        <p className="text-xs font-bold text-muted">لا توجد مهام اليوم</p>
+        <p className="text-xs font-normal text-muted">لا توجد مهام اليوم</p>
         <p className="mt-1 text-[11px] font-medium text-dim">استمتع بيوم هادئ</p>
         <Link to="/tasks">
-          <Button size="sm" className="mt-3 h-8 gap-1.5 rounded-xl px-4 text-[10px] font-bold">
+          <Button size="sm" className="mt-3 h-8 gap-1.5 rounded-xl px-4 text-[10px] font-normal">
             <Plus size={12} /> إنشاء مهمة
           </Button>
         </Link>
@@ -75,18 +75,18 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
             key={s.id}
             className="flex items-center gap-2.5 rounded-xl border border-border bg-card p-2.5 transition-colors hover:bg-surface"
           >
-            <span className="w-[50px] shrink-0 rounded-lg bg-surface py-1.5 text-center text-[10px] font-black tabular-nums leading-none text-main">
+            <span className="w-[50px] shrink-0 rounded-lg bg-surface py-1.5 text-center text-[10px] font-medium tabular-nums leading-none text-main">
               {s.time || '—'}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-bold text-main">{s.studentName}</p>
+              <p className="truncate text-xs font-normal text-main">{s.studentName}</p>
               {s.subject && (
                 <p className="mt-0.5 truncate text-[10px] font-medium text-muted">{s.subject}</p>
               )}
             </div>
             <span
               className={cn(
-                'shrink-0 rounded-lg px-2 py-1 text-[10px] font-black leading-none',
+                'shrink-0 rounded-lg px-2 py-1 text-[10px] font-medium leading-none',
                 st.badge,
               )}
             >
@@ -106,7 +106,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
             <ListTodo size={13} strokeWidth={1.9} className="text-warning" />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-xs font-bold text-main">{t.title}</p>
+            <p className="truncate text-xs font-normal text-main">{t.title}</p>
             {t.dueDate && (
               <p className="mt-0.5 text-[10px] font-medium tabular-nums text-muted">{t.dueDate}</p>
             )}
@@ -125,7 +125,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
           <span className="flex h-[26px] w-[50px] shrink-0 items-center justify-center rounded-lg bg-card">
             <BatteryLow size={13} strokeWidth={1.9} className="text-error" />
           </span>
-          <p className="flex-1 text-xs font-bold text-error">
+          <p className="flex-1 text-xs font-normal text-error">
             {lowBalanceCount} طالب برصيد جلسات منخفض
           </p>
           <AlertTriangle size={13} className="shrink-0 text-error opacity-70" />
@@ -140,7 +140,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
           <Button
             variant="outline"
             size="sm"
-            className="h-8 w-full gap-1.5 rounded-xl text-[10px] font-bold"
+            className="h-8 w-full gap-1.5 rounded-xl text-[10px] font-normal"
           >
             <CalendarCheck size={11} />
             الجدول
@@ -154,7 +154,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
           <Button
             variant="outline"
             size="sm"
-            className="h-8 w-full gap-1.5 rounded-xl text-[10px] font-bold"
+            className="h-8 w-full gap-1.5 rounded-xl text-[10px] font-normal"
           >
             <ListTodo size={11} />
             المهام

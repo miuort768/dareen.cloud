@@ -43,7 +43,7 @@ interface ParentsTableProps {
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="group relative">
     {children}
-    <div className="pointer-events-none absolute -top-8 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
+    <div className="pointer-events-none absolute -top-8 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-normal text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
       {label}
     </div>
   </div>
@@ -75,29 +75,29 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
         <div className="grid grid-cols-3 gap-3">
           <div className="flex items-center gap-2 rounded-xl border border-success-soft bg-success-soft px-3 py-2">
             <Phone size={12} className="shrink-0 text-success" />
-            <span className="font-mono text-[10px] font-bold text-main" dir="ltr">
+            <span className="font-mono text-[10px] font-normal text-main" dir="ltr">
               {parent.phone}
             </span>
           </div>
           {parent.phone2 && (
             <div className="flex items-center gap-2 rounded-xl border border-info-soft bg-info-soft px-3 py-2">
               <Phone size={12} className="shrink-0 text-info" />
-              <span className="font-mono text-[10px] font-bold text-main" dir="ltr">
+              <span className="font-mono text-[10px] font-normal text-main" dir="ltr">
                 {parent.phone2}
               </span>
             </div>
           )}
           <div className="flex items-center gap-2 rounded-xl border border-warning-soft bg-warning-soft px-3 py-2">
             <Users size={12} className="shrink-0 text-warning" />
-            <span className="text-[10px] font-bold text-main">{children.length} أبناء</span>
+            <span className="text-[10px] font-normal text-main">{children.length} أبناء</span>
           </div>
         </div>
 
         <div>
-          <h5 className="mb-3 flex items-center gap-2 text-[10px] font-bold text-muted">
+          <h5 className="mb-3 flex items-center gap-2 text-[10px] font-normal text-muted">
             <GraduationCap size={11} />
             الأبناء المسجلين
-            <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
+            <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-normal text-primary">
               {children.length}
             </span>
           </h5>
@@ -116,11 +116,11 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
                     className="rounded-xl border border-border bg-card p-3 transition-all hover:border-primary/20"
                   >
                     <div className="mb-2 flex items-center gap-2.5">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[9px] font-bold text-primary">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[9px] font-normal text-primary">
                         {(child.name || '?').charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <p className="truncate text-[10px] font-bold text-main">{child.name}</p>
+                        <p className="truncate text-[10px] font-normal text-main">{child.name}</p>
                         <p className="text-[9px] text-muted">{child.grade || '—'}</p>
                       </div>
                       {hasLowBalance && <AlertCircle size={10} className="shrink-0 text-error" />}
@@ -130,7 +130,7 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
                         {(child.enrollments || []).slice(0, 2).map((en, i) => (
                           <div key={i} className="flex items-center justify-between text-[9px]">
                             <span className="text-muted">{en.subject}</span>
-                            <span className="font-bold text-main">
+                            <span className="font-normal text-main">
                               {en.sessionsUsed}/{en.sessionsTotal}
                             </span>
                           </div>
@@ -156,7 +156,7 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
               })
             ) : (
               <div className="col-span-full rounded-xl border border-dashed border-border py-6 text-center">
-                <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطين</p>
+                <p className="text-xs font-normal text-muted">لا يوجد أبناء مرتبطين</p>
               </div>
             )}
           </div>
@@ -192,7 +192,7 @@ export const ParentsTable = memo<ParentsTableProps>(
               <div className="flex items-center gap-3">
                 <div
                   className={cn(
-                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-2 transition-all',
+                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-normal ring-2 transition-all',
                     isExpanded
                       ? 'bg-primary text-on-primary ring-primary/20'
                       : 'bg-primary-soft text-primary ring-primary/20',
@@ -202,12 +202,12 @@ export const ParentsTable = memo<ParentsTableProps>(
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <p className="truncate text-xs font-bold leading-tight text-main">
+                    <p className="truncate text-xs font-normal leading-tight text-main">
                       {parent.name}
                     </p>
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold',
+                        'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-normal',
                         status.bg,
                         status.text,
                       )}
@@ -233,14 +233,14 @@ export const ParentsTable = memo<ParentsTableProps>(
             <div className="flex flex-col gap-1.5">
               <div className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-success-soft bg-success-soft px-2 py-1">
                 <Phone size={9} className="shrink-0 text-success" />
-                <span className="font-mono text-[10px] font-bold text-main" dir="ltr">
+                <span className="font-mono text-[10px] font-normal text-main" dir="ltr">
                   {parent.phone}
                 </span>
               </div>
               {parent.phone2 && (
                 <div className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-info-soft bg-info-soft px-2 py-1">
                   <Phone size={9} className="shrink-0 text-info" />
-                  <span className="font-mono text-[10px] font-bold text-main" dir="ltr">
+                  <span className="font-mono text-[10px] font-normal text-main" dir="ltr">
                     {parent.phone2}
                   </span>
                 </div>
@@ -262,7 +262,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     <div key={child.id} className="group/child relative">
                       <div
                         className={cn(
-                          'flex h-7 w-7 items-center justify-center rounded-lg border-2 text-[9px] font-bold transition-all',
+                          'flex h-7 w-7 items-center justify-center rounded-lg border-2 text-[9px] font-normal transition-all',
                           i === 0
                             ? 'border-primary/20 bg-primary/10 text-primary'
                             : i === 1
@@ -272,18 +272,18 @@ export const ParentsTable = memo<ParentsTableProps>(
                       >
                         {(child.name || '?').charAt(0)}
                       </div>
-                      <div className="pointer-events-none absolute -bottom-6 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded bg-main px-1.5 py-0.5 text-[8px] font-bold text-inverse opacity-0 transition-opacity group-hover/child:opacity-100">
+                      <div className="pointer-events-none absolute -bottom-6 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded bg-main px-1.5 py-0.5 text-[8px] font-normal text-inverse opacity-0 transition-opacity group-hover/child:opacity-100">
                         {child.name}
                       </div>
                     </div>
                   ))}
                   {children.length > 3 && (
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[9px] font-bold text-on-primary">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[9px] font-normal text-on-primary">
                       +{children.length - 3}
                     </div>
                   )}
                 </div>
-                <span className="text-[9px] font-bold text-muted">{children.length} طلاب</span>
+                <span className="text-[9px] font-normal text-muted">{children.length} طلاب</span>
               </div>
             )
           },
@@ -385,7 +385,7 @@ export const ParentsTable = memo<ParentsTableProps>(
             <div className="flex min-w-0 flex-1 items-center gap-3">
               <div
                 className={cn(
-                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-2',
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-normal ring-2',
                   isExpanded
                     ? 'bg-primary text-on-primary ring-primary/20'
                     : 'bg-primary-soft text-primary ring-primary/20',
@@ -395,7 +395,7 @@ export const ParentsTable = memo<ParentsTableProps>(
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <h4 className="truncate text-sm font-bold leading-tight text-main">
+                  <h4 className="truncate text-sm font-normal leading-tight text-main">
                     {parent.name}
                   </h4>
                   <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', status.dot)} />
@@ -450,7 +450,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                 <div
                   key={child.id}
                   className={cn(
-                    'flex h-6 w-6 items-center justify-center rounded-lg border-2 text-[8px] font-bold',
+                    'flex h-6 w-6 items-center justify-center rounded-lg border-2 text-[8px] font-normal',
                     i === 0
                       ? 'border-primary/20 bg-primary/10 text-primary'
                       : i === 1
@@ -462,18 +462,18 @@ export const ParentsTable = memo<ParentsTableProps>(
                 </div>
               ))}
               {children.length > 3 && (
-                <div className="flex h-6 w-6 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[8px] font-bold text-on-primary">
+                <div className="flex h-6 w-6 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[8px] font-normal text-on-primary">
                   +{children.length - 3}
                 </div>
               )}
             </div>
-            <span className="text-[9px] font-bold text-muted">{children.length} طلاب</span>
+            <span className="text-[9px] font-normal text-muted">{children.length} طلاب</span>
           </div>
           {total > 0 && (
             <div>
               <div className="mb-1 flex justify-between text-[10px] text-muted">
                 <span>معدل الاستهلاك</span>
-                <span className="font-bold tabular-nums">{Math.round((used / total) * 100)}%</span>
+                <span className="font-normal tabular-nums">{Math.round((used / total) * 100)}%</span>
               </div>
               <ProgressBar
                 value={Math.round((used / total) * 100)}

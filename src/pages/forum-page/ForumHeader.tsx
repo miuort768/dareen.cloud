@@ -42,13 +42,13 @@ export const ForumHeader = ({ searchTerm, onSearchChange }: ForumHeaderProps) =>
             <MessagesSquare size={22} className="text-on-primary" />
           </div>
           <div>
-            <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-on-primary backdrop-blur-sm">
+            <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-normal text-on-primary backdrop-blur-sm">
               تواصل وشارك
             </span>
-            <h1 className="text-sm font-black leading-tight text-on-primary md:text-2xl">
+            <h1 className="text-sm font-medium leading-tight text-on-primary md:text-2xl">
               منتدى {academyName}
             </h1>
-            <p className="mt-1 text-xs font-bold text-white/90">
+            <p className="mt-1 text-xs font-normal text-white/90">
               شارك أفكارك وأسئلتك مع مجتمع دارين
             </p>
           </div>
@@ -66,7 +66,7 @@ export const ForumHeader = ({ searchTerm, onSearchChange }: ForumHeaderProps) =>
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="ابحث في المنشورات..."
-            className="h-11 w-full rounded-xl border border-white/15 bg-white/10 pe-9 ps-10 text-xs font-bold text-on-primary outline-none backdrop-blur-sm transition-all placeholder:text-white/50 focus:border-white/30 focus:ring-2 focus:ring-white/20"
+            className="h-11 w-full rounded-xl border border-white/15 bg-white/10 pe-9 ps-10 text-xs font-normal text-on-primary outline-none backdrop-blur-sm transition-all placeholder:text-white/50 focus:border-white/30 focus:ring-2 focus:ring-white/20"
           />
           {searchTerm && (
             <button

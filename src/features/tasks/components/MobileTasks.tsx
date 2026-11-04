@@ -144,7 +144,7 @@ export const MobileTasks = () => {
           animate={{ height: isRefreshing ? 44 : pullDistance }}
           className="flex items-center justify-center overflow-hidden"
         >
-          <div className="flex items-center gap-2 text-xs font-bold text-primary">
+          <div className="flex items-center gap-2 text-xs font-normal text-primary">
             {isRefreshing ? (
               <>
                 <Loader2 size={16} className="animate-spin" strokeWidth={1.7} />
@@ -184,10 +184,10 @@ export const MobileTasks = () => {
           ) : isError ? (
             <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-10 text-center">
               <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
-              <p className="text-xs font-bold text-main">تعذر تحميل المهام</p>
+              <p className="text-xs font-normal text-main">تعذر تحميل المهام</p>
               <button
                 onClick={() => refetch()}
-                className="mx-auto mt-3 rounded-2xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="mx-auto mt-3 rounded-2xl bg-primary px-4 py-2 text-micro font-normal text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إعادة المحاولة
               </button>
@@ -254,7 +254,7 @@ export const MobileTasks = () => {
                       {/* عنوان المهمة — مستطيل واضح بجانب الدائرة */}
                       <span
                         className={cn(
-                          'inline-flex min-w-0 flex-1 items-center rounded-xl bg-white/20 px-3 py-1 text-sm font-black leading-snug text-white ring-1 ring-white/25',
+                          'inline-flex min-w-0 flex-1 items-center rounded-xl bg-white/20 px-3 py-1 text-sm font-medium leading-snug text-white ring-1 ring-white/25',
                           done && 'line-through decoration-2 opacity-80',
                         )}
                       >
@@ -282,7 +282,7 @@ export const MobileTasks = () => {
                     <div className="mt-1.5 flex items-center gap-1 overflow-hidden whitespace-nowrap">
                       <span
                         className={cn(
-                          'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold',
+                          'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-normal',
                           priority.badge,
                         )}
                       >
@@ -292,7 +292,7 @@ export const MobileTasks = () => {
                       {!done && (
                         <span
                           className={cn(
-                            'inline-flex shrink-0 items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-[9px] font-bold',
+                            'inline-flex shrink-0 items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-[9px] font-normal',
                             statusMeta.color,
                           )}
                         >
@@ -303,7 +303,7 @@ export const MobileTasks = () => {
                       {task.dueDate && (
                         <span
                           className={cn(
-                            'flex min-w-0 items-center gap-1 truncate rounded-full px-2 py-0.5 text-[9px] font-bold tabular-nums',
+                            'flex min-w-0 items-center gap-1 truncate rounded-full px-2 py-0.5 text-[9px] font-normal tabular-nums',
                             overdue
                               ? 'bg-error-soft text-error'
                               : isToday
@@ -357,7 +357,7 @@ export const MobileTasks = () => {
             type="submit"
             form="mobile-task-form"
             disabled={createTask.isPending || !form.title.trim()}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-xs font-black text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-xs font-medium text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
           >
             {createTask.isPending ? (
               <>
@@ -376,7 +376,7 @@ export const MobileTasks = () => {
           <div className="space-y-1.5">
             <label
               htmlFor="m-task-title"
-              className="text-micro font-bold uppercase tracking-wide text-muted"
+              className="text-micro font-normal uppercase tracking-wide text-muted"
             >
               عنوان المهمة
             </label>
@@ -387,7 +387,7 @@ export const MobileTasks = () => {
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               placeholder="مثال: تجهيز تقرير الأسبوع..."
-              className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
@@ -395,7 +395,7 @@ export const MobileTasks = () => {
           <div className="space-y-1.5">
             <label
               htmlFor="m-task-desc"
-              className="text-micro font-bold uppercase tracking-wide text-muted"
+              className="text-micro font-normal uppercase tracking-wide text-muted"
             >
               الوصف (اختياري)
             </label>
@@ -405,13 +405,13 @@ export const MobileTasks = () => {
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               placeholder="تفاصيل المهمة..."
-              className="w-full resize-none rounded-2xl border border-border bg-background px-4 py-3 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full resize-none rounded-2xl border border-border bg-background px-4 py-3 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
           {/* الأولوية */}
           <div className="space-y-1.5">
-            <p className="text-micro font-bold uppercase tracking-wide text-muted">الأولوية</p>
+            <p className="text-micro font-normal uppercase tracking-wide text-muted">الأولوية</p>
             <div className="grid grid-cols-3 gap-1.5">
               {(Object.keys(TASK_PRIORITY_CONFIG) as TaskPriority[]).map((p) => {
                 const PriorityIcon = TASK_PRIORITY_CONFIG[p].icon
@@ -425,7 +425,7 @@ export const MobileTasks = () => {
                     }}
                     aria-pressed={form.priority === p}
                     className={cn(
-                      'flex items-center justify-center gap-1.5 rounded-2xl border py-2.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      'flex items-center justify-center gap-1.5 rounded-2xl border py-2.5 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                       form.priority === p
                         ? cn(TASK_PRIORITY_CONFIG[p].solid, 'shadow-elevation-1')
                         : TASK_PRIORITY_CONFIG[p].soft,
@@ -443,7 +443,7 @@ export const MobileTasks = () => {
           <div className="space-y-1.5">
             <label
               htmlFor="m-task-date"
-              className="text-micro font-bold uppercase tracking-wide text-muted"
+              className="text-micro font-normal uppercase tracking-wide text-muted"
             >
               تاريخ التسليم
             </label>
@@ -460,7 +460,7 @@ export const MobileTasks = () => {
                     setForm({ ...form, dueDate: d.value })
                   }}
                   className={cn(
-                    'rounded-2xl border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    'rounded-2xl border px-3 py-2 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                     form.dueDate === d.value
                       ? 'border-primary bg-primary-soft text-primary'
                       : 'border-border text-muted hover:text-main',
@@ -475,7 +475,7 @@ export const MobileTasks = () => {
                 aria-label="اختيار تاريخ التسليم"
                 value={form.dueDate}
                 onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
-                className="min-w-0 flex-1 rounded-2xl border border-border bg-background px-2 py-2 text-micro font-bold text-main outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                className="min-w-0 flex-1 rounded-2xl border border-border bg-background px-2 py-2 text-micro font-normal text-main outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
           </div>

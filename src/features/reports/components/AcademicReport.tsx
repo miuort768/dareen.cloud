@@ -62,8 +62,8 @@ const SectionHeader = ({
       <Icon size={15} className="text-chart-4" />
     </div>
     <div>
-      <p className="text-xs font-bold text-main">{label}</p>
-      {sub && <p className="mt-0.5 text-micro font-bold text-muted">{sub}</p>}
+      <p className="text-xs font-normal text-main">{label}</p>
+      {sub && <p className="mt-0.5 text-micro font-normal text-muted">{sub}</p>}
     </div>
   </div>
 )
@@ -83,8 +83,8 @@ const CustomTooltip = ({
         className="rounded-xl border border-border bg-card px-4 py-3 shadow-elevation-4"
         dir="rtl"
       >
-        <p className="mb-1 text-micro font-bold text-muted">{label}</p>
-        <p className="text-lg font-bold tabular-nums text-main">
+        <p className="mb-1 text-micro font-normal text-muted">{label}</p>
+        <p className="text-lg font-normal tabular-nums text-main">
           {payload[0]!.value} <span className="text-micro text-muted">طالب</span>
         </p>
       </div>
@@ -152,7 +152,7 @@ export const AcademicReport = React.memo(
               </ResponsiveContainer>
             </div>
             {gradeBarData.length === 0 && (
-              <div className="flex h-32 items-center justify-center text-xs font-bold text-muted">
+              <div className="flex h-32 items-center justify-center text-xs font-normal text-muted">
                 لا توجد بيانات
               </div>
             )}
@@ -179,16 +179,16 @@ export const AcademicReport = React.memo(
                               className="h-2 w-2 shrink-0 rounded-sm"
                               style={{ backgroundColor: color }}
                             />
-                            <span className="max-w-[120px] truncate text-xs font-bold text-muted">
+                            <span className="max-w-[120px] truncate text-xs font-normal text-muted">
                               {entry.name}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-micro font-bold tabular-nums text-muted">
+                            <span className="text-micro font-normal tabular-nums text-muted">
                               {entry.value}
                             </span>
                             <span
-                              className="rounded-lg px-1.5 py-0.5 text-micro font-bold text-on-primary"
+                              className="rounded-lg px-1.5 py-0.5 text-micro font-normal text-on-primary"
                               style={{ backgroundColor: color }}
                             >
                               {pct}%
@@ -208,7 +208,7 @@ export const AcademicReport = React.memo(
                     )
                   })
               ) : (
-                <div className="flex h-32 items-center justify-center text-xs font-bold text-muted">
+                <div className="flex h-32 items-center justify-center text-xs font-normal text-muted">
                   لا توجد بيانات
                 </div>
               )}
@@ -246,8 +246,8 @@ export const AcademicReport = React.memo(
               >
                 <item.icon size={16} className={item.textClass} />
               </div>
-              <p className={`text-xl font-bold tabular-nums ${item.textClass}`}>{item.value}</p>
-              <p className="mt-1 text-micro font-bold text-muted">{item.label}</p>
+              <p className={`text-xl font-normal tabular-nums ${item.textClass}`}>{item.value}</p>
+              <p className="mt-1 text-micro font-normal text-muted">{item.label}</p>
             </div>
           ))}
         </div>

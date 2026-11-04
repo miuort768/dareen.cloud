@@ -59,7 +59,7 @@ export const FilterDropdown = ({
         {activeItem?.dot && (
           <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', activeItem.dot)} />
         )}
-        <span className="flex-1 truncate text-xs font-bold text-main">{displayLabel}</span>
+        <span className="flex-1 truncate text-xs font-normal text-main">{displayLabel}</span>
         <ChevronDown
           size={14}
           className={cn(
@@ -94,7 +94,7 @@ export const FilterDropdown = ({
                 {item.dot ? (
                   <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', item.dot)} />
                 ) : null}
-                <span className="flex-1 truncate text-xs font-bold">{item.label}</span>
+                <span className="flex-1 truncate text-xs font-normal">{item.label}</span>
                 {isActive && <Check size={14} className="shrink-0 text-primary" />}
               </button>
             )

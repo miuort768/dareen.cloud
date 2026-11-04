@@ -110,13 +110,13 @@ export const MobileQuickAccess = ({
             imgClassName="object-contain"
           />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-black text-main">{academyName}</p>
-            <span className="mt-1 inline-flex w-fit items-center rounded-none bg-primary-soft px-2 py-0.5 text-micro font-bold text-primary">
+            <p className="truncate text-sm font-medium text-main">{academyName}</p>
+            <span className="mt-1 inline-flex w-fit items-center rounded-none bg-primary-soft px-2 py-0.5 text-micro font-normal text-primary">
               الوصول السريع
             </span>
           </div>
           {academicYear && (
-            <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold text-primary">
+            <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-normal text-primary">
               <CalendarDays size={11} />
               {academicYear}
             </span>
@@ -141,7 +141,7 @@ export const MobileQuickAccess = ({
             >
               <motion.p
                 variants={item}
-                className="mb-1 text-micro font-black uppercase tracking-label text-muted"
+                className="mb-1 text-micro font-medium uppercase tracking-label text-muted"
               >
                 الأكثر استخدامًا
               </motion.p>
@@ -171,7 +171,7 @@ export const MobileQuickAccess = ({
                         >
                           <Icon size={21} strokeWidth={1.9} />
                         </span>
-                        <span className="line-clamp-1 w-full truncate text-center text-[10px] font-bold leading-tight text-main">
+                        <span className="line-clamp-1 w-full truncate text-center text-[10px] font-normal leading-tight text-main">
                           {navItem.name}
                         </span>
                       </NavLink>
@@ -193,7 +193,7 @@ export const MobileQuickAccess = ({
             >
               <motion.p
                 variants={item}
-                className="mb-1 text-micro font-black uppercase tracking-label text-muted"
+                className="mb-1 text-micro font-medium uppercase tracking-label text-muted"
               >
                 جميع الصفحات
               </motion.p>
@@ -209,7 +209,7 @@ export const MobileQuickAccess = ({
                           cn(
                             'flex items-center gap-2 rounded-2xl px-2 py-1.5 outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                             isActive
-                              ? 'bg-primary-soft font-bold text-primary'
+                              ? 'bg-primary-soft font-normal text-primary'
                               : 'text-muted hover:bg-hover hover:text-main',
                           )
                         }
@@ -247,7 +247,7 @@ export const MobileQuickAccess = ({
               aria-label="الملف الشخصي"
               className="mb-1.5 flex w-full items-center gap-2.5 rounded-2xl border border-border bg-surface px-3 py-2 text-start outline-none transition-all duration-fast hover:bg-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus dark:bg-card"
             >
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-black text-on-primary">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-medium text-on-primary">
                 {currentUser.avatar ? (
                   <img
                     src={currentUser.avatar}
@@ -262,10 +262,10 @@ export const MobileQuickAccess = ({
                 )}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-xs font-black leading-tight text-main">
+                <span className="block truncate text-xs font-medium leading-tight text-main">
                   {currentUser.name}
                 </span>
-                <span className="block text-[10px] font-bold leading-tight text-muted">
+                <span className="block text-[10px] font-normal leading-tight text-muted">
                   {roleLabels[currentUser.role ?? ''] ?? 'حسابي'} • الملف الشخصي
                 </span>
               </span>

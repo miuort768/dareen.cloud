@@ -207,21 +207,21 @@ export const QuizGame = ({
           >
             <Award size={28} />
           </motion.span>
-          <p className="text-lg font-bold text-main">
+          <p className="text-lg font-normal text-main">
             أكملت المرحلة {Math.ceil(checkpoint / QUIZ_ROUND_SIZE)} من {roundsTotal}
           </p>
-          <p className="mt-1 text-xs font-bold text-muted">
+          <p className="mt-1 text-xs font-normal text-muted">
             أصبتَ {roundCorrect} من {roundTotal} في هذه المرحلة · {roundPercent}٪
           </p>
         </div>
         <div className="flex flex-col items-center gap-3 p-4 sm:p-5">
           <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-3 py-1 text-xs font-bold tabular-nums text-warning-strong">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-3 py-1 text-xs font-normal tabular-nums text-warning-strong">
               <Zap size={13} />
               {stats.xp} نقطة
             </span>
             {stats.streak > 1 && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-error-soft px-3 py-1 text-xs font-bold tabular-nums text-error">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-error-soft px-3 py-1 text-xs font-normal tabular-nums text-error">
                 <Flame size={13} />
                 تتابع {stats.streak}
               </span>
@@ -232,7 +232,7 @@ export const QuizGame = ({
             <button
               type="button"
               onClick={continueRound}
-              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               متابعة المرحلة التالية
               <ArrowLeft size={14} />
@@ -240,7 +240,7 @@ export const QuizGame = ({
             <button
               type="button"
               onClick={onExit}
-              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-bold text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+              className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-normal text-main outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
             >
               <X size={14} />
               حفظ والخروج
@@ -265,10 +265,10 @@ export const QuizGame = ({
           <ArrowRight size={16} />
         </button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-bold text-on-primary">{quiz.title}</p>
-          <p className="truncate text-[10px] font-bold text-white/75">{languageName}</p>
+          <p className="truncate text-sm font-normal text-on-primary">{quiz.title}</p>
+          <p className="truncate text-[10px] font-normal text-white/75">{languageName}</p>
         </div>
-        <span className="hidden shrink-0 rounded-full bg-white/15 px-2.5 py-1 text-[9px] font-bold tabular-nums text-on-primary sm:inline-flex">
+        <span className="hidden shrink-0 rounded-full bg-white/15 px-2.5 py-1 text-[9px] font-normal tabular-nums text-on-primary sm:inline-flex">
           المرحلة {currentRound}/{roundsTotal}
         </span>
         {stats.streak > 1 && (
@@ -276,13 +276,13 @@ export const QuizGame = ({
             key={stats.streak}
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
-            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold tabular-nums text-on-primary"
+            className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-normal tabular-nums text-on-primary"
           >
             <Flame size={12} className="fill-warning text-warning" />
             {stats.streak}
           </motion.span>
         )}
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold tabular-nums text-on-primary">
+        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-normal tabular-nums text-on-primary">
           <Zap size={12} className="fill-warning text-warning" />
           {stats.xp}
         </span>
@@ -290,7 +290,7 @@ export const QuizGame = ({
 
       <div className="p-3 sm:p-4">
         <div className="mb-3 flex items-center gap-2">
-          <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold tabular-nums text-primary">
+          <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-normal tabular-nums text-primary">
             سؤال {viewIndex + 1} من {total}
           </span>
           <div className="min-w-0 flex-1">
@@ -299,7 +299,7 @@ export const QuizGame = ({
         </div>
 
         {isReview && (
-          <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-[10px] font-bold text-muted">
+          <p className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-[10px] font-normal text-muted">
             <ChevronRight size={12} />
             مراجعة إجابة سابقة
           </p>
@@ -317,10 +317,10 @@ export const QuizGame = ({
           >
             <div dir={foreign ? 'ltr' : undefined} className="flex flex-col gap-3.5">
               <div className="flex items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary font-dash text-lg font-bold tabular-nums text-on-primary shadow-elevation-2">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary font-dash text-lg font-normal tabular-nums text-on-primary shadow-elevation-2">
                   {viewIndex + 1}
                 </span>
-                <p className="min-w-0 flex-1 rounded-2xl border border-border bg-surface px-4 py-3.5 text-start text-sm font-bold leading-relaxed text-main shadow-elevation-1 md:text-base">
+                <p className="min-w-0 flex-1 rounded-2xl border border-border bg-surface px-4 py-3.5 text-start text-sm font-normal leading-relaxed text-main shadow-elevation-1 md:text-base">
                   {current.prompt}
                 </p>
               </div>
@@ -350,13 +350,13 @@ export const QuizGame = ({
                       }
                       transition={{ duration: 0.35 }}
                       className={cn(
-                        'flex min-h-12 items-center gap-3 whitespace-normal rounded-2xl border px-4 py-3 text-start text-sm font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]',
+                        'flex min-h-12 items-center gap-3 whitespace-normal rounded-2xl border px-4 py-3 text-start text-sm font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]',
                         stateClass,
                       )}
                     >
                       <span
                         className={cn(
-                          'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold',
+                          'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-normal',
                           answered
                             ? 'bg-white/20'
                             : 'bg-surface text-muted ring-1 ring-inset ring-border',
@@ -385,7 +385,7 @@ export const QuizGame = ({
               {answered && (
                 <p
                   className={cn(
-                    'flex items-start gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold',
+                    'flex items-start gap-2 rounded-2xl px-4 py-2.5 text-xs font-normal',
                     selected === current.correctIndex
                       ? 'bg-success text-on-success shadow-elevation-1'
                       : 'bg-error text-on-error shadow-elevation-1',
@@ -413,7 +413,7 @@ export const QuizGame = ({
             type="button"
             onClick={goBack}
             disabled={viewIndex <= 0}
-            className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-bold text-main shadow-elevation-1 outline-none transition-all hover:bg-surface hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-xs font-normal text-main shadow-elevation-1 outline-none transition-all hover:bg-surface hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ChevronRight size={15} />
             السابق
@@ -423,13 +423,13 @@ export const QuizGame = ({
             <button
               type="button"
               onClick={goForwardReview}
-              className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-bold text-on-primary shadow-elevation-2 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-normal text-on-primary shadow-elevation-2 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               {reviewIndex !== null && reviewIndex + 1 < qIndex ? 'التالي' : 'العودة للسؤال الحالي'}
               <ChevronLeft size={15} />
             </button>
           ) : !answered ? (
-            <span className="inline-flex min-h-12 items-center gap-1.5 rounded-full bg-surface px-4 text-[10px] font-bold text-muted">
+            <span className="inline-flex min-h-12 items-center gap-1.5 rounded-full bg-surface px-4 text-[10px] font-normal text-muted">
               <Zap size={12} className="shrink-0 text-primary" />
               اختر إجابة للمتابعة…
             </span>
@@ -437,7 +437,7 @@ export const QuizGame = ({
             <button
               type="button"
               onClick={advanceNow}
-              className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-bold text-on-primary shadow-elevation-2 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-primary px-6 text-xs font-normal text-on-primary shadow-elevation-2 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               {qIndex >= total - 1 ? 'عرض النتيجة' : 'التالي الآن'}
               <ArrowLeft size={15} />

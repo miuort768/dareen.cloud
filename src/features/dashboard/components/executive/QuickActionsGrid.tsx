@@ -58,7 +58,7 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
                 strokeWidth={1.9}
                 className="transition-transform duration-normal group-hover:scale-110"
               />
-              <span className="text-[10px] font-bold leading-tight">{action.label}</span>
+              <span className="text-[10px] font-normal leading-tight">{action.label}</span>
             </button>
           )
         })}

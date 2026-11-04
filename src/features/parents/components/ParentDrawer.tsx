@@ -58,7 +58,7 @@ const StatCell = ({
     <div className={cn('mb-2 flex h-7 w-7 items-center justify-center rounded-lg', color)}>
       <Icon size={12} />
     </div>
-    <p className="text-sm font-bold tabular-nums text-main">{value}</p>
+    <p className="text-sm font-normal tabular-nums text-main">{value}</p>
     <p className="mt-0.5 text-[9px] text-muted">{label}</p>
   </div>
 )
@@ -83,7 +83,7 @@ const OverviewTab = ({
   <>
     {/* Contact */}
     <div className="space-y-2">
-      <h5 className="flex items-center gap-1.5 text-[9px] font-bold text-muted">
+      <h5 className="flex items-center gap-1.5 text-[9px] font-normal text-muted">
         <Star size={10} /> بيانات التواصل
       </h5>
       <div className="grid grid-cols-1 gap-1.5">
@@ -93,7 +93,7 @@ const OverviewTab = ({
           </div>
           <div>
             <p className="text-[9px] text-muted">الهاتف</p>
-            <p className="font-mono text-[11px] font-bold text-main" dir="ltr">
+            <p className="font-mono text-[11px] font-normal text-main" dir="ltr">
               {parent.phone}
             </p>
           </div>
@@ -105,7 +105,7 @@ const OverviewTab = ({
             </div>
             <div>
               <p className="text-[9px] text-muted">هاتف إضافي</p>
-              <p className="font-mono text-[11px] font-bold text-main" dir="ltr">
+              <p className="font-mono text-[11px] font-normal text-main" dir="ltr">
                 {parent.phone2}
               </p>
             </div>
@@ -118,7 +118,7 @@ const OverviewTab = ({
             </div>
             <div>
               <p className="text-[9px] text-muted">اسم المستخدم</p>
-              <p className="font-mono text-[11px] font-bold text-main" dir="ltr">
+              <p className="font-mono text-[11px] font-normal text-main" dir="ltr">
                 {parent.username}
               </p>
             </div>
@@ -157,10 +157,10 @@ const OverviewTab = ({
 
     {/* Children */}
     <div className="space-y-2">
-      <h5 className="flex items-center gap-1.5 text-[9px] font-bold text-muted">
+      <h5 className="flex items-center gap-1.5 text-[9px] font-normal text-muted">
         <GraduationCap size={10} />
         الأبناء المسجلين
-        <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
+        <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-normal text-primary">
           {children.length}
         </span>
       </h5>
@@ -177,11 +177,11 @@ const OverviewTab = ({
               >
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex min-w-0 items-center gap-2.5">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[10px] font-bold text-primary">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[10px] font-normal text-primary">
                       {(child.name || '?').charAt(0)}
                     </div>
                     <div className="min-w-0">
-                      <p className="truncate text-[11px] font-bold text-main">{child.name}</p>
+                      <p className="truncate text-[11px] font-normal text-main">{child.name}</p>
                       <p className="text-[9px] text-muted">{child.grade || '—'}</p>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ const OverviewTab = ({
                     {(child.enrollments || []).some(
                       (en) => en.sessionsTotal - en.sessionsUsed <= 2,
                     ) && <AlertCircle size={10} className="text-error" />}
-                    <span className="text-[9px] font-bold text-muted">
+                    <span className="text-[9px] font-normal text-muted">
                       {used}/{total}
                     </span>
                   </div>
@@ -209,7 +209,7 @@ const OverviewTab = ({
                           <BookOpen size={8} />
                           {en.subject}
                         </span>
-                        <span className="font-bold text-main">
+                        <span className="font-normal text-main">
                           {en.sessionsUsed}/{en.sessionsTotal} حصة
                         </span>
                       </div>
@@ -227,7 +227,7 @@ const OverviewTab = ({
         ) : (
           <div className="rounded-xl border border-dashed border-border py-8 text-center">
             <Users size={28} className="mx-auto mb-2 text-muted" />
-            <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطين</p>
+            <p className="text-xs font-normal text-muted">لا يوجد أبناء مرتبطين</p>
           </div>
         )}
       </div>
@@ -237,25 +237,25 @@ const OverviewTab = ({
     <div className="grid grid-cols-2 gap-2 pt-2">
       <button
         onClick={handleCall}
-        className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[10px] font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-success dark:text-on-success"
+        className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[10px] font-normal text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-success dark:text-on-success"
       >
         <Phone size={12} /> اتصال
       </button>
       <button
         onClick={handleWhatsApp}
-        className="flex items-center justify-center gap-2 rounded-xl bg-warning py-2.5 text-[10px] font-bold text-on-warning outline-none transition-all hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-warning dark:text-on-warning"
+        className="flex items-center justify-center gap-2 rounded-xl bg-warning py-2.5 text-[10px] font-normal text-on-warning outline-none transition-all hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-warning dark:text-on-warning"
       >
         <MessageCircle size={12} /> واتساب
       </button>
       <button
         onClick={() => onEdit?.(parent)}
-        className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[10px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-primary dark:text-on-primary"
+        className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[10px] font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-primary dark:text-on-primary"
       >
         <Edit size={12} /> تعديل
       </button>
       <button
         onClick={() => onDelete?.(parent.id)}
-        className="flex items-center justify-center gap-2 rounded-xl bg-error py-2.5 text-[10px] font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-error dark:text-on-error"
+        className="flex items-center justify-center gap-2 rounded-xl bg-error py-2.5 text-[10px] font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-error dark:text-on-error"
       >
         <Trash2 size={12} /> حذف
       </button>
@@ -267,7 +267,7 @@ const DAY_ORDER = ['السبت', 'الأحد', 'الاثنين', 'الثلاثا
 
 const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] }) => (
   <div className="space-y-3">
-    <h5 className="flex items-center gap-1.5 text-[9px] font-bold text-muted">
+    <h5 className="flex items-center gap-1.5 text-[9px] font-normal text-muted">
       <Clock size={10} />
       الجدول العائلي الموحد
     </h5>
@@ -281,27 +281,27 @@ const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] 
           <div key={day} className="overflow-hidden rounded-xl border border-border bg-card">
             <div className="flex items-center gap-2 border-b border-border bg-primary-soft px-3 py-2">
               <Calendar size={12} className="text-primary" />
-              <p className="text-[10px] font-bold text-primary">{day}</p>
-              <span className="ms-auto text-[9px] font-bold text-primary/70">
+              <p className="text-[10px] font-normal text-primary">{day}</p>
+              <span className="ms-auto text-[9px] font-normal text-primary/70">
                 {dayItems.length} حصة
               </span>
             </div>
             <div className="divide-y divide-border">
               {dayItems.map((s, i) => (
                 <div key={i} className="flex items-center gap-3 px-3 py-2.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[10px] font-bold text-primary">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[10px] font-normal text-primary">
                     {(s.studentName || '?').charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[11px] font-bold text-main">{s.studentName}</p>
+                    <p className="truncate text-[11px] font-normal text-main">{s.studentName}</p>
                     <p className="truncate text-[9px] text-muted">
                       {s.subject}
                       {s.teacherName ? (
-                        <span className="font-bold text-primary"> • {s.teacherName}</span>
+                        <span className="font-normal text-primary"> • {s.teacherName}</span>
                       ) : null}
                     </p>
                   </div>
-                  <div className="flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1 text-[9px] font-bold">
+                  <div className="flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1 text-[9px] font-normal">
                     <Clock size={9} className="text-primary" />
                     <span className="font-mono text-primary">
                       {s.hour} {s.period === 'am' ? 'ص' : 'م'}
@@ -316,7 +316,7 @@ const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] 
     ) : (
       <div className="rounded-xl border border-dashed border-border py-12 text-center">
         <Calendar size={32} className="mx-auto mb-2 text-muted opacity-40" />
-        <p className="text-xs font-bold text-muted">لا توجد مواعيد حالياً</p>
+        <p className="text-xs font-normal text-muted">لا توجد مواعيد حالياً</p>
       </div>
     )}
   </div>
@@ -348,24 +348,24 @@ const ParentHeader = ({
       <X size={18} />
     </button>
     <div className="relative z-10 flex items-center gap-4 pe-12">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-xl font-bold text-on-primary shadow-elevation-3 ring-2 ring-white/30 backdrop-blur-sm">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-xl font-normal text-on-primary shadow-elevation-3 ring-2 ring-white/30 backdrop-blur-sm">
         {(parent.name || '?').charAt(0)}
       </div>
       <div className="min-w-0">
-        <h2 className="truncate text-base font-bold text-on-primary">{parent.name}</h2>
+        <h2 className="truncate text-base font-normal text-on-primary">{parent.name}</h2>
         <p className="mt-0.5 flex items-center gap-1.5 text-[10px] font-medium text-white/90">
           <Users size={9} />
           {childrenCount} {childrenCount === 1 ? 'ابن' : 'أبناء'} مسجلين
         </p>
         <div className="mt-1.5 flex items-center gap-1.5">
           {hasOverdue && (
-            <span className="flex items-center gap-1 rounded-lg bg-error-soft px-1.5 py-0.5 text-[9px] font-bold text-error">
+            <span className="flex items-center gap-1 rounded-lg bg-error-soft px-1.5 py-0.5 text-[9px] font-normal text-error">
               <AlertTriangle size={8} /> متأخرات
             </span>
           )}
           <span
             className={cn(
-              'flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold',
+              'flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-normal',
               childrenCount > 0 ? 'bg-success-soft text-success' : 'bg-surface text-muted',
             )}
           >
@@ -390,7 +390,7 @@ const TabsBar = ({ tab, onTabChange }: { tab: TabKey; onTabChange: (t: TabKey) =
         key={t.key}
         onClick={() => onTabChange(t.key)}
         className={cn(
-          'flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-[10px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+          'flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-[10px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
           tab === t.key
             ? 'border-primary text-primary'
             : 'border-transparent text-muted hover:text-main',

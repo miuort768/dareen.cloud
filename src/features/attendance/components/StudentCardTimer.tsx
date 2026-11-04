@@ -28,13 +28,13 @@ export const StudentCardTimer = ({
     >
       <div className="flex items-center gap-2">
         <Clock size={14} className={cn(timerRunning && 'animate-spin-slow')} />
-        <span className="font-mono text-xs font-bold">{formatTime(timerSeconds)}</span>
+        <span className="font-mono text-xs font-normal">{formatTime(timerSeconds)}</span>
       </div>
-      <span className="text-micro font-bold uppercase">{timerRunning ? 'إنهاء' : 'بدء'}</span>
+      <span className="text-micro font-normal uppercase">{timerRunning ? 'إنهاء' : 'بدء'}</span>
     </button>
     <button
       onClick={onReschedule}
-      className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-card px-3 py-2.5 text-micro font-bold uppercase text-muted transition-all hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+      className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-card px-3 py-2.5 text-micro font-normal uppercase text-muted transition-all hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
     >
       <Calendar size={14} /> إعادة جدولة
     </button>

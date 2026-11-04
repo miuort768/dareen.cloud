@@ -47,13 +47,13 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
             <CalendarClock size={18} />
           </div>
           <div className="flex flex-col">
-            <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
-            <p className="mt-0.5 text-[10px] font-bold text-muted">
+            <h3 className="text-sm font-medium text-main">أسبوعك القادم</h3>
+            <p className="mt-0.5 text-[10px] font-normal text-muted">
               توزيع الحصص على الأيام القادمة
             </p>
           </div>
         </div>
-        <span className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-black tabular-nums text-on-primary shadow-elevation-1">
+        <span className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-medium tabular-nums text-on-primary shadow-elevation-1">
           <UsersRound size={12} />
           <span>{weekTotal} حصة</span>
         </span>
@@ -81,7 +81,7 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
               )}
               <span
                 className={cn(
-                  'text-[10px] font-black',
+                  'text-[10px] font-medium',
                   day.isToday ? 'text-primary' : 'text-muted',
                 )}
               >
@@ -105,7 +105,7 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
 
             <span
               className={cn(
-                'font-dash text-xs font-black tabular-nums leading-none',
+                'font-dash text-xs font-medium tabular-nums leading-none',
                 day.isToday ? 'text-primary' : day.count > 0 ? 'text-main' : 'text-muted',
               )}
             >

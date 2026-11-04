@@ -116,7 +116,7 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
                 <Icon size={18} />
               </span>
               {card.bar !== undefined && (
-                <span className="hidden rounded-full bg-hover px-2 py-0.5 text-[10px] font-bold tabular-nums text-muted sm:block">
+                <span className="hidden rounded-full bg-hover px-2 py-0.5 text-[10px] font-normal tabular-nums text-muted sm:block">
                   {card.bar}%
                 </span>
               )}
@@ -126,19 +126,19 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
             <p className="mt-4 flex items-baseline gap-1">
               <span
                 className={cn(
-                  'font-dash text-3xl font-black tabular-nums leading-none',
+                  'font-dash text-3xl font-medium tabular-nums leading-none',
                   tone.value,
                 )}
               >
                 {card.value}
               </span>
               {card.unit && (
-                <span className="text-xs font-bold tabular-nums text-muted">{card.unit}</span>
+                <span className="text-xs font-normal tabular-nums text-muted">{card.unit}</span>
               )}
             </p>
 
             {/* Title & caption */}
-            <p className="mt-1.5 truncate text-xs font-bold text-main">{card.title}</p>
+            <p className="mt-1.5 truncate text-xs font-normal text-main">{card.title}</p>
             <p className="mt-0.5 truncate text-[11px] font-medium text-muted">{card.caption}</p>
 
             {/* Progress bar */}

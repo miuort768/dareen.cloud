@@ -94,7 +94,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
     hasHeader && Boolean(title) && !icon && !description && !action ? (
       <div className="mb-3 flex items-center gap-2">
         <span className={cn('h-1.5 w-1.5 rounded-full', titleTone)} aria-hidden="true" />
-        <h2 className="text-sm font-black text-main">{title}</h2>
+        <h2 className="text-sm font-medium text-main">{title}</h2>
       </div>
     ) : null
   const fullHeader =
@@ -103,7 +103,7 @@ export const SectionCard: React.FC<SectionCardProps> = ({
         <div className="flex items-center gap-2.5">
           {icon}
           <div>
-            {title && <h2 className="text-sm font-black leading-tight text-main">{title}</h2>}
+            {title && <h2 className="text-sm font-medium leading-tight text-main">{title}</h2>}
             {description && (
               <p className={cn('mt-0.5 text-micro text-muted', descClassName)}>{description}</p>
             )}

@@ -208,12 +208,12 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
             <History size={16} className="text-primary" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-main">النشاطات</h3>
+            <h3 className="text-sm font-medium text-main">النشاطات</h3>
             <p className="text-[10px] text-muted">سجل العمليات المباشر</p>
           </div>
         </div>
         {items.length > 0 && (
-          <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-black tabular-nums text-primary">
+          <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-medium tabular-nums text-primary">
             {items.length}
           </span>
         )}
@@ -225,7 +225,7 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
               <History size={16} className="text-dim" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد نشاطات بعد</p>
+            <p className="text-xs font-normal text-muted">لا توجد نشاطات بعد</p>
             <p className="mt-0.5 text-[10px] text-dim">ستظهر العمليات هنا فور حدوثها</p>
           </div>
         )}
@@ -252,15 +252,15 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
               </div>
               <div className="min-w-0 flex-1 pt-0.5">
                 <p className="text-xs leading-relaxed">
-                  <span className="font-black text-primary">{item.username || 'النظام'}</span>{' '}
+                  <span className="font-medium text-primary">{item.username || 'النظام'}</span>{' '}
                   <span className="font-medium text-main">{actionLabel(item)}</span>
                 </p>
                 <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                  <span className="flex items-center gap-1 rounded-md bg-surface px-1.5 py-0.5 text-[9px] font-bold tabular-nums text-muted">
+                  <span className="flex items-center gap-1 rounded-md bg-surface px-1.5 py-0.5 text-[9px] font-normal tabular-nums text-muted">
                     <Clock size={8} />
                     {formatTimestamp(item.timestamp)}
                   </span>
-                  <span className={cn('rounded-md px-1.5 py-0.5 text-[9px] font-bold', v.chip)}>
+                  <span className={cn('rounded-md px-1.5 py-0.5 text-[9px] font-normal', v.chip)}>
                     {v.label}
                   </span>
                 </div>

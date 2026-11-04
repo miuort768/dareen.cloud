@@ -36,10 +36,10 @@ export const GamificationCard = ({
         <div className="absolute start-0 top-0 h-16 w-16 -translate-y-8 translate-x-8 bg-white/10 blur-2xl transition-transform group-hover:scale-110"></div>
         <div className="relative z-10 flex items-center justify-between">
           <div>
-            <p className="mb-0.5 text-micro font-bold uppercase tracking-widest text-on-primary opacity-80 md:text-micro">
+            <p className="mb-0.5 text-micro font-normal uppercase tracking-widest text-on-primary opacity-80 md:text-micro">
               إجمالي نقاط الإنجاز
             </p>
-            <h2 className="flex items-center gap-2 text-xl font-black tracking-tight text-on-primary md:text-3xl">
+            <h2 className="flex items-center gap-2 text-xl font-medium tracking-tight text-on-primary md:text-3xl">
               {totalPoints.toLocaleString()}
               <div className="rounded bg-white/20 p-0.5 md:p-1">
                 <Star size={12} className="fill-current text-warning md:h-3.5 md:w-3.5" />
@@ -76,7 +76,7 @@ export const GamificationCard = ({
                   title={`تم الحصول عليه في ${format(new Date(badge.date), 'yyyy/MM/dd')}`}
                 >
                   <Award size={14} strokeWidth={2.5} className="md:h-4 md:w-4" />
-                  <span className="text-center text-micro font-bold uppercase leading-none">
+                  <span className="text-center text-micro font-normal uppercase leading-none">
                     {badge.name}
                   </span>
                 </div>
@@ -84,7 +84,7 @@ export const GamificationCard = ({
             ) : (
               <div className="col-span-4 rounded-xl border border-dashed border-border bg-surface py-5 text-center">
                 <Award size={20} className="mx-auto mb-1.5 text-muted" />
-                <p className="text-micro font-bold uppercase tracking-widest text-muted">
+                <p className="text-micro font-normal uppercase tracking-widest text-muted">
                   لا توجد أوسمة بعد
                 </p>
               </div>

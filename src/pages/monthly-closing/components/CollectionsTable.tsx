@@ -65,7 +65,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
         }}
         disabled={savingId === item.id}
         className={cn(
-          'rounded-xl px-3 py-1 text-micro font-bold uppercase outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-60',
+          'rounded-xl px-3 py-1 text-micro font-normal uppercase outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-60',
           isPaid ? 'bg-success text-on-success' : 'border border-error bg-error-light text-error',
         )}
       >
@@ -82,7 +82,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
         mobileLabel: 'الطالب',
         render: (item) => (
           <div className="min-w-0">
-            <span className="block text-xs font-bold text-main">{item.studentName}</span>
+            <span className="block text-xs font-normal text-main">{item.studentName}</span>
             <span className="line-clamp-1 text-micro font-medium text-muted">
               {item.description}
             </span>
@@ -95,7 +95,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
         align: 'center',
         mobileLabel: 'المبلغ',
         render: (item) => (
-          <span className="text-xs font-bold text-success-strong">
+          <span className="text-xs font-normal text-success-strong">
             {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
           </span>
         ),
@@ -125,7 +125,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
         <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" />
       </div>
       {saveError && (
-        <div className="border-b border-border bg-error-soft px-4 py-2 text-micro font-bold text-error">
+        <div className="border-b border-border bg-error-soft px-4 py-2 text-micro font-normal text-error">
           {saveError}
         </div>
       )}

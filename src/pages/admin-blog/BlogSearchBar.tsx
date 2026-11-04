@@ -31,7 +31,7 @@ export const BlogSearchBar = ({
         placeholder="بحث عن مقالات أو تصنيفات..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:h-12 md:text-sm"
+        className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:h-12 md:text-sm"
       />
     </div>
     <div className="flex flex-wrap items-center gap-1.5">
@@ -41,7 +41,7 @@ export const BlogSearchBar = ({
           onClick={() => setFilterType(btn.key)}
           aria-pressed={filterType === btn.key}
           className={cn(
-            'flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:h-9',
+            'flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-normal transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:h-9',
             filterType === btn.key
               ? 'bg-primary text-on-primary shadow-elevation-1'
               : 'border border-border bg-card text-muted hover:bg-hover',

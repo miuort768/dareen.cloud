@@ -51,7 +51,7 @@ export const BlogGrid = ({
         <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
           <BookMarked size={22} />
         </div>
-        <p className="text-xs font-bold text-muted">لا توجد مقالات بعد — أضف أول مقال الآن</p>
+        <p className="text-xs font-normal text-muted">لا توجد مقالات بعد — أضف أول مقال الآن</p>
       </div>
     )
   }
@@ -76,16 +76,16 @@ export const BlogGrid = ({
               </div>
             )}
             <div className="absolute start-2 top-2">
-              <span className="rounded-lg bg-primary px-2 py-1 text-micro font-bold text-on-primary shadow-elevation-1">
+              <span className="rounded-lg bg-primary px-2 py-1 text-micro font-normal text-on-primary shadow-elevation-1">
                 {post.category || 'عام'}
               </span>
             </div>
           </div>
           <div className="p-3.5">
-            <h3 className="mb-1.5 line-clamp-2 min-h-[2.5rem] text-sm font-bold leading-snug text-main">
+            <h3 className="mb-1.5 line-clamp-2 min-h-[2.5rem] text-sm font-normal leading-snug text-main">
               {post.title || 'بدون عنوان'}
             </h3>
-            <div className="mb-3 flex items-center gap-3 text-micro font-bold text-muted">
+            <div className="mb-3 flex items-center gap-3 text-micro font-normal text-muted">
               <span className="flex items-center gap-1">
                 <Calendar size={12} /> {formatDate(post.date)}
               </span>

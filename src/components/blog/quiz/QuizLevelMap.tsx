@@ -83,14 +83,14 @@ export const QuizLevelMap = ({ quizzes, progress, onPlay }: QuizLevelMapProps) =
                 >
                   <StageIcon size={26} />
                 </span>
-                <span className={cn('rounded-full px-2 py-0.5 text-[9px] font-bold', tone.chip)}>
+                <span className={cn('rounded-full px-2 py-0.5 text-[9px] font-normal', tone.chip)}>
                   {stageLabel}
                 </span>
               </div>
 
               <div className="min-w-0 flex-1">
-                <span className="block truncate text-sm font-bold text-main">{quiz.title}</span>
-                <p className="mt-0.5 truncate text-micro font-bold text-muted">
+                <span className="block truncate text-sm font-normal text-main">{quiz.title}</span>
+                <p className="mt-0.5 truncate text-micro font-normal text-muted">
                   {quiz.description}
                 </p>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface">
@@ -112,17 +112,17 @@ export const QuizLevelMap = ({ quizzes, progress, onPlay }: QuizLevelMapProps) =
                       />
                     ))}
                   </span>
-                  <span className="rounded-full bg-surface px-2 py-0.5 text-[9px] font-bold tabular-nums text-muted">
+                  <span className="rounded-full bg-surface px-2 py-0.5 text-[9px] font-normal tabular-nums text-muted">
                     {quiz.questions.length} سؤالًا
                   </span>
                   {stat && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[9px] font-bold tabular-nums text-success-strong">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[9px] font-normal tabular-nums text-success-strong">
                       <Award size={10} />
                       {stat.bestCorrect}/{stat.bestTotal}
                     </span>
                   )}
                   {stat && stat.xp > 0 && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-warning-soft px-2 py-0.5 text-[9px] font-bold tabular-nums text-warning-strong">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-warning-soft px-2 py-0.5 text-[9px] font-normal tabular-nums text-warning-strong">
                       <Zap size={10} />
                       {stat.xp}
                     </span>
@@ -133,7 +133,7 @@ export const QuizLevelMap = ({ quizzes, progress, onPlay }: QuizLevelMapProps) =
               <button
                 type="button"
                 onClick={() => onPlay(quiz.id)}
-                className="inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                className="inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-primary px-4 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
                 {hasRun || !stat?.completed ? <Play size={13} /> : <RotateCcw size={13} />}
                 {label}

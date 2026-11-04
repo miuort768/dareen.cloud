@@ -50,10 +50,10 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-sm font-black tabular-nums leading-none text-on-primary">
+            <span className="text-sm font-medium tabular-nums leading-none text-on-primary">
               {attendanceRate}%
             </span>
-            <span className="mt-0.5 text-[9px] font-bold text-white/90">الحضور</span>
+            <span className="mt-0.5 text-[9px] font-normal text-white/90">الحضور</span>
           </div>
         </div>
       }

@@ -21,14 +21,14 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
       className="min-w-40 rounded-xl border border-border bg-card px-4 py-3 shadow-elevation-3 dark:border-border dark:bg-card"
       dir="rtl"
     >
-      <p className="mb-2 text-xs font-bold text-main">{label}</p>
+      <p className="mb-2 text-xs font-normal text-main">{label}</p>
       {payload.map((entry, i) => (
         <div key={i} className="flex items-center justify-between gap-4 py-0.5">
           <div className="flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-md" style={{ backgroundColor: entry.color }} />
             <span className="text-[10px] font-medium text-muted">{entry.name}</span>
           </div>
-          <span className="text-xs font-bold tabular-nums text-main">
+          <span className="text-xs font-normal tabular-nums text-main">
             {Number(entry.value).toLocaleString()} {CURRENCY_SYMBOL}
           </span>
         </div>
@@ -66,20 +66,20 @@ export const FinanceOverview = React.memo(
                 <BarChart3 size={16} className="text-primary dark:text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-black text-main">نظرة مالية</h3>
+                <h3 className="text-sm font-medium text-main">نظرة مالية</h3>
                 <p className="text-[10px] text-muted">الإيرادات والمصروفات</p>
               </div>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="flex items-center gap-1 rounded-lg bg-success-soft px-2 py-0.5">
                 <TrendingUp size={9} className="text-success" />
-                <span className="text-[10px] font-bold tabular-nums text-success">
+                <span className="text-[10px] font-normal tabular-nums text-success">
                   {totalRevenue.toLocaleString()}
                 </span>
               </div>
               <div className="flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5">
                 <TrendingDown size={9} className="text-warning" />
-                <span className="text-[10px] font-bold tabular-nums text-warning">
+                <span className="text-[10px] font-normal tabular-nums text-warning">
                   {totalExpenses.toLocaleString()}
                 </span>
               </div>
@@ -93,12 +93,12 @@ export const FinanceOverview = React.memo(
             <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
               <BarChart3 size={28} className="text-primary-200" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد بيانات مالية بعد</p>
+            <p className="text-xs font-normal text-muted">لا توجد بيانات مالية بعد</p>
             <p className="mt-1 text-[11px] text-dim">ابدأ بإضافة أول عملية مالية</p>
             <Button
               onClick={() => navigate('/finance')}
               size="sm"
-              className="mt-3 h-9 gap-1.5 rounded-xl px-5 text-xs font-bold"
+              className="mt-3 h-9 gap-1.5 rounded-xl px-5 text-xs font-normal"
             >
               <Plus size={14} /> إضافة عملية
             </Button>
@@ -173,14 +173,14 @@ export const FinanceOverview = React.memo(
                 className="h-2.5 w-2.5 rounded-md"
                 style={{ backgroundColor: chartColors.revenue }}
               />
-              <span className="text-[10px] font-bold text-muted">الإيرادات</span>
+              <span className="text-[10px] font-normal text-muted">الإيرادات</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div
                 className="h-2.5 w-2.5 rounded-md"
                 style={{ backgroundColor: chartColors.expenses }}
               />
-              <span className="text-[10px] font-bold text-muted">المصروفات</span>
+              <span className="text-[10px] font-normal text-muted">المصروفات</span>
             </div>
             <div
               className={cn(
@@ -191,7 +191,7 @@ export const FinanceOverview = React.memo(
               <DollarSign size={9} className={totalProfit >= 0 ? 'text-success' : 'text-error'} />
               <span
                 className={cn(
-                  'text-[10px] font-bold tabular-nums',
+                  'text-[10px] font-normal tabular-nums',
                   totalProfit >= 0 ? 'text-success' : 'text-error',
                 )}
               >

@@ -112,13 +112,13 @@ export const ParentAnnouncements = () => {
           {/* موبايل فقط: النص ← الجرس (الجانب الآخر) */}
           <div className="flex w-full items-center justify-between gap-3 lg:hidden">
             <div className="min-w-0 flex-1">
-              <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-on-primary backdrop-blur-sm">
+              <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-normal text-on-primary backdrop-blur-sm">
                 آخر إعلانات المؤسسة
               </span>
-              <h1 className="text-sm font-black leading-tight text-on-primary md:text-2xl">
+              <h1 className="text-sm font-medium leading-tight text-on-primary md:text-2xl">
                 آخر إعلانات {academyName}
               </h1>
-              <p className="mt-1 text-xs font-bold text-white/90">
+              <p className="mt-1 text-xs font-normal text-white/90">
                 تابع كل أخبار المؤسسة والفعاليات والإعلانات هنا
               </p>
             </div>
@@ -133,13 +133,13 @@ export const ParentAnnouncements = () => {
               <Bell size={22} className="text-on-primary" />
             </div>
             <div>
-              <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-on-primary backdrop-blur-sm">
+              <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-normal text-on-primary backdrop-blur-sm">
                 آخر إعلانات المؤسسة
               </span>
-              <h1 className="text-sm font-black leading-tight text-on-primary md:text-2xl">
+              <h1 className="text-sm font-medium leading-tight text-on-primary md:text-2xl">
                 آخر إعلانات {academyName}
               </h1>
-              <p className="mt-1 text-xs font-bold text-white/90">
+              <p className="mt-1 text-xs font-normal text-white/90">
                 تابع كل أخبار المؤسسة والفعاليات والإعلانات هنا
               </p>
             </div>
@@ -157,7 +157,7 @@ export const ParentAnnouncements = () => {
             placeholder="بحث عن إعلان..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-11 w-full rounded-xl border border-border bg-card pe-3 ps-10 text-xs font-bold text-main shadow-elevation-1 transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:h-12 md:text-sm"
+            className="h-11 w-full rounded-xl border border-border bg-card pe-3 ps-10 text-xs font-normal text-main shadow-elevation-1 transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:h-12 md:text-sm"
           />
         </div>
 
@@ -202,10 +202,10 @@ export const ParentAnnouncements = () => {
         {isError ? (
           <div className="col-span-full rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
             <AlertTriangle size={30} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
-            <p className="text-sm font-bold text-main">تعذر تحميل الإعلانات</p>
+            <p className="text-sm font-normal text-main">تعذر تحميل الإعلانات</p>
             <button
               onClick={() => refetch()}
-              className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-normal text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة المحاولة
             </button>
@@ -227,13 +227,13 @@ export const ParentAnnouncements = () => {
                   className="relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-soft transition-all hover:border-primary/30 hover:bg-card hover:shadow-elevation-1 md:p-6"
                 >
                   <div className="mb-4 flex items-start justify-between">
-                    <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-micro font-bold text-on-primary">
+                    <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-micro font-normal text-on-primary">
                       <Calendar size={11} />
                       {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
                     </span>
                     <span
                       className={cn(
-                        'flex items-center gap-1.5 rounded-full border border-transparent px-3 py-1 text-micro font-bold',
+                        'flex items-center gap-1.5 rounded-full border border-transparent px-3 py-1 text-micro font-normal',
                         SOLID_TYPE_BADGE[ann.type] ?? config.badge,
                       )}
                     >
@@ -245,12 +245,12 @@ export const ParentAnnouncements = () => {
                   </div>
 
                   <div className="mb-5 flex-1 space-y-2.5">
-                    <h3 className="text-sm font-bold leading-tight text-main md:text-lg">
+                    <h3 className="text-sm font-normal leading-tight text-main md:text-lg">
                       {ann.title}
                     </h3>
                     <p
                       className={cn(
-                        'whitespace-pre-line text-xs font-bold leading-relaxed text-muted',
+                        'whitespace-pre-line text-xs font-normal leading-relaxed text-muted',
                         !isExpanded && 'line-clamp-4',
                       )}
                     >
@@ -267,7 +267,7 @@ export const ParentAnnouncements = () => {
                           })
                         }
                         aria-expanded={isExpanded}
-                        className="flex items-center gap-1 text-micro font-bold text-primary transition-colors hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                        className="flex items-center gap-1 text-micro font-normal text-primary transition-colors hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                       >
                         {isExpanded ? 'عرض أقل' : 'عرض المزيد'}
                         <ChevronDown
@@ -283,7 +283,7 @@ export const ParentAnnouncements = () => {
                       <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary">
                         <ShieldCheck size={14} />
                       </div>
-                      <span className="text-micro font-bold text-muted">إدارة المؤسسة</span>
+                      <span className="text-micro font-normal text-muted">إدارة المؤسسة</span>
                     </div>
 
                     {waPhone && (
@@ -291,7 +291,7 @@ export const ParentAnnouncements = () => {
                         href={`https://wa.me/${waPhone}?text=${encodeURIComponent(`مرحباً ${academyName}،\nلدي استفسار بخصوص الإعلان: «${ann.title}» المنشور بتاريخ ${format(new Date(ann.date), 'dd/MM/yyyy')}.\nشكراً لكم.`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 rounded-xl bg-primary px-4 py-1.5 text-micro font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                        className="flex items-center gap-2 rounded-xl bg-primary px-4 py-1.5 text-micro font-normal text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                       >
                         <MessageCircle size={14} />
                         استفسار
@@ -348,7 +348,7 @@ const FilterButton = ({
     onClick={onClick}
     aria-pressed={active}
     className={cn(
-      'flex items-center justify-between rounded-xl border px-4 py-3.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:text-xs',
+      'flex items-center justify-between rounded-xl border px-4 py-3.5 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:text-xs',
       active
         ? `${activeTextColor} border-transparent`
         : 'border-border bg-card text-muted hover:bg-surface',

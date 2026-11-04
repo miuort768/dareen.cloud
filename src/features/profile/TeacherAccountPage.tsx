@@ -223,13 +223,13 @@ export const TeacherAccountPage = () => {
                         <span className="block text-micro text-jade-on opacity-80">
                           الرتبة الحالية
                         </span>
-                        <span className="block truncate text-sm font-black leading-tight text-jade-on">
+                        <span className="block truncate text-sm font-medium leading-tight text-jade-on">
                           {rank.name}
                         </span>
                       </span>
                     </span>
                     {nextRank && (
-                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-1.5 text-micro font-bold text-jade-on ring-1 ring-white/25">
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-1.5 text-micro font-normal text-jade-on ring-1 ring-white/25">
                         <TrendingUp size={11} />
                         التالية: {nextRank.name}
                       </span>
@@ -240,7 +240,7 @@ export const TeacherAccountPage = () => {
                     {nextRank ? (
                       <>
                         تحتاج{' '}
-                        <span className="font-dash font-black tabular-nums">{pointsNeeded}</span>{' '}
+                        <span className="font-dash font-medium tabular-nums">{pointsNeeded}</span>{' '}
                         نقطة للوصول إلى «{nextRank.name}»
                       </>
                     ) : (

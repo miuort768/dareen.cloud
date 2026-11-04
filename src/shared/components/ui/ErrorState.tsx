@@ -37,7 +37,7 @@ export const ErrorState = ({
     >
       <Icon size={compact ? 18 : 22} className="text-error" />
     </div>
-    <p className="text-sm font-semibold text-main md:text-base">{title}</p>
+    <p className="text-sm font-light text-main md:text-base">{title}</p>
     <p className="mt-1 max-w-xs text-sm text-muted">{message}</p>
     {onRetry && (
       <Button variant="outline" onClick={onRetry} className="mt-4 h-11 px-6 md:h-8 md:px-3.5">

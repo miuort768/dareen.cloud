@@ -247,8 +247,8 @@ export const MobileAttendance = () => {
                 className={cn(
                   'relative flex flex-1 items-center justify-center gap-1.5 rounded-2xl px-2 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                   activeSection === tab.id
-                    ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
-                    : 'font-bold text-muted hover:text-main',
+                    ? 'bg-primary font-normal text-on-primary shadow-elevation-1'
+                    : 'font-normal text-muted hover:text-main',
                 )}
               >
                 <tab.icon size={14} strokeWidth={1.7} />
@@ -290,7 +290,7 @@ export const MobileAttendance = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="ابحث باسم الطالب أو المادة..."
-                    className="w-full rounded-2xl border border-border bg-card py-3 pe-10 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
+                    className="w-full rounded-2xl border border-border bg-card py-3 pe-10 ps-9 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
                   />
                 </div>
 
@@ -309,7 +309,7 @@ export const MobileAttendance = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         onClick={() => handleBulkAttendance()}
                         whileTap={{ scale: 0.97 }}
-                        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-success py-3.5 text-xs font-bold text-on-success shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-success py-3.5 text-xs font-normal text-on-success shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                       >
                         <CheckCircle2 size={15} strokeWidth={1.7} />
                         تسجيل حضور اليوم ({pendingTodayCount})
@@ -325,7 +325,7 @@ export const MobileAttendance = () => {
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
                             aria-label="تصفية حسب المعلمة"
-                            className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-bold text-main outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                            className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-normal text-main outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                           >
                             <option value="all">كل المعلمات</option>
                             {uniqueTeachers.map((t) => (
@@ -342,7 +342,7 @@ export const MobileAttendance = () => {
                               value={filterSubject}
                               onChange={(e) => setFilterSubject(e.target.value)}
                               aria-label="تصفية حسب المادة"
-                              className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-bold text-main outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                              className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-normal text-main outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                             >
                               <option value="all">كل المواد</option>
                               {uniqueSubjects.map((s) => (
@@ -386,7 +386,7 @@ export const MobileAttendance = () => {
                       ) : (
                         <div className="rounded-2xl border border-dashed border-border bg-card py-12 text-center">
                           <Users className="mx-auto mb-2 text-muted" size={28} strokeWidth={1.5} />
-                          <p className="text-xs font-bold text-muted">
+                          <p className="text-xs font-normal text-muted">
                             {searchTerm ? 'لا نتائج مطابقة للبحث' : 'لا يوجد طلاب متاحون'}
                           </p>
                         </div>

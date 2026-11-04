@@ -72,13 +72,13 @@ const KPICard = ({
     {/* Label */}
     <p className="text-xs font-medium text-muted">{title}</p>
     {/* Main value */}
-    <p className="mt-1 text-2xl font-black leading-none tracking-tight text-main">
+    <p className="mt-1 text-2xl font-medium leading-none tracking-tight text-main">
       <Counter value={value} />
     </p>
     {/* Month divider */}
     <div className="mt-3 flex items-center gap-1.5 border-t border-border pt-3">
       <span className="text-[11px] font-medium text-muted">{monthLabel}:</span>
-      <span className="text-xs font-bold tabular-nums text-main">
+      <span className="text-xs font-normal tabular-nums text-main">
         <Counter value={monthValue} />
       </span>
     </div>

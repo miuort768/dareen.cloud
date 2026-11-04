@@ -111,7 +111,7 @@ export const UsersSettings = ({
         </div>
 
         <div className="mt-4 border-t border-divider pt-4">
-          <p className="mb-2 flex items-center gap-1.5 text-[11px] font-bold text-primary">
+          <p className="mb-2 flex items-center gap-1.5 text-[11px] font-normal text-primary">
             <Shield size={11} /> قوالب صلاحيات سريعة
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -119,7 +119,7 @@ export const UsersSettings = ({
               <button
                 key={role.label}
                 onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
-                className="rounded-lg border border-divider bg-background px-3 py-1.5 text-[11px] font-bold text-muted outline-none transition-all hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
+                className="rounded-lg border border-divider bg-background px-3 py-1.5 text-[11px] font-normal text-muted outline-none transition-all hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
               >
                 {role.label}
               </button>
@@ -128,13 +128,13 @@ export const UsersSettings = ({
         </div>
 
         <div className="mt-4 border-t border-divider pt-4">
-          <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold text-primary">
+          <p className="mb-3 flex items-center gap-1.5 text-[11px] font-normal text-primary">
             <Shield size={11} /> تخصيص يدوي — كل صفحات النظام
           </p>
           <div className="space-y-4">
             {Object.entries(groups).map(([groupName, perms]) => (
               <div key={groupName}>
-                <p className="mb-2 text-[11px] font-bold text-muted">{groupName}</p>
+                <p className="mb-2 text-[11px] font-normal text-muted">{groupName}</p>
                 <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
                   {perms.map((p) => {
                     const isSelected = newUser.permissions.includes(p.id)
@@ -143,7 +143,7 @@ export const UsersSettings = ({
                         key={p.id}
                         onClick={() => togglePerm(p.id)}
                         className={cn(
-                          'flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-start text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                          'flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-start text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           isSelected
                             ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-divider bg-card text-muted hover:border-primary/50 hover:text-main',
@@ -181,7 +181,7 @@ export const UsersSettings = ({
       <SectionCard>
         <SectionTitle icon={Users} label="الحسابات والمسؤولون" sub="إدارة الحسابات الموجودة" />
         <div className="mb-4 flex items-center justify-between px-1">
-          <span className="rounded-lg bg-primary-soft px-3 py-1.5 text-[11px] font-bold text-primary">
+          <span className="rounded-lg bg-primary-soft px-3 py-1.5 text-[11px] font-normal text-primary">
             {users.length} حساب
           </span>
         </div>
@@ -192,7 +192,7 @@ export const UsersSettings = ({
               className="group rounded-xl border border-divider bg-card p-4 transition-all duration-normal hover:border-primary/30 hover:shadow-elevation-1"
             >
               <div className="mb-3 flex items-start justify-between">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-sm font-bold text-primary">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-sm font-normal text-primary">
                   {u.username[0]?.toUpperCase()}
                 </div>
                 <div className="flex gap-1.5 opacity-0 transition-opacity group-hover:opacity-100">
@@ -221,7 +221,7 @@ export const UsersSettings = ({
                   )}
                 </div>
               </div>
-              <p className="truncate text-sm font-bold text-main">{u.name || u.username}</p>
+              <p className="truncate text-sm font-normal text-main">{u.name || u.username}</p>
               <p className="mt-1 flex items-center gap-1 text-[11px] text-muted">
                 <Shield size={10} className="text-primary" />
                 {u.permissions?.includes('*')
@@ -238,7 +238,7 @@ export const UsersSettings = ({
                   </span>
                 ))}
                 {(u.permissions?.length || 0) > 3 && (
-                  <span className="rounded-md bg-primary-soft px-2 py-0.5 text-[11px] font-bold text-primary">
+                  <span className="rounded-md bg-primary-soft px-2 py-0.5 text-[11px] font-normal text-primary">
                     +{(u.permissions?.length || 0) - 3}
                   </span>
                 )}

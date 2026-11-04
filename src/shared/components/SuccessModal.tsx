@@ -97,7 +97,7 @@ export const SuccessModal = ({
 
           {/* Text content */}
           <div className="min-w-0 flex-1 pt-0.5">
-            <h3 className="font-sans text-xs font-black leading-none tracking-tight text-main">
+            <h3 className="font-sans text-xs font-medium leading-none tracking-tight text-main">
               {title}
             </h3>
             <p className="mt-1.5 text-xs font-medium leading-relaxed text-muted">{message}</p>

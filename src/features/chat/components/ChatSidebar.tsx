@@ -66,7 +66,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             />
           </div>
           <div className="flex flex-col text-start">
-            <span className="text-xs font-semibold leading-tight text-main">
+            <span className="text-xs font-light leading-tight text-main">
               واتساب {academyName}
             </span>
             <span className="text-[10px] font-thin text-muted">تواصل أسهل وأسرع</span>
@@ -144,10 +144,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           </div>
         ) : hasError ? (
           <div className="flex flex-col items-center justify-center gap-4 p-6 text-center lg:p-12">
-            <p className="text-sm font-bold text-error">تعذر تحميل المحادثات</p>
+            <p className="text-sm font-normal text-error">تعذر تحميل المحادثات</p>
             <button
               onClick={onRetry}
-              className="flex min-h-11 items-center gap-2 rounded-xl bg-error px-5 py-2.5 text-sm font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+              className="flex min-h-11 items-center gap-2 rounded-xl bg-error px-5 py-2.5 text-sm font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
             >
               إعادة محاولة
             </button>
@@ -229,7 +229,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           })
         ) : (
           <div className="flex flex-col items-center justify-center p-6 text-muted lg:p-12">
-            <p className="text-xs font-bold text-muted">لا توجد محادثات نشطة</p>
+            <p className="text-xs font-normal text-muted">لا توجد محادثات نشطة</p>
           </div>
         )}
       </div>
@@ -237,7 +237,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       <div className="sticky bottom-0 z-[100] w-full border-t border-success-soft bg-white/80 p-3 text-center dark:bg-card">
         <div className="flex items-center justify-center gap-2">
           <ShieldCheck size={14} className="animate-pulse text-success" />
-          <span className="text-micro font-semibold uppercase tracking-label text-success">
+          <span className="text-micro font-light uppercase tracking-label text-success">
             تواصل آمن ومشفر
           </span>
         </div>

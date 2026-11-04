@@ -70,14 +70,14 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
         <div className="min-w-0 flex-1 space-y-2">
           {/* Badge Pill */}
           {badge && (
-            <div className="shadow-xs backdrop-blur-xs inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-black text-primary">
+            <div className="shadow-xs backdrop-blur-xs inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary">
               {badgeIcon || <Sparkles size={12} className="animate-pulse text-primary" />}
               <span>{badge}</span>
             </div>
           )}
 
           {/* Title with subtle gradient feel */}
-          <h2 className="text-xl font-black leading-tight tracking-tight text-main">{title}</h2>
+          <h2 className="text-xl font-medium leading-tight tracking-tight text-main">{title}</h2>
 
           {/* Subtitle */}
           <p className="line-clamp-2 text-xs font-medium leading-relaxed text-muted">{subtitle}</p>
@@ -88,10 +88,10 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
               {chips.map((chip, idx) => (
                 <div
                   key={idx}
-                  className="border-border/80 bg-surface/90 backdrop-blur-xs inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[10px] font-bold text-main"
+                  className="border-border/80 bg-surface/90 backdrop-blur-xs inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[10px] font-normal text-main"
                 >
                   <span className="text-muted">{chip.label}:</span>
-                  <span className="font-dash font-black text-primary">{chip.value}</span>
+                  <span className="font-dash font-medium text-primary">{chip.value}</span>
                 </div>
               ))}
             </div>
@@ -102,10 +102,10 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
             <div className="flex flex-wrap items-center gap-3 pt-2">
               {metric && (
                 <div className="backdrop-blur-xs flex items-baseline gap-1.5 rounded-xl border border-primary/20 bg-primary/5 px-3 py-1.5">
-                  <span className="font-dash text-lg font-black leading-none text-primary">
+                  <span className="font-dash text-lg font-medium leading-none text-primary">
                     {metric.value}
                   </span>
-                  <span className="text-[10px] font-bold text-muted">{metric.label}</span>
+                  <span className="text-[10px] font-normal text-muted">{metric.label}</span>
                   {metric.sublabel && (
                     <span className="text-[9px] font-medium text-dim">({metric.sublabel})</span>
                   )}
@@ -116,7 +116,7 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
                 <button
                   type="button"
                   onClick={onCtaClick}
-                  className="group/btn inline-flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all duration-fast hover:shadow-elevation-2 hover:brightness-105 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]"
+                  className="group/btn inline-flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-xs font-medium text-on-primary shadow-elevation-1 outline-none transition-all duration-fast hover:shadow-elevation-2 hover:brightness-105 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]"
                 >
                   <span>{ctaText}</span>
                   <ArrowLeft

@@ -5,14 +5,14 @@ const SPACING_KEYS = ['0', '1', '2', '4', '6', '8', '12', '16', '20', '24', '32'
 export function DesignTokenSection() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">Design Tokens — Non-Color</h2>
+      <h2 className="mb-4 text-lg font-normal">Design Tokens — Non-Color</h2>
       <p className="mb-6 text-sm text-muted">
         المصدر: <code className="font-mono text-primary">src/theme/design-tokens.ts</code>
       </p>
 
       {/* Typography */}
       <div className="mb-10">
-        <h3 className="mb-4 text-base font-semibold">الخطوط — Typography</h3>
+        <h3 className="mb-4 text-base font-light">الخطوط — Typography</h3>
         <div className="space-y-6">
           {Object.entries(typography.fontFamily).map(([key, value]) => (
             <div key={key} className="flex items-center gap-4">
@@ -40,7 +40,7 @@ export function DesignTokenSection() {
 
       {/* Spacing */}
       <div className="mb-10">
-        <h3 className="mb-4 text-base font-semibold">المسافات — Spacing</h3>
+        <h3 className="mb-4 text-base font-light">المسافات — Spacing</h3>
         <div className="space-y-2">
           {SPACING_KEYS.map((key) => {
             const value = spacing[key]
@@ -60,7 +60,7 @@ export function DesignTokenSection() {
 
       {/* Radius */}
       <div className="mb-10">
-        <h3 className="mb-4 text-base font-semibold">الزوايا — Border Radius</h3>
+        <h3 className="mb-4 text-base font-light">الزوايا — Border Radius</h3>
         <div className="flex flex-wrap gap-6">
           {Object.entries(radius).map(([key, value]) => {
             const cssVar = key === 'DEFAULT' ? '--radius' : `--radius-${key}`
@@ -77,7 +77,7 @@ export function DesignTokenSection() {
 
       {/* Shadows */}
       <div className="mb-10">
-        <h3 className="mb-4 text-base font-semibold">الظلال — Shadows</h3>
+        <h3 className="mb-4 text-base font-light">الظلال — Shadows</h3>
         <div className="flex flex-wrap gap-6">
           {Object.entries(shadows).map(([key, value]) => {
             const cssVar = key === 'DEFAULT' ? '--shadow' : `--shadow-${key}`

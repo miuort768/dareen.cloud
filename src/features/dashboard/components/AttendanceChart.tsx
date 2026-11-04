@@ -30,7 +30,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
 
   return (
     <div>
-      <h3 className="mb-4 text-sm font-black text-main">{label}</h3>
+      <h3 className="mb-4 text-sm font-medium text-main">{label}</h3>
       <div className="flex items-center gap-5">
         <svg
           width={size}
@@ -67,7 +67,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
             textAnchor="middle"
             dominantBaseline="central"
             fill={getStrokeColor(rate)}
-            className="text-xl font-black"
+            className="text-xl font-medium"
           >
             {rate}%
           </text>
@@ -84,7 +84,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
         </svg>
 
         <div className="min-w-0 flex-1 space-y-2">
-          <p className="text-sm font-bold text-main">{status.label}</p>
+          <p className="text-sm font-normal text-main">{status.label}</p>
           <ProgressBar
             value={rate}
             variant={rate >= 80 ? 'success' : rate >= 50 ? 'info' : 'error'}

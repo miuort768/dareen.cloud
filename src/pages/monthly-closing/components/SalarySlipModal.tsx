@@ -43,7 +43,7 @@ export const SalarySlipModal = ({
               <Receipt size={20} />
             </div>
             <div>
-              <h2 className="text-sm font-bold">قسيمة راتب المعلمة</h2>
+              <h2 className="text-sm font-normal">قسيمة راتب المعلمة</h2>
               <p className="text-micro font-medium tracking-wider text-white/90">
                 سجل مالي معتمد • {month}
               </p>
@@ -61,15 +61,15 @@ export const SalarySlipModal = ({
         <div className="max-h-[80vh] space-y-6 overflow-y-auto p-4 md:p-6">
           <div className="flex items-start justify-between border-b border-border pb-6">
             <div>
-              <p className="mb-1 text-micro font-bold uppercase text-muted">المعلمة</p>
-              <h3 className="text-lg font-bold text-main">{teacher.name}</h3>
-              <span className="mt-1 inline-block rounded-lg bg-primary-soft px-2 py-0.5 text-micro font-bold text-primary">
+              <p className="mb-1 text-micro font-normal uppercase text-muted">المعلمة</p>
+              <h3 className="text-lg font-normal text-main">{teacher.name}</h3>
+              <span className="mt-1 inline-block rounded-lg bg-primary-soft px-2 py-0.5 text-micro font-normal text-primary">
                 {teacher.subject}
               </span>
             </div>
             <div className="text-end">
-              <p className="mb-1 text-micro font-bold uppercase text-muted">التاريخ</p>
-              <p className="text-xs font-semibold text-main">
+              <p className="mb-1 text-micro font-normal uppercase text-muted">التاريخ</p>
+              <p className="text-xs font-light text-main">
                 {new Date().toLocaleDateString('ar-EG')}
               </p>
             </div>
@@ -77,16 +77,16 @@ export const SalarySlipModal = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-xl border border-border bg-card p-4">
-              <p className="mb-1 text-micro font-bold uppercase text-muted">إجمالي الحصص</p>
-              <p className="font-mono text-2xl font-bold text-main">{teacher.sessionsCount}</p>
+              <p className="mb-1 text-micro font-normal uppercase text-muted">إجمالي الحصص</p>
+              <p className="font-mono text-2xl font-normal text-main">{teacher.sessionsCount}</p>
             </div>
             <div className="rounded-xl border border-primary-soft bg-primary-soft p-4">
-              <p className="mb-1 text-micro font-bold uppercase text-primary">صافي المستحق</p>
+              <p className="mb-1 text-micro font-normal uppercase text-primary">صافي المستحق</p>
               <div className="flex items-baseline gap-1">
-                <p className="font-mono text-2xl font-bold text-primary">
+                <p className="font-mono text-2xl font-normal text-primary">
                   {teacher.totalAmount.toLocaleString()}
                 </p>
-                <span className="text-micro font-bold uppercase text-primary">
+                <span className="text-micro font-normal uppercase text-primary">
                   {CURRENCY_SYMBOL}
                 </span>
               </div>
@@ -99,13 +99,13 @@ export const SalarySlipModal = ({
               <table className="w-full text-start text-xs">
                 <thead className="bg-surface">
                   <tr>
-                    <th scope="col" className="p-2.5 font-bold text-muted">
+                    <th scope="col" className="p-2.5 font-normal text-muted">
                       التاريخ
                     </th>
-                    <th scope="col" className="p-2.5 font-bold text-muted">
+                    <th scope="col" className="p-2.5 font-normal text-muted">
                       الطالب
                     </th>
-                    <th scope="col" className="p-2.5 text-center font-bold text-muted">
+                    <th scope="col" className="p-2.5 text-center font-normal text-muted">
                       القيمة
                     </th>
                   </tr>
@@ -120,8 +120,8 @@ export const SalarySlipModal = ({
                       ) => (
                         <tr key={idx} className="transition-colors hover:bg-hover">
                           <td className="p-2.5 font-mono text-muted">{s.date}</td>
-                          <td className="p-2.5 font-bold text-main">{s.studentName}</td>
-                          <td className="p-2.5 text-center font-mono font-bold text-success">
+                          <td className="p-2.5 font-normal text-main">{s.studentName}</td>
+                          <td className="p-2.5 text-center font-mono font-normal text-success">
                             {s.teacherPrice || teacher.price} {CURRENCY_SYMBOL}
                           </td>
                         </tr>

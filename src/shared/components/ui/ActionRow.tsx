@@ -40,7 +40,7 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
         className={cn(
           'inline-flex items-center justify-center',
           'h-10 w-10 rounded-xl md:h-8 md:w-8',
-          'text-[10px] font-bold',
+          'text-[10px] font-normal',
           'transition-all duration-normal ease-out active:duration-fast',
           'active:scale-95',
           'focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',

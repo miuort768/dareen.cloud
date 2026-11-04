@@ -21,14 +21,14 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
               <TrendingUp size={24} />
             </div>
             <div>
-              <p className="text-sm font-bold text-muted">التقدم الأكاديمي العام</p>
+              <p className="text-sm font-normal text-muted">التقدم الأكاديمي العام</p>
               <div className="mt-1 flex items-baseline gap-2">
                 <CountUp
                   value={stats.academicProgress}
                   format={(n) => `${n}%`}
-                  className="font-dash text-3xl font-black tabular-nums text-main"
+                  className="font-dash text-3xl font-medium tabular-nums text-main"
                 />
-                <span className="rounded-lg bg-success-soft px-2 py-0.5 text-[11px] font-bold text-success">
+                <span className="rounded-lg bg-success-soft px-2 py-0.5 text-[11px] font-normal text-success">
                   حضور {stats.attendanceRate}%
                 </span>
               </div>
@@ -54,9 +54,9 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
             <CheckCircle2 className="mb-2 text-success-strong" size={20} />
             <CountUp
               value={stats.completed}
-              className="font-dash text-2xl font-black tabular-nums text-success-strong"
+              className="font-dash text-2xl font-medium tabular-nums text-success-strong"
             />
-            <p className="mt-1 text-xs font-bold text-success-strong">حصص منجزة</p>
+            <p className="mt-1 text-xs font-normal text-success-strong">حصص منجزة</p>
             <p className="text-success-strong/80 mt-0.5 text-[10px] font-medium">
               {stats.weeklyCompleted} هذا الأسبوع
             </p>
@@ -66,9 +66,9 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
             <ClipboardList className="mb-2 text-primary" size={20} />
             <CountUp
               value={stats.todayCount}
-              className="font-dash text-2xl font-black tabular-nums text-main"
+              className="font-dash text-2xl font-medium tabular-nums text-main"
             />
-            <p className="mt-1 text-xs font-bold text-muted">في جدول اليوم</p>
+            <p className="mt-1 text-xs font-normal text-muted">في جدول اليوم</p>
             <p className="mt-0.5 text-[10px] font-medium text-muted">استعد لحصص اليوم</p>
           </article>
         </div>

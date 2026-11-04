@@ -311,7 +311,7 @@ export const Sidebar = memo(
               </div>
               <span
                 className={cn(
-                  'text-sm font-semibold text-main transition-all duration-slow',
+                  'text-sm font-light text-main transition-all duration-slow',
                   collapsed ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
                 )}
               >

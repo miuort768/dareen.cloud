@@ -58,7 +58,7 @@ const formatPhone = (phone: string) => {
 }
 
 const actionBtnBase =
-  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-extrabold transition-all duration-normal ease-out shadow-button hover:shadow-button-hover active:scale-95 active:shadow-button-pressed outline-none focus-visible:ring-2 focus-visible:ring-focus'
+  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-normal transition-all duration-normal ease-out shadow-button hover:shadow-button-hover active:scale-95 active:shadow-button-pressed outline-none focus-visible:ring-2 focus-visible:ring-focus'
 
 export const TrialSessionCard = ({
   session: t,
@@ -99,10 +99,10 @@ export const TrialSessionCard = ({
               <User size={18} className={gradient.on} />
             </div>
             <div className="text-start">
-              <h3 className="text-sm font-bold leading-tight text-main">{t.studentName}</h3>
+              <h3 className="text-sm font-normal leading-tight text-main">{t.studentName}</h3>
               <span
                 className={cn(
-                  'mt-1 inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold',
+                  'mt-1 inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-normal',
                   cfg.bg,
                   cfg.text,
                 )}
@@ -113,7 +113,7 @@ export const TrialSessionCard = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] font-bold text-muted">
+          <div className="flex items-center gap-2 text-[11px] font-normal text-muted">
             <span className="inline-flex items-center gap-1">
               <Calendar size={11} />
               {t.date}
@@ -133,35 +133,35 @@ export const TrialSessionCard = ({
         {/* Session info: stacked on mobile, 3 columns on sm+ */}
         <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
           <div className="rounded-xl border border-primary-soft bg-primary-soft p-2.5 text-start">
-            <p className="mb-1 text-[10px] font-bold text-primary">المادة</p>
+            <p className="mb-1 text-[10px] font-normal text-primary">المادة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <BookOpen size={12} className="text-primary" />
               </div>
-              <span className="truncate text-[11px] font-extrabold text-main">
+              <span className="truncate text-[11px] font-normal text-main">
                 {t.subject || '—'}
               </span>
             </div>
           </div>
           <div className="rounded-xl border border-success-soft bg-success-soft p-2.5 text-start">
-            <p className="mb-1 text-[10px] font-bold text-success">المعلمة</p>
+            <p className="mb-1 text-[10px] font-normal text-success">المعلمة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <GraduationCap size={12} className="text-success" />
               </div>
-              <span className="truncate text-[11px] font-extrabold text-main">
+              <span className="truncate text-[11px] font-normal text-main">
                 {t.teacherName || '—'}
               </span>
             </div>
           </div>
           <div className="rounded-xl border border-warning-soft bg-warning-soft p-2.5 text-start">
-            <p className="mb-1 text-[10px] font-bold text-warning">رقم التواصل</p>
+            <p className="mb-1 text-[10px] font-normal text-warning">رقم التواصل</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <Phone size={12} className="text-warning" />
               </div>
               <span
-                className="whitespace-nowrap font-mono text-[11px] font-extrabold tracking-wide text-main"
+                className="whitespace-nowrap font-mono text-[11px] font-normal tracking-wide text-main"
                 dir="ltr"
               >
                 {formatPhone(t.parentPhone) || '—'}
@@ -186,15 +186,15 @@ export const TrialSessionCard = ({
           >
             {showNotes ? (
               <div className="flex items-start gap-2">
-                <MessageCircle size={14} className="mt-0.5 shrink-0 font-bold text-warning" />
+                <MessageCircle size={14} className="mt-0.5 shrink-0 font-normal text-warning" />
                 <div className="min-w-0 flex-1 text-start">
-                  <p className="font-semibold leading-relaxed text-main">{t.notes}</p>
+                  <p className="font-light leading-relaxed text-main">{t.notes}</p>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       setShowNotes(false)
                     }}
-                    className="mt-1 inline-flex items-center gap-1 text-[10px] font-black text-warning outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="mt-1 inline-flex items-center gap-1 text-[10px] font-medium text-warning outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <ChevronUp size={10} />
                     أقل
@@ -202,7 +202,7 @@ export const TrialSessionCard = ({
                 </div>
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 px-1 py-1.5 font-semibold text-main">
+              <div className="flex items-center gap-1.5 px-1 py-1.5 font-light text-main">
                 <MessageCircle size={13} className="shrink-0 text-warning" />
                 <span className="line-clamp-1 flex-1 text-start">{t.notes}</span>
                 <ChevronDown size={11} className="shrink-0 text-warning" />

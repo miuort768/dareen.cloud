@@ -88,11 +88,11 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
       <div className="relative z-10 p-6 sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-white/90">
+            <p className="mb-1 flex items-center gap-1.5 text-xs font-normal text-white/90">
               <CalendarDays size={12} />
               {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
             </p>
-            <h1 className="font-heading text-xl font-black leading-tight text-on-primary md:text-2xl">
+            <h1 className="font-heading text-xl font-medium leading-tight text-on-primary md:text-2xl">
               {getGreeting(nightMessage)}، {firstName}
             </h1>
             {subtitle && <div className="mt-1">{subtitle}</div>}
@@ -123,9 +123,9 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
                       <CountUp
                         value={stat.value}
                         format={stat.formatter}
-                        className="block text-xl font-black tabular-nums leading-none text-on-primary sm:text-2xl"
+                        className="block text-xl font-medium tabular-nums leading-none text-on-primary sm:text-2xl"
                       />
-                      <p className="mt-1.5 truncate text-[10px] font-bold text-white/90 sm:text-[11px]">
+                      <p className="mt-1.5 truncate text-[10px] font-normal text-white/90 sm:text-[11px]">
                         {stat.label}
                       </p>
                     </div>
@@ -141,7 +141,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
                   return (
                     <span
                       key={chip.label}
-                      className="inline-flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-on-primary backdrop-blur-sm"
+                      className="inline-flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-normal text-on-primary backdrop-blur-sm"
                     >
                       <Icon size={12} />
                       {chip.label}

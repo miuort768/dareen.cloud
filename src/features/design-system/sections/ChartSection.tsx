@@ -4,13 +4,13 @@ export function ChartSection() {
   const maxVal = Math.max(...mockChartData.map((d) => d.value))
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الرسوم البيانية — Charts</h2>
+      <h2 className="mb-4 text-lg font-normal">الرسوم البيانية — Charts</h2>
       <div
         className="rounded-card border p-4"
         role="img"
         aria-label="رسم بياني عمودي يوضح الإيرادات الشهرية"
       >
-        <h3 className="mb-4 text-sm font-semibold text-muted">
+        <h3 className="mb-4 text-sm font-light text-muted">
           رسم بياني عمودي — الإيرادات الشهرية
         </h3>
         <div className="flex h-40 items-end gap-3">

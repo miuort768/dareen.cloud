@@ -54,16 +54,16 @@ export const GreetingStrip = ({
       <div className="relative z-10 p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
+            <p className="flex items-center gap-1.5 text-xs font-normal text-muted">
               <UserRound size={13} className="text-primary" />
               <span className="font-dash">{today}</span>
             </p>
 
-            <h1 className="mt-3 font-parent-heading text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
+            <h1 className="mt-3 font-parent-heading text-xl font-medium leading-tight text-main md:text-2xl xl:text-3xl">
               {getGreeting()}، شريك النجاح
             </h1>
 
-            <p className="mt-1 text-[11px] font-bold text-muted xl:text-xs">
+            <p className="mt-1 text-[11px] font-normal text-muted xl:text-xs">
               نبض يومي لمتابعة أبنائك
             </p>
           </div>
@@ -109,34 +109,34 @@ export const GreetingStrip = ({
                 <CountUp
                   value={attendanceRate}
                   format={(n) => `${Math.round(n)}`}
-                  className="font-dash text-base font-black tabular-nums leading-none text-primary lg:text-xl lg:leading-none"
+                  className="font-dash text-base font-medium tabular-nums leading-none text-primary lg:text-xl lg:leading-none"
                 />
-                <span className="text-[11px] font-black leading-none text-primary lg:text-xs">
+                <span className="text-[11px] font-medium leading-none text-primary lg:text-xs">
                   %
                 </span>
               </span>
             </div>
-            <span className="whitespace-nowrap text-[10px] font-bold text-muted">
+            <span className="whitespace-nowrap text-[10px] font-normal text-muted">
               الحضور الإجمالي
             </span>
           </div>
         </div>
 
-        <p className="mt-2 max-w-xl text-center text-xs font-bold leading-relaxed text-muted sm:text-sm md:text-start xl:text-base">
+        <p className="mt-2 max-w-xl text-center text-xs font-normal leading-relaxed text-muted sm:text-sm md:text-start xl:text-base">
           متابعتك اليومية تصنع الفرق .. وأبناؤك في أيدٍ أمينة
         </p>
 
         {/* رقائق البيانات */}
         <div className="mt-4 flex flex-wrap justify-center gap-1.5 md:justify-start">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10px] font-black text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10px] font-medium text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
             <Users size={11} />
             {childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-2.5 py-1 text-[10px] font-black text-on-accent shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-2.5 py-1 text-[10px] font-medium text-on-accent shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
             <BookOpen size={11} />
             {subjectCount} {subjectCount === 1 ? 'مادة' : 'مواد'}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-medium text-primary lg:px-3 lg:py-1.5 lg:text-xs">
             <ClipboardList size={11} />
             {todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم'}
           </span>

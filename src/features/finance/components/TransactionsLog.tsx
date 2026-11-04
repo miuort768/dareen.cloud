@@ -88,9 +88,9 @@ const TransactionRow = ({
           {/* Details */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h4 className="truncate text-xs font-bold text-main">{t.description}</h4>
+              <h4 className="truncate text-xs font-normal text-main">{t.description}</h4>
               {t.category && (
-                <span className="shrink-0 rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
+                <span className="shrink-0 rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-normal text-muted">
                   {t.category}
                 </span>
               )}
@@ -114,14 +114,14 @@ const TransactionRow = ({
         <div className="flex shrink-0 items-center gap-3">
           <div className="text-end">
             <p
-              className={`text-sm font-extrabold tabular-nums ${isIncome ? 'text-success' : 'text-error'}`}
+              className={`text-sm font-normal tabular-nums ${isIncome ? 'text-success' : 'text-error'}`}
             >
               {isIncome ? '+' : '-'}
               {(t.amount ?? 0).toLocaleString()} {rowCurrency}
             </p>
             {badge && (
               <span
-                className={`mt-0.5 inline-block rounded-md px-1.5 py-0.5 text-[9px] font-bold ${badge.cls}`}
+                className={`mt-0.5 inline-block rounded-md px-1.5 py-0.5 text-[9px] font-normal ${badge.cls}`}
               >
                 {badge.label}
               </span>
@@ -164,20 +164,20 @@ const TransactionRow = ({
                 <div className="flex items-center gap-2">
                   <FileText size={13} className="text-primary" />
                   <span>رقم الفاتورة:</span>
-                  <span className="font-bold text-main">{t.invoiceNumber}</span>
+                  <span className="font-normal text-main">{t.invoiceNumber}</span>
                 </div>
               )}
               {t.paymentMethod && (
                 <div className="flex items-center gap-2">
                   <CreditCard size={13} className="text-primary" />
                   <span>طريقة الدفع:</span>
-                  <span className="font-bold text-main">{t.paymentMethod}</span>
+                  <span className="font-normal text-main">{t.paymentMethod}</span>
                 </div>
               )}
               <div className="flex items-center gap-2">
                 <Receipt size={13} className="text-primary" />
                 <span>نوع المعاملة:</span>
-                <span className="font-bold text-main">{isIncome ? 'إيراد' : 'مصروف'}</span>
+                <span className="font-normal text-main">{isIncome ? 'إيراد' : 'مصروف'}</span>
               </div>
             </div>
           </motion.div>
@@ -234,9 +234,9 @@ export const TransactionsLog = ({
             <Receipt size={18} />
           </div>
           <div>
-            <h2 className="text-sm font-black text-main">سجل المعاملات المالية</h2>
+            <h2 className="text-sm font-medium text-main">سجل المعاملات المالية</h2>
             <p className="mt-0.5 text-xs text-muted">
-              إجمالي <span className="font-bold text-main">{filtered.length}</span> معاملة مسجلة
+              إجمالي <span className="font-normal text-main">{filtered.length}</span> معاملة مسجلة
             </p>
           </div>
         </div>
@@ -244,7 +244,7 @@ export const TransactionsLog = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onAddTransaction}
-            className={cn(FAB_SURFACE, 'gap-1.5 rounded-xl px-3 py-2 text-xs font-bold')}
+            className={cn(FAB_SURFACE, 'gap-1.5 rounded-xl px-3 py-2 text-xs font-normal')}
           >
             <Plus size={14} /> إضافة معاملة
           </button>
@@ -265,7 +265,7 @@ export const TransactionsLog = ({
               setSearchQuery(e.target.value)
               setPage(1)
             }}
-            className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-xs font-bold text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+            className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-xs font-normal text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
           />
         </div>
 
@@ -276,7 +276,7 @@ export const TransactionsLog = ({
               setFilterType('all')
               setPage(1)
             }}
-            className={`rounded-lg px-3 py-1 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
+            className={`rounded-lg px-3 py-1 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterType === 'all'
                 ? 'shadow-xs bg-primary text-on-primary'
                 : 'text-muted hover:text-main'
@@ -289,7 +289,7 @@ export const TransactionsLog = ({
               setFilterType('income')
               setPage(1)
             }}
-            className={`rounded-lg px-3 py-1 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
+            className={`rounded-lg px-3 py-1 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterType === 'income'
                 ? 'shadow-xs bg-success text-on-success'
                 : 'text-muted hover:text-main'
@@ -302,7 +302,7 @@ export const TransactionsLog = ({
               setFilterType('expense')
               setPage(1)
             }}
-            className={`rounded-lg px-3 py-1 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
+            className={`rounded-lg px-3 py-1 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterType === 'expense'
                 ? 'shadow-xs bg-error text-on-error'
                 : 'text-muted hover:text-main'
@@ -320,7 +320,7 @@ export const TransactionsLog = ({
             <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-surface text-muted">
               <Filter size={20} />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد معاملات مطابقة</p>
+            <p className="text-xs font-normal text-muted">لا توجد معاملات مطابقة</p>
             <p className="mt-1 text-[10px] text-muted">جرب البحث بكلمات مختلفة أو تغيير الفلتر</p>
           </div>
         ) : (
@@ -333,7 +333,7 @@ export const TransactionsLog = ({
         <div className="px-4 pb-4 pt-0">
           <button
             onClick={() => setPage((p) => p + 1)}
-            className="flex w-full items-center justify-center rounded-xl border border-primary/20 bg-primary-soft py-2.5 text-xs font-bold text-primary shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/40 hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] active:shadow-button-pressed"
+            className="flex w-full items-center justify-center rounded-xl border border-primary/20 bg-primary-soft py-2.5 text-xs font-normal text-primary shadow-button outline-none transition-all duration-normal ease-out hover:border-primary/40 hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] active:shadow-button-pressed"
           >
             عرض المزيد ({filtered.length - page * PER_PAGE} متبقي)
           </button>

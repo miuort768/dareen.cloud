@@ -85,12 +85,12 @@ export const AdminAttendanceView = ({
               className="flex w-full items-center justify-between gap-2 px-3.5 py-3 text-start transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
             >
               <div className="flex min-w-0 items-center gap-2.5">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-xs font-bold text-primary">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-xs font-normal text-primary">
                   {teacher.teacherName.charAt(0)}
                 </div>
                 <div className="min-w-0">
-                  <p className="truncate text-xs font-bold text-main">{teacher.teacherName}</p>
-                  <p className="text-micro font-bold text-muted">
+                  <p className="truncate text-xs font-normal text-main">{teacher.teacherName}</p>
+                  <p className="text-micro font-normal text-muted">
                     {filteredStudents.length} طالب · {teacher.completed}/{teacher.totalSessions} حصة
                   </p>
                 </div>
@@ -98,7 +98,7 @@ export const AdminAttendanceView = ({
               <div className="flex shrink-0 items-center gap-2">
                 <span
                   className={cn(
-                    'flex items-center gap-1 rounded-2xl px-2 py-1 text-micro font-bold tabular-nums',
+                    'flex items-center gap-1 rounded-2xl px-2 py-1 text-micro font-normal tabular-nums',
                     getRateBg(teacher.rate),
                     getRateColor(teacher.rate),
                   )}
@@ -132,25 +132,25 @@ export const AdminAttendanceView = ({
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex min-w-0 items-center gap-2">
-                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-micro font-bold text-primary">
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-micro font-normal text-primary">
                               {student.studentName.charAt(0)}
                             </div>
                             <div className="min-w-0">
-                              <p className="truncate text-micro font-bold text-main">
+                              <p className="truncate text-micro font-normal text-main">
                                 {student.studentName}
                               </p>
-                              <span className="flex items-center gap-0.5 text-micro font-bold text-muted">
+                              <span className="flex items-center gap-0.5 text-micro font-normal text-muted">
                                 <BookOpen size={8} /> {student.subject}
                               </span>
                             </div>
                           </div>
                           <div className="flex shrink-0 items-center gap-1.5">
-                            <span className="text-micro font-bold tabular-nums text-muted">
+                            <span className="text-micro font-normal tabular-nums text-muted">
                               {student.completed}/{student.total}
                             </span>
                             <span
                               className={cn(
-                                'text-micro font-bold tabular-nums',
+                                'text-micro font-normal tabular-nums',
                                 getRateColor(student.rate),
                               )}
                             >
@@ -177,7 +177,7 @@ export const AdminAttendanceView = ({
                             aria-expanded={
                               expandedHistory === `${student.studentId}-${student.subject}`
                             }
-                            className="flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-micro font-bold text-primary shadow-button transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
+                            className="flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-micro font-normal text-primary shadow-button transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.985] active:shadow-button-pressed"
                           >
                             <History size={10} /> السجل
                           </button>

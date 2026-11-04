@@ -73,7 +73,7 @@ export const AttendanceHistoryView = ({
               setPeriodFilter(p)
             }}
             className={cn(
-              'relative flex-1 rounded-2xl py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+              'relative flex-1 rounded-2xl py-2 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
               periodFilter === p
                 ? 'bg-primary text-on-primary shadow-elevation-1'
                 : 'text-muted hover:text-main',
@@ -98,11 +98,11 @@ export const AttendanceHistoryView = ({
           return Array.from(groups.entries()).map(([dateStr, sessions]) => (
             <div key={dateStr} className="space-y-1.5">
               <div className="sticky top-16 z-10 flex items-center gap-2 px-1">
-                <span className="rounded-2xl bg-surface px-2 py-1 text-micro font-bold text-main">
+                <span className="rounded-2xl bg-surface px-2 py-1 text-micro font-normal text-main">
                   {dayHeaderLabel(dateStr)}
                 </span>
                 <span className="h-px flex-1 bg-border" />
-                <span className="text-micro font-bold tabular-nums text-muted">
+                <span className="text-micro font-normal tabular-nums text-muted">
                   {sessions.length} حصة
                 </span>
               </div>
@@ -132,26 +132,26 @@ export const AttendanceHistoryView = ({
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-1.5">
-                            <p className="truncate text-xs font-bold text-main">
+                            <p className="truncate text-xs font-normal text-main">
                               {session.studentName}
                             </p>
                             <span
                               className={cn(
-                                'shrink-0 rounded-2xl bg-surface px-1.5 py-0.5 text-micro font-bold',
+                                'shrink-0 rounded-2xl bg-surface px-1.5 py-0.5 text-micro font-normal',
                                 meta.iconClass,
                               )}
                             >
                               {meta.label}
                             </span>
                           </div>
-                          <p className="truncate text-micro font-bold text-muted">
+                          <p className="truncate text-micro font-normal text-muted">
                             {session.subject}
                             {session.teacherName ? ` · ${session.teacherName}` : ''}
                           </p>
                         </div>
                       </div>
                       <div className="flex shrink-0 flex-col items-end gap-0.5">
-                        <span className="text-micro font-bold tabular-nums text-muted">
+                        <span className="text-micro font-normal tabular-nums text-muted">
                           {session.time}
                         </span>
                         <History size={11} className="text-muted" />

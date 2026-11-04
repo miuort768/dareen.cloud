@@ -132,7 +132,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           nightMessage="ليلة موفقة"
           subtitle={
             academicYear ? (
-              <span className="inline-flex items-center rounded-lg bg-white/10 px-2 py-0.5 text-[10px] font-bold text-on-primary">
+              <span className="inline-flex items-center rounded-lg bg-white/10 px-2 py-0.5 text-[10px] font-normal text-on-primary">
                 {academicYear}
               </span>
             ) : undefined
@@ -164,7 +164,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           role="status"
         >
           <AlertTriangle size={14} className="shrink-0 text-warning" />
-          <p className="text-[11px] font-bold text-main">
+          <p className="text-[11px] font-normal text-main">
             بعض الأقسام تعرض بيانات جزئية بسبب خطأ مؤقت في الخادم: {degradedNames}
           </p>
         </div>
@@ -181,7 +181,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           <Section>
             <TodayMoney stats={stats} />
             <div className="mt-4">
-              <p className="mb-2.5 font-dash text-[11px] font-black text-muted">تحتاج انتباهك</p>
+              <p className="mb-2.5 font-dash text-[11px] font-medium text-muted">تحتاج انتباهك</p>
               <AttentionTiles stats={stats} />
             </div>
           </Section>

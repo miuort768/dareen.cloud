@@ -11,7 +11,7 @@ const EXAMPLE_TOKENS = [
 export function TokenInspector() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">مفتش الـ Tokens — Token Inspector</h2>
+      <h2 className="mb-4 text-lg font-normal">مفتش الـ Tokens — Token Inspector</h2>
       <p className="mb-4 text-sm text-muted">تتبع مصدر اللون من المكون إلى الـ Primitive</p>
       <div className="space-y-3">
         {EXAMPLE_TOKENS.map((ex) => {
@@ -25,7 +25,7 @@ export function TokenInspector() {
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
-                    <span className="font-bold text-main">{ex.label}</span>
+                    <span className="font-normal text-main">{ex.label}</span>
                     <span className="text-muted">↓</span>
                     <span className="text-primary">{ex.token}</span>
                     <span className="text-muted">↓</span>

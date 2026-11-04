@@ -172,7 +172,7 @@ export const GeneralSettings = ({
                   aria-label="العملة"
                   value={localCurrency}
                   onChange={(e) => setLocalCurrency(e.target.value)}
-                  className="w-full rounded-xl border border-divider bg-background px-3 py-3 text-sm font-bold text-main outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
+                  className="w-full rounded-xl border border-divider bg-background px-3 py-3 text-sm font-normal text-main outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
                 >
                   {ALLOWED_CURRENCIES.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -206,7 +206,7 @@ export const GeneralSettings = ({
               />
             </div>
 
-            <div className="flex items-center gap-2 rounded-lg border-s-2 border-warning bg-warning-soft px-4 py-3 text-[11px] font-bold text-warning-dark">
+            <div className="flex items-center gap-2 rounded-lg border-s-2 border-warning bg-warning-soft px-4 py-3 text-[11px] font-normal text-warning-dark">
               القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
             </div>
 
@@ -234,7 +234,7 @@ export const GeneralSettings = ({
               className="text-center"
             />
           </div>
-          <p className={cn('flex-1 text-[11px] font-bold text-muted')}>
+          <p className={cn('flex-1 text-[11px] font-normal text-muted')}>
             يتم تجميد حساب الطالب تلقائياً بعد غياب متواصل عن الحصص لمدة هذا العدد من الأيام، ويُرسل
             تنبيه لولي الأمر قبل التجميد.
           </p>

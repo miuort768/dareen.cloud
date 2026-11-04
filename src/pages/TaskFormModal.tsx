@@ -29,8 +29,8 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
               <Plus size={16} className="text-on-primary" />
             </div>
             <div>
-              <h3 className="text-sm font-black text-on-primary">إنشاء مهمة جديدة</h3>
-              <p className="text-micro font-bold text-white/80">إضافة مهمة إلى القائمة</p>
+              <h3 className="text-sm font-medium text-on-primary">إنشاء مهمة جديدة</h3>
+              <p className="text-micro font-normal text-white/80">إضافة مهمة إلى القائمة</p>
             </div>
           </div>
           <button
@@ -47,7 +47,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
             <div className="space-y-1.5">
               <label
                 htmlFor="task-title"
-                className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+                className="flex items-center gap-1.5 text-micro font-normal uppercase tracking-wider text-dim dark:text-muted"
               >
                 <Sparkles size={10} className="text-primary" /> عنوان المهمة
               </label>
@@ -56,7 +56,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 id="task-title"
                 required
                 type="text"
-                className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-normal text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus"
                 value={data.title}
                 onChange={(e) => onChange({ ...data, title: e.target.value })}
               />
@@ -66,13 +66,13 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
               <div className="space-y-1.5">
                 <label
                   htmlFor="task-priority"
-                  className="text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+                  className="text-micro font-normal uppercase tracking-wider text-dim dark:text-muted"
                 >
                   درجة الأولوية
                 </label>
                 <select
                   id="task-priority"
-                  className="w-full cursor-pointer rounded-2xl border border-border bg-background py-2.5 ps-3.5 text-xs font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full cursor-pointer rounded-2xl border border-border bg-background py-2.5 ps-3.5 text-xs font-normal text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="درجة الأولوية"
                   value={data.priority}
                   onChange={(e) =>
@@ -87,14 +87,14 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
               <div className="space-y-1.5">
                 <label
                   htmlFor="task-due"
-                  className="text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+                  className="text-micro font-normal uppercase tracking-wider text-dim dark:text-muted"
                 >
                   تاريخ التسليم
                 </label>
                 <input
                   id="task-due"
                   type="date"
-                  className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-normal text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   value={data.dueDate}
                   onChange={(e) => onChange({ ...data, dueDate: e.target.value })}
                 />
@@ -104,13 +104,13 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
             <div className="space-y-1.5">
               <label
                 htmlFor="task-desc"
-                className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+                className="flex items-center gap-1.5 text-micro font-normal uppercase tracking-wider text-dim dark:text-muted"
               >
                 <ShieldCheck size={10} className="text-primary" /> وصف المهمة
               </label>
               <textarea
                 id="task-desc"
-                className="h-24 w-full resize-none rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="h-24 w-full resize-none rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-normal text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 value={data.description}
                 onChange={(e) => onChange({ ...data, description: e.target.value })}
               ></textarea>
@@ -120,7 +120,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
           <button
             type="submit"
             disabled={!data.title.trim()}
-            className="w-full rounded-full bg-primary py-3 text-xs font-black text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
+            className="w-full rounded-full bg-primary py-3 text-xs font-medium text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
           >
             إنشاء مهمة جديدة
           </button>

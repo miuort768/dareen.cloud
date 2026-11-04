@@ -36,7 +36,7 @@ export const EmptyState = ({
     >
       <Icon size={compact ? 20 : 24} className={cn('text-muted', iconClassName)} />
     </div>
-    <p className={cn('font-semibold text-main', compact ? 'text-sm' : 'text-base')}>{title}</p>
+    <p className={cn('font-light text-main', compact ? 'text-sm' : 'text-base')}>{title}</p>
     {subtitle && <p className="mt-1 max-w-xs text-sm text-muted">{subtitle}</p>}
     {action && <div className="mt-4">{action}</div>}
   </div>

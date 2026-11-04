@@ -19,7 +19,7 @@ export const FooterSettingsSection = ({
   setLocalFooterInstagram,
 }: FooterSettingsSectionProps) => (
   <div className="mt-6 border-t border-divider pt-5">
-    <h4 className="mb-4 flex items-center gap-2 text-sm font-black text-main">
+    <h4 className="mb-4 flex items-center gap-2 text-sm font-medium text-main">
       <Info size={14} className="text-primary" /> تعديل الفوتر (الموقع العام)
     </h4>
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2">

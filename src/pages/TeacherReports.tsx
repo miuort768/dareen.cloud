@@ -41,7 +41,7 @@ export const TeacherReports = () => {
           meta={[
             <span
               key="attendance"
-              className="rounded-full bg-primary-soft px-2.5 py-1 text-micro font-bold text-primary"
+              className="rounded-full bg-primary-soft px-2.5 py-1 text-micro font-normal text-primary"
             >
               الحضور {stats.attendanceRate}%
             </span>,

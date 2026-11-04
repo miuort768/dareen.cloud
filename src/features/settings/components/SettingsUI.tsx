@@ -97,15 +97,15 @@ export const SectionTitle = ({
       <Icon size={18} className="text-primary" />
     </div>
     <div className="flex-1">
-      <p className="text-sm font-bold text-main">{label}</p>
-      {sub && <p className="mt-0.5 text-[11px] font-bold text-muted">{sub}</p>}
+      <p className="text-sm font-normal text-main">{label}</p>
+      {sub && <p className="mt-0.5 text-[11px] font-normal text-muted">{sub}</p>}
     </div>
     <div className="hidden h-0.5 w-16 rounded-full bg-gradient-to-l from-primary/40 to-transparent sm:block" />
   </div>
 )
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-  <label className="mb-1.5 block text-[11px] font-bold tracking-wide text-muted">{children}</label>
+  <label className="mb-1.5 block text-[11px] font-normal tracking-wide text-muted">{children}</label>
 )
 
 export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
@@ -113,7 +113,7 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
     {...props}
     className={cn(
       'w-full border border-divider bg-background',
-      'px-4 py-3 text-sm font-bold text-main',
+      'px-4 py-3 text-sm font-normal text-main',
       'outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
       'rounded-xl transition-all duration-normal',
       'text-dim',
@@ -127,7 +127,7 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
     {...props}
     className={cn(
       'w-full border border-divider bg-background',
-      'resize-none px-4 py-3 text-sm font-bold text-main',
+      'resize-none px-4 py-3 text-sm font-normal text-main',
       'outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
       'rounded-xl transition-all duration-normal',
       'text-dim',
@@ -174,7 +174,7 @@ export const PrimaryBtn = ({
       'flex items-center justify-center gap-2 rounded-xl bg-primary text-on-primary',
       'border border-primary/60 shadow-button ring-1 ring-inset ring-white/10',
       'hover:border-primary-hover hover:bg-primary-hover hover:shadow-button-hover',
-      'px-6 py-3 text-xs font-bold',
+      'px-6 py-3 text-xs font-normal',
       'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
       'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       'disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',
@@ -199,7 +199,7 @@ export const SecondaryBtn = ({
     className={cn(
       'flex items-center justify-center gap-2 rounded-xl border border-border bg-card text-muted shadow-button',
       'hover:border-border-strong hover:bg-surface hover:text-main hover:shadow-button-hover',
-      'px-5 py-2.5 text-xs font-bold',
+      'px-5 py-2.5 text-xs font-normal',
       'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
       'active:scale-[0.985] active:shadow-button-pressed active:duration-fast',
       className,
@@ -223,7 +223,7 @@ export const DangerBtn = ({
     className={cn(
       'flex items-center justify-center gap-2 rounded-xl border border-error-soft bg-error-soft text-error shadow-none',
       'hover:border-error hover:bg-error hover:text-on-error hover:shadow-button',
-      'px-5 py-2.5 text-xs font-bold',
+      'px-5 py-2.5 text-xs font-normal',
       'outline-none transition-all duration-normal ease-out focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
       'active:scale-[0.985] active:bg-error-active active:text-on-error active:shadow-button-pressed active:duration-fast',
       className,
@@ -252,8 +252,8 @@ export const ToggleRow = ({
         <Icon size={15} className="text-primary" />
       </div>
       <div>
-        <p className="text-xs font-bold text-main">{label}</p>
-        {sub && <p className="mt-0.5 text-[11px] font-bold text-muted">{sub}</p>}
+        <p className="text-xs font-normal text-main">{label}</p>
+        {sub && <p className="mt-0.5 text-[11px] font-normal text-muted">{sub}</p>}
       </div>
     </div>
     <Toggle checked={checked} onChange={onChange} />

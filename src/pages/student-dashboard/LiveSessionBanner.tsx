@@ -52,12 +52,12 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
             />
           </div>
           <div className="min-w-0">
-            <p className="flex items-center gap-1.5 text-xs font-black text-main">
+            <p className="flex items-center gap-1.5 text-xs font-medium text-main">
               <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-error" />
               حصتك جارية الآن
             </p>
-            <p className="mt-0.5 truncate text-[11px] font-bold text-muted">{session.subject}</p>
-            <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-bold text-error">
+            <p className="mt-0.5 truncate text-[11px] font-normal text-muted">{session.subject}</p>
+            <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-normal text-error">
               <ShieldCheck size={10} className="shrink-0" />
               المعلمة: {session.teacherName || 'غير محددة'}
             </p>
@@ -67,10 +67,10 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
           className="shrink-0 rounded-2xl bg-card px-3 py-2 text-center shadow-elevation-1"
           aria-live="off"
         >
-          <p className="font-mono text-xl font-black tabular-nums leading-none tracking-widest text-error">
+          <p className="font-mono text-xl font-medium tabular-nums leading-none tracking-widest text-error">
             {time}
           </p>
-          <p className="mt-1 text-[10px] font-bold uppercase text-muted">مدة الحصة</p>
+          <p className="mt-1 text-[10px] font-normal uppercase text-muted">مدة الحصة</p>
         </div>
       </div>
     </div>

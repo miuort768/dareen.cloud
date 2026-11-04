@@ -47,7 +47,7 @@ export const AttendanceHistoryModal = ({
           <div className="flex items-center gap-2.5">
             <Clock size={14} className="text-on-primary" />
             <div className="min-w-0">
-              <h3 className="truncate text-xs font-bold text-on-primary">سجل الحضور</h3>
+              <h3 className="truncate text-xs font-normal text-on-primary">سجل الحضور</h3>
               <p className="truncate text-[10px] text-white/90">{studentName}</p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export const AttendanceHistoryModal = ({
         <div className="border-t border-border px-3 py-2">
           <button
             onClick={onClose}
-            className="w-full rounded-2xl bg-surface py-2 text-[10px] font-bold text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
+            className="w-full rounded-2xl bg-surface py-2 text-[10px] font-normal text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             إغلاق
           </button>

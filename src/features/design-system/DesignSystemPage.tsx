@@ -55,8 +55,8 @@ export function DesignSystemPage() {
       <header className="sticky top-0 z-50 border-b bg-card">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <h1 className="text-lg font-bold text-main">Design System</h1>
-            <span className="rounded-full border border-warning bg-warning-soft px-2 py-0.5 text-xs font-semibold text-warning-dark">
+            <h1 className="text-lg font-normal text-main">Design System</h1>
+            <span className="rounded-full border border-warning bg-warning-soft px-2 py-0.5 text-xs font-light text-warning-dark">
               {DS_VERSION_LABEL}
             </span>
           </div>

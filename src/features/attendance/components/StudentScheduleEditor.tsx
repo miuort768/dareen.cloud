@@ -37,13 +37,13 @@ export const StudentScheduleEditor = ({
           schedule.map((slot, i) => (
             <span
               key={`slot-${i}`}
-              className="flex items-center gap-1 rounded-2xl border border-border bg-surface px-2 py-1 text-micro font-bold text-muted"
+              className="flex items-center gap-1 rounded-2xl border border-border bg-surface px-2 py-1 text-micro font-normal text-muted"
             >
               {slot.day} {slot.hour} {periodLabel(slot.period)}
             </span>
           ))
         ) : (
-          <p className="text-xs font-bold text-muted">لا يوجد جدول محدد</p>
+          <p className="text-xs font-normal text-muted">لا يوجد جدول محدد</p>
         )}
       </div>
 

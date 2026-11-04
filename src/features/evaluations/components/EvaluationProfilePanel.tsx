@@ -54,7 +54,7 @@ export const EvaluationProfilePanel = ({ student, evaluations }: EvaluationProfi
             >
               <item.icon size={11} />
             </div>
-            <p className="text-xs font-bold tabular-nums text-main">{item.value}</p>
+            <p className="text-xs font-normal tabular-nums text-main">{item.value}</p>
             <p className="text-micro text-muted">{item.label}</p>
           </div>
         ))}
@@ -65,7 +65,7 @@ export const EvaluationProfilePanel = ({ student, evaluations }: EvaluationProfi
         <div>
           <div className="mb-1 flex justify-between text-micro text-muted">
             <span>تقدم الحصص</span>
-            <span className="font-bold">{progress}%</span>
+            <span className="font-normal">{progress}%</span>
           </div>
           <ProgressBar
             value={progress}
@@ -78,7 +78,7 @@ export const EvaluationProfilePanel = ({ student, evaluations }: EvaluationProfi
       {/* Enrollments */}
       {(student?.enrollments || []).length > 0 && (
         <div className="space-y-1.5">
-          <h5 className="flex items-center gap-1 text-micro font-bold text-muted">
+          <h5 className="flex items-center gap-1 text-micro font-normal text-muted">
             <BookOpen size={10} /> المواد
           </h5>
           {(student?.enrollments || []).map((en, i) => (
@@ -87,12 +87,12 @@ export const EvaluationProfilePanel = ({ student, evaluations }: EvaluationProfi
               className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-2"
             >
               <div className="min-w-0">
-                <p className="truncate text-xs font-bold text-main">{en.subject}</p>
+                <p className="truncate text-xs font-normal text-main">{en.subject}</p>
                 <p className="text-micro text-muted">
                   {typeof en.teacher === 'string' ? en.teacher : en.teacher?.name}
                 </p>
               </div>
-              <p className="shrink-0 text-xs font-bold tabular-nums text-main">
+              <p className="shrink-0 text-xs font-normal tabular-nums text-main">
                 {en.sessionsUsed}/{en.sessionsTotal}
               </p>
             </div>
@@ -104,13 +104,13 @@ export const EvaluationProfilePanel = ({ student, evaluations }: EvaluationProfi
       {studentEvals.length > 0 && (
         <div className="rounded-lg border border-border bg-surface p-2.5">
           <div className="flex items-center justify-between">
-            <span className="text-micro font-bold text-muted">متوسط التقييم</span>
-            <span className="text-sm font-black tabular-nums text-main">{avgRating || '—'}</span>
+            <span className="text-micro font-normal text-muted">متوسط التقييم</span>
+            <span className="text-sm font-medium tabular-nums text-main">{avgRating || '—'}</span>
           </div>
           {totalXP > 0 && (
             <div className="mt-1 flex items-center justify-between">
-              <span className="text-micro font-bold text-muted">إجمالي XP</span>
-              <span className="text-sm font-black tabular-nums text-primary">{totalXP}</span>
+              <span className="text-micro font-normal text-muted">إجمالي XP</span>
+              <span className="text-sm font-medium tabular-nums text-primary">{totalXP}</span>
             </div>
           )}
         </div>

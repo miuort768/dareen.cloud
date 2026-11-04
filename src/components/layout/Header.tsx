@@ -159,7 +159,7 @@ export const Header = memo(() => {
           <div className="hidden h-6 w-px shrink-0 bg-divider lg:block" />
 
           <div className="min-w-0">
-            <h1 className="truncate text-sm font-black leading-tight text-main md:text-base lg:text-base">
+            <h1 className="truncate text-sm font-medium leading-tight text-main md:text-base lg:text-base">
               {meta.title}
             </h1>
             {isDesktop && (
@@ -188,9 +188,9 @@ export const Header = memo(() => {
                   if (e.key === 'Enter') runSearch()
                   if (e.key === 'Escape') searchRef.current?.blur()
                 }}
-                className="h-10 w-52 rounded-full border border-border bg-surface pe-16 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 dark:border-white/5 xl:w-64"
+                className="h-10 w-52 rounded-full border border-border bg-surface pe-16 ps-10 text-xs font-normal text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 dark:border-white/5 xl:w-64"
               />
-              <kbd className="pointer-events-none absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-border bg-background px-1.5 py-0.5 text-[9px] font-bold text-muted dark:border-white/5">
+              <kbd className="pointer-events-none absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-border bg-background px-1.5 py-0.5 text-[9px] font-normal text-muted dark:border-white/5">
                 <Command size={9} />K
               </kbd>
             </div>
@@ -215,7 +215,7 @@ export const Header = memo(() => {
             >
               <MessageSquare size={15} />
               {totalUnreadCount > 0 && (
-                <span className="absolute -top-0.5 start-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
+                <span className="absolute -top-0.5 start-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[9px] font-medium leading-none text-on-error">
                   {totalUnreadCount > 99 ? '+99' : totalUnreadCount}
                 </span>
               )}
@@ -255,10 +255,10 @@ export const Header = memo(() => {
               )}
             </span>
             <span className="hidden min-w-0 lg:block">
-              <span className="block max-w-[90px] truncate text-xs font-black leading-tight text-main">
+              <span className="block max-w-[90px] truncate text-xs font-medium leading-tight text-main">
                 {firstName}
               </span>
-              <span className="block text-[9px] font-bold leading-tight text-muted">حسابي</span>
+              <span className="block text-[9px] font-normal leading-tight text-muted">حسابي</span>
             </span>
             <ChevronDown size={13} className="hidden shrink-0 text-muted lg:block" />
           </Link>

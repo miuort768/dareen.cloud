@@ -39,13 +39,13 @@ export const SecureActionModal = ({
           <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-error-soft text-error">
             <AlertCircle size={24} />
           </div>
-          <h3 className="text-base font-bold text-main">{secureAction.title}</h3>
+          <h3 className="text-base font-normal text-main">{secureAction.title}</h3>
           <p className="text-xs leading-relaxed text-muted">{secureAction.description}</p>
 
           <div className="mt-2 w-full space-y-3 rounded-xl border border-border bg-surface p-4 text-start">
-            <p className="text-xs font-bold text-muted">اكتب للتأكيد:</p>
+            <p className="text-xs font-normal text-muted">اكتب للتأكيد:</p>
             <div
-              className="select-all rounded-lg border border-error bg-error-soft py-1.5 text-center text-xs font-black text-error"
+              className="select-all rounded-lg border border-error bg-error-soft py-1.5 text-center text-xs font-medium text-error"
               dir="ltr"
             >
               {secureAction.confirmWord}
@@ -77,7 +77,7 @@ export const SecureActionModal = ({
                 setSecureAction(null)
                 setSecureInput('')
               }}
-              className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex-1 rounded-xl bg-error py-2.5 text-xs font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
             >
               تنفيذ نهائي
             </button>

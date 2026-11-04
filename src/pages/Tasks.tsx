@@ -143,7 +143,7 @@ export const Tasks = () => {
                   onClick={() => setFilterPriority(key)}
                   aria-pressed={filterPriority === key}
                   className={cn(
-                    'whitespace-nowrap rounded-full border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    'whitespace-nowrap rounded-full border px-3 py-2 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                     filterPriority === key
                       ? key === 'all'
                         ? 'border-primary bg-primary text-on-primary shadow-elevation-2'
@@ -160,7 +160,7 @@ export const Tasks = () => {
                 <button
                   onClick={handleDeleteCompleted}
                   disabled={deleteTask.isPending}
-                  className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                  className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-micro font-normal text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                 >
                   <Trash2 size={12} /> حذف المكتملة ({stats.completed})
                 </button>

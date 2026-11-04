@@ -20,7 +20,7 @@ interface StudentTableProps {
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="group relative">
     {children}
-    <div className="pointer-events-none absolute -top-8 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
+    <div className="pointer-events-none absolute -top-8 start-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-normal text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
       {label}
     </div>
   </div>
@@ -58,7 +58,7 @@ export const StudentTable = memo(
               <div className="flex items-center gap-3">
                 <div
                   className={cn(
-                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-2',
+                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-normal ring-2',
                     gc.bg,
                     gc.text,
                     gc.ring,
@@ -68,11 +68,11 @@ export const StudentTable = memo(
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <p className="text-xs font-bold leading-tight text-main">
+                    <p className="text-xs font-normal leading-tight text-main">
                       {student.name || '—'}
                     </p>
                     {hasLowBalance && (
-                      <span className="animate-pulse rounded bg-error-soft px-1.5 py-0.5 text-[9px] font-bold text-error">
+                      <span className="animate-pulse rounded bg-error-soft px-1.5 py-0.5 text-[9px] font-normal text-error">
                         <AlertTriangle size={8} />
                       </span>
                     )}
@@ -101,7 +101,7 @@ export const StudentTable = memo(
             return (
               <span
                 className={cn(
-                  'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold ring-1',
+                  'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-normal ring-1',
                   gc.bg,
                   gc.text,
                   gc.ring,
@@ -123,7 +123,7 @@ export const StudentTable = memo(
             return (
               <span
                 className={cn(
-                  'inline-flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold ring-1',
+                  'inline-flex h-7 w-7 items-center justify-center rounded-lg text-xs font-normal ring-1',
                   count > 0
                     ? 'bg-primary-soft text-primary ring-primary/20'
                     : 'bg-surface text-muted ring-border',
@@ -151,7 +151,7 @@ export const StudentTable = memo(
             )
             const remaining = totalExpected - totalUsed
             return (
-              <span className="text-xs font-bold tabular-nums text-main">
+              <span className="text-xs font-normal tabular-nums text-main">
                 {totalUsed} <span className="text-muted">/</span> {totalExpected}
                 {remaining <= 2 && remaining > 0 && (
                   <span className="block text-[9px] text-error">{remaining} رصيد</span>
@@ -196,7 +196,7 @@ export const StudentTable = memo(
           render: (student) => {
             const pts = student.totalPoints || 0
             return (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-warning">
+              <span className="inline-flex items-center gap-1 text-[11px] font-normal text-warning">
                 <Star size={10} />
                 {pts > 0 ? pts.toLocaleString() : '—'}
               </span>
@@ -276,7 +276,7 @@ export const StudentTable = memo(
             <div className="flex min-w-0 flex-1 items-center gap-3">
               <div
                 className={cn(
-                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-2',
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-normal ring-2',
                   gc.bg,
                   gc.text,
                   gc.ring,
@@ -285,13 +285,13 @@ export const StudentTable = memo(
                 {(student.name || '?').charAt(0)}
               </div>
               <div className="min-w-0 flex-1">
-                <h4 className="truncate text-sm font-bold leading-tight text-main">
+                <h4 className="truncate text-sm font-normal leading-tight text-main">
                   {student.name || '—'}
                 </h4>
                 <div className="mt-0.5 flex items-center gap-2">
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold ring-1',
+                      'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-normal ring-1',
                       gc.bg,
                       gc.text,
                       gc.ring,
@@ -300,7 +300,7 @@ export const StudentTable = memo(
                     {student.grade || '—'}
                   </span>
                   {pts > 0 && (
-                    <span className="flex items-center gap-0.5 text-[9px] font-bold text-warning">
+                    <span className="flex items-center gap-0.5 text-[9px] font-normal text-warning">
                       <Star size={8} />
                       {pts}
                     </span>
@@ -350,19 +350,19 @@ export const StudentTable = memo(
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded-xl bg-primary-soft p-2 text-center">
-              <span className="block text-[9px] font-bold text-muted">العقود</span>
-              <span className="text-xs font-bold text-primary">
+              <span className="block text-[9px] font-normal text-muted">العقود</span>
+              <span className="text-xs font-normal text-primary">
                 {student.enrollments?.length || 0}
               </span>
             </div>
             <div className="rounded-xl bg-success-soft p-2 text-center">
-              <span className="block text-[9px] font-bold text-muted">المستخدم</span>
-              <span className="text-xs font-bold text-success">{totalUsed}</span>
+              <span className="block text-[9px] font-normal text-muted">المستخدم</span>
+              <span className="text-xs font-normal text-success">{totalUsed}</span>
             </div>
             <div className="rounded-xl bg-warning-soft p-2 text-center">
-              <span className="block text-[9px] font-bold text-muted">الرصيد</span>
+              <span className="block text-[9px] font-normal text-muted">الرصيد</span>
               <span
-                className={cn('text-xs font-bold', hasLowBalance ? 'text-error' : 'text-warning')}
+                className={cn('text-xs font-normal', hasLowBalance ? 'text-error' : 'text-warning')}
               >
                 {totalExpected - totalUsed}
               </span>
@@ -371,7 +371,7 @@ export const StudentTable = memo(
           <div>
             <div className="mb-1 flex justify-between text-[10px] text-muted">
               <span>معدل الاستهلاك</span>
-              <span className="font-bold tabular-nums">{progress}%</span>
+              <span className="font-normal tabular-nums">{progress}%</span>
             </div>
             <ProgressBar
               value={progress}
@@ -387,7 +387,7 @@ export const StudentTable = memo(
       return (
         <div className="rounded-3xl border border-border bg-card py-16 text-center shadow-soft">
           <GraduationCap size={48} className="mx-auto mb-3 text-muted opacity-20" />
-          <p className="text-xs font-bold text-muted">لا توجد بيانات طلاب حالياً</p>
+          <p className="text-xs font-normal text-muted">لا توجد بيانات طلاب حالياً</p>
           <p className="mt-1 text-[10px] text-muted opacity-60">قم بإضافة طالب جديد للبدء</p>
         </div>
       )

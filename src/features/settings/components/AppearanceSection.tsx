@@ -22,8 +22,8 @@ export const AppearanceSection = ({
           <Palette size={18} className="text-primary" />
         </div>
         <div className="flex-1">
-          <h2 className="text-sm font-black text-main">المظهر</h2>
-          <p className="mt-0.5 text-[11px] font-bold text-muted">الوضع الداكن وسمة الألوان</p>
+          <h2 className="text-sm font-medium text-main">المظهر</h2>
+          <p className="mt-0.5 text-[11px] font-normal text-muted">الوضع الداكن وسمة الألوان</p>
         </div>
         <div className="hidden h-0.5 w-16 rounded-full bg-gradient-to-l from-primary/40 to-transparent sm:block" />
       </div>
@@ -39,8 +39,8 @@ export const AppearanceSection = ({
               )}
             </div>
             <div>
-              <p className="text-xs font-bold text-main">الوضع الداكن</p>
-              <p className="mt-0.5 text-[11px] font-bold text-muted">تفعيل/إلغاء الوضع الليلي</p>
+              <p className="text-xs font-normal text-main">الوضع الداكن</p>
+              <p className="mt-0.5 text-[11px] font-normal text-muted">تفعيل/إلغاء الوضع الليلي</p>
             </div>
           </div>
           <button
@@ -62,7 +62,7 @@ export const AppearanceSection = ({
         </div>
 
         <div>
-          <p className="mb-3 flex items-center gap-2 text-xs font-bold text-main">
+          <p className="mb-3 flex items-center gap-2 text-xs font-normal text-main">
             <Palette size={14} className="text-primary" />
             سمة الألوان
           </p>
@@ -96,7 +96,7 @@ export const AppearanceSection = ({
                   </div>
                   <span
                     className={cn(
-                      'text-[10px] font-bold tracking-tight transition-colors',
+                      'text-[10px] font-normal tracking-tight transition-colors',
                       isActive ? 'text-primary' : 'text-muted',
                     )}
                   >

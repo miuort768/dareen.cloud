@@ -133,11 +133,11 @@ export const Appointments = () => {
         {isError ? (
           /* حالة الخطأ مع إعادة المحاولة */
           <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
-            <p className="text-sm font-bold text-main">حدث خطأ في تحميل البيانات</p>
+            <p className="text-sm font-normal text-main">حدث خطأ في تحميل البيانات</p>
             <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
             <button
               onClick={() => refetch()}
-              className="mx-auto mt-4 block rounded-2xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="mx-auto mt-4 block rounded-2xl bg-primary px-5 py-2.5 text-xs font-normal text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة المحاولة
             </button>
@@ -208,7 +208,7 @@ export const Appointments = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

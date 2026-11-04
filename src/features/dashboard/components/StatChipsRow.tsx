@@ -94,10 +94,10 @@ export const StatChipsRow = ({ stats }: { stats: DashboardStats }) => {
                 className="text-dim opacity-0 transition-opacity group-hover:opacity-100"
               />
             </div>
-            <p className="font-dash text-lg font-black tabular-nums leading-none tracking-tight text-main">
+            <p className="font-dash text-lg font-medium tabular-nums leading-none tracking-tight text-main">
               {chip.value}
             </p>
-            <p className="mt-1 truncate text-[10px] font-bold text-muted">{chip.label}</p>
+            <p className="mt-1 truncate text-[10px] font-normal text-muted">{chip.label}</p>
           </Link>
         )
       })}

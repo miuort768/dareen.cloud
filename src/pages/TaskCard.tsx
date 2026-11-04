@@ -38,7 +38,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
             {/* عنوان المهمة — مستطيل واضح بجانب السهم */}
             <span
               className={cn(
-                'inline-flex min-w-0 flex-1 items-center rounded-xl border border-primary/25 bg-primary-soft px-3 py-1.5 text-sm font-black text-main',
+                'inline-flex min-w-0 flex-1 items-center rounded-xl border border-primary/25 bg-primary-soft px-3 py-1.5 text-sm font-medium text-main',
                 isCompleted && 'line-through opacity-60',
               )}
             >
@@ -46,7 +46,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
             </span>
             <span
               className={cn(
-                'shrink-0 rounded-full border border-current px-2.5 py-0.5 text-micro font-bold',
+                'shrink-0 rounded-full border border-current px-2.5 py-0.5 text-micro font-normal',
                 priority.badge,
               )}
             >
@@ -59,13 +59,13 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
           </p>
 
           <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-            <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+            <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-0.5 text-micro font-normal text-muted">
               <Calendar size={11} />
               {task.dueDate}
             </span>
             <span
               className={cn(
-                'inline-flex items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-micro font-bold',
+                'inline-flex items-center gap-1 rounded-full bg-surface px-2 py-0.5 text-micro font-normal',
                 status.color,
               )}
             >
@@ -83,7 +83,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
               onUpdateStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')
             }
             className={cn(
-              'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+              'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               task.status === 'pending'
                 ? 'bg-info text-on-info hover:bg-info-hover'
                 : 'bg-success text-on-success hover:bg-success-hover',
@@ -95,7 +95,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
         ) : (
           <button
             onClick={() => onUpdateStatus(task.id, 'pending')}
-            className="inline-flex items-center gap-1.5 rounded-full bg-warning px-3.5 py-1.5 text-micro font-bold text-on-warning transition-all hover:bg-warning-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="inline-flex items-center gap-1.5 rounded-full bg-warning px-3.5 py-1.5 text-micro font-normal text-on-warning transition-all hover:bg-warning-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <RefreshCcw size={12} />
             إعادة
@@ -118,8 +118,8 @@ export const EmptyTaskState = () => (
     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-soft">
       <ClipboardList size={24} className="text-on-primary" />
     </div>
-    <h2 className="mb-1 text-base font-semibold text-main">قائمة المهام</h2>
-    <p className="text-micro font-bold uppercase tracking-wider text-primary">
+    <h2 className="mb-1 text-base font-light text-main">قائمة المهام</h2>
+    <p className="text-micro font-normal uppercase tracking-wider text-primary">
       لم يتم العثور على مهام تطابق معايير البحث
     </p>
   </div>

@@ -19,8 +19,8 @@ export const StudentSupportStrip = () => {
           <Receipt size={18} />
         </span>
         <span className="min-w-0 flex-1 leading-tight">
-          <span className="block truncate text-xs font-black text-main">الفواتير</span>
-          <span className="block truncate text-micro font-bold text-muted">فواتيرك ومدفوعاتك</span>
+          <span className="block truncate text-xs font-medium text-main">الفواتير</span>
+          <span className="block truncate text-micro font-normal text-muted">فواتيرك ومدفوعاتك</span>
         </span>
         <span
           aria-hidden
@@ -42,10 +42,10 @@ export const StudentSupportStrip = () => {
             <MessageCircle size={18} />
           </span>
           <span className="min-w-0 flex-1 leading-tight">
-            <span className="block truncate text-xs font-black text-main">
+            <span className="block truncate text-xs font-medium text-main">
               تواصل مع الدعم الفني
             </span>
-            <span className="block truncate text-micro font-bold text-muted">متاح عبر واتساب</span>
+            <span className="block truncate text-micro font-normal text-muted">متاح عبر واتساب</span>
           </span>
           <span
             aria-hidden
@@ -60,8 +60,8 @@ export const StudentSupportStrip = () => {
             <MessageCircle size={18} className="text-muted" />
           </div>
           <div className="min-w-0 flex-1 leading-tight">
-            <span className="block truncate text-xs font-black text-muted">الدعم غير متاح</span>
-            <span className="block truncate text-micro font-bold text-muted">لم تتم إضافة رقم</span>
+            <span className="block truncate text-xs font-medium text-muted">الدعم غير متاح</span>
+            <span className="block truncate text-micro font-normal text-muted">لم تتم إضافة رقم</span>
           </div>
         </div>
       )}

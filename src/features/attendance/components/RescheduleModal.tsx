@@ -38,7 +38,7 @@ export const RescheduleModal = ({
         <div className="flex items-center justify-between rounded-t-none bg-primary p-4 text-on-primary">
           <div className="flex items-center gap-2">
             <Calendar size={18} />
-            <h3 className="text-sm font-bold">طلب تغيير موعد حصة</h3>
+            <h3 className="text-sm font-normal">طلب تغيير موعد حصة</h3>
           </div>
           <button
             onClick={onClose}
@@ -55,14 +55,14 @@ export const RescheduleModal = ({
               <Clock size={18} />
             </div>
             <div>
-              <p className="text-micro font-bold text-muted">{subject}</p>
-              <h4 className="text-xs font-bold text-main">{studentName}</h4>
+              <p className="text-micro font-normal text-muted">{subject}</p>
+              <h4 className="text-xs font-normal text-main">{studentName}</h4>
             </div>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="mb-1.5 block text-micro font-bold text-muted">
+              <label className="mb-1.5 block text-micro font-normal text-muted">
                 الموعد الجديد المقترح
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -71,7 +71,7 @@ export const RescheduleModal = ({
                   aria-label="الموعد الجديد المقترح"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-2xl border border-border bg-surface p-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="w-full rounded-2xl border border-border bg-surface p-3 text-xs font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 <input
                   type="text"
@@ -79,25 +79,25 @@ export const RescheduleModal = ({
                   placeholder="الساعة (مثلا 4 عصراً)"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  className="w-full rounded-2xl border border-border bg-surface p-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="w-full rounded-2xl border border-border bg-surface p-3 text-xs font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-micro font-bold text-muted">سبب التغيير</label>
+              <label className="mb-1.5 block text-micro font-normal text-muted">سبب التغيير</label>
               <textarea
                 aria-label="سبب التغيير"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="مثلاً: الطالب لديه امتحان في المدرسة..."
-                className="min-h-[100px] w-full resize-none rounded-2xl border border-border bg-surface p-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                className="min-h-[100px] w-full resize-none rounded-2xl border border-border bg-surface p-3 text-xs font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
               />
             </div>
 
             <div className="flex items-start gap-2 rounded-2xl border border-primary/20 bg-primary-soft p-3">
               <AlertCircle size={14} className="mt-0.5 flex-shrink-0 text-primary" />
-              <p className="text-micro font-bold leading-relaxed text-primary">
+              <p className="text-micro font-normal leading-relaxed text-primary">
                 سيصل طلبك للإدارة فوراً للموافقة عليه، وسيتم إبلاغ ولي الأمر تلقائياً.
               </p>
             </div>
@@ -107,14 +107,14 @@ export const RescheduleModal = ({
         <div className="flex gap-3 p-5 pt-0">
           <button
             onClick={onClose}
-            className="flex-1 rounded-2xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex-1 rounded-2xl border border-border bg-surface py-3 text-xs font-normal text-main transition-all hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             إلغاء
           </button>
           <button
             onClick={() => onConfirm({ date, time, reason })}
             disabled={!time || !reason}
-            className="flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex flex-[2] items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-normal text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Save size={16} />
             إرسال الطلب الآن

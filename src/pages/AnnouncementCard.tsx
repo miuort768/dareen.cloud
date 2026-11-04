@@ -39,13 +39,13 @@ export const AnnouncementCard = ({
             <div>
               <span
                 className={cn(
-                  'mb-0.5 inline-flex items-center rounded-lg px-2 py-0.5 text-micro font-bold',
+                  'mb-0.5 inline-flex items-center rounded-lg px-2 py-0.5 text-micro font-normal',
                   meta.badge,
                 )}
               >
                 {meta.label}
               </span>
-              <p className="text-micro font-bold text-muted">
+              <p className="text-micro font-normal text-muted">
                 {format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}
               </p>
             </div>
@@ -74,15 +74,15 @@ export const AnnouncementCard = ({
           )}
         </div>
         <div className="space-y-2 md:space-y-3">
-          <h3 className="text-sm font-bold leading-tight text-main md:text-base">{ann.title}</h3>
-          <p className="line-clamp-4 border-s-2 border-border ps-2 text-micro font-bold leading-relaxed text-muted md:ps-3 md:text-xs">
+          <h3 className="text-sm font-normal leading-tight text-main md:text-base">{ann.title}</h3>
+          <p className="line-clamp-4 border-s-2 border-border ps-2 text-micro font-normal leading-relaxed text-muted md:ps-3 md:text-xs">
             {ann.content}
           </p>
         </div>
       </div>
       {!ann.isActive && (
         <div className="mt-5 border-t border-dashed border-border pt-3">
-          <span className="flex items-center gap-1.5 text-micro font-bold text-warning-dark dark:text-primary">
+          <span className="flex items-center gap-1.5 text-micro font-normal text-warning-dark dark:text-primary">
             <Info size={10} /> غير نشط
           </span>
         </div>

@@ -132,7 +132,7 @@ function TableInner<T>({
             key={col.key}
             scope="col"
             className={cn(
-              'select-none px-5 py-4 text-start text-xs font-bold uppercase tracking-wider',
+              'select-none px-5 py-4 text-start text-xs font-normal uppercase tracking-wider',
               col.align === 'center' && 'text-center',
               col.align === 'right' && 'text-end',
               thClass,
@@ -244,7 +244,7 @@ function TableInner<T>({
     if (!totalPages || totalPages <= 1 || !onPageChange) return null
     return (
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:px-5">
-        <p className="text-xs font-bold text-dim">
+        <p className="text-xs font-normal text-dim">
           {totalCount ? `1-${Math.min(pageSize || data.length, totalCount)} من ${totalCount}` : ''}
         </p>
         <div className="flex items-center gap-1">
@@ -264,7 +264,7 @@ function TableInner<T>({
                 key={p}
                 onClick={() => onPageChange(p)}
                 className={cn(
-                  'h-9 min-w-9 rounded-card text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:min-w-8',
+                  'h-9 min-w-9 rounded-card text-xs font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:min-w-8',
                   isActive ? 'bg-primary text-on-primary' : 'text-muted hover:bg-hover',
                 )}
               >
@@ -362,7 +362,7 @@ function TableInner<T>({
               <div className="space-y-2.5">
                 {defaultMobileColumns.map((col) => (
                   <div key={col.key} className="flex items-start justify-between gap-3">
-                    <span className="shrink-0 pt-0.5 text-xs font-semibold text-muted">
+                    <span className="shrink-0 pt-0.5 text-xs font-light text-muted">
                       {col.mobileLabel}
                     </span>
                     <span className="min-w-0 text-end text-sm font-medium text-main">

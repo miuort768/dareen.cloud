@@ -91,13 +91,13 @@ export const AttendanceHeroCard = ({
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-lg font-black tabular-nums text-on-primary">{rate}%</span>
+              <span className="text-lg font-medium tabular-nums text-on-primary">{rate}%</span>
             </div>
           </div>
 
           {/* العدادات */}
           <div className="min-w-0 flex-1 space-y-2">
-            <p className="text-xs font-bold text-white/85">حصص اليوم</p>
+            <p className="text-xs font-normal text-white/85">حصص اليوم</p>
             <div className="grid grid-cols-3 gap-1.5">
               {stats.map((s) => (
                 <div
@@ -106,14 +106,14 @@ export const AttendanceHeroCard = ({
                 >
                   <p
                     className={cn(
-                      'flex items-center justify-center gap-1 text-base font-bold tabular-nums leading-none',
+                      'flex items-center justify-center gap-1 text-base font-normal tabular-nums leading-none',
                       s.className,
                     )}
                   >
                     <s.icon size={11} strokeWidth={2} />
                     {s.value}
                   </p>
-                  <p className="mt-1 text-micro font-bold text-white/90">{s.label}</p>
+                  <p className="mt-1 text-micro font-normal text-white/90">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -124,7 +124,7 @@ export const AttendanceHeroCard = ({
         <div className="relative z-10 mt-3 flex items-center justify-between rounded-2xl bg-white/10 px-3 py-2 backdrop-blur-sm">
           <div className="flex items-center gap-1.5 text-white/85">
             <CalendarDays size={12} />
-            <span className="text-micro font-bold">{todayArabic()}</span>
+            <span className="text-micro font-normal">{todayArabic()}</span>
           </div>
           {onDateChange && date && (
             <input
@@ -132,7 +132,7 @@ export const AttendanceHeroCard = ({
               aria-label="اختيار التاريخ"
               value={date}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-[105px] cursor-pointer rounded-2xl border-none bg-transparent p-0 text-end text-micro font-bold text-white outline-none hover:text-white/80"
+              className="w-[105px] cursor-pointer rounded-2xl border-none bg-transparent p-0 text-end text-micro font-normal text-white outline-none hover:text-white/80"
             />
           )}
         </div>

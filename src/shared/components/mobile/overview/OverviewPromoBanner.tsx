@@ -46,7 +46,7 @@ export const OverviewPromoBanner: React.FC<OverviewPromoBannerProps> = ({
 
         {/* Text */}
         <div className="min-w-0">
-          <h4 className="truncate text-xs font-black text-main transition-colors group-hover:text-primary">
+          <h4 className="truncate text-xs font-medium text-main transition-colors group-hover:text-primary">
             {title}
           </h4>
           <p className="truncate text-[10px] font-medium text-muted">{subtitle}</p>

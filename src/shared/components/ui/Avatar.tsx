@@ -44,7 +44,7 @@ export const Avatar = ({ src, alt = '', name, size = 'md', className, indicator 
             ) : (
                 <div className={cn(
                     s,
-                    'rounded-full flex items-center justify-center font-bold bg-primary-soft text-primary border-2 border-border'
+                    'rounded-full flex items-center justify-center font-normal bg-primary-soft text-primary border-2 border-border'
                 )}>
                     {initial}
                 </div>

@@ -7,11 +7,11 @@ export function NavigationSection() {
 
   return (
     <section>
-      <h2 className="text-lg font-bold mb-4">التنقل — Navigation</h2>
+      <h2 className="text-lg font-normal mb-4">التنقل — Navigation</h2>
       <div className="space-y-6">
         {/* Tabs */}
         <div>
-          <h3 className="text-sm font-semibold text-muted mb-3">Tabs — Underline</h3>
+          <h3 className="text-sm font-light text-muted mb-3">Tabs — Underline</h3>
           <Tabs
             tabs={[
               { label: 'لوحة القيادة', value: 'dashboard' },
@@ -26,7 +26,7 @@ export function NavigationSection() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-muted mb-3">Tabs — Pills</h3>
+          <h3 className="text-sm font-light text-muted mb-3">Tabs — Pills</h3>
           <Tabs
             tabs={[
               { label: 'لوحة القيادة', value: 'dashboard' },
@@ -41,7 +41,7 @@ export function NavigationSection() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-muted mb-3">Tabs — Buttons</h3>
+          <h3 className="text-sm font-light text-muted mb-3">Tabs — Buttons</h3>
           <Tabs
             tabs={[
               { label: 'لوحة القيادة', value: 'dashboard' },
@@ -57,7 +57,7 @@ export function NavigationSection() {
 
         {/* Breadcrumb */}
         <div>
-          <h3 className="text-sm font-semibold text-muted mb-3">Breadcrumb</h3>
+          <h3 className="text-sm font-light text-muted mb-3">Breadcrumb</h3>
           <div className="space-y-4">
             <div>
               <p className="text-xs text-muted mb-2">مستويان</p>
@@ -107,11 +107,11 @@ export function NavigationSection() {
 
         {/* Sidebar mock */}
         <div>
-          <h3 className="text-sm font-semibold text-muted mb-3">Sidebar</h3>
+          <h3 className="text-sm font-light text-muted mb-3">Sidebar</h3>
           <div className="w-56 rounded-card border border-border overflow-hidden">
             {['لوحة القيادة', 'الطلاب', 'المعلمين', 'المالية', 'الإعدادات'].map((item, i) => (
               <div key={item} className={`px-4 py-2.5 text-sm flex items-center gap-3 transition-colors ${
-                i === 1 ? 'bg-primary-soft text-primary font-semibold border-s-2 border-primary' : 'text-muted hover:bg-hover'
+                i === 1 ? 'bg-primary-soft text-primary font-light border-s-2 border-primary' : 'text-muted hover:bg-hover'
               }`}>
                 <div className={`w-2 h-2 rounded-full ${i === 1 ? 'bg-primary' : 'bg-border'}`} />
                 {item}

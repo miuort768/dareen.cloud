@@ -55,7 +55,7 @@ function AnimatedCounter({ value, className = '' }: { value: number; className?:
     }
     requestAnimationFrame(animate)
   }, [value])
-  return <span className={cn('font-bold tabular-nums', className)}>{display}</span>
+  return <span className={cn('font-normal tabular-nums', className)}>{display}</span>
 }
 
 interface EnrollmentFormData {
@@ -346,7 +346,7 @@ export const Students = () => {
                   setShowAddForm(true)
                 }}
                 aria-label="إضافة طالب"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-normal text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 <Plus size={16} /> طالب
               </button>
@@ -362,7 +362,7 @@ export const Students = () => {
             placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-bold text-main shadow-soft outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+            className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-normal text-main shadow-soft outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
           />
         </div>
         {/* Desktop header — unified PageHeader pattern */}
@@ -372,7 +372,7 @@ export const Students = () => {
             subtitle="إدارة بيانات الطلاب والاشتراكات والجلسات"
             icon={<GraduationCap size={22} />}
             meta={
-              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-normal tabular-nums text-muted">
                 {allStudents.length} طالب
               </span>
             }
@@ -388,7 +388,7 @@ export const Students = () => {
                   placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
               </div>
             }
@@ -423,7 +423,7 @@ export const Students = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-2xl font-black tabular-nums tracking-tight text-main">
+                    <p className="text-2xl font-medium tabular-nums tracking-tight text-main">
                       <AnimatedCounter value={stat.value} />
                     </p>
                     <p className="mt-1 text-xs font-medium text-muted">{stat.label}</p>
@@ -465,7 +465,7 @@ export const Students = () => {
                   <ShieldAlert size={18} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-error">حذف جميع الطلاب نهائيًا</p>
+                  <p className="text-xs font-normal text-error">حذف جميع الطلاب نهائيًا</p>
                   <p className="text-[11px] text-muted">
                     هذا الإجراء لا يمكن التراجع عنه وسيحذف كل الطلاب والاشتراكات والجلسات.
                   </p>
@@ -489,7 +489,7 @@ export const Students = () => {
                 <button
                   onClick={handleDeleteAll}
                   disabled={isDeletingAllBusy}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-micro font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 md:h-9"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-micro font-normal text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 md:h-9"
                 >
                   {isDeletingAllBusy && <Loader2 className="animate-spin" size={14} />}
                   تأكيد الحذف
@@ -500,13 +500,13 @@ export const Students = () => {
                     setDeleteAllPassword('')
                     setDeleteAllError('')
                   }}
-                  className="h-10 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:h-9"
+                  className="h-10 rounded-xl border border-border bg-surface px-4 text-micro font-normal text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:h-9"
                 >
                   إلغاء
                 </button>
               </div>
               {deleteAllError && (
-                <p className="flex items-center gap-1 text-[11px] font-bold text-error">
+                <p className="flex items-center gap-1 text-[11px] font-normal text-error">
                   <AlertCircle size={12} />
                   {deleteAllError}
                 </p>
@@ -609,7 +609,7 @@ export const Students = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

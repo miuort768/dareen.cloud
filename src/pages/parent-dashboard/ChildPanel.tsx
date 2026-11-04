@@ -53,7 +53,7 @@ const Ring = ({ value, size = 64 }: { value: number; size?: number }) => {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={cn('font-dash text-sm font-black tabular-nums', tone)}>{value}%</span>
+        <span className={cn('font-dash text-sm font-medium tabular-nums', tone)}>{value}%</span>
       </div>
     </div>
   )
@@ -90,13 +90,13 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
         <div className="flex min-w-0 items-center gap-3">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
-            <span className="text-base font-black" aria-hidden="true">
+            <span className="text-base font-medium" aria-hidden="true">
               {(child.name || 'ط').charAt(0)}
             </span>
           </div>
           <div className="min-w-0">
-            <h2 className="truncate text-base font-black text-main">{child.name}</h2>
-            <p className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+            <h2 className="truncate text-base font-medium text-main">{child.name}</h2>
+            <p className="flex items-center gap-1.5 text-[11px] font-normal text-muted">
               <GraduationCap size={11} className="text-primary" />
               {child.grade}
             </p>
@@ -105,12 +105,12 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
         <div className="flex items-center gap-4">
           <div className="text-center">
-            <p className="text-sm font-black tabular-nums text-main">
+            <p className="text-sm font-medium tabular-nums text-main">
               <CountUp value={stats.completed} />
-              <span className="text-[10px] font-bold text-muted"> منجزة</span>
+              <span className="text-[10px] font-normal text-muted"> منجزة</span>
             </p>
             {stats.cancelled > 0 && (
-              <p className="text-[10px] font-bold text-error">{stats.cancelled} ملغاة</p>
+              <p className="text-[10px] font-normal text-error">{stats.cancelled} ملغاة</p>
             )}
           </div>
           <Ring value={stats.attendanceRate} />
@@ -122,30 +122,30 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         {nextSession && when ? (
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="min-w-0">
-              <p className="flex items-center gap-2 text-xs font-black text-main">
+              <p className="flex items-center gap-2 text-xs font-medium text-main">
                 <CalendarClock size={13} className="text-primary" />
                 الحصة القادمة:
                 <span className="truncate text-primary">{nextSession.subject}</span>
               </p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-bold text-muted">
+              <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-normal text-muted">
                 <User size={10} className="text-primary" />
                 مع {nextSession.teacher}
               </p>
             </div>
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-medium tabular-nums text-on-primary">
               <Clock size={11} />
               {when}
             </span>
           </div>
         ) : (
-          <p className="flex items-center gap-2 text-xs font-bold text-muted">
+          <p className="flex items-center gap-2 text-xs font-normal text-muted">
             <CalendarClock size={13} className="text-primary" />
             لا توجد حصص مجدولة
           </p>
         )}
         <button
           onClick={() => navigate('/schedule')}
-          className="mt-3 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full border border-primary/25 bg-primary-soft text-[11px] font-black text-primary transition-colors duration-normal hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="mt-3 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full border border-primary/25 bg-primary-soft text-[11px] font-medium text-primary transition-colors duration-normal hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           aria-label="فتح الجدول الأسبوعي"
         >
           <CalendarDays size={12} />
@@ -157,7 +157,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
       {/* تقدم المواد */}
       <div className="p-5">
         <div className="mb-3 flex items-center gap-2">
-          <h3 className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-xs font-black text-on-primary shadow-elevation-1">
+          <h3 className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-on-primary shadow-elevation-1">
             تقدم المواد
           </h3>
           <span
@@ -166,7 +166,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
           />
         </div>
         {enrollments.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-border py-6 text-center text-xs font-bold text-muted">
+          <p className="rounded-2xl border border-dashed border-border py-6 text-center text-xs font-normal text-muted">
             لا توجد مواد مسجلة
           </p>
         ) : (
@@ -196,9 +196,9 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                         <BookMarked size={18} />
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-black text-main">{en.subject}</p>
+                        <p className="truncate text-sm font-medium text-main">{en.subject}</p>
                         {teacherName && (
-                          <p className="mt-0.5 flex items-center gap-1 text-[11px] font-bold text-muted">
+                          <p className="mt-0.5 flex items-center gap-1 text-[11px] font-normal text-muted">
                             <User size={11} className={cn('shrink-0', accent.text)} />
                             <span className="truncate">{teacherName}</span>
                           </p>
@@ -206,13 +206,13 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                       </div>
                     </div>
                     {frozen ? (
-                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2.5 py-1 text-[10px] font-bold text-muted">
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2.5 py-1 text-[10px] font-normal text-muted">
                         <Snowflake size={10} /> مجمّدة
                       </span>
                     ) : (
                       <span
                         className={cn(
-                          'shrink-0 font-dash text-2xl font-black tabular-nums leading-none',
+                          'shrink-0 font-dash text-2xl font-medium tabular-nums leading-none',
                           accent.text,
                         )}
                       >
@@ -223,10 +223,10 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
                   <div className="mt-4">
                     <div className="mb-1.5 flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-black text-muted">المنهج</span>
-                      <span className="text-xs font-black tabular-nums text-main">
+                      <span className="text-[11px] font-medium text-muted">المنهج</span>
+                      <span className="text-xs font-medium tabular-nums text-main">
                         {used}
-                        <span className="text-[10px] font-bold text-muted"> / {total} حصة</span>
+                        <span className="text-[10px] font-normal text-muted"> / {total} حصة</span>
                       </span>
                     </div>
                     {frozen ? (
@@ -244,7 +244,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         {/* ملاحظات المعلمات */}
         {notes.length > 0 && (
           <div className="mt-5">
-            <h3 className="mb-3 flex items-center gap-1.5 text-xs font-black text-muted">
+            <h3 className="mb-3 flex items-center gap-1.5 text-xs font-medium text-muted">
               <FileText size={14} className="text-primary" />
               ملاحظات المعلمات
             </h3>
@@ -255,10 +255,10 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                   className="rounded-2xl border border-border bg-primary-soft p-4 shadow-soft"
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="text-primary-strong text-[11px] font-black">
+                    <span className="text-primary-strong text-[11px] font-medium">
                       {note.subject}
                     </span>
-                    <span className="text-[10px] font-bold text-primary">{note.teacher}</span>
+                    <span className="text-[10px] font-normal text-primary">{note.teacher}</span>
                   </div>
                   <p className="text-[12px] leading-relaxed text-main opacity-90">{note.text}</p>
                 </div>
@@ -274,7 +274,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
             <FileText size={18} />
           </span>
-          <span className="min-w-0 flex-1 text-xs font-black text-on-primary">
+          <span className="min-w-0 flex-1 text-xs font-medium text-on-primary">
             عرض السجل الكامل في صفحة الأبناء
           </span>
           <span

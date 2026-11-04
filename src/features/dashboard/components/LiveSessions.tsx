@@ -182,7 +182,7 @@ export const LiveSessions = () => {
         }
         afterTitle={
           sessions.length > 0 ? (
-            <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success-strong">
+            <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-normal text-success-strong">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
               مباشر
             </span>
@@ -193,7 +193,7 @@ export const LiveSessions = () => {
             <Button
               onClick={() => setShowCreateDialog(true)}
               size="sm"
-              className="h-9 gap-1.5 rounded-lg bg-primary px-3.5 text-[11px] font-bold text-on-primary"
+              className="h-9 gap-1.5 rounded-lg bg-primary px-3.5 text-[11px] font-normal text-on-primary"
             >
               <Plus size={13} />
               بدء حصة
@@ -211,7 +211,7 @@ export const LiveSessions = () => {
           </div>
           <button
             onClick={() => refetch()}
-            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-normal text-error outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
           >
             <RefreshCcw size={11} /> إعادة
           </button>
@@ -228,13 +228,13 @@ export const LiveSessions = () => {
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/10">
             <Video size={24} className="text-primary/40 dark:text-primary/30" />
           </div>
-          <p className="text-xs font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
+          <p className="text-xs font-normal text-muted">لا توجد حصص مباشرة حالياً</p>
           <p className="mt-1 text-[11px] text-muted dark:text-dim">ابدأ حصتك بضغطة واحدة</p>
           {isTeacher && (
             <Button
               onClick={() => setShowCreateDialog(true)}
               size="sm"
-              className="mt-3 h-9 gap-1.5 rounded-xl bg-primary px-5 text-[11px] font-bold text-on-primary"
+              className="mt-3 h-9 gap-1.5 rounded-xl bg-primary px-5 text-[11px] font-normal text-on-primary"
             >
               <Plus size={13} /> بدء حصة
             </Button>
@@ -264,7 +264,7 @@ export const LiveSessions = () => {
 
                 {/* Info */}
                 <div className="min-w-0 flex-1 rounded-none border-s-4 border-s-success bg-surface px-3 py-2 dark:bg-surface">
-                  <h4 className="text-sm font-bold text-main">{session.title}</h4>
+                  <h4 className="text-sm font-normal text-main">{session.title}</h4>
                   <div className="mt-1 flex items-center gap-2 text-[11px] text-muted">
                     <span className="flex items-center gap-1">
                       <Users size={10} />
@@ -292,7 +292,7 @@ export const LiveSessions = () => {
                       PROVIDER_DOT_COLORS[session.meetingProvider] || 'bg-muted',
                     )}
                   />
-                  <span className="text-[10px] font-bold text-muted">
+                  <span className="text-[10px] font-normal text-muted">
                     {PROVIDER_LABELS[session.meetingProvider] || session.meetingProvider}
                   </span>
                 </div>
@@ -303,7 +303,7 @@ export const LiveSessions = () => {
                     href={session.meetingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex min-h-9 items-center gap-1.5 rounded-none bg-primary px-3.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                    className="flex min-h-9 items-center gap-1.5 rounded-none bg-primary px-3.5 text-[11px] font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                   >
                     <ExternalLink size={12} />
                     انضم
@@ -374,19 +374,19 @@ export const LiveSessions = () => {
                 <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
                   <Globe size={20} className="text-primary" />
                 </div>
-                <h3 className="text-base font-bold text-main">تعديل رابط الحصة</h3>
+                <h3 className="text-base font-normal text-main">تعديل رابط الحصة</h3>
                 <p className="mt-1 text-[11px] text-muted">غيّر رابط الاجتماع للحصة المباشرة</p>
               </div>
 
               <div>
-                <label className="mb-2 block text-xs font-bold text-muted">نوع الاجتماع</label>
+                <label className="mb-2 block text-xs font-normal text-muted">نوع الاجتماع</label>
                 <div className="flex gap-2">
                   {PROVIDERS.map((p) => (
                     <button
                       key={p.value}
                       onClick={() => setEditProvider(p.value)}
                       className={cn(
-                        'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                        'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                         editProvider === p.value
                           ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10'
                           : 'border-border text-muted hover:border-primary/30 dark:border-primary/15',
@@ -401,7 +401,7 @@ export const LiveSessions = () => {
               <div>
                 <label
                   htmlFor="edit-meeting-url"
-                  className="mb-2 block text-xs font-bold text-muted"
+                  className="mb-2 block text-xs font-normal text-muted"
                 >
                   رابط الاجتماع
                 </label>
@@ -425,7 +425,7 @@ export const LiveSessions = () => {
                       href="https://meet.google.com/new"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:bg-success-soft"
+                      className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-normal text-success transition-colors hover:bg-success-soft dark:bg-success-soft"
                       title="إنشاء رابط Google Meet جديد"
                     >
                       <LinkIcon size={14} /> إنشاء
@@ -434,7 +434,7 @@ export const LiveSessions = () => {
                 </div>
               </div>
 
-              {editError && <p className="text-xs font-bold text-error">{editError}</p>}
+              {editError && <p className="text-xs font-normal text-error">{editError}</p>}
 
               <div className="flex gap-3 pt-2">
                 <Button
@@ -444,14 +444,14 @@ export const LiveSessions = () => {
                     setEditingSession(null)
                     setEditError(null)
                   }}
-                  className="h-11 flex-1 rounded-xl text-xs font-bold"
+                  className="h-11 flex-1 rounded-xl text-xs font-normal"
                 >
                   إلغاء
                 </Button>
                 <Button
                   onClick={saveEditedLink}
                   disabled={editMutation.isPending}
-                  className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary"
+                  className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-normal text-on-primary"
                 >
                   {editMutation.isPending ? (
                     <>

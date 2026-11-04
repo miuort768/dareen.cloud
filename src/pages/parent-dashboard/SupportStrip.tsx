@@ -21,8 +21,8 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
           <Wallet size={18} />
         </span>
         <span className="min-w-0 flex-1 leading-tight">
-          <span className="block truncate text-xs font-black text-on-primary">سجل الدفعات</span>
-          <span className="block truncate text-[10px] font-bold text-on-primary opacity-80">
+          <span className="block truncate text-xs font-medium text-on-primary">سجل الدفعات</span>
+          <span className="block truncate text-[10px] font-normal text-on-primary opacity-80">
             تتبّع مدفوعاتك
           </span>
         </span>
@@ -46,10 +46,10 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
             <MessageCircle size={18} />
           </span>
           <span className="min-w-0 flex-1 leading-tight">
-            <span className="block truncate text-xs font-black text-on-success">
+            <span className="block truncate text-xs font-medium text-on-success">
               الدعم والاستفسار
             </span>
-            <span className="block truncate text-micro font-bold text-on-success opacity-80">
+            <span className="block truncate text-micro font-normal text-on-success opacity-80">
               متاح عبر واتساب
             </span>
           </span>
@@ -66,8 +66,8 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
             <MessageCircle size={18} className="text-muted" />
           </div>
           <div className="min-w-0 flex-1 leading-tight">
-            <span className="block truncate text-xs font-black text-muted">الدعم غير متاح</span>
-            <span className="block truncate text-micro font-bold text-muted">لم تتم إضافة رقم</span>
+            <span className="block truncate text-xs font-medium text-muted">الدعم غير متاح</span>
+            <span className="block truncate text-micro font-normal text-muted">لم تتم إضافة رقم</span>
           </div>
         </div>
       )}

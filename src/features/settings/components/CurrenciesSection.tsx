@@ -115,7 +115,7 @@ export const CurrenciesSection = ({
         <button
           onClick={() => setActiveTab('currencies')}
           className={cn(
-            'rounded-lg px-4 py-2 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+            'rounded-lg px-4 py-2 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
             activeTab === 'currencies'
               ? 'bg-card text-main shadow-elevation-1'
               : 'text-muted hover:text-main',
@@ -126,7 +126,7 @@ export const CurrenciesSection = ({
         <button
           onClick={() => setActiveTab('rates')}
           className={cn(
-            'rounded-lg px-4 py-2 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+            'rounded-lg px-4 py-2 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
             activeTab === 'rates'
               ? 'bg-card text-main shadow-elevation-1'
               : 'text-muted hover:text-main',
@@ -138,7 +138,7 @@ export const CurrenciesSection = ({
 
       {activeTab === 'currencies' && (
         <>
-          <div className="mb-5 rounded-xl border border-primary/20 bg-primary-soft p-4 text-[11px] font-bold text-primary">
+          <div className="mb-5 rounded-xl border border-primary/20 bg-primary-soft p-4 text-[11px] font-normal text-primary">
             يدعم النظام العملات التالية مع إمكانية إضافة أسعار الصرف بين أي عملتين.
           </div>
 
@@ -146,19 +146,19 @@ export const CurrenciesSection = ({
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-divider bg-background">
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     الرمز
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     الاسم
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     العلامة
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     الحالة
                   </th>
-                  <th scope="col" className="px-4 py-3 text-end font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-end font-normal text-muted">
                     الافتراضية
                   </th>
                 </tr>
@@ -169,13 +169,13 @@ export const CurrenciesSection = ({
                     key={c.code}
                     className="border-b border-divider transition-colors hover:bg-background"
                   >
-                    <td className="px-4 py-3 font-bold text-main">{c.code}</td>
+                    <td className="px-4 py-3 font-normal text-main">{c.code}</td>
                     <td className="px-4 py-3 text-muted">{c.name}</td>
                     <td className="px-4 py-3 text-muted">{c.symbol}</td>
                     <td className="px-4 py-3">
                       <span
                         className={cn(
-                          'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold',
+                          'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-normal',
                           c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-muted',
                         )}
                       >
@@ -184,13 +184,13 @@ export const CurrenciesSection = ({
                     </td>
                     <td className="px-4 py-3 text-end">
                       {localCurrency === c.code ? (
-                        <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary">
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-normal text-primary">
                           <CheckCircle2 size={12} /> الافتراضية
                         </span>
                       ) : (
                         <button
                           onClick={() => setAsDefault(c.code)}
-                          className="rounded-lg bg-info-soft px-3 py-1.5 text-[11px] font-bold text-info outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus"
+                          className="rounded-lg bg-info-soft px-3 py-1.5 text-[11px] font-normal text-info outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus"
                           title="تعيين كافتراضي"
                         >
                           تعيين افتراضي
@@ -216,14 +216,14 @@ export const CurrenciesSection = ({
               <div key={c.code} className="rounded-xl border border-divider bg-background p-3.5">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex min-w-0 items-center gap-2">
-                    <span className="rounded-lg bg-hover px-2 py-1 font-mono text-[11px] font-bold text-main">
+                    <span className="rounded-lg bg-hover px-2 py-1 font-mono text-[11px] font-normal text-main">
                       {c.code}
                     </span>
-                    <span className="truncate text-xs font-bold text-main">{c.name}</span>
+                    <span className="truncate text-xs font-normal text-main">{c.name}</span>
                   </div>
                   <span
                     className={cn(
-                      'inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold',
+                      'inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-normal',
                       c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-muted',
                     )}
                   >
@@ -233,13 +233,13 @@ export const CurrenciesSection = ({
                 <div className="mt-2.5 flex items-center justify-between border-t border-divider pt-2.5">
                   <span className="text-[11px] text-muted">العلامة: {c.symbol}</span>
                   {localCurrency === c.code ? (
-                    <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-normal text-primary">
                       <CheckCircle2 size={12} /> الافتراضية
                     </span>
                   ) : (
                     <button
                       onClick={() => setAsDefault(c.code)}
-                      className="rounded-lg bg-info-soft px-3 py-2 text-[11px] font-bold text-info outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus"
+                      className="rounded-lg bg-info-soft px-3 py-2 text-[11px] font-normal text-info outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus"
                     >
                       تعيين افتراضي
                     </button>
@@ -255,7 +255,7 @@ export const CurrenciesSection = ({
           </div>
 
           <div className="mt-4 rounded-xl border border-primary/10 bg-primary-soft p-4">
-            <p className="text-xs font-bold text-primary">
+            <p className="text-xs font-normal text-primary">
               العملة الافتراضية:{' '}
               {ALLOWED_CURRENCIES.find((c) => c.code === localCurrency)?.name ||
                 localCurrency ||
@@ -311,22 +311,22 @@ export const CurrenciesSection = ({
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-divider bg-background">
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     من
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     إلى
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     الشراء
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     البيع
                   </th>
-                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                  <th scope="col" className="px-4 py-3 text-start font-normal text-muted">
                     التاريخ
                   </th>
-                  <th scope="col" className="px-4 py-3 text-end font-bold text-muted"></th>
+                  <th scope="col" className="px-4 py-3 text-end font-normal text-muted"></th>
                 </tr>
               </thead>
               <tbody>
@@ -335,8 +335,8 @@ export const CurrenciesSection = ({
                     key={r.id}
                     className="border-b border-divider transition-colors hover:bg-background"
                   >
-                    <td className="px-4 py-3 font-bold text-main">{r.fromCurrency}</td>
-                    <td className="px-4 py-3 font-bold text-main">{r.toCurrency}</td>
+                    <td className="px-4 py-3 font-normal text-main">{r.fromCurrency}</td>
+                    <td className="px-4 py-3 font-normal text-main">{r.toCurrency}</td>
                     <td className="px-4 py-3 text-muted">{r.buyRate}</td>
                     <td className="px-4 py-3 text-muted">{r.sellRate}</td>
                     <td className="px-4 py-3 text-muted">
@@ -369,7 +369,7 @@ export const CurrenciesSection = ({
             {rates.map((r) => (
               <div key={r.id} className="rounded-xl border border-divider bg-background p-3.5">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-bold text-main">
+                  <span className="text-xs font-normal text-main">
                     {r.fromCurrency} → {r.toCurrency}
                   </span>
                   <button

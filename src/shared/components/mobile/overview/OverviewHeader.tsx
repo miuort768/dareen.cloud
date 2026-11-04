@@ -47,7 +47,7 @@ export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
             {logoIcon || <GraduationCap size={22} strokeWidth={2} />}
           </div>
           <div className="min-w-0">
-            <h1 className="truncate text-base font-black tracking-tight text-main">{appName}</h1>
+            <h1 className="truncate text-base font-medium tracking-tight text-main">{appName}</h1>
             <p className="truncate text-[11px] font-medium text-muted">{slogan}</p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
         >
           <Bell size={19} strokeWidth={2} />
           {notificationCount > 0 && (
-            <span className="absolute -end-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error shadow-elevation-1">
+            <span className="absolute -end-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[9px] font-medium leading-none text-on-error shadow-elevation-1">
               {notificationCount > 99 ? '99+' : notificationCount}
             </span>
           )}
@@ -75,7 +75,7 @@ export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
           onClick={() => hasOptions && setSheetOpen(true)}
           disabled={!hasOptions}
           className={cn(
-            'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
+            'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-normal outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
             hasOptions
               ? 'cursor-pointer text-main hover:bg-hover active:scale-[0.98]'
               : 'cursor-default text-muted',
@@ -102,7 +102,7 @@ export const OverviewHeader: React.FC<OverviewHeaderProps> = ({
                     setSheetOpen(false)
                   }}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-xl p-3 text-xs font-bold outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
+                    'flex w-full items-center justify-between rounded-xl p-3 text-xs font-normal outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
                     isSelected
                       ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'bg-surface text-main hover:bg-hover',

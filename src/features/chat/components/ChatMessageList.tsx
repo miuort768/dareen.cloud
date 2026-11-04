@@ -104,7 +104,7 @@ export const ChatMessageList = ({
             <div key={msg.id}>
               {isNewDay && label && (
                 <div className="flex justify-center px-3 pt-3">
-                  <span className="rounded-full bg-hover px-3 py-1 text-[11px] font-bold text-muted dark:bg-card dark:text-dim">
+                  <span className="rounded-full bg-hover px-3 py-1 text-[11px] font-normal text-muted dark:bg-card dark:text-dim">
                     {label}
                   </span>
                 </div>
@@ -126,7 +126,7 @@ export const ChatMessageList = ({
                   )}
                 >
                   {isGroup && !isMe && (
-                    <span className="mb-1 block text-start text-xs font-semibold text-primary">
+                    <span className="mb-1 block text-start text-xs font-light text-primary">
                       {msg.senderName}
                     </span>
                   )}

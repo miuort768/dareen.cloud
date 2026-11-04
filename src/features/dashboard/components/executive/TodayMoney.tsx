@@ -24,11 +24,11 @@ const MoneyStat = memo(function MoneyStat({
         <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${iconBg}`}>
           <Icon size={15} strokeWidth={1.9} className={accent} />
         </span>
-        <p className="truncate text-[11px] font-bold text-muted">{label}</p>
+        <p className="truncate text-[11px] font-normal text-muted">{label}</p>
       </div>
-      <p className="font-dash text-xl font-black tabular-nums leading-none tracking-tight text-main md:text-2xl lg:text-[28px]">
+      <p className="font-dash text-xl font-medium tabular-nums leading-none tracking-tight text-main md:text-2xl lg:text-[28px]">
         {(value ?? 0).toLocaleString('en-US')}
-        <span className="ms-1.5 text-[11px] font-bold text-dim">{CURRENCY_SYMBOL}</span>
+        <span className="ms-1.5 text-[11px] font-normal text-dim">{CURRENCY_SYMBOL}</span>
       </p>
     </div>
   )

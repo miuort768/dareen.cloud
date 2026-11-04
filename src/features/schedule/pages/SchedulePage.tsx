@@ -315,7 +315,7 @@ export const Schedule = () => {
     return (
       <div className="flex min-h-full flex-col items-center justify-center gap-3 bg-gradient-to-b from-primary-soft via-background to-background">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-primary" />
-        <p className="text-xs font-bold text-muted">جاري تحميل الجدول...</p>
+        <p className="text-xs font-normal text-muted">جاري تحميل الجدول...</p>
       </div>
     )
 
@@ -396,13 +396,13 @@ export const Schedule = () => {
                   >
                     <PartyPopper size={28} className="text-success-strong" />
                   </motion.div>
-                  <h3 className="mb-1.5 text-lg font-black text-main">
+                  <h3 className="mb-1.5 text-lg font-medium text-main">
                     ماشاء الله! أنهيتِ كل حصص اليوم
                   </h3>
                   <p className="text-sm font-medium text-muted">
                     أحسنتِ يا معلمة — استمري في التميّز
                   </p>
-                  <div className="mt-4 flex items-center justify-center gap-2 text-xs font-bold text-success-strong">
+                  <div className="mt-4 flex items-center justify-center gap-2 text-xs font-normal text-success-strong">
                     <CheckCircle2 size={14} />
                     <span>{todayQueue.length} حصص مكتملة</span>
                   </div>
@@ -421,7 +421,7 @@ export const Schedule = () => {
                       <div className="rounded-xl bg-primary-soft p-2 text-primary">
                         <Sparkles size={15} />
                       </div>
-                      <span className="text-xs font-bold text-main">
+                      <span className="text-xs font-normal text-main">
                         الحصة الحالية — {todayQueue.length - remainingQueue.length + 1}/
                         {todayQueue.length}
                       </span>
@@ -431,7 +431,7 @@ export const Schedule = () => {
                         <div key={i} className="h-1.5 w-1.5 rounded-full bg-border" />
                       ))}
                       {remainingQueue.length > 4 && (
-                        <span className="text-[10px] font-bold tabular-nums text-muted">
+                        <span className="text-[10px] font-normal tabular-nums text-muted">
                           +{remainingQueue.length - 4}
                         </span>
                       )}
@@ -450,12 +450,12 @@ export const Schedule = () => {
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex min-w-0 items-center gap-3.5">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
-                        <span className="text-sm font-bold text-primary">
+                        <span className="text-sm font-normal text-primary">
                           {currentSession.studentName.charAt(0)}
                         </span>
                       </div>
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-bold text-main">
+                        <p className="truncate text-sm font-normal text-main">
                           {currentSession.studentName}
                         </p>
                         <p className="mt-0.5 truncate text-xs font-medium text-muted">
@@ -466,14 +466,14 @@ export const Schedule = () => {
                     <div className="flex shrink-0 items-center gap-4">
                       <div className="flex items-center gap-1.5 text-muted">
                         <Clock size={13} />
-                        <span className="text-xs font-bold tabular-nums">
+                        <span className="text-xs font-normal tabular-nums">
                           {currentSession.time}
                         </span>
                       </div>
                       <button
                         onClick={() => completeMutation.mutate(currentSession.id)}
                         disabled={completeMutation.isPending}
-                        className="flex h-10 items-center gap-1.5 rounded-xl bg-success px-4 text-xs font-bold text-on-success shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-success-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:pointer-events-none disabled:opacity-50"
+                        className="flex h-10 items-center gap-1.5 rounded-xl bg-success px-4 text-xs font-normal text-on-success shadow-soft outline-none transition-all hover:-translate-y-0.5 hover:bg-success-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:pointer-events-none disabled:opacity-50"
                       >
                         <CheckCircle2 size={14} />
                         <span className="hidden sm:inline">إتمام الحصة</span>
@@ -499,8 +499,8 @@ export const Schedule = () => {
                   <Sparkles size={16} />
                 </div>
                 <div>
-                  <p className="text-[11px] font-bold text-muted">الحصة القادمة</p>
-                  <p className="mt-0.5 text-sm font-bold text-main">
+                  <p className="text-[11px] font-normal text-muted">الحصة القادمة</p>
+                  <p className="mt-0.5 text-sm font-normal text-main">
                     {nextSession.subject} — {nextSession.studentName}
                   </p>
                 </div>
@@ -508,15 +508,15 @@ export const Schedule = () => {
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1.5 text-muted">
                   <CalendarDays size={10} />
-                  <span className="text-[10px] font-bold">{nextSession.day}</span>
+                  <span className="text-[10px] font-normal">{nextSession.day}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-muted">
                   <Clock size={10} />
-                  <span className="text-[10px] font-bold">{nextSession.time}</span>
+                  <span className="text-[10px] font-normal">{nextSession.time}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-muted">
                   <BookOpen size={10} />
-                  <span className="text-[10px] font-bold">{nextSession.teacherName}</span>
+                  <span className="text-[10px] font-normal">{nextSession.teacherName}</span>
                 </div>
               </div>
             </div>

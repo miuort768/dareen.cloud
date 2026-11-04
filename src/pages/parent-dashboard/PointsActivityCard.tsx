@@ -69,8 +69,8 @@ export const PointsActivityCard = ({
             <RankIcon size={18} />
           </div>
           <div className="min-w-0">
-            <p className="truncate text-xs font-black text-main">{rankName}</p>
-            <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
+            <p className="truncate text-xs font-medium text-main">{rankName}</p>
+            <p className="flex items-center gap-1 text-[10px] font-normal text-muted">
               <Award size={9} className="text-primary" /> رتبة الأبناء
             </p>
           </div>
@@ -78,15 +78,15 @@ export const PointsActivityCard = ({
         <div className="shrink-0 rounded-2xl bg-card px-3 py-1.5 text-center shadow-elevation-1">
           <CountUp
             value={points}
-            className="block font-dash text-lg font-black tabular-nums leading-none text-primary"
+            className="block font-dash text-lg font-medium tabular-nums leading-none text-primary"
           />
-          <p className="mt-0.5 text-[9px] font-bold text-muted">نقطة</p>
+          <p className="mt-0.5 text-[9px] font-normal text-muted">نقطة</p>
         </div>
       </div>
 
       {items.length > 0 && (
         <div className="p-4 sm:p-5">
-          <h3 className="mb-3 flex items-center gap-1.5 text-xs font-black text-muted">
+          <h3 className="mb-3 flex items-center gap-1.5 text-xs font-medium text-muted">
             <Sparkles size={12} className="text-primary" />
             آخر النشاطات
           </h3>
@@ -113,9 +113,9 @@ export const PointsActivityCard = ({
                   </span>
 
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[11px] font-black text-main">{item.title}</p>
+                    <p className="truncate text-[11px] font-medium text-main">{item.title}</p>
                     {item.meta && (
-                      <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
+                      <p className="flex items-center gap-1 text-[10px] font-normal text-muted">
                         <Clock size={8} />
                         {item.meta}
                       </p>
@@ -124,7 +124,7 @@ export const PointsActivityCard = ({
 
                   <span
                     className={cn(
-                      'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-black tabular-nums',
+                      'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-medium tabular-nums',
                       item.tone === 'positive' && 'bg-success text-on-success',
                       item.tone === 'negative' && 'bg-error text-on-error',
                       item.tone === 'neutral' && 'bg-primary-soft text-primary',

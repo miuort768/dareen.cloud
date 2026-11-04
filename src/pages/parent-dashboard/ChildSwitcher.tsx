@@ -42,7 +42,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
           >
             <span
               className={cn(
-                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black',
+                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium',
                 active ? 'bg-white/25 text-on-primary' : tone,
               )}
               aria-hidden="true"
@@ -52,7 +52,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
             <span className="min-w-0">
               <span
                 className={cn(
-                  'block max-w-28 truncate text-xs font-bold',
+                  'block max-w-28 truncate text-xs font-normal',
                   active ? 'text-on-primary' : 'text-main',
                 )}
               >
@@ -61,7 +61,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
               {child.grade && (
                 <span
                   className={cn(
-                    'block max-w-28 truncate text-[9px] font-bold',
+                    'block max-w-28 truncate text-[9px] font-normal',
                     active ? 'text-on-primary opacity-70' : 'text-muted',
                   )}
                 >

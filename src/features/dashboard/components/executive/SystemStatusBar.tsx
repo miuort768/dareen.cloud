@@ -41,9 +41,9 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
   }) => (
     <span className="flex items-center gap-1.5 whitespace-nowrap">
       <Icon size={12} strokeWidth={1.8} className="text-dim" />
-      <span className="text-[10px] font-bold text-muted">{label}</span>
+      <span className="text-[10px] font-normal text-muted">{label}</span>
       <span className={cn('h-1.5 w-1.5 rounded-full', DOT[tone] || 'bg-muted')} />
-      <span className="text-[10px] font-bold tabular-nums text-dim">{detail}</span>
+      <span className="text-[10px] font-normal tabular-nums text-dim">{detail}</span>
     </span>
   )
 
@@ -64,7 +64,7 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
       </div>
       <span className="flex items-center gap-1.5 whitespace-nowrap">
         <Clock3 size={12} strokeWidth={1.8} className="text-dim" />
-        <span className="text-[10px] font-bold tabular-nums text-dim">
+        <span className="text-[10px] font-normal tabular-nums text-dim">
           تشغيل مستمر {uptimeHours} ساعة
         </span>
       </span>

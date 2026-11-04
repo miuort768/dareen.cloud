@@ -52,7 +52,7 @@ export const MaintenanceModal = ({
             />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-main">
+            <h3 className="text-lg font-normal text-main">
               {isEnabled ? 'تفعيل وضع الصيانة' : 'إيقاف وضع الصيانة'}
             </h3>
             <p className="mt-1 text-xs leading-relaxed text-muted">
@@ -69,7 +69,7 @@ export const MaintenanceModal = ({
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-error-soft text-error">
                 <Lock size={16} />
               </div>
-              <p className="text-[11px] font-bold text-main">
+              <p className="text-[11px] font-normal text-main">
                 {isEnabled ? 'تعطيل الدخول' : 'السماح بالدخول'}
               </p>
             </div>
@@ -77,14 +77,14 @@ export const MaintenanceModal = ({
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning-soft text-warning">
                 <Users size={16} />
               </div>
-              <p className="text-[11px] font-bold text-main">
+              <p className="text-[11px] font-normal text-main">
                 {isEnabled ? 'جلسات نشطة ستُنهى' : 'جلسات المستخدمين تعود للعمل'}
               </p>
             </div>
           </div>
 
           <div className="space-y-3 rounded-xl border border-divider bg-surface p-4">
-            <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
+            <p className="flex items-center gap-1.5 text-xs font-normal text-muted">
               <ShieldCheck size={13} className="text-primary" />
               اكتب{' '}
               <span dir="ltr" className="select-all font-mono text-primary">
@@ -98,7 +98,7 @@ export const MaintenanceModal = ({
               onChange={(e) => setInput(e.target.value)}
               placeholder="اكتب dareen..."
               dir="ltr"
-              className="w-full rounded-xl border border-divider bg-background px-4 py-3 text-center font-mono text-sm font-bold text-dim text-main outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-xl border border-divider bg-background px-4 py-3 text-center font-mono text-sm font-normal text-dim text-main outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
             />
           </div>
 
@@ -108,7 +108,7 @@ export const MaintenanceModal = ({
                 setShowMaintenanceModal(false)
                 setInput('')
               }}
-              className="flex-1 rounded-xl border border-divider py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="flex-1 rounded-xl border border-divider py-3 text-xs font-normal text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               تراجع
             </button>
@@ -116,7 +116,7 @@ export const MaintenanceModal = ({
               disabled={input.trim().toLowerCase() !== CONFIRM_WORD}
               onClick={handleConfirm}
               className={cn(
-                'flex flex-1 items-center justify-center gap-1.5 rounded-xl py-3 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40',
+                'flex flex-1 items-center justify-center gap-1.5 rounded-xl py-3 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40',
                 isEnabled
                   ? 'bg-error text-on-error hover:bg-error-hover'
                   : 'bg-primary text-on-primary hover:bg-primary-hover',

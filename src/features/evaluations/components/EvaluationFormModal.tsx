@@ -65,7 +65,7 @@ export const EvaluationFormModal = ({
                   <Award size={22} />
                 </div>
                 <div>
-                  <h3 className="text-base font-black text-on-primary">
+                  <h3 className="text-base font-medium text-on-primary">
                     {formData.studentId
                       ? `تقييم: ${students.find((s) => s.id === formData.studentId)?.name || ''}`
                       : 'إضافة تقييم جديد'}
@@ -88,7 +88,7 @@ export const EvaluationFormModal = ({
             <div className="no-scrollbar flex-1 overflow-y-auto p-4">
               {!formData.studentId && (
                 <div className="mb-5">
-                  <label htmlFor="eval-student" className="mb-2 block text-xs font-bold text-muted">
+                  <label htmlFor="eval-student" className="mb-2 block text-xs font-normal text-muted">
                     اختر الطالب
                   </label>
                   <select

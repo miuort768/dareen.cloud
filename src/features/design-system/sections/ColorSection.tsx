@@ -30,11 +30,11 @@ const GROUPS = [
 export function ColorSection() {
   return (
     <section>
-      <h2 className="text-lg font-bold mb-4">الألوان — Semantic Tokens</h2>
+      <h2 className="text-lg font-normal mb-4">الألوان — Semantic Tokens</h2>
       <div className="space-y-6">
         {GROUPS.map(group => (
           <div key={group.label}>
-            <h3 className="text-sm font-semibold text-muted mb-3">{group.label}</h3>
+            <h3 className="text-sm font-light text-muted mb-3">{group.label}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {group.tokens.map(token => {
                 const value = semantic[token as keyof typeof semantic];

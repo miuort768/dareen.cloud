@@ -53,22 +53,22 @@ export const Settings = () => {
               <SettingsIcon size={20} strokeWidth={1.9} className="text-primary" />
             </span>
             <div>
-              <h1 className="text-lg font-black leading-tight tracking-tight text-main md:text-xl">
+              <h1 className="text-lg font-medium leading-tight tracking-tight text-main md:text-xl">
                 إعدادات النظام
               </h1>
-              <p className="mt-0.5 text-[11px] font-bold text-muted">
+              <p className="mt-0.5 text-[11px] font-normal text-muted">
                 تكوين المنصة والصلاحيات والمالية
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {h.maintenanceMode && (
-              <span className="flex items-center gap-1.5 rounded-lg border border-warning-soft bg-warning-soft px-2.5 py-1.5 text-[10px] font-black text-warning-dark">
+              <span className="flex items-center gap-1.5 rounded-lg border border-warning-soft bg-warning-soft px-2.5 py-1.5 text-[10px] font-medium text-warning-dark">
                 <Wrench size={11} />
                 وضع الصيانة مفعّل
               </span>
             )}
-            <span className="rounded-lg bg-primary-soft px-2.5 py-1.5 text-[10px] font-black text-primary">
+            <span className="rounded-lg bg-primary-soft px-2.5 py-1.5 text-[10px] font-medium text-primary">
               {activeTabLabel}
             </span>
           </div>
@@ -83,7 +83,7 @@ export const Settings = () => {
             id="settings-tab-select"
             value={h.activeTab}
             onChange={(e) => h.setActiveTab(e.target.value as TabId)}
-            className="h-11 w-full appearance-none rounded-xl border border-border bg-card px-4 text-sm font-bold text-main shadow-elevation-1 outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/10 dark:[color-scheme:dark]"
+            className="h-11 w-full appearance-none rounded-xl border border-border bg-card px-4 text-sm font-normal text-main shadow-elevation-1 outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/10 dark:[color-scheme:dark]"
           >
             {tabGroups.map((group) => (
               <optgroup key={group.label} label={group.label}>
@@ -124,7 +124,7 @@ export const Settings = () => {
                       aria-current={isActive ? 'page' : undefined}
                       title={tab.label}
                       className={cn(
-                        'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-3 py-2 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                        'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-3 py-2 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                         isActive
                           ? 'bg-primary text-on-primary shadow-elevation-1'
                           : 'text-muted hover:bg-hover hover:text-main',

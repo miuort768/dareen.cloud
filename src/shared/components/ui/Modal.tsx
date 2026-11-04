@@ -136,7 +136,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
                 isDesktop ? 'mb-5 px-6 pt-6' : 'shrink-0 px-4 pb-1 pt-2',
               )}
             >
-              {title && <h3 className="text-base font-semibold text-main">{title}</h3>}
+              {title && <h3 className="text-base font-light text-main">{title}</h3>}
               <button
                 onClick={handleClose}
                 className={cn(

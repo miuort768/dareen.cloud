@@ -338,7 +338,7 @@ export const Evaluations = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-normal text-main shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

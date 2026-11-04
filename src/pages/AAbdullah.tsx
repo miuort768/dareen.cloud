@@ -67,10 +67,10 @@ export const AAbdullah = () => {
               <VCodeBracket size={22} className="text-on-primary" />
             </div>
             <div className="text-start">
-              <h1 className="text-xl font-bold leading-tight text-primary md:text-3xl">
+              <h1 className="text-xl font-normal leading-tight text-primary md:text-3xl">
                 مستر احمد عبدالله
               </h1>
-              <p className="mt-px text-micro font-bold leading-tight text-success md:text-base">
+              <p className="mt-px text-micro font-normal leading-tight text-success md:text-base">
                 مؤسس منصة دارين السابعة
               </p>
             </div>
@@ -80,7 +80,7 @@ export const AAbdullah = () => {
               href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-success px-5 py-2.5 text-sm font-bold text-on-success shadow-elevation-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
+              className="flex items-center gap-2 rounded-full bg-success px-5 py-2.5 text-sm font-normal text-on-success shadow-elevation-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
             >
               <VChatBubble size={16} />
               واتساب
@@ -89,7 +89,7 @@ export const AAbdullah = () => {
               href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-on-primary shadow-elevation-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
+              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-normal text-on-primary shadow-elevation-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
             >
               <VTelegram size={16} />
               تيليجرام
@@ -108,7 +108,7 @@ export const AAbdullah = () => {
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-elevation-3 shadow-primary/30">
                 <VRocket size={20} className="text-on-primary" />
               </div>
-              <h2 className="text-lg font-bold text-main">نبدة تعريفية</h2>
+              <h2 className="text-lg font-normal text-main">نبدة تعريفية</h2>
               <VBolt size={16} className="text-accent" />
             </div>
             <p className="text-xs leading-relaxed text-muted md:text-sm">
@@ -116,16 +116,16 @@ export const AAbdullah = () => {
               لتطوير التعليم العربي وتخليه أكثر متعة وفايدة.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1 text-[11px] font-bold text-primary">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1 text-[11px] font-normal text-primary">
                 <VAward size={12} /> مؤسس منصة دارين السابعة
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-[11px] font-bold text-success">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-3 py-1 text-[11px] font-normal text-success">
                 <VCodeBracket size={12} /> مدرس برمجة
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold text-accent">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-normal text-accent">
                 <VStar size={12} /> خريج جامعة الأزهر
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-success px-3 py-1 text-[11px] font-bold text-on-success">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-success px-3 py-1 text-[11px] font-normal text-on-success">
                 <VStar size={12} /> أزهري وأفتخر
               </span>
             </div>
@@ -144,7 +144,7 @@ export const AAbdullah = () => {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
                 <VTargetArrow size={20} className="text-on-primary" />
               </div>
-              <h2 className="text-lg font-semibold text-on-primary">الرؤية</h2>
+              <h2 className="text-lg font-light text-on-primary">الرؤية</h2>
             </div>
             <p className="text-sm leading-relaxed text-on-primary">
               "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور. هدفنا إنا نصير أكبر
@@ -155,7 +155,7 @@ export const AAbdullah = () => {
 
         {/* ═══════════════ القيم ═══════════════ */}
         <motion.div {...sectionDelay(3)} className="space-y-4">
-          <h2 className="text-xl font-bold text-primary">القيم</h2>
+          <h2 className="text-xl font-normal text-primary">القيم</h2>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             {values.map((v, i) => {
               const Icon = v.icon
@@ -169,7 +169,7 @@ export const AAbdullah = () => {
                   >
                     <Icon size={18} className="text-on-primary" />
                   </div>
-                  <h3 className="text-sm font-bold text-main">{v.title}</h3>
+                  <h3 className="text-sm font-normal text-main">{v.title}</h3>
                   <p className="text-xs text-muted">{v.desc}</p>
                 </div>
               )
@@ -186,7 +186,7 @@ export const AAbdullah = () => {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
               <VHeart size={20} className="text-accent" />
             </div>
-            <h2 className="text-lg font-semibold text-primary">
+            <h2 className="text-lg font-light text-primary">
               رسالة إلى أولياء الأمور والمعلمين
             </h2>
           </div>
@@ -205,7 +205,7 @@ export const AAbdullah = () => {
         {/* ═══════════════ ما هي منصة دارين السابعة ═══════════════ */}
         <motion.div {...sectionDelay(4.5)} className={cardClass}>
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-primary">ما هي منصة دارين السابعة؟</h2>
+            <h2 className="text-lg font-light text-primary">ما هي منصة دارين السابعة؟</h2>
             <VRocket size={18} className="inline text-success" />
           </div>
           <div className="space-y-3">
@@ -230,7 +230,7 @@ export const AAbdullah = () => {
               يناسب المراحل الدراسية المختلفة، ويساعد الطلاب على المذاكرة، فهم الدروس، مراجعة
               المواد، وحل الكتب والاختبارات.
             </p>
-            <p className="text-sm font-bold text-primary">
+            <p className="text-sm font-normal text-primary">
               دارين السابعة – منصة تعليمية أونلاين للطلاب في الخليج.
             </p>
           </div>
@@ -245,7 +245,7 @@ export const AAbdullah = () => {
           <div className="absolute bottom-[-30px] end-[20%] h-36 w-36 rounded-full bg-white/10" />
           <div className="absolute start-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10" />
           <div className="relative z-10 space-y-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-1.5 text-xs font-bold tracking-wide text-on-primary backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-1.5 text-xs font-normal tracking-wide text-on-primary backdrop-blur-sm">
               <VHeart size={14} className="fill-current text-on-primary" />
               <span>رسالتي لكم</span>
               <VHeart size={14} className="fill-current text-on-primary" />
@@ -266,7 +266,7 @@ export const AAbdullah = () => {
                 ابدأ يومك بابتسامة، واعمل بإصرار، وتحلَّ بالصبر، فكل جهد تبذله اليوم سيكون ثمرةً
                 تفتخر بها غدًا.
               </p>
-              <p className="font-black text-on-primary">
+              <p className="font-medium text-on-primary">
                 تذكّر دائمًا: الإيجابية تصنع العقلية، والاجتهاد يصنع الإنجاز، والاستمرار يصنع
                 النجاح.
               </p>

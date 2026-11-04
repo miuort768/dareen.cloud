@@ -137,8 +137,8 @@ export const ForumHelpBanner = () => {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="mb-1 flex flex-wrap items-center gap-2">
-                  <h4 className="text-sm font-black">قواعد وإرشادات المنتدى</h4>
-                  <span className="rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-micro font-bold backdrop-blur-sm">
+                  <h4 className="text-sm font-medium">قواعد وإرشادات المنتدى</h4>
+                  <span className="rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-micro font-normal backdrop-blur-sm">
                     خاص بـ {currentRules.roleTitle}
                   </span>
                 </div>
@@ -149,7 +149,7 @@ export const ForumHelpBanner = () => {
             </div>
             <button
               onClick={() => setShowModal(true)}
-              className="w-full shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-center text-xs font-black shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60 active:scale-95 sm:w-auto sm:px-5"
+              className="w-full shrink-0 rounded-full border border-white/25 bg-white/10 px-4 py-2.5 text-center text-xs font-medium shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/60 active:scale-95 sm:w-auto sm:px-5"
             >
               عرض القواعد والتعليمات
             </button>
@@ -193,10 +193,10 @@ export const ForumHelpBanner = () => {
                           <Icon size={21} />
                         </div>
                         <div>
-                          <p className="text-[10px] font-black tracking-wide opacity-70">
+                          <p className="text-[10px] font-medium tracking-wide opacity-70">
                             دليل المشاركة
                           </p>
-                          <h3 id="forum-rules-title" className="text-base font-black sm:text-lg">
+                          <h3 id="forum-rules-title" className="text-base font-medium sm:text-lg">
                             إرشادات وقواعد {currentRules.roleTitle}
                           </h3>
                         </div>
@@ -215,7 +215,7 @@ export const ForumHelpBanner = () => {
                   <div className="custom-scrollbar flex-1 space-y-4 overflow-y-auto p-4 sm:p-5">
                     <p
                       id="forum-rules-description"
-                      className="text-xs font-bold leading-relaxed text-muted"
+                      className="text-xs font-normal leading-relaxed text-muted"
                     >
                       عزيزي/عزيزتي {currentRules.roleTitle}، نرجو الالتزام بالقواعد التالية لضمان
                       تجربة تعليمية راقية ومثمرة:
@@ -225,7 +225,7 @@ export const ForumHelpBanner = () => {
                       <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-warning text-on-warning">
                         <Info size={14} />
                       </div>
-                      <p className="text-[11px] font-bold leading-relaxed text-warning-strong">
+                      <p className="text-[11px] font-normal leading-relaxed text-warning-strong">
                         ملاحظة: البلاغات تُراجع من إدارة الأكاديمية، وقد يُحذف المحتوى المخالف بعد
                         المراجعة.
                       </p>
@@ -238,11 +238,11 @@ export const ForumHelpBanner = () => {
                           className={`flex items-start gap-3 rounded-2xl border border-s-4 border-border bg-background p-3 ${tone.borderStart}`}
                         >
                           <span
-                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl text-[11px] font-black ${tone.solid}`}
+                            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-xl text-[11px] font-medium ${tone.solid}`}
                           >
                             {index + 1}
                           </span>
-                          <span className="text-xs font-semibold leading-relaxed text-main sm:text-sm">
+                          <span className="text-xs font-light leading-relaxed text-main sm:text-sm">
                             {rule}
                           </span>
                         </li>
@@ -253,7 +253,7 @@ export const ForumHelpBanner = () => {
                   <div className="shrink-0 border-t border-border bg-surface p-4 sm:p-5">
                     <button
                       onClick={() => setShowModal(false)}
-                      className={`flex w-full items-center justify-center gap-2 rounded-full py-3 text-xs font-black shadow-elevation-1 outline-none transition-all hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:text-sm ${tone.solid} ${tone.hover}`}
+                      className={`flex w-full items-center justify-center gap-2 rounded-full py-3 text-xs font-medium shadow-elevation-1 outline-none transition-all hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:text-sm ${tone.solid} ${tone.hover}`}
                     >
                       <Check size={16} />
                       فهمت وأوافق على الإرشادات

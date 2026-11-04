@@ -45,7 +45,7 @@ export const AppointmentFilters = ({
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
         placeholder="ابحث باسم الطالب أو المادة..."
-        className="w-full rounded-2xl border border-border bg-card py-3 pe-10 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
+        className="w-full rounded-2xl border border-border bg-card py-3 pe-10 ps-9 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
       />
     </div>
 
@@ -55,7 +55,7 @@ export const AppointmentFilters = ({
         aria-label="تصفية حسب اليوم"
         value={filterDay}
         onChange={(e) => onDayChange(e.target.value)}
-        className={`h-11 w-full appearance-none rounded-2xl border bg-card px-4 text-xs font-bold text-main shadow-soft outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+        className={`h-11 w-full appearance-none rounded-2xl border bg-card px-4 text-xs font-normal text-main shadow-soft outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
           filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
         }`}
       >
@@ -85,7 +85,7 @@ export const AppointmentFilters = ({
               onClick={() => onTeacherChange(value)}
               aria-pressed={selected}
               className={cn(
-                'inline-flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                'inline-flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                 selected
                   ? 'border-transparent bg-info text-on-info shadow-elevation-1'
                   : 'border-border bg-card text-main hover:border-info-soft hover:bg-info-soft hover:text-info',

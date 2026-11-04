@@ -8,7 +8,7 @@ const EXAMPLES = [
 export function MotionSection() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الحركة — Motion</h2>
+      <h2 className="mb-4 text-lg font-normal">الحركة — Motion</h2>
       <p className="mb-4 text-sm text-muted">
         حركات بسيطة للحالات التفاعلية (قيد التطوير — سيضاف لاحقاً Easing و Duration)
       </p>
@@ -16,7 +16,7 @@ export function MotionSection() {
         {EXAMPLES.map((ex) => (
           <div key={ex.label} className="flex flex-col items-center gap-3">
             <div
-              className={`flex h-20 w-20 cursor-pointer items-center justify-center rounded-card bg-primary text-xs font-bold text-on-primary transition-all duration-300 ${ex.class}`}
+              className={`flex h-20 w-20 cursor-pointer items-center justify-center rounded-card bg-primary text-xs font-normal text-on-primary transition-all duration-300 ${ex.class}`}
             >
               Hover
             </div>

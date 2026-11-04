@@ -81,7 +81,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
 
   const renderBadge = (count: number) =>
     count > 0 ? (
-      <span className="absolute -end-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[8px] font-black leading-none text-on-error shadow-elevation-1">
+      <span className="absolute -end-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[8px] font-medium leading-none text-on-error shadow-elevation-1">
         {count > 99 ? '+99' : count}
       </span>
     ) : null
@@ -126,7 +126,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
                       <Icon size={19} strokeWidth={isActive ? 2.2 : 1.7} />
                       {tab.id === 'chat' && renderBadge(totalUnreadCount)}
                     </span>
-                    <span className="whitespace-nowrap text-[10px] font-black leading-none">
+                    <span className="whitespace-nowrap text-[10px] font-medium leading-none">
                       {tab.label}
                     </span>
                   </span>
@@ -145,7 +145,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
                   <LayoutGrid size={19} strokeWidth={1.7} />
                   {!hasChatTab && renderBadge(totalUnreadCount)}
                 </span>
-                <span className="whitespace-nowrap text-[10px] font-black leading-none">
+                <span className="whitespace-nowrap text-[10px] font-medium leading-none">
                   القائمة
                 </span>
               </span>

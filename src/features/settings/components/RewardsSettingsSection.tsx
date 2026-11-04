@@ -94,7 +94,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
           <div className="rounded-xl border border-divider bg-background p-4">
             <div className="mb-2 flex items-center gap-2">
               <Star size={14} className="text-warning" />
-              <span className="text-xs font-bold text-main">الشارة البرونزية</span>
+              <span className="text-xs font-normal text-main">الشارة البرونزية</span>
             </div>
             <InputField
               type="number"
@@ -106,7 +106,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
           <div className="rounded-xl border border-divider bg-background p-4">
             <div className="mb-2 flex items-center gap-2">
               <Trophy size={14} className="text-info" />
-              <span className="text-xs font-bold text-main">الشارة الفضية</span>
+              <span className="text-xs font-normal text-main">الشارة الفضية</span>
             </div>
             <InputField
               type="number"
@@ -118,7 +118,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
           <div className="rounded-xl border border-divider bg-background p-4">
             <div className="mb-2 flex items-center gap-2">
               <Award size={14} className="text-primary" />
-              <span className="text-xs font-bold text-main">الشارة الذهبية</span>
+              <span className="text-xs font-normal text-main">الشارة الذهبية</span>
             </div>
             <InputField
               type="number"

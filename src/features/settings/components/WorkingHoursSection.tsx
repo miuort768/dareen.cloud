@@ -125,7 +125,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
               {d.day < 5 ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <span
-              className={`w-16 text-sm font-bold md:w-20 ${d.enabled ? 'text-main' : 'text-muted'}`}
+              className={`w-16 text-sm font-normal md:w-20 ${d.enabled ? 'text-main' : 'text-muted'}`}
             >
               {DAYS[d.day]}
             </span>

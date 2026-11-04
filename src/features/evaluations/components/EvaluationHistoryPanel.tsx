@@ -32,9 +32,9 @@ export const EvaluationHistoryPanel = ({
 
   return (
     <div className="space-y-1.5">
-      <h5 className="flex items-center gap-1 text-micro font-bold text-muted">
+      <h5 className="flex items-center gap-1 text-micro font-normal text-muted">
         <History size={10} /> سجل التقييمات
-        <span className="rounded bg-primary-soft px-1 py-0.5 text-micro font-bold text-primary">
+        <span className="rounded bg-primary-soft px-1 py-0.5 text-micro font-normal text-primary">
           {studentEvals.length}
         </span>
       </h5>
@@ -48,7 +48,7 @@ export const EvaluationHistoryPanel = ({
                   <div className="flex items-center gap-1">
                     <span
                       className={cn(
-                        'flex items-center gap-0.5 rounded px-1.5 py-0.5 text-micro font-bold',
+                        'flex items-center gap-0.5 rounded px-1.5 py-0.5 text-micro font-normal',
                         r.pill,
                       )}
                     >
@@ -56,7 +56,7 @@ export const EvaluationHistoryPanel = ({
                       {ev.rating}
                     </span>
                     {ev.points > 0 && (
-                      <span className="rounded bg-primary-soft px-1 py-0.5 text-micro font-bold text-primary dark:bg-primary/10">
+                      <span className="rounded bg-primary-soft px-1 py-0.5 text-micro font-normal text-primary dark:bg-primary/10">
                         +{ev.points}
                       </span>
                     )}
@@ -85,7 +85,7 @@ export const EvaluationHistoryPanel = ({
           {studentEvals.length > visibleCount && (
             <button
               onClick={() => setVisibleCount((prev) => prev + 3)}
-              className="flex w-full items-center justify-center gap-1 rounded-lg border border-border bg-surface py-2 text-micro font-bold text-muted transition-all hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="flex w-full items-center justify-center gap-1 rounded-lg border border-border bg-surface py-2 text-micro font-normal text-muted transition-all hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <ChevronDown size={12} />
               المزيد ({studentEvals.length - visibleCount})
@@ -95,7 +95,7 @@ export const EvaluationHistoryPanel = ({
       ) : (
         <div className="rounded-lg border border-dashed border-border py-6 text-center">
           <History size={16} className="mx-auto mb-1 text-muted" />
-          <p className="text-xs font-bold text-muted">لا يوجد سجل</p>
+          <p className="text-xs font-normal text-muted">لا يوجد سجل</p>
         </div>
       )}
     </div>

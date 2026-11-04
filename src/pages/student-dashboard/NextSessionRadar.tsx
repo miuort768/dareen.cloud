@@ -21,8 +21,8 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
             <CalendarClock size={20} className="text-primary" />
           </div>
           <div>
-            <p className="text-sm font-black text-main">لا توجد حصص قادمة</p>
-            <p className="text-[11px] font-bold text-muted">استرح، أو راجع جدولك الأسبوعي</p>
+            <p className="text-sm font-medium text-main">لا توجد حصص قادمة</p>
+            <p className="text-[11px] font-normal text-muted">استرح، أو راجع جدولك الأسبوعي</p>
           </div>
         </div>
       </section>
@@ -40,29 +40,29 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
     >
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="flex items-center gap-2 text-xs font-black text-main">
+          <p className="flex items-center gap-2 text-xs font-medium text-main">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
               <CalendarClock size={14} />
             </span>
             الحصة القادمة
           </p>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[11px] font-medium tabular-nums text-on-primary">
             <Clock size={11} />
             {when}
           </span>
         </div>
 
-        <p className="mt-3 truncate text-lg font-black leading-tight text-main md:text-xl">
+        <p className="mt-3 truncate text-lg font-medium leading-tight text-main md:text-xl">
           {session.subject}
         </p>
 
-        <p className="mt-1.5 flex items-center gap-1.5 text-[11px] font-bold text-muted">
+        <p className="mt-1.5 flex items-center gap-1.5 text-[11px] font-normal text-muted">
           <User size={12} className="shrink-0 text-primary" />
           <span className="truncate">مع {session.teacher}</span>
         </p>
 
         {session.notes && (
-          <p className="mt-3 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2.5 text-[11px] font-bold leading-relaxed text-main">
+          <p className="mt-3 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2.5 text-[11px] font-normal leading-relaxed text-main">
             <FileText size={12} className="mt-0.5 shrink-0 text-primary" />
             {session.notes}
           </p>
@@ -77,7 +77,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
           <CalendarClock size={18} />
         </span>
-        <span className="min-w-0 flex-1 text-xs font-black text-on-primary">عرض التفاصيل</span>
+        <span className="min-w-0 flex-1 text-xs font-medium text-on-primary">عرض التفاصيل</span>
         <span
           aria-hidden
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-primary transition-transform duration-normal group-hover:-translate-x-1"

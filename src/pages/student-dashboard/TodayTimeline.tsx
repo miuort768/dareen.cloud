@@ -64,8 +64,8 @@ const Detail = ({
       <Icon size={12} />
     </span>
     <div className="min-w-0">
-      <p className={cn('text-[10px] font-black', labelClass)}>{label}</p>
-      <p className="text-[11px] font-bold leading-relaxed text-main">{value}</p>
+      <p className={cn('text-[10px] font-medium', labelClass)}>{label}</p>
+      <p className="text-[11px] font-normal leading-relaxed text-main">{value}</p>
     </div>
   </div>
 )
@@ -81,10 +81,10 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
           <CalendarCheck size={18} />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-black text-main">حصص اليوم</h3>
-          <p className="text-[11px] font-bold text-muted">جدول جلساتك لهذا اليوم</p>
+          <h3 className="text-sm font-medium text-main">حصص اليوم</h3>
+          <p className="text-[11px] font-normal text-muted">جدول جلساتك لهذا اليوم</p>
         </div>
-        <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
+        <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-medium tabular-nums text-primary">
           {items.length} {items.length === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
@@ -94,7 +94,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
           <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
             <CalendarCheck size={22} />
           </span>
-          <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة</p>
+          <p className="text-xs font-normal text-muted">يوم مريح — لا توجد حصص مجدولة</p>
         </div>
       ) : (
         <ol className="grid grid-cols-1 gap-3 lg:grid-cols-2" role="list">
@@ -122,16 +122,16 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       <Icon size={18} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-black text-main">{item.subject}</p>
-                      <p className="truncate text-[11px] font-bold text-muted">
+                      <p className="truncate text-xs font-medium text-main">{item.subject}</p>
+                      <p className="truncate text-[11px] font-normal text-muted">
                         {item.teacher || 'غير محددة'}
                       </p>
                     </div>
                     <div className="inline-flex shrink-0 flex-col items-center justify-center rounded-lg border border-border bg-surface px-2.5 py-1.5 text-center">
-                      <span className="font-dash text-base font-black tabular-nums leading-none text-main">
+                      <span className="font-dash text-base font-medium tabular-nums leading-none text-main">
                         {item.hour}
                       </span>
-                      <span className="mt-0.5 text-[9px] font-bold text-muted">
+                      <span className="mt-0.5 text-[9px] font-normal text-muted">
                         {periodLabel(item.period)}
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
 
                   <span
                     className={cn(
-                      'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-black',
+                      'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium',
                       meta.chip,
                     )}
                   >

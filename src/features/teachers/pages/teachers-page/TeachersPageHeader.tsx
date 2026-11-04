@@ -55,14 +55,14 @@ export const TeachersPageHeader = ({
                 <Users size={20} className="text-on-primary" />
               </div>
               <div>
-                <h1 className="text-lg font-black text-main">إدارة المعلمات</h1>
-                <p className="text-[11px] font-bold text-muted">{totalTeachers} معلمة نشطة</p>
+                <h1 className="text-lg font-medium text-main">إدارة المعلمات</h1>
+                <p className="text-[11px] font-normal text-muted">{totalTeachers} معلمة نشطة</p>
               </div>
             </div>
             <button
               onClick={onToggleForm}
               className={cn(
-                'flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[11px] font-black outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                'flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[11px] font-medium outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'border border-border bg-surface text-main hover:bg-hover'
                   : 'bg-primary text-on-primary shadow-elevation-2 shadow-primary/25 hover:bg-primary-hover',
@@ -81,7 +81,7 @@ export const TeachersPageHeader = ({
                   className="rounded-xl border border-border bg-surface p-3 transition-colors hover:border-primary/20"
                 >
                   <div className="mb-1 flex items-center justify-between">
-                    <span className="text-sm font-black tabular-nums text-main">
+                    <span className="text-sm font-medium tabular-nums text-main">
                       {statValues[item.key]}
                     </span>
                     <span
@@ -94,7 +94,7 @@ export const TeachersPageHeader = ({
                       <Icon size={13} />
                     </span>
                   </div>
-                  <p className="text-[10px] font-bold text-muted">{statLabels[item.key]}</p>
+                  <p className="text-[10px] font-normal text-muted">{statLabels[item.key]}</p>
                 </div>
               )
             })}
@@ -112,7 +112,7 @@ export const TeachersPageHeader = ({
             <button
               onClick={onToggleForm}
               className={cn(
-                'flex h-11 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                'flex h-11 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'border border-border bg-surface text-main'
                   : 'bg-primary text-on-primary shadow-elevation-2 shadow-primary/25',
@@ -145,10 +145,10 @@ export const TeachersPageHeader = ({
                 >
                   <Icon size={14} />
                 </span>
-                <span className={cn('text-xl font-black tabular-nums', item.text)}>
+                <span className={cn('text-xl font-medium tabular-nums', item.text)}>
                   {statValues[item.key]}
                 </span>
-                <p className="mt-1 text-[10px] font-bold text-muted">{statLabels[item.key]}</p>
+                <p className="mt-1 text-[10px] font-normal text-muted">{statLabels[item.key]}</p>
               </div>
             )
           })}

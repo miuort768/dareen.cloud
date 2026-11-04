@@ -258,7 +258,7 @@ export const ParentPaymentHistory = () => {
         header: 'الطالب',
         mobileLabel: 'الطالب',
         render: (inv) => (
-          <span className="flex items-center gap-1.5 text-xs font-bold text-main">
+          <span className="flex items-center gap-1.5 text-xs font-normal text-main">
             <Users size={11} className="shrink-0 text-muted" />
             {inv.studentName}
           </span>
@@ -268,7 +268,7 @@ export const ParentPaymentHistory = () => {
         key: 'description',
         header: 'الوصف',
         mobileLabel: 'الوصف',
-        render: (inv) => <span className="text-xs font-bold text-main">{inv.description}</span>,
+        render: (inv) => <span className="text-xs font-normal text-main">{inv.description}</span>,
       },
       {
         key: 'amount',
@@ -276,7 +276,7 @@ export const ParentPaymentHistory = () => {
         align: 'center',
         mobileLabel: 'المبلغ',
         render: (inv) => (
-          <span className="font-mono text-xs font-bold tabular-nums text-main">
+          <span className="font-mono text-xs font-normal tabular-nums text-main">
             {(Number(inv.amount) || 0).toLocaleString()}{' '}
             <span className="text-[10px] text-muted">{CURRENCY_SYMBOL}</span>
           </span>
@@ -301,7 +301,7 @@ export const ParentPaymentHistory = () => {
           return (
             <span
               className={cn(
-                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold',
+                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-normal',
                 meta.bgCls,
                 meta.textCls,
               )}
@@ -322,7 +322,7 @@ export const ParentPaymentHistory = () => {
             className={cn(
               'text-[11px]',
               normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.OVERDUE
-                ? 'font-bold text-error'
+                ? 'font-normal text-error'
                 : 'text-muted',
             )}
           >
@@ -392,7 +392,7 @@ export const ParentPaymentHistory = () => {
         </motion.div>
 
         {mixedCount > 0 && (
-          <p className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning-strong">
+          <p className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-normal text-warning-strong">
             <AlertCircle size={13} className="shrink-0" />
             {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
           </p>
@@ -411,7 +411,7 @@ export const ParentPaymentHistory = () => {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as FilterStatus)}
               aria-label="تصفية حسب الحالة"
-              className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-card px-3.5 text-xs font-bold text-main outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:hidden"
+              className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-card px-3.5 text-xs font-normal text-main outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:hidden"
             >
               {([['all', STATUS_PILL_LABEL.all]] as [FilterStatus, string][])
                 .concat(
@@ -437,7 +437,7 @@ export const ParentPaymentHistory = () => {
                     key={key}
                     onClick={() => setFilterStatus(key)}
                     className={cn(
-                      'shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                      'shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       filterStatus === key
                         ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'border border-border bg-card text-muted hover:bg-hover',
@@ -455,7 +455,7 @@ export const ParentPaymentHistory = () => {
                 <button
                   onClick={() => setFilterChild('all')}
                   className={cn(
-                    'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                    'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                     filterChild === 'all'
                       ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
@@ -468,7 +468,7 @@ export const ParentPaymentHistory = () => {
                     key={c.id}
                     onClick={() => setFilterChild(c.id)}
                     className={cn(
-                      'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                      'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       filterChild === c.id
                         ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'border border-border bg-card text-muted hover:bg-hover',
@@ -483,7 +483,7 @@ export const ParentPaymentHistory = () => {
               value={period}
               onChange={(e) => setPeriod(e.target.value as Period)}
               aria-label="تصفية حسب الفترة"
-              className="h-10 shrink-0 cursor-pointer appearance-none rounded-xl border border-border bg-card px-3 text-[11px] font-bold text-main outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-10 shrink-0 cursor-pointer appearance-none rounded-xl border border-border bg-card px-3 text-[11px] font-normal text-main outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             >
               {periodOptions.map((p) => (
                 <option key={p.value} value={p.value}>
@@ -498,7 +498,7 @@ export const ParentPaymentHistory = () => {
                 placeholder="بحث بالبيان أو اسم الطالب..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-10 w-full rounded-xl border border-border bg-card py-2 pe-3 ps-9 text-[11px] font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                className="h-10 w-full rounded-xl border border-border bg-card py-2 pe-3 ps-9 text-[11px] font-normal text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
             </div>
           </div>
@@ -528,11 +528,11 @@ export const ParentPaymentHistory = () => {
                       <Users size={14} className="text-primary" />
                     </div>
                     <div className="min-w-0">
-                      <p className="truncate text-xs font-black text-main">{inv.studentName}</p>
-                      <p className="truncate text-[10px] font-bold text-muted">{inv.description}</p>
+                      <p className="truncate text-xs font-medium text-main">{inv.studentName}</p>
+                      <p className="truncate text-[10px] font-normal text-muted">{inv.description}</p>
                       <p
                         className={cn(
-                          'mt-0.5 text-[10px] font-bold',
+                          'mt-0.5 text-[10px] font-normal',
                           overdue ? 'text-error' : 'text-muted',
                         )}
                       >
@@ -541,13 +541,13 @@ export const ParentPaymentHistory = () => {
                     </div>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-1.5">
-                    <span className="font-mono text-sm font-black tabular-nums text-main">
+                    <span className="font-mono text-sm font-medium tabular-nums text-main">
                       {(Number(inv.amount) || 0).toLocaleString()}{' '}
-                      <span className="text-[10px] font-bold text-muted">{CURRENCY_SYMBOL}</span>
+                      <span className="text-[10px] font-normal text-muted">{CURRENCY_SYMBOL}</span>
                     </span>
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold',
+                        'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-normal',
                         meta.bgCls,
                         meta.textCls,
                       )}

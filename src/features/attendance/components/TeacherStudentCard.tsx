@@ -163,7 +163,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
       <div className="flex flex-1 flex-col gap-y-4 p-5">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-soft text-micro font-semibold text-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-soft text-micro font-light text-primary">
               {student.grade?.charAt(0) || student.name.charAt(0)}
             </div>
             <div>
@@ -232,11 +232,11 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         {/* Notes */}
         <div className="rounded-2xl border border-e-[3px] border-border border-e-primary bg-primary-soft p-3">
           <div className="mb-2 flex items-center justify-between">
-            <h5 className="flex items-center gap-1.5 text-micro font-bold uppercase text-primary">
+            <h5 className="flex items-center gap-1.5 text-micro font-normal uppercase text-primary">
               <MessageSquare size={12} /> ملاحظات الحصة القادمة
             </h5>
             {isSavingNotes && (
-              <span className="animate-pulse text-micro font-bold text-primary">جاري الحفظ...</span>
+              <span className="animate-pulse text-micro font-normal text-primary">جاري الحفظ...</span>
             )}
           </div>
           <textarea
@@ -247,7 +247,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
               triggerSave(e.target.value)
             }}
             placeholder="وثقي ملاحظات الحصة القادمة..."
-            className="min-h-[60px] w-full resize-none border-none bg-transparent p-0 text-micro font-bold text-main placeholder:text-primary/60 focus-visible:ring-0"
+            className="min-h-[60px] w-full resize-none border-none bg-transparent p-0 text-micro font-normal text-main placeholder:text-primary/60 focus-visible:ring-0"
           />
         </div>
 
@@ -256,7 +256,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
           onClick={() => setShowLiveDialog(true)}
           className={cn(
             FAB_SURFACE,
-            'group w-full gap-2 rounded-2xl py-3 text-micro font-bold uppercase tracking-widest',
+            'group w-full gap-2 rounded-2xl py-3 text-micro font-normal uppercase tracking-widest',
           )}
         >
           <Radio size={14} className="animate-pulse" />
@@ -271,7 +271,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         <button
           onClick={() => setIsEditing(!isEditing)}
           aria-expanded={isEditing}
-          className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-micro font-bold uppercase tracking-widest transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 ${
+          className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-micro font-normal uppercase tracking-widest transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 ${
             isEditing
               ? 'bg-error text-on-error shadow-elevation-1 hover:bg-error-hover'
               : 'bg-info text-on-info shadow-elevation-1 hover:bg-info-hover'
@@ -295,7 +295,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
               aria-label="التاريخ"
               value={logDate}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-full rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold outline-none transition-all focus-visible:border-primary"
+              className="w-full rounded-2xl border border-border bg-card px-2 py-2 text-micro font-normal outline-none transition-all focus-visible:border-primary"
             />
             <button
               onClick={() =>
@@ -307,13 +307,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                   student.curriculum,
                 )
               }
-              className="w-full rounded-2xl bg-primary-soft px-1 py-2 text-micro font-bold text-primary shadow-button ring-1 ring-inset ring-primary/20 transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
+              className="w-full rounded-2xl bg-primary-soft px-1 py-2 text-micro font-normal text-primary shadow-button ring-1 ring-inset ring-primary/20 transition-all duration-normal ease-out hover:bg-primary hover:text-on-primary hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
             >
               السجل
             </button>
             <button
               onClick={() => onLogAttendance(student, en)}
-              className="w-full rounded-2xl bg-success px-2 py-2 text-micro font-bold text-on-success shadow-button ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:bg-success-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
+              className="w-full rounded-2xl bg-success px-2 py-2 text-micro font-normal text-on-success shadow-button ring-1 ring-inset ring-white/10 transition-all duration-normal ease-out hover:bg-success-hover hover:shadow-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:shadow-button-pressed"
             >
               تسجيل
             </button>

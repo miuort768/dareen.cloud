@@ -3,21 +3,21 @@ import { mockTableData } from '../data/mockData'
 export function TableSection() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">الجداول — Tables</h2>
+      <h2 className="mb-4 text-lg font-normal">الجداول — Tables</h2>
       <div className="overflow-x-auto rounded-card border">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-surface">
-              <th scope="col" className="p-3 text-start font-semibold text-muted">
+              <th scope="col" className="p-3 text-start font-light text-muted">
                 الاسم
               </th>
-              <th scope="col" className="p-3 text-start font-semibold text-muted">
+              <th scope="col" className="p-3 text-start font-light text-muted">
                 المادة
               </th>
-              <th scope="col" className="p-3 text-start font-semibold text-muted">
+              <th scope="col" className="p-3 text-start font-light text-muted">
                 الحالة
               </th>
-              <th scope="col" className="p-3 text-start font-semibold text-muted">
+              <th scope="col" className="p-3 text-start font-light text-muted">
                 الدرجة
               </th>
             </tr>

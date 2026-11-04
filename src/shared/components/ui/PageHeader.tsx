@@ -47,7 +47,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           )}
           <div className="min-w-0 pt-1">
             <div className="flex flex-wrap items-center gap-2 md:gap-3">
-              <h1 className="text-2xl font-bold leading-tight tracking-tight text-main md:text-3xl">
+              <h1 className="text-2xl font-normal leading-tight tracking-tight text-main md:text-3xl">
                 {title}
               </h1>
               {meta}

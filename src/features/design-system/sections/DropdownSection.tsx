@@ -7,11 +7,11 @@ export function DropdownSection() {
 
     return (
         <section>
-            <h2 className="text-lg font-bold text-main mb-4">القوائم المنسدلة — Dropdowns</h2>
+            <h2 className="text-lg font-normal text-main mb-4">القوائم المنسدلة — Dropdowns</h2>
 
             <div className="flex items-start gap-8">
                 <div>
-                    <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider">عادي</h3>
+                    <h3 className="text-xs font-normal text-muted mb-3 uppercase tracking-wider">عادي</h3>
                     <Dropdown
                         trigger={<span>إجراءات</span>}
                         items={[
@@ -28,7 +28,7 @@ export function DropdownSection() {
                 </div>
 
                 <div>
-                    <h3 className="text-xs font-bold text-muted mb-3 uppercase tracking-wider">مع عنصر معطل</h3>
+                    <h3 className="text-xs font-normal text-muted mb-3 uppercase tracking-wider">مع عنصر معطل</h3>
                     <Dropdown
                         trigger={<span>قائمة</span>}
                         items={[

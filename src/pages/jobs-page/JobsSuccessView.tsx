@@ -22,7 +22,7 @@ export const JobsSuccessView = () => (
           >
             <CheckCircle2 size={32} className="text-success" />
           </motion.div>
-          <h2 className="mb-3 font-heading text-2xl font-bold text-main md:text-3xl">
+          <h2 className="mb-3 font-heading text-2xl font-normal text-main md:text-3xl">
             تم استلام طلبك!
           </h2>
           <p className="text-base text-muted md:text-lg">

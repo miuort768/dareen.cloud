@@ -84,9 +84,9 @@ const variants = {
 }
 
 const sizes = {
-  sm: 'h-10 px-3.5 text-xs rounded-md gap-1.5 font-semibold md:h-8 md:px-3.5',
-  md: 'h-11 px-5 text-sm rounded-lg gap-2 font-bold md:h-10 md:px-5',
-  lg: 'h-12 px-6 text-base rounded-card gap-2.5 font-bold md:px-7',
+  sm: 'h-10 px-3.5 text-xs rounded-md gap-1.5 font-light md:h-8 md:px-3.5',
+  md: 'h-11 px-5 text-sm rounded-lg gap-2 font-normal md:h-10 md:px-5',
+  lg: 'h-12 px-6 text-base rounded-card gap-2.5 font-normal md:px-7',
   icon: 'h-11 w-11 rounded-lg md:h-10 md:w-10',
 }
 

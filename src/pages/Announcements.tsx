@@ -218,10 +218,10 @@ export const Announcements = () => {
             icon={<Megaphone size={22} />}
             meta={
               <>
-                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-normal tabular-nums text-muted">
                   الإجمالي: {announcements.length}
                 </span>
-                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-normal tabular-nums text-success-strong">
                   النشطة: {announcements.filter((a) => a.isActive).length}
                 </span>
               </>
@@ -253,7 +253,7 @@ export const Announcements = () => {
                       <Icon size={16} />
                     </div>
                   </div>
-                  <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
+                  <p className="text-2xl font-normal tabular-nums text-main">{kpi.value}</p>
                   <p className="mt-0.5 text-xs text-muted">{kpi.label}</p>
                 </motion.div>
               )
@@ -337,7 +337,7 @@ export const Announcements = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

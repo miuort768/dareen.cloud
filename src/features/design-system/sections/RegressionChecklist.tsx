@@ -22,7 +22,7 @@ const ITEMS = [
 export function RegressionChecklist() {
   return (
     <section>
-      <h2 className="mb-4 text-lg font-bold">قائمة التحقق — Visual Regression Checklist</h2>
+      <h2 className="mb-4 text-lg font-normal">قائمة التحقق — Visual Regression Checklist</h2>
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {ITEMS.map((item) => (
           <label

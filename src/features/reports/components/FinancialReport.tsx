@@ -40,12 +40,12 @@ const FinancialCard = ({
       <div className={cn('rounded-xl p-2', iconBgClass)}>
         <Icon size={16} className={textClass} />
       </div>
-      <h3 className="text-xs font-bold text-muted">{title}</h3>
+      <h3 className="text-xs font-normal text-muted">{title}</h3>
     </div>
-    <p className="text-xl font-extrabold tabular-nums text-main">
+    <p className="text-xl font-normal tabular-nums text-main">
       {typeof value === 'number' ? value.toLocaleString() : value} {isPercentage ? '%' : currency}
     </p>
-    <p className={`mt-1.5 text-micro font-bold ${subTextClass || textClass}`}>
+    <p className={`mt-1.5 text-micro font-normal ${subTextClass || textClass}`}>
       هذا الشهر: {typeof subValue === 'number' ? subValue.toLocaleString() : subValue}{' '}
       {isPercentage ? '%' : currency}
     </p>
@@ -119,7 +119,7 @@ export const FinancialReport = ({
 
       {/* Negative-profit warning — margin is meaningless when revenue ≈ 0 */}
       {totalRevenue <= 0 && totalExpenses > 0 && (
-        <div className="rounded-2xl border border-warning-soft bg-warning-soft px-4 py-3 text-xs font-bold text-warning-strong">
+        <div className="rounded-2xl border border-warning-soft bg-warning-soft px-4 py-3 text-xs font-normal text-warning-strong">
           لا توجد إيرادات مسجلة بعد، لذا لا يمكن حساب هامش الربح — المسجل هو مصروفات فقط.
         </div>
       )}
@@ -130,26 +130,26 @@ export const FinancialReport = ({
             <FileText size={18} className="text-primary" />
           </div>
           <div>
-            <h3 className="mb-1 text-sm font-black text-main">التقرير المالي والتحليل الدقيق</h3>
-            <p className="text-xs font-bold leading-relaxed text-muted">
-              تم تحليل <span className="font-bold text-main">{completedSessions}</span> حصة دراسية
+            <h3 className="mb-1 text-sm font-medium text-main">التقرير المالي والتحليل الدقيق</h3>
+            <p className="text-xs font-normal leading-relaxed text-muted">
+              تم تحليل <span className="font-normal text-main">{completedSessions}</span> حصة دراسية
               مكتملة، بحيث بلغ إجمالي الإيرادات{' '}
-              <span className="font-bold text-success">
+              <span className="font-normal text-success">
                 {totalRevenue.toLocaleString()} {reportCurrency}
               </span>{' '}
               مقابل مصروفات إجمالية بقيمة{' '}
-              <span className="font-bold text-error">
+              <span className="font-normal text-error">
                 {totalExpenses.toLocaleString()} {reportCurrency}
               </span>
               . نتج عن ذلك {netProfit >= 0 ? 'صافي ربح' : 'صافي خسارة'} قدره{' '}
-              <span className="font-bold text-primary">
+              <span className="font-normal text-primary">
                 {Math.abs(netProfit).toLocaleString()} {reportCurrency}
               </span>
               {totalRevenue > 0 && (
                 <>
                   {' '}
                   وهامش ربح إجمالي بنسبة{' '}
-                  <span className="font-bold text-info">{overallMargin}%</span>
+                  <span className="font-normal text-info">{overallMargin}%</span>
                 </>
               )}
               .

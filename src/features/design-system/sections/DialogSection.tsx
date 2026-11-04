@@ -7,7 +7,7 @@ export function DialogSection() {
 
     return (
         <section>
-            <h2 className="text-lg font-bold text-main mb-4">مربعات الحوار — Dialogs</h2>
+            <h2 className="text-lg font-normal text-main mb-4">مربعات الحوار — Dialogs</h2>
             <div className="flex flex-wrap gap-3">
                 <Button variant="primary" onClick={() => setOpen('info')}>
                     <Info size={16} /> Info

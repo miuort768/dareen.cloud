@@ -99,14 +99,14 @@ export const ModernAnnouncements = () => {
         dir="rtl"
         className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card p-4 dark:border-primary/20"
       >
-        <div className="flex items-center gap-2 text-xs font-bold text-error">
+        <div className="flex items-center gap-2 text-xs font-normal text-error">
           <AlertTriangle size={14} />
           تعذر تحميل الإعلانات
         </div>
         <Button
           variant="outline"
           size="sm"
-          className="h-8 gap-1.5 rounded-lg text-xs font-bold"
+          className="h-8 gap-1.5 rounded-lg text-xs font-normal"
           onClick={() => window.location.reload()}
         >
           <RefreshCw size={12} /> إعادة
@@ -138,7 +138,7 @@ export const ModernAnnouncements = () => {
         <div className="flex min-w-0 items-center gap-2">
           <span
             className={cn(
-              'flex items-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-micro font-bold',
+              'flex items-center gap-1.5 rounded-lg border border-transparent px-2 py-1 text-micro font-normal',
               type.badge,
             )}
           >
@@ -146,7 +146,7 @@ export const ModernAnnouncements = () => {
             <span className="truncate">{type.label}</span>
           </span>
           {announcements.length > 1 && (
-            <span className="shrink-0 rounded-md bg-primary-soft px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-primary">
+            <span className="shrink-0 rounded-md bg-primary-soft px-1.5 py-0.5 text-[10px] font-normal tabular-nums text-primary">
               {currentIndex + 1} / {announcements.length}
             </span>
           )}
@@ -200,13 +200,13 @@ export const ModernAnnouncements = () => {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h4 className="truncate text-sm font-black leading-tight text-main">
+              <h4 className="truncate text-sm font-medium leading-tight text-main">
                 {current.title}
               </h4>
               <Badge
                 variant="outline"
                 className={cn(
-                  'h-5 shrink-0 rounded-lg border px-1.5 text-[10px] font-bold',
+                  'h-5 shrink-0 rounded-lg border px-1.5 text-[10px] font-normal',
                   type.badge,
                 )}
               >
@@ -261,7 +261,7 @@ export const ModernAnnouncements = () => {
                   })()}
                 </div>
                 <div>
-                  <h3 className="text-base font-bold leading-tight text-main">تأكيد القراءة</h3>
+                  <h3 className="text-base font-normal leading-tight text-main">تأكيد القراءة</h3>
                   <p className="mt-0.5 text-micro font-medium text-muted">إشعار الامتثال</p>
                 </div>
                 <button
@@ -274,7 +274,7 @@ export const ModernAnnouncements = () => {
               </div>
 
               <div className="mb-5 rounded-xl border-s-4 border-primary bg-surface p-4">
-                <p className="text-sm font-bold leading-relaxed text-main">«{ackTarget.title}»</p>
+                <p className="text-sm font-normal leading-relaxed text-main">«{ackTarget.title}»</p>
                 <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-muted">
                   {ackTarget.content}
                 </p>
@@ -284,7 +284,7 @@ export const ModernAnnouncements = () => {
                 <Button
                   data-autofocus
                   onClick={() => handleDismiss(ackTarget)}
-                  className="h-10 gap-1.5 rounded-xl text-xs font-bold"
+                  className="h-10 gap-1.5 rounded-xl text-xs font-normal"
                 >
                   <Check size={14} />
                   موافق، تم الاطلاع
@@ -292,7 +292,7 @@ export const ModernAnnouncements = () => {
                 <Button
                   onClick={() => setAckTarget(null)}
                   variant="outline"
-                  className="h-10 gap-1.5 rounded-xl text-xs font-bold"
+                  className="h-10 gap-1.5 rounded-xl text-xs font-normal"
                 >
                   <X size={14} />
                   إغلاق

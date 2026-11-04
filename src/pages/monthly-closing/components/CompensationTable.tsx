@@ -39,13 +39,13 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
         key: 'studentName',
         header: 'الطالب',
         mobileLabel: 'الطالب',
-        render: (row) => <span className="text-xs font-bold text-main">{row.studentName}</span>,
+        render: (row) => <span className="text-xs font-normal text-main">{row.studentName}</span>,
       },
       {
         key: 'teacherName',
         header: 'المعلمة',
         mobileLabel: 'المعلمة',
-        render: (row) => <span className="text-xs font-bold text-muted">{row.teacherName}</span>,
+        render: (row) => <span className="text-xs font-normal text-muted">{row.teacherName}</span>,
       },
       {
         key: 'date',
@@ -60,7 +60,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
         align: 'center',
         mobileLabel: 'الحالة',
         render: () => (
-          <div className="inline-block rounded-lg bg-error-soft px-2 py-0.5 text-micro font-bold text-error">
+          <div className="inline-block rounded-lg bg-error-soft px-2 py-0.5 text-micro font-normal text-error">
             تعويض معلق
           </div>
         ),

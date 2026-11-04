@@ -229,7 +229,7 @@ export const StudentAccountPage = () => {
                                 <BookOpen size={14} />
                               </div>
                               <div className="min-w-0">
-                                <p className="truncate text-xs font-bold text-main">{en.subject}</p>
+                                <p className="truncate text-xs font-normal text-main">{en.subject}</p>
                                 {teacherNameOf(en) && (
                                   <p className="flex items-center gap-1 text-micro text-muted">
                                     <Users size={9} /> {teacherNameOf(en)}
@@ -237,7 +237,7 @@ export const StudentAccountPage = () => {
                                 )}
                               </div>
                             </div>
-                            <span className="shrink-0 rounded-full bg-jade-soft px-2 py-0.5 text-micro font-bold tabular-nums text-jade ring-1 ring-jade-soft">
+                            <span className="shrink-0 rounded-full bg-jade-soft px-2 py-0.5 text-micro font-normal tabular-nums text-jade ring-1 ring-jade-soft">
                               {used}/{total} حصة
                             </span>
                           </div>
@@ -245,7 +245,7 @@ export const StudentAccountPage = () => {
                             <div className="flex-1">
                               <ProgressBar value={pct} variant="attendance" />
                             </div>
-                            <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
+                            <span className="shrink-0 font-dash text-micro font-medium tabular-nums text-jade">
                               {pct}%
                             </span>
                           </div>
@@ -258,7 +258,7 @@ export const StudentAccountPage = () => {
                     <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-jade-soft">
                       <BookOpen size={20} className="text-jade" />
                     </div>
-                    <p className="text-xs font-bold text-muted">لا توجد مواد مسجلة</p>
+                    <p className="text-xs font-normal text-muted">لا توجد مواد مسجلة</p>
                   </div>
                 )}
               </SectionCard>
@@ -277,14 +277,14 @@ export const StudentAccountPage = () => {
                             <Clock size={13} />
                           </div>
                           <div className="min-w-0">
-                            <p className="truncate text-xs font-bold text-main">{s.subject}</p>
+                            <p className="truncate text-xs font-normal text-main">{s.subject}</p>
                             {s.teacherName && (
                               <p className="truncate text-micro text-muted">{s.teacherName}</p>
                             )}
                           </div>
                         </div>
                         <div className="shrink-0 text-end">
-                          <p className="text-micro font-bold tabular-nums text-main">{s.time}</p>
+                          <p className="text-micro font-normal tabular-nums text-main">{s.time}</p>
                           <p className="text-micro text-muted">{s.date}</p>
                         </div>
                       </div>
@@ -295,7 +295,7 @@ export const StudentAccountPage = () => {
                     <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-info-soft">
                       <CalendarDays size={20} className="text-info-strong" />
                     </div>
-                    <p className="text-xs font-bold text-muted">
+                    <p className="text-xs font-normal text-muted">
                       لا توجد جلسات قادمة مجدولة حاليًا
                     </p>
                   </div>

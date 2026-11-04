@@ -154,7 +154,7 @@ export const MobileDashboardView = ({
         animate={{ height: isRefreshing ? 48 : pullDistance }}
         className="flex items-center justify-center overflow-hidden"
       >
-        <div className="flex items-center gap-2.5 text-xs font-bold text-primary">
+        <div className="flex items-center gap-2.5 text-xs font-normal text-primary">
           {isRefreshing ? (
             <>
               <Loader2 size={16} className="animate-spin" />
@@ -228,12 +228,12 @@ export const MobileDashboardView = ({
                 <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
                   <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
-                <h3 className="text-sm font-black text-main">حصص اليوم المميزة</h3>
+                <h3 className="text-sm font-medium text-main">حصص اليوم المميزة</h3>
               </div>
               <button
                 type="button"
                 onClick={() => navigate('/schedule')}
-                className="text-xs font-bold text-accent hover:underline"
+                className="text-xs font-normal text-accent hover:underline"
               >
                 عرض الجدول الكل
               </button>
@@ -261,7 +261,7 @@ export const MobileDashboardView = ({
                       visual={
                         <div className="flex flex-col items-center justify-center gap-1 text-primary">
                           <BookOpen size={26} strokeWidth={1.8} />
-                          <span className="line-clamp-1 text-[9px] font-black text-main">
+                          <span className="line-clamp-1 text-[9px] font-medium text-main">
                             {s.studentName}
                           </span>
                         </div>
@@ -272,7 +272,7 @@ export const MobileDashboardView = ({
               </div>
             ) : (
               <div className="rounded-2xl border border-border bg-card p-5 text-center shadow-elevation-1">
-                <p className="text-xs font-bold text-muted">لا توجد حصص تطابق البحث حالياً</p>
+                <p className="text-xs font-normal text-muted">لا توجد حصص تطابق البحث حالياً</p>
               </div>
             )}
           </section>
@@ -295,7 +295,7 @@ export const MobileDashboardView = ({
                   )}
                 >
                   <Icon size={19} strokeWidth={1.9} />
-                  <span className="text-[10px] font-bold leading-none">{action.label}</span>
+                  <span className="text-[10px] font-normal leading-none">{action.label}</span>
                 </button>
               )
             })}

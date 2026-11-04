@@ -56,7 +56,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               <DollarSign size={20} />
             </div>
             <div>
-              <h3 className="text-base font-bold">تسجيل معاملة مالية</h3>
+              <h3 className="text-base font-normal">تسجيل معاملة مالية</h3>
               <p className="mt-0.5 text-micro font-medium text-on-primary opacity-70">
                 إدخال مباشر إلى سجل الحسابات
               </p>
@@ -74,7 +74,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
         <form onSubmit={handleSubmit} className="space-y-6 p-4 md:p-8">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
             <div className="space-y-2">
-              <label className="flex items-center gap-1.5 text-micro font-bold text-muted">
+              <label className="flex items-center gap-1.5 text-micro font-normal text-muted">
                 <Tag size={11} className="text-primary" /> نوع المعاملة
               </label>
               <select
@@ -88,7 +88,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               </select>
             </div>
             <div className="space-y-2">
-              <label className="flex items-center gap-1.5 text-micro font-bold text-muted">
+              <label className="flex items-center gap-1.5 text-micro font-normal text-muted">
                 <DollarSign size={11} className="text-primary" /> المبلغ المستحق
               </label>
               <input
@@ -103,7 +103,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               />
             </div>
             <div className="space-y-2">
-              <label className="flex items-center gap-1.5 text-micro font-bold text-muted">
+              <label className="flex items-center gap-1.5 text-micro font-normal text-muted">
                 عملة المعاملة
               </label>
               <select
@@ -119,7 +119,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="flex items-center gap-1.5 text-micro font-bold text-muted">
+              <label className="flex items-center gap-1.5 text-micro font-normal text-muted">
                 <Info size={11} className="text-primary" /> التصنيف الحسابي
               </label>
               <input
@@ -133,7 +133,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               />
             </div>
             <div className="space-y-2">
-              <label className="flex items-center gap-1.5 text-micro font-bold text-muted">
+              <label className="flex items-center gap-1.5 text-micro font-normal text-muted">
                 <Calendar size={11} className="text-primary" /> تاريخ المعاملة
               </label>
               <input
@@ -148,7 +148,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
           </div>
 
           <div className="space-y-2">
-            <label className="text-micro font-bold uppercase tracking-widest text-muted">
+            <label className="text-micro font-normal uppercase tracking-widest text-muted">
               بيان المعاملة / التفاصيل
             </label>
             <textarea
@@ -166,13 +166,13 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-xl bg-hover px-6 py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus"
+              className="flex-1 rounded-xl bg-hover px-6 py-3 text-xs font-normal text-muted outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus"
             >
               إلغاء
             </button>
             <button
               type="submit"
-              className="flex flex-[2] items-center justify-center gap-3 rounded-xl bg-primary py-3 font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="flex flex-[2] items-center justify-center gap-3 rounded-xl bg-primary py-3 font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Save size={18} />
               تأكيد وحفظ العملية

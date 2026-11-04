@@ -118,11 +118,11 @@ export const Login = () => {
       <div className="relative z-10 flex min-h-[calc(100vh-60px)] flex-col items-center justify-center px-4 py-8 lg:min-h-screen lg:pt-24">
         <div className="form-light mt-32 w-full max-w-sm lg:mt-0 lg:max-w-md xl:max-w-lg">
           <div className="mb-8 text-center lg:mb-10">
-            <h1 className="mb-2 hidden font-heading text-2xl font-black text-main lg:block lg:text-3xl">
+            <h1 className="mb-2 hidden font-heading text-2xl font-medium text-main lg:block lg:text-3xl">
               تسجيل الدخول
             </h1>
             {/* Mobile: sharp-cornered rectangle with lock — clear over the photo in both modes */}
-            <p className="inline-flex items-center gap-2 rounded-none border border-white/40 bg-white/10 px-4 py-2.5 text-sm font-bold text-white backdrop-blur-sm lg:hidden">
+            <p className="inline-flex items-center gap-2 rounded-none border border-white/40 bg-white/10 px-4 py-2.5 text-sm font-normal text-white backdrop-blur-sm lg:hidden">
               <Lock size={14} />
               أدخل بياناتك للوصول إلى حسابك
             </p>
@@ -133,7 +133,7 @@ export const Login = () => {
 
           {error && (
             <div className="mb-4 rounded-xl border border-error-soft bg-error-soft p-4">
-              <p className="text-sm font-bold text-error">{error}</p>
+              <p className="text-sm font-normal text-error">{error}</p>
             </div>
           )}
 
@@ -141,7 +141,7 @@ export const Login = () => {
             <div>
               <label
                 htmlFor="login-username"
-                className="mb-1.5 block text-xs font-bold text-white/80 lg:text-sm lg:text-main"
+                className="mb-1.5 block text-xs font-normal text-white/80 lg:text-sm lg:text-main"
               >
                 اسم المستخدم
               </label>
@@ -165,7 +165,7 @@ export const Login = () => {
             <div>
               <label
                 htmlFor="login-password"
-                className="mb-1.5 block text-xs font-bold text-white/80 lg:text-sm lg:text-main"
+                className="mb-1.5 block text-xs font-normal text-white/80 lg:text-sm lg:text-main"
               >
                 كلمة المرور
               </label>
@@ -199,7 +199,7 @@ export const Login = () => {
               type="submit"
               disabled={loading}
               className={cn(
-                'flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold outline-none transition-all duration-slow focus-visible:ring-2 focus-visible:ring-focus lg:h-14 lg:text-base',
+                'flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-normal outline-none transition-all duration-slow focus-visible:ring-2 focus-visible:ring-focus lg:h-14 lg:text-base',
                 'bg-primary text-on-primary hover:bg-primary-hover active:scale-[0.98]',
                 'disabled:cursor-not-allowed disabled:opacity-50',
                 'shadow-elevation-3 shadow-primary/20 hover:shadow-elevation-4 hover:shadow-primary/30',
@@ -219,7 +219,7 @@ export const Login = () => {
           <div className="mt-6 flex flex-col items-center gap-3 lg:mt-8">
             <Link
               to="/"
-              className="flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-white/80 lg:text-base lg:text-warning lg:hover:text-warning-dark"
+              className="flex items-center gap-2 text-sm font-normal text-white transition-colors hover:text-white/80 lg:text-base lg:text-warning lg:hover:text-warning-dark"
             >
               <ArrowRight size={16} />
               <span>العودة للرئيسية</span>
@@ -230,7 +230,7 @@ export const Login = () => {
                 href={`https://wa.me/${adminPhone.replace(/\D/g, '')}?text=أحتاج مساعدة في تسجيل الدخول`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-success text-sm font-bold text-on-success transition-all hover:bg-success active:scale-[0.98] lg:h-14 lg:text-base"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-success text-sm font-normal text-on-success transition-all hover:bg-success active:scale-[0.98] lg:h-14 lg:text-base"
               >
                 <Headphones size={18} />
                 <span>الدعم الفني</span>

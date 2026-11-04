@@ -165,7 +165,7 @@ export const Jobs = () => {
           >
             <div className="border-b border-border p-4 md:p-10">
               <div className="mb-6 flex items-center justify-between">
-                <h2 className="flex items-center gap-2 font-heading text-sm font-black text-main md:text-lg">
+                <h2 className="flex items-center gap-2 font-heading text-sm font-medium text-main md:text-lg">
                   <FileText className="h-4 w-4 text-primary md:h-5 md:w-5" />
                   تقديم طلب التوظيف
                 </h2>
@@ -177,11 +177,11 @@ export const Jobs = () => {
                     />
                   ))}
                 </div>
-                <span className="hidden rounded-card border border-border bg-card px-3 py-1 text-xs font-bold text-muted md:inline-block">
+                <span className="hidden rounded-card border border-border bg-card px-3 py-1 text-xs font-normal text-muted md:inline-block">
                   الخطوة {step} من {totalSteps}
                 </span>
               </div>
-              <p className="text-xs font-bold text-primary md:hidden">
+              <p className="text-xs font-normal text-primary md:hidden">
                 {steps.find((s) => s.id === step)?.title}
               </p>
               <div className="hidden grid-cols-4 gap-2 md:grid md:gap-4">
@@ -189,7 +189,7 @@ export const Jobs = () => {
                   <div key={s.id} className="flex flex-col items-center gap-1.5 md:gap-2">
                     <div className="flex w-full items-center gap-1.5 md:gap-2">
                       <div
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-500 ${step === s.id ? 'bg-primary text-on-primary' : step > s.id ? 'bg-success text-on-success' : 'border border-border bg-card text-muted'}`}
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-normal transition-all duration-500 ${step === s.id ? 'bg-primary text-on-primary' : step > s.id ? 'bg-success text-on-success' : 'border border-border bg-card text-muted'}`}
                       >
                         {step > s.id ? <CheckCircle2 size={16} /> : s.id}
                       </div>
@@ -200,7 +200,7 @@ export const Jobs = () => {
                       )}
                     </div>
                     <span
-                      className={`text-center text-xs font-bold transition-colors ${step === s.id ? 'text-primary' : 'text-muted'}`}
+                      className={`text-center text-xs font-normal transition-colors ${step === s.id ? 'text-primary' : 'text-muted'}`}
                     >
                       {s.title}
                     </span>
@@ -235,7 +235,7 @@ export const Jobs = () => {
                     onClick={prevStep}
                     disabled={step === 1}
                     aria-label="الخطوة السابقة"
-                    className="flex items-center gap-2 rounded-card border border-border bg-card px-5 py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-20 md:px-6 md:py-4"
+                    className="flex items-center gap-2 rounded-card border border-border bg-card px-5 py-3 text-xs font-normal text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-20 md:px-6 md:py-4"
                   >
                     <ChevronRight size={14} /> السابق
                   </button>
@@ -245,7 +245,7 @@ export const Jobs = () => {
                       onClick={nextStep}
                       disabled={!canProceed()}
                       aria-label="الخطوة التالية"
-                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-primary px-8 py-3 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30 md:flex-none md:px-10 md:py-4"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-primary px-8 py-3 text-xs font-normal text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30 md:flex-none md:px-10 md:py-4"
                     >
                       التالي <ChevronLeft size={14} />
                     </button>
@@ -260,7 +260,7 @@ export const Jobs = () => {
                         !form.position ||
                         !form.qualification
                       }
-                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-success px-8 py-3 text-xs font-bold text-on-success shadow-soft outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30 md:flex-none md:px-10 md:py-4"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-success px-8 py-3 text-xs font-normal text-on-success shadow-soft outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30 md:flex-none md:px-10 md:py-4"
                     >
                       {loading ? (
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-on-primary" />

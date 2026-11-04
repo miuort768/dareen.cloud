@@ -93,14 +93,14 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
               value={roleName}
               onChange={(e) => setRoleName(e.target.value)}
               placeholder="مثال: مشرف مالي"
-              className="flex-1 rounded-xl border border-divider bg-background px-4 py-3 text-sm font-bold outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+              className="flex-1 rounded-xl border border-divider bg-background px-4 py-3 text-sm font-normal outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
             />
             <PrimaryBtn onClick={handleCreateRole} loading={creating}>
               إنشاء الدور
             </PrimaryBtn>
           </div>
           {!canOpenRoles && (
-            <p className="mt-2 text-[11px] font-bold text-muted">
+            <p className="mt-2 text-[11px] font-normal text-muted">
               إنشاء الأدوار متاح فقط لمدير النظام.
             </p>
           )}
@@ -112,7 +112,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
           <div className="space-y-4">
             {Object.entries(groups).map(([group, perms]) => (
               <div key={group}>
-                <p className="mb-2 text-[11px] font-bold text-muted">
+                <p className="mb-2 text-[11px] font-normal text-muted">
                   {GROUP_LABELS[group] || group}
                 </p>
                 <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
@@ -123,7 +123,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                         key={p.id}
                         onClick={() => togglePerm(p.key)}
                         className={cn(
-                          'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-start text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                          'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-start text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           isSelected
                             ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-divider bg-background text-muted hover:border-primary/50 hover:text-main',

@@ -32,10 +32,10 @@ export const ParentsStudentHeader = ({
           <Users size={22} className="text-on-primary" />
         </div>
         <div>
-          <h1 className="text-xl font-black leading-tight text-on-primary md:text-2xl">
+          <h1 className="text-xl font-medium leading-tight text-on-primary md:text-2xl">
             قائمة الأبناء
           </h1>
-          <p className="mt-0.5 text-xs font-bold text-white/90">إدارة ومتابعة التفاصيل الدراسية</p>
+          <p className="mt-0.5 text-xs font-normal text-white/90">إدارة ومتابعة التفاصيل الدراسية</p>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export const ParentsStudentHeader = ({
           placeholder="بحث عن ابن..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="h-11 w-full rounded-xl border border-white/20 bg-white/15 pe-3 ps-10 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25 md:h-10"
+          className="h-11 w-full rounded-xl border border-white/20 bg-white/15 pe-3 ps-10 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25 md:h-10"
         />
       </div>
     </div>

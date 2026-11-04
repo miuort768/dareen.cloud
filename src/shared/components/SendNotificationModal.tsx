@@ -57,9 +57,9 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 <Bell size={20} className="text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-main">بث إشعار فوري</h3>
+                <h3 className="text-sm font-normal text-main">بث إشعار فوري</h3>
                 <p className="text-[11px] text-muted">
-                  إلى: <span className="font-bold text-primary">{recipientName}</span>
+                  إلى: <span className="font-normal text-primary">{recipientName}</span>
                 </p>
               </div>
             </div>
@@ -75,7 +75,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Message */}
             <div className="space-y-1.5">
-              <label htmlFor="notification-message" className="text-[11px] font-bold text-muted">
+              <label htmlFor="notification-message" className="text-[11px] font-normal text-muted">
                 محتوى التنبيه
               </label>
               <textarea

@@ -275,7 +275,7 @@ export const AdminJobs = () => {
             subtitle="إدارة طلبات المتقدمين للوظائف"
             icon={<Briefcase size={22} />}
             meta={
-              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-normal tabular-nums text-muted">
                 {apps.length} طلب
               </span>
             }
@@ -283,14 +283,14 @@ export const AdminJobs = () => {
               <>
                 <button
                   onClick={() => exportToCsv(filtered)}
-                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 text-xs font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
+                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 text-xs font-light text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <Download size={14} />
                   <span>تصدير CSV</span>
                 </button>
                 <button
                   onClick={handleExportPdf}
-                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 text-xs font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
+                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 text-xs font-light text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <FileText size={14} />
                   <span>تصدير PDF</span>
@@ -300,7 +300,7 @@ export const AdminJobs = () => {
             action={
               <button
                 onClick={handleDeleteAll}
-                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-error px-3 text-xs font-semibold text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
+                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-error px-3 text-xs font-light text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
               >
                 <Trash2 size={14} />
                 <span>حذف الكل</span>
@@ -333,7 +333,7 @@ export const AdminJobs = () => {
                       <Icon size={16} />
                     </div>
                   </div>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <p className="text-2xl font-normal text-main">{kpi.value}</p>
                   <p className="mt-1 text-micro text-muted">{kpi.label}</p>
                 </motion.div>
               )
@@ -359,7 +359,7 @@ export const AdminJobs = () => {
                 placeholder="ابحث بالاسم أو الهاتف أو المنصب..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-normal text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
               />
               {search && (
                 <button
@@ -416,11 +416,11 @@ export const AdminJobs = () => {
                 <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-error-soft">
                   <AlertTriangle size={20} className="text-error" />
                 </div>
-                <p className="text-xs font-bold text-error">{error}</p>
+                <p className="text-xs font-normal text-error">{error}</p>
                 <button
                   type="button"
                   onClick={retryFetch}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-normal text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   إعادة تحميل
                 </button>
@@ -434,7 +434,7 @@ export const AdminJobs = () => {
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Briefcase size={24} className="text-primary" />
                 </div>
-                <p className="mb-1 text-xs font-bold text-muted">لا توجد طلبات</p>
+                <p className="mb-1 text-xs font-normal text-muted">لا توجد طلبات</p>
                 <p className="text-xs text-muted">سيتم عرض طلبات المتقدمين هنا</p>
               </motion.div>
             ) : emptySearch ? (
@@ -446,7 +446,7 @@ export const AdminJobs = () => {
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Search size={24} className="text-primary" />
                 </div>
-                <p className="mb-1 text-xs font-bold text-muted">لا توجد نتائج</p>
+                <p className="mb-1 text-xs font-normal text-muted">لا توجد نتائج</p>
                 <p className="text-xs text-muted">جرّب تغيير كلمات البحث أو الفلتر</p>
               </motion.div>
             ) : (
@@ -477,7 +477,7 @@ export const AdminJobs = () => {
                           >
                             <span
                               className={cn(
-                                'text-sm font-bold',
+                                'text-sm font-normal',
                                 app.contacted ? 'text-muted' : 'text-primary',
                               )}
                             >
@@ -487,7 +487,7 @@ export const AdminJobs = () => {
                           <div className="min-w-0">
                             <h3
                               className={cn(
-                                'truncate text-sm font-bold',
+                                'truncate text-sm font-normal',
                                 app.contacted ? 'text-muted' : 'text-main',
                               )}
                             >
@@ -495,7 +495,7 @@ export const AdminJobs = () => {
                             </h3>
                             <p
                               className={cn(
-                                'truncate text-micro font-bold',
+                                'truncate text-micro font-normal',
                                 app.contacted ? 'text-muted' : 'text-primary',
                               )}
                             >
@@ -507,7 +507,7 @@ export const AdminJobs = () => {
                           {!app.contacted && (
                             <button
                               onClick={() => handleContacted(app.id)}
-                              className="flex h-9 items-center gap-1.5 rounded-lg bg-success px-3 text-micro font-bold text-on-success outline-none transition-colors duration-fast hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-auto sm:py-1.5"
+                              className="flex h-9 items-center gap-1.5 rounded-lg bg-success px-3 text-micro font-normal text-on-success outline-none transition-colors duration-fast hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-auto sm:py-1.5"
                               title="تم التواصل"
                               aria-label="تم التواصل"
                             >
@@ -517,7 +517,7 @@ export const AdminJobs = () => {
                           )}
                           <button
                             onClick={() => handleDelete(app.id)}
-                            className="flex h-9 items-center gap-1.5 rounded-lg bg-error px-3 text-micro font-bold text-on-error outline-none transition-colors duration-fast hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:py-1.5"
+                            className="flex h-9 items-center gap-1.5 rounded-lg bg-error px-3 text-micro font-normal text-on-error outline-none transition-colors duration-fast hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:py-1.5"
                             title="حذف الطلب"
                             aria-label="حذف الطلب"
                           >
@@ -589,8 +589,8 @@ export const AdminJobs = () => {
                             />
                           </div>
                           <div className="min-w-0">
-                            <p className="mb-0.5 text-micro font-bold text-muted">المناهج</p>
-                            <span className="text-micro font-bold text-main">
+                            <p className="mb-0.5 text-micro font-normal text-muted">المناهج</p>
+                            <span className="text-micro font-normal text-main">
                               {app.curriculums || '-'}
                             </span>
                           </div>
@@ -630,10 +630,10 @@ const DetailRow = ({
         <Icon size={10} className={contacted ? 'text-muted' : 'text-primary'} />
       </div>
       <div className="min-w-0">
-        <p className="text-micro font-bold text-muted">{label}</p>
+        <p className="text-micro font-normal text-muted">{label}</p>
         <span
           className={cn(
-            'block truncate text-micro font-bold',
+            'block truncate text-micro font-normal',
             contacted ? 'text-muted' : 'text-main',
           )}
         >
@@ -650,7 +650,7 @@ const DetailRow = ({
           href={'https://wa.me/' + cleanPhone.replace(/^\+/, '')}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-micro font-bold text-success hover:underline"
+          className="flex items-center gap-1 text-micro font-normal text-success hover:underline"
         >
           {content}
         </a>

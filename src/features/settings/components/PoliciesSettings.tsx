@@ -41,7 +41,7 @@ export const PoliciesSettings = ({
         <div className="rounded-xl border border-divider bg-background p-4">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <p className="flex items-center gap-1.5 text-xs font-bold text-warning">
+              <p className="flex items-center gap-1.5 text-xs font-normal text-warning">
                 <AlertCircle size={13} /> قفل التعديل بأثر رجعي
               </p>
               <p className="mt-1.5 text-[11px] leading-relaxed text-warning">
@@ -60,7 +60,7 @@ export const PoliciesSettings = ({
         </div>
 
         <div className="border-t border-divider pt-3">
-          <p className="mb-3 flex items-center gap-1.5 text-xs font-bold text-primary">
+          <p className="mb-3 flex items-center gap-1.5 text-xs font-normal text-primary">
             <Wallet size={13} /> سياسة حساب العمولات
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -81,7 +81,7 @@ export const PoliciesSettings = ({
                     : 'border-divider bg-background text-muted hover:border-primary/50',
                 )}
               >
-                <p className="text-xs font-bold">{opt.label}</p>
+                <p className="text-xs font-normal">{opt.label}</p>
                 <p
                   className={cn(
                     'mt-0.5 text-[11px]',
@@ -104,7 +104,7 @@ export const PoliciesSettings = ({
       <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="آلية التجميد التلقائي" />
       <div className="space-y-4">
         <div className="rounded-xl border border-divider bg-background p-4">
-          <p className="mb-1 text-xs font-bold text-info">حد الغياب المسموح</p>
+          <p className="mb-1 text-xs font-normal text-info">حد الغياب المسموح</p>
           <p className="mb-3 text-[11px] leading-relaxed text-info">
             إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
           </p>
@@ -116,7 +116,7 @@ export const PoliciesSettings = ({
               onChange={(e) => setAutoFreezeThreshold(Number(e.target.value))}
               min={1}
               max={15}
-              className="w-20 text-center text-lg font-bold"
+              className="w-20 text-center text-lg font-normal"
             />
             <PrimaryBtn
               onClick={() =>
@@ -137,7 +137,7 @@ export const PoliciesSettings = ({
               <Archive size={14} className="text-error" />
             </div>
             <div>
-              <p className="text-xs font-bold text-error">إقفال الشهر المالي</p>
+              <p className="text-xs font-normal text-error">إقفال الشهر المالي</p>
               <p className="text-[11px] text-error">منطقة الخطر</p>
             </div>
           </div>

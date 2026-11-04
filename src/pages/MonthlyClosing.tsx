@@ -351,8 +351,8 @@ export const MonthlyClosing = () => {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-black leading-tight text-main">الإقفال الشهري</h1>
-                  <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+                  <h1 className="text-xl font-medium leading-tight text-main">الإقفال الشهري</h1>
+                  <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-normal text-primary">
                     {semesterName}
                   </span>
                 </div>
@@ -364,17 +364,17 @@ export const MonthlyClosing = () => {
 
             <div className="grid flex-1 grid-cols-2 gap-2">
               <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-primary">
+                <p className="text-lg font-medium tabular-nums leading-none text-primary">
                   {netProjectedProfit.toLocaleString()}
-                  <span className="ms-1 text-[10px] font-bold text-muted">{CURRENCY_SYMBOL}</span>
+                  <span className="ms-1 text-[10px] font-normal text-muted">{CURRENCY_SYMBOL}</span>
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">صافي الربح</p>
+                <p className="mt-1 text-[10px] font-normal text-muted">صافي الربح</p>
               </div>
               <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-info">
+                <p className="text-lg font-medium tabular-nums leading-none text-info">
                   {filteredSessions.length}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">الجلسات</p>
+                <p className="mt-1 text-[10px] font-normal text-muted">الجلسات</p>
               </div>
             </div>
           </div>
@@ -384,7 +384,7 @@ export const MonthlyClosing = () => {
               <input
                 aria-label="تاريخ البداية"
                 type="date"
-                className="min-w-0 flex-1 border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark] md:w-[120px] md:flex-none"
+                className="min-w-0 flex-1 border-none bg-transparent text-xs font-normal text-main outline-none dark:[color-scheme:dark] md:w-[120px] md:flex-none"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
@@ -392,20 +392,20 @@ export const MonthlyClosing = () => {
               <input
                 aria-label="تاريخ النهاية"
                 type="date"
-                className="min-w-0 flex-1 border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark] md:w-[120px] md:flex-none"
+                className="min-w-0 flex-1 border-none bg-transparent text-xs font-normal text-main outline-none dark:[color-scheme:dark] md:w-[120px] md:flex-none"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
             <button
               onClick={handleRefresh}
-              className="flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:min-h-0 md:flex-none"
+              className="flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-normal text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:min-h-0 md:flex-none"
             >
               <RefreshCw size={13} /> تحديث
             </button>
             {mixedCurrencyCount > 0 && (
               <span
-                className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning"
+                className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-normal text-warning"
                 title="بنود بعملات غير الجنيه لا تُضم للأجماليات — تُحول من صفحة الفواتير"
               >
                 <AlertCircle size={13} />
@@ -463,7 +463,7 @@ export const MonthlyClosing = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
                 className={cn(
-                  'relative flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:min-h-[38px]',
+                  'relative flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:min-h-[38px]',
                   activeTab === tab.id ? 'text-on-primary' : 'text-muted hover:text-main',
                 )}
               >
@@ -554,7 +554,7 @@ export const MonthlyClosing = () => {
                 transition={{ delay: 0.05 * i }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-normal shadow-elevation-1">
                   {item.label}
                 </span>
                 <button

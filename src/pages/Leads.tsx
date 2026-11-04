@@ -72,7 +72,7 @@ const ConfirmDeleteModal = ({
               <AlertTriangle size={18} className="text-on-error" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+              <h3 className="text-sm font-normal text-on-error">تأكيد الحذف</h3>
               <p className="mt-0.5 text-[10px] text-white/90">لا يمكن التراجع عن هذا الإجراء</p>
             </div>
           </div>
@@ -85,9 +85,9 @@ const ConfirmDeleteModal = ({
           </button>
         </div>
         <div className="p-5">
-          <p className="mb-1 text-sm font-bold text-main">هل أنت متأكد من حذف هذا العميل؟</p>
+          <p className="mb-1 text-sm font-normal text-main">هل أنت متأكد من حذف هذا العميل؟</p>
           <p className="text-xs leading-relaxed text-muted">
-            سيتم نقل العميل <span className="font-bold text-error">المفقود</span> إلى قائمة العملاء
+            سيتم نقل العميل <span className="font-normal text-error">المفقود</span> إلى قائمة العملاء
             المفقودين ولن يظهر مرة أخرى.
           </p>
         </div>
@@ -99,13 +99,13 @@ const ConfirmDeleteModal = ({
             ref={cancelRef}
             type="button"
             onClick={onCancel}
-            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-normal text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إلغاء
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-normal text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             تأكيد الحذف
           </button>
@@ -149,7 +149,7 @@ const ConfirmDeleteAllModal = ({
               <Trash2 size={18} className="text-on-error" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-on-error">حذف جميع العملاء</h3>
+              <h3 className="text-sm font-normal text-on-error">حذف جميع العملاء</h3>
               <p className="mt-0.5 text-[10px] text-white/90">لا يمكن التراجع عن هذا الإجراء</p>
             </div>
           </div>
@@ -162,15 +162,15 @@ const ConfirmDeleteAllModal = ({
           </button>
         </div>
         <div className="p-5">
-          <p className="mb-1 text-sm font-bold text-main">هل أنت متأكد من حذف جميع العملاء؟</p>
+          <p className="mb-1 text-sm font-normal text-main">هل أنت متأكد من حذف جميع العملاء؟</p>
           <p className="text-xs leading-relaxed text-muted">
-            سيتم <span className="font-bold text-error">حذف جميع العملاء نهائيًا</span> بما فيهم
+            سيتم <span className="font-normal text-error">حذف جميع العملاء نهائيًا</span> بما فيهم
             المفقودون، ولن يمكن استعادتهم.
           </p>
           <div className="mt-4">
-            <label className="mb-1.5 block text-[11px] font-bold text-muted">
+            <label className="mb-1.5 block text-[11px] font-normal text-muted">
               اكتب{' '}
-              <span dir="ltr" className="font-black text-error">
+              <span dir="ltr" className="font-medium text-error">
                 dareen
               </span>{' '}
               للتأكيد
@@ -180,7 +180,7 @@ const ConfirmDeleteAllModal = ({
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
               placeholder="dareen"
-              className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-black tracking-widest text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
+              className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-medium tracking-widest text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && verified) onConfirm()
               }}
@@ -195,14 +195,14 @@ const ConfirmDeleteAllModal = ({
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-normal text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إلغاء
           </button>
           <button
             onClick={onConfirm}
             disabled={isLoading || !verified}
-            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-normal text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? 'جاري الحذف...' : 'حذف الكل'}
           </button>
@@ -216,8 +216,8 @@ const ConfirmDeleteAllModal = ({
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted']
 
 const inputClass =
-  'w-full bg-surface border border-border px-3.5 py-3 text-sm outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-normal placeholder:text-muted font-bold'
-const labelClass = 'text-[11px] font-bold text-muted mb-1.5 block'
+  'w-full bg-surface border border-border px-3.5 py-3 text-sm outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-normal placeholder:text-muted font-normal'
+const labelClass = 'text-[11px] font-normal text-muted mb-1.5 block'
 
 const AddLeadModalInline = ({
   formRef,
@@ -244,7 +244,7 @@ const AddLeadModalInline = ({
             <UserPlus size={16} className="text-on-primary" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-on-primary">إضافة عميل جديد</h2>
+            <h2 className="text-sm font-normal text-on-primary">إضافة عميل جديد</h2>
             <p className="text-[10px] text-white/80">أدخل بيانات العميل</p>
           </div>
         </div>
@@ -322,14 +322,14 @@ const AddLeadModalInline = ({
           <button
             type="submit"
             disabled={addMutation.isPending}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all duration-normal hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all duration-normal hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
+            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-normal text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             إلغاء
           </button>
@@ -507,7 +507,7 @@ export const Leads = () => {
         <ArchiveX size={16} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-xs font-black">المفقودون</p>
+        <p className="text-xs font-medium">المفقودون</p>
         <p className={cn('text-[10px]', showLost ? 'text-error' : 'text-white/75')}>
           {lostCount} عميل مفقود
         </p>
@@ -516,7 +516,7 @@ export const Leads = () => {
         onClick={() => setShowLost(!showLost)}
         aria-pressed={showLost}
         className={cn(
-          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl px-3 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
           showLost
             ? 'bg-error text-on-error hover:bg-error-hover'
             : 'bg-white/20 hover:bg-white/30',
@@ -558,7 +558,7 @@ export const Leads = () => {
               <button
                 onClick={() => setIsAddModalOpen(true)}
                 aria-label="عميل جديد"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-normal text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 <Plus size={16} /> جديد
               </button>
@@ -581,7 +581,7 @@ export const Leads = () => {
               action={
                 <button
                   onClick={() => setIsAddModalOpen(true)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-light text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Plus size={16} /> عميل جديد
                 </button>
@@ -654,14 +654,14 @@ export const Leads = () => {
               )}
             >
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-bold text-muted">{stat.label}</span>
+                <span className="text-xs font-normal text-muted">{stat.label}</span>
                 <div
                   className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.chip)}
                 >
                   <stat.icon size={14} />
                 </div>
               </div>
-              <div className={cn('text-2xl font-black tabular-nums', stat.valueColor)}>
+              <div className={cn('text-2xl font-medium tabular-nums', stat.valueColor)}>
                 {stat.value}
               </div>
               <div
@@ -711,7 +711,7 @@ export const Leads = () => {
                   onClick={() => setFilterStatus(item.key as LeadStatus | 'all')}
                   aria-pressed={isActive}
                   className={cn(
-                    'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                    'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                     isActive
                       ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                       : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
@@ -728,13 +728,13 @@ export const Leads = () => {
         {/* ===== LIST ===== */}
         <div className="mt-4">
           <div className="mb-3 flex items-center justify-between gap-2 px-0.5">
-            <h2 className="flex items-center gap-2 text-base font-black text-main">
+            <h2 className="flex items-center gap-2 text-base font-medium text-main">
               <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft text-primary">
                 <Users size={13} />
               </span>
               قائمة العملاء
             </h2>
-            <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/25 bg-primary-soft px-3 py-1.5 text-xs font-black tabular-nums text-primary">
+            <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/25 bg-primary-soft px-3 py-1.5 text-xs font-medium tabular-nums text-primary">
               النتائج: {filteredLeads.length}
             </span>
           </div>

@@ -84,7 +84,7 @@ export const QuickActions = ({ showQuickLinks = true, withHeader = true }: Quick
                 <Icon size={18} />
               </div>
               <div className="min-w-0">
-                <span className="block truncate text-xs font-black text-main">{action.title}</span>
+                <span className="block truncate text-xs font-medium text-main">{action.title}</span>
                 <span className="hidden text-[10px] font-medium text-muted sm:line-clamp-1">
                   {action.subtitle}
                 </span>
