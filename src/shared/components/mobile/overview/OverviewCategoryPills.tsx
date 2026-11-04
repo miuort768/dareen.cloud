@@ -40,10 +40,10 @@ export const OverviewCategoryPills: React.FC<OverviewCategoryPillsProps> = ({
             type="button"
             onClick={() => onSelect(cat.id)}
             className={cn(
-              'group relative flex min-w-[76px] shrink-0 flex-col items-center justify-center gap-1.5 rounded-[20px] p-2.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]',
+              'group relative flex min-h-[40px] shrink-0 flex-row items-center justify-center gap-2 rounded-full px-4 py-2 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]',
               isActive
-                ? 'bg-accent font-medium text-on-accent shadow-elevation-2'
-                : 'border border-border bg-card text-muted shadow-elevation-1 hover:border-border-strong hover:text-main',
+                ? 'bg-primary font-medium text-on-primary shadow-elevation-2 ring-1 ring-primary'
+                : 'border-border/80 border bg-card text-muted shadow-elevation-1 hover:border-primary/30 hover:text-main',
             )}
           >
             {/* Icon container */}
