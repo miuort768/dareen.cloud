@@ -12,10 +12,10 @@ export const AboutHero = () => (
       <AnimateOnScroll animation="fadeUp">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary bg-primary-soft px-4 py-1.5 backdrop-blur-sm dark:border-primary/20 dark:bg-primary/10">
           <Sparkles size={13} className="text-primary" />
-          <span className="text-micro font-bold text-primary">دارين السابعة | ريادة تعليمية</span>
+          <span className="text-micro font-normal text-primary">دارين السابعة | ريادة تعليمية</span>
         </div>
 
-        <h1 className="relative mb-4 font-heading text-2xl font-bold leading-none text-main md:text-4xl md:leading-tight lg:text-5xl">
+        <h1 className="relative mb-4 font-heading text-2xl font-normal leading-none text-main md:text-4xl md:leading-tight lg:text-5xl">
           <span className="sr-only">
             عن دارين السابعة للتعليم والتدريب - أفضل منصة للتعليم عن بعد والدروس الخصوصية في الكويت
             والخليج
@@ -30,7 +30,7 @@ export const AboutHero = () => (
           </span>
         </h1>
 
-        <p className="mx-auto mb-8 max-w-3xl px-4 text-xs font-medium leading-relaxed text-muted md:text-base md:leading-relaxed">
+        <p className="mx-auto mb-8 max-w-3xl px-4 text-xs font-light leading-relaxed text-muted md:text-base md:leading-relaxed">
           في دارين السابعة، منصة تعليم عن بعد رائدة في السعودية والكويت والخليج، نؤمن بأن كل طالب هو
           مشروع نجاح بحد ذاته. نجمع بين أصالة القيم العربية وأحدث تقنيات التعليم الرقمي في السعودية،
           الكويت، الإمارات، قطر وعمان والبحرين لتقديم دروس خصوصية أونلاين، قدرات وتحصيلي، تحفيظ
@@ -53,8 +53,8 @@ export const AboutHero = () => (
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-primary-soft text-primary shadow-elevation-1 transition-transform group-hover:scale-110 dark:bg-card">
             <Award size={24} />
           </div>
-          <span className="text-xl font-bold text-main md:text-2xl">10+</span>
-          <span className="mt-1 text-micro font-bold text-muted">سنوات تميز</span>
+          <span className="text-xl font-normal text-main md:text-2xl">10+</span>
+          <span className="mt-1 text-micro font-normal text-muted">سنوات تميز</span>
         </motion.div>
         <motion.div
           variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
@@ -64,8 +64,8 @@ export const AboutHero = () => (
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-primary-soft text-primary shadow-elevation-1 transition-transform group-hover:scale-110 dark:bg-card">
             <Users size={24} />
           </div>
-          <span className="text-xl font-bold text-main md:text-2xl">5k+</span>
-          <span className="mt-1 text-micro font-bold text-muted">طالب فخور</span>
+          <span className="text-xl font-normal text-main md:text-2xl">5k+</span>
+          <span className="mt-1 text-micro font-normal text-muted">طالب فخور</span>
         </motion.div>
         <motion.div
           variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
@@ -75,8 +75,8 @@ export const AboutHero = () => (
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-warning-light text-warning shadow-elevation-1 transition-transform group-hover:scale-110 dark:bg-warning-soft">
             <Heart size={24} />
           </div>
-          <span className="text-xl font-bold text-main md:text-2xl">100%</span>
-          <span className="mt-1 text-micro font-bold text-muted">ثقة وتفاني</span>
+          <span className="text-xl font-normal text-main md:text-2xl">100%</span>
+          <span className="mt-1 text-micro font-normal text-muted">ثقة وتفاني</span>
         </motion.div>
       </motion.div>
     </div>

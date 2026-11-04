@@ -82,10 +82,10 @@ export const PublicNavbar = () => {
                 isAuthenticated ? 'hidden md:flex' : 'flex',
               )}
             >
-              <p className="site-title text-sm font-bold leading-tight text-primary dark:text-main md:text-base md:dark:text-primary">
+              <p className="site-title text-sm font-normal leading-tight text-primary dark:text-main md:text-base md:dark:text-primary">
                 {academyName}
               </p>
-              <span className="mt-0.5 hidden items-center gap-1.5 text-xs font-bold italic text-primary dark:text-main md:dark:text-primary lg:inline-flex">
+              <span className="mt-0.5 hidden items-center gap-1.5 text-xs font-normal italic text-primary dark:text-main md:dark:text-primary lg:inline-flex">
                 <svg
                   viewBox="0 0 40 20"
                   className="h-3.5 w-5 text-primary"
@@ -108,7 +108,7 @@ export const PublicNavbar = () => {
                   <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
                 </svg>
               </span>
-              <span className="mt-0.5 rounded-md bg-primary-soft px-2 py-0.5 text-micro font-bold italic text-primary dark:bg-primary/40 dark:text-main md:hidden">
+              <span className="mt-0.5 rounded-md bg-primary-soft px-2 py-0.5 text-micro font-normal italic text-primary dark:bg-primary/40 dark:text-main md:hidden">
                 أفضل مدرسة افتراضية
               </span>
             </div>
@@ -120,7 +120,7 @@ export const PublicNavbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-bold transition-colors duration-150 lg:px-5 lg:text-sm xl:px-6 ${
+                className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-normal transition-colors duration-150 lg:px-5 lg:text-sm xl:px-6 ${
                   isActive(item.path)
                     ? 'bg-primary text-on-primary shadow-elevation-3 shadow-primary/30'
                     : 'text-main hover:bg-primary hover:text-on-primary'
@@ -163,7 +163,7 @@ export const PublicNavbar = () => {
                       </div>
                     )}
                   </div>
-                  <span className="hidden text-xs font-bold lg:block xl:text-sm">
+                  <span className="hidden text-xs font-normal lg:block xl:text-sm">
                     {currentUser?.name.split(' ')[0]}
                   </span>
                   <ChevronDown
@@ -175,7 +175,7 @@ export const PublicNavbar = () => {
                   className={`absolute end-0 z-50 mt-4 w-56 overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-4 transition-all duration-300 ${isDropdownOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'}`}
                 >
                   <div className="border-b border-border bg-background p-4">
-                    <p className="text-sm font-bold text-main">{currentUser?.name}</p>
+                    <p className="text-sm font-normal text-main">{currentUser?.name}</p>
                     <p className="text-xs text-muted">{currentUser?.username}</p>
                   </div>
                   <Link
@@ -203,7 +203,7 @@ export const PublicNavbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="hidden whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary px-4 py-2 text-xs font-bold text-on-primary transition-all hover:scale-105 hover:shadow-elevation-3 md:flex md:py-2.5 lg:px-6 lg:text-sm xl:px-8"
+                className="hidden whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary px-4 py-2 text-xs font-normal text-on-primary transition-all hover:scale-105 hover:shadow-elevation-3 md:flex md:py-2.5 lg:px-6 lg:text-sm xl:px-8"
               >
                 تسجيل الدخول
               </Link>
@@ -233,7 +233,7 @@ export const PublicNavbar = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center gap-3 rounded-full px-6 py-4 font-bold transition-all ${
+                  className={`flex items-center gap-3 rounded-full px-6 py-4 font-normal transition-all ${
                     isActive(item.path)
                       ? 'bg-primary text-on-primary shadow-elevation-3'
                       : 'text-main hover:bg-surface dark:text-main dark:hover:bg-hover'
@@ -252,7 +252,7 @@ export const PublicNavbar = () => {
                   <Link
                     to="/dashboard"
                     onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 rounded-full px-6 py-4 font-bold text-main hover:bg-surface dark:hover:bg-hover"
+                    className="flex items-center gap-3 rounded-full px-6 py-4 font-normal text-main hover:bg-surface dark:hover:bg-hover"
                   >
                     <Sparkles className="h-5 w-5 text-primary" />
                     لوحة التحكم
@@ -263,7 +263,7 @@ export const PublicNavbar = () => {
                       logout()
                       setIsMenuOpen(false)
                     }}
-                    className="flex w-full items-center gap-3 rounded-full px-6 py-4 font-bold text-error outline-none hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error"
+                    className="flex w-full items-center gap-3 rounded-full px-6 py-4 font-normal text-error outline-none hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error"
                   >
                     <LogOut size={20} className="rotate-180" />
                     تسجيل الخروج
@@ -273,7 +273,7 @@ export const PublicNavbar = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsMenuOpen(false)}
-                  className="mt-2 flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary py-4 font-bold text-on-primary shadow-elevation-3 transition-transform active:scale-[0.98]"
+                  className="mt-2 flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary py-4 font-normal text-on-primary shadow-elevation-3 transition-transform active:scale-[0.98]"
                 >
                   تسجيل الدخول
                 </Link>

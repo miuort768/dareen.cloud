@@ -14,7 +14,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
   return (
     <div className="mt-0 flex flex-col items-center justify-between gap-6 border-t border-border pt-8 sm:flex-row">
       <div className="flex items-center gap-3">
-        <span className="text-sm font-bold text-main">شارك</span>
+        <span className="text-sm font-normal text-main">شارك</span>
         <a
           href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + url)}`}
           target="_blank"
@@ -105,7 +105,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
           title="انسخ الرابط"
         >
           {copied ? (
-            <span className="text-micro font-bold">تم</span>
+            <span className="text-micro font-normal">تم</span>
           ) : (
             <svg
               viewBox="0 0 24 24"
@@ -137,7 +137,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
           title="نسخ الرابط"
         >
           {copied ? (
-            <span className="text-micro font-bold">تم</span>
+            <span className="text-micro font-normal">تم</span>
           ) : (
             <svg
               viewBox="0 0 24 24"
@@ -158,14 +158,14 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
           href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن' + post.title)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-card bg-success px-6 py-4 text-sm font-bold text-on-success shadow-elevation-3 transition-all hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-card bg-success px-6 py-4 text-sm font-normal text-on-success shadow-elevation-3 transition-all hover:opacity-90"
         >
           <MessageCircle size={18} />
           <span>لدي سؤال؟</span>
         </a>
         <Link
           to="/courses"
-          className="inline-flex items-center gap-2 rounded-card bg-primary px-6 py-4 text-sm font-bold text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover"
+          className="inline-flex items-center gap-2 rounded-card bg-primary px-6 py-4 text-sm font-normal text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover"
         >
           <Play size={18} /> ابدأ التعلم الآن
         </Link>

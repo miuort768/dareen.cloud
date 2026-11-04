@@ -22,13 +22,13 @@ export const AboutStory = () => (
                   </div>
                   <div className="flex h-48 flex-col justify-end rounded-[2rem] bg-warning p-6 text-on-warning shadow-elevation-4">
                     <Sparkles size={24} className="mb-4 text-white/90" />
-                    <p className="text-xl font-bold">إبداع مستمر</p>
+                    <p className="text-xl font-normal">إبداع مستمر</p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="flex h-48 flex-col justify-end rounded-[2rem] bg-primary-hover p-6 text-on-primary shadow-elevation-4">
                     <Target size={24} className="mb-4 text-white/90" />
-                    <h4 className="text-xl font-bold text-on-primary">أهداف محققة</h4>
+                    <h4 className="text-xl font-normal text-on-primary">أهداف محققة</h4>
                   </div>
                   <div className="h-64 overflow-hidden rounded-[2rem] shadow-2xl">
                     <Image
@@ -44,14 +44,14 @@ export const AboutStory = () => (
 
           <div className="order-1 w-full text-start lg:order-2 lg:w-1/2">
             <div className="mb-4 inline-flex items-center gap-2 rounded-card bg-card px-4 py-1.5 text-main dark:bg-surface dark:text-main">
-              <span className="text-micro font-bold">تعرف عليـــنا</span>
+              <span className="text-micro font-normal">تعرف عليـــنا</span>
             </div>
-            <h2 className="mb-6 font-heading text-2xl font-bold leading-tight text-main md:text-4xl md:leading-tight">
+            <h2 className="mb-6 font-heading text-2xl font-normal leading-tight text-main md:text-4xl md:leading-tight">
               ريادة في التعليم،
               <br />
               <span className="mt-2 block text-primary">نهضة في الفكر</span>
             </h2>
-            <p className="mb-8 max-w-xl text-sm font-medium leading-relaxed text-muted md:text-base">
+            <p className="mb-8 max-w-xl text-sm font-light leading-relaxed text-muted md:text-base">
               بدأ دارين السابعة كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية
               يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات
               البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
@@ -73,8 +73,8 @@ export const AboutStory = () => (
                   <Zap size={24} />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-bold text-main">رؤية الابتكار</h3>
-                  <p className="text-sm font-medium text-muted">
+                  <h3 className="mb-1 text-lg font-normal text-main">رؤية الابتكار</h3>
+                  <p className="text-sm font-light text-muted">
                     أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.
                   </p>
                 </div>
@@ -88,8 +88,8 @@ export const AboutStory = () => (
                   <BookOpen size={24} />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-lg font-bold text-main">رسالة التمكين</h3>
-                  <p className="text-sm font-medium text-muted">
+                  <h3 className="mb-1 text-lg font-normal text-main">رسالة التمكين</h3>
+                  <p className="text-sm font-light text-muted">
                     تقديم تجربة تعليمية قيمّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.
                   </p>
                 </div>

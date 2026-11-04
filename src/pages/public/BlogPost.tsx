@@ -107,10 +107,10 @@ export const BlogPost = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="mb-4 text-4xl font-bold">المقال غير موجود</h1>
+          <h1 className="mb-4 text-4xl font-normal">المقال غير موجود</h1>
           <Link
             to="/books"
-            className="font-bold text-error underline outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="font-normal text-error underline outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             العودة للمدونة
           </Link>
@@ -181,7 +181,7 @@ export const BlogPost = () => {
                 <Image src={post.coverImage} alt={post.title || ''} className="h-auto w-full" />
               </div>
               <div
-                className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-bold prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
+                className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-normal prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(processContent(contentParts.first, post.title)),
                 }}
@@ -190,7 +190,7 @@ export const BlogPost = () => {
           ) : (
             <div className="mx-auto max-w-3xl">
               <div
-                className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-bold prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
+                className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-normal prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(processContent(contentParts.first, post.title)),
                 }}
@@ -209,7 +209,7 @@ export const BlogPost = () => {
                   <button
                     onClick={(e) => handleButtonClick('download', downloadLink, e)}
                     disabled={buttonState !== null && buttonState.type !== 'download'}
-                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-bold shadow-elevation-3 outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-warning text-on-warning'}`}
+                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-normal shadow-elevation-3 outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-warning text-on-warning'}`}
                   >
                     <Download size={16} />
                     <span>
@@ -225,7 +225,7 @@ export const BlogPost = () => {
                   <button
                     onClick={(e) => handleButtonClick('watch', watchLink, e)}
                     disabled={buttonState !== null && buttonState.type !== 'watch'}
-                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-bold shadow-elevation-3 outline-none transition-all hover:bg-error-active focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}
+                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-normal shadow-elevation-3 outline-none transition-all hover:bg-error-active focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}
                   >
                     <Eye size={16} />
                     <span>
@@ -242,7 +242,7 @@ export const BlogPost = () => {
 
           {contentParts.rest && (
             <div
-              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-bold prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify mb-4 max-w-none text-main"
+              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-normal prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify mb-4 max-w-none text-main"
               dangerouslySetInnerHTML={{
                 __html: sanitizeHTML(processContent(contentParts.rest, post.title)),
               }}

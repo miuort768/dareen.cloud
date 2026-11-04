@@ -49,10 +49,10 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
               <GraduationCap className="relative z-10 h-6 w-6 text-on-primary dark:text-on-primary" />
             </div>
             <div>
-              <p className="text-base font-bold leading-tight text-main dark:text-main">
+              <p className="text-base font-normal leading-tight text-main dark:text-main">
                 {academyName}
               </p>
-              <p className="dark:text-soft text-micro font-bold leading-tight text-main">
+              <p className="dark:text-soft text-micro font-normal leading-tight text-main">
                 أفضل مدرسة افتراضية
               </p>
               <p className="mt-0.5 text-micro leading-tight text-main dark:text-muted">
@@ -94,7 +94,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
                     key={item.path}
                     to={item.path}
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 whitespace-nowrap border-b border-border px-4 py-3 text-xs font-bold text-main transition-colors last:border-0 hover:bg-primary-soft hover:text-primary dark:border-primary/20 dark:text-main dark:hover:bg-primary/10 dark:hover:text-primary"
+                    className="flex items-center gap-2 whitespace-nowrap border-b border-border px-4 py-3 text-xs font-normal text-main transition-colors last:border-0 hover:bg-primary-soft hover:text-primary dark:border-primary/20 dark:text-main dark:hover:bg-primary/10 dark:hover:text-primary"
                   >
                     <item.icon size={16} className="shrink-0 dark:text-primary" />
                     {item.label}
@@ -104,7 +104,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
                   <Link
                     to="/dashboard"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 border-t border-border px-4 py-3 text-xs font-bold text-primary transition-colors hover:bg-info-light dark:border-primary/20 dark:text-primary dark:hover:bg-primary/10"
+                    className="flex items-center gap-2 border-t border-border px-4 py-3 text-xs font-normal text-primary transition-colors hover:bg-info-light dark:border-primary/20 dark:text-primary dark:hover:bg-primary/10"
                   >
                     <LayoutDashboard size={14} />
                     لوحة التحكم
@@ -113,7 +113,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
                   <Link
                     to="/login"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-2 border-t border-border px-4 py-3 text-xs font-bold text-primary transition-colors hover:bg-info-light dark:border-primary/20 dark:text-primary dark:hover:bg-primary/10"
+                    className="flex items-center gap-2 border-t border-border px-4 py-3 text-xs font-normal text-primary transition-colors hover:bg-info-light dark:border-primary/20 dark:text-primary dark:hover:bg-primary/10"
                   >
                     <LogIn size={14} />
                     تسجيل الدخول

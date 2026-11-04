@@ -58,7 +58,7 @@ export const NotFound = () => {
             />
           </picture>
 
-          <h2 className="mb-3 font-heading text-xl font-bold text-main dark:text-dim md:mb-4 md:text-3xl">
+          <h2 className="mb-3 font-heading text-xl font-normal text-main dark:text-dim md:mb-4 md:text-3xl">
             الصفحة غير موجودة
           </h2>
 
@@ -70,7 +70,7 @@ export const NotFound = () => {
           <div className="flex flex-row flex-wrap items-center justify-center gap-2 md:gap-4">
             <Link
               to="/"
-              className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
+              className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-normal text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
             >
               <Home size={16} />
               العودة للرئيسية
@@ -79,7 +79,7 @@ export const NotFound = () => {
               href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}?text=${encodeURIComponent('السلام عليكم، وصلت لصفحة غير موجودة في الموقع وأحتاج مساعدة')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-xl bg-success px-6 py-3 text-sm font-bold text-on-success shadow-elevation-2 transition-all hover:bg-success-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
+              className="flex items-center gap-2 rounded-xl bg-success px-6 py-3 text-sm font-normal text-on-success shadow-elevation-2 transition-all hover:bg-success-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
             >
               <Headphones size={16} />
               تواصل مع الدعم

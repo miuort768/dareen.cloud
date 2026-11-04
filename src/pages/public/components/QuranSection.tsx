@@ -51,11 +51,11 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="w-full text-center lg:w-1/2">
                 <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-success bg-white/80 px-4 py-1.5 dark:border-primary/40 dark:bg-primary/15">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-success dark:bg-primary"></span>
-                  <span className="text-xs font-bold text-success-dark dark:text-primary">
+                  <span className="text-xs font-normal text-success-dark dark:text-primary">
                     برامج تحفيظ متميزة
                   </span>
                 </div>
-                <h2 className="mb-4 font-heading text-lg font-bold leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
+                <h2 className="mb-4 font-heading text-lg font-normal leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
                   رحلتك مع{' '}
                   <span className="relative inline-block text-success dark:text-primary">
                     كتاب الله
@@ -75,7 +75,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   </span>{' '}
                   تبدأ بخطوة
                 </h2>
-                <p className="dark:text-soft mx-auto mb-6 max-w-xl text-xs font-medium leading-relaxed text-muted lg:text-sm">
+                <p className="dark:text-soft mx-auto mb-6 max-w-xl text-xs font-light leading-relaxed text-muted lg:text-sm">
                   منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية
                   ومجموعات صغيرة مع نخبة من المقرئين المجازين.
                 </p>
@@ -84,7 +84,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-semibold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-light text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                   >
                     <span>ابدأ الحفظ الآن</span>
                     <ArrowLeft
@@ -95,7 +95,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   <Link
                     to="/courses"
                     onClick={() => window.scrollTo(0, 0)}
-                    className="flex items-center justify-center rounded-xl border border-border bg-card px-8 py-3.5 text-sm font-bold text-main transition-all hover:border-success hover:text-success dark:border-primary/30 dark:bg-white/5 dark:text-main"
+                    className="flex items-center justify-center rounded-xl border border-border bg-card px-8 py-3.5 text-sm font-normal text-main transition-all hover:border-success hover:text-success dark:border-primary/30 dark:bg-white/5 dark:text-main"
                   >
                     <Sparkles size={16} className="me-2 dark:text-primary" />
                     تصفح المزيد
@@ -115,17 +115,17 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         />
                       </div>
                     ))}
-                    <div className="dark:text-soft flex h-10 w-10 items-center justify-center rounded-full border-2 border-card bg-surface text-xs font-bold text-muted shadow-elevation-1 dark:border-primary/40 dark:bg-background">
+                    <div className="dark:text-soft flex h-10 w-10 items-center justify-center rounded-full border-2 border-card bg-surface text-xs font-normal text-muted shadow-elevation-1 dark:border-primary/40 dark:bg-background">
                       +5k
                     </div>
                   </div>
                   <div className="h-8 w-px bg-success opacity-40 dark:bg-primary"></div>
                   <div className="text-start">
-                    <div className="flex items-center gap-1 text-sm font-bold text-main dark:text-main">
+                    <div className="flex items-center gap-1 text-sm font-normal text-main dark:text-main">
                       4.9/5
                       <Star className="h-4 w-4 fill-warning text-warning dark:fill-primary dark:text-primary" />
                     </div>
-                    <div className="text-xs font-medium text-muted dark:text-muted">
+                    <div className="text-xs font-light text-muted dark:text-muted">
                       من قبل آلاف الطلاب
                     </div>
                   </div>
@@ -147,8 +147,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-surface text-primary dark:bg-primary/15 dark:text-primary">
                       <Clock className="h-5 w-5" />
                     </div>
-                    <h3 className="mb-1 text-xs font-bold text-main dark:text-main">أوقات مرنة</h3>
-                    <p className="text-micro font-medium leading-tight text-muted dark:text-muted">
+                    <h3 className="mb-1 text-xs font-normal text-main dark:text-main">
+                      أوقات مرنة
+                    </h3>
+                    <p className="text-micro font-light leading-tight text-muted dark:text-muted">
                       اختر مواعيدك المفضلة
                     </p>
                   </motion.div>
@@ -160,10 +162,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-warning-soft text-warning dark:bg-primary/15 dark:text-primary">
                       <ClipboardCheck className="h-5 w-5" />
                     </div>
-                    <h3 className="mb-1 text-xs font-bold text-main dark:text-main">
+                    <h3 className="mb-1 text-xs font-normal text-main dark:text-main">
                       متابعة دقيقة
                     </h3>
-                    <p className="text-micro font-medium leading-tight text-muted dark:text-muted">
+                    <p className="text-micro font-light leading-tight text-muted dark:text-muted">
                       تقارير إنجاز أسبوعية
                     </p>
                   </motion.div>
@@ -175,10 +177,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft text-success dark:bg-primary/15 dark:text-primary">
                       <Mic className="h-5 w-5" />
                     </div>
-                    <h3 className="mb-1 text-xs font-bold text-main dark:text-main">
+                    <h3 className="mb-1 text-xs font-normal text-main dark:text-main">
                       معلمون مجازون
                     </h3>
-                    <p className="text-micro font-medium leading-tight text-muted dark:text-muted">
+                    <p className="text-micro font-light leading-tight text-muted dark:text-muted">
                       نخبة الحفاظ المبدعون
                     </p>
                   </motion.div>
@@ -193,10 +195,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 text-on-primary backdrop-blur-sm dark:bg-black/20 dark:text-on-primary">
                         <Sparkles className="h-5 w-5" />
                       </div>
-                      <h3 className="mb-1 text-xs font-bold text-on-primary dark:text-on-primary">
+                      <h3 className="mb-1 text-xs font-normal text-on-primary dark:text-on-primary">
                         جرب مجاناً
                       </h3>
-                      <p className="text-micro font-semibold leading-tight text-on-primary opacity-80 dark:text-on-primary">
+                      <p className="text-micro font-light leading-tight text-on-primary opacity-80 dark:text-on-primary">
                         حصة تجريبية للمشتركين
                       </p>
                     </Link>
@@ -219,14 +221,14 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
           <div className="mb-5 mt-2 flex items-center justify-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-success bg-white/80 px-5 py-2.5 shadow-elevation-1 dark:border-primary/40 dark:bg-primary/15">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success dark:bg-primary"></span>
-              <span className="text-xs font-bold tracking-wide text-success-dark dark:text-primary">
+              <span className="text-xs font-normal tracking-wide text-success-dark dark:text-primary">
                 برامج حفظ متميزة
               </span>
             </div>
           </div>
 
           <div className="mb-5 text-center">
-            <h2 className="font-heading text-2xl font-bold leading-tight text-main dark:text-main">
+            <h2 className="font-heading text-2xl font-normal leading-tight text-main dark:text-main">
               رحلتك مع{' '}
               <span className="relative inline-block text-success dark:text-primary">
                 كتاب الله
@@ -250,7 +252,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </h2>
           </div>
 
-          <p className="dark:text-soft mx-auto mb-6 max-w-xs text-center text-xs font-medium leading-relaxed text-muted">
+          <p className="dark:text-soft mx-auto mb-6 max-w-xs text-center text-xs font-light leading-relaxed text-muted">
             منهجية فريدة تجمع بين أصالة التلقي وتقنيات التعليم الحديثة. نقدم حلقات فردية ومجموعات
             صغيرة مع نخبة من المقرئين المجازين.
           </p>
@@ -260,7 +262,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-semibold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-light text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
             >
               <span>ابدأ الحفظ الآن</span>
               <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
@@ -268,7 +270,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <Link
               to="/courses"
               onClick={() => window.scrollTo(0, 0)}
-              className="flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-bold text-main shadow-elevation-1 transition-all dark:border-primary/30 dark:bg-white/5 dark:text-main"
+              className="flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-normal text-main shadow-elevation-1 transition-all dark:border-primary/30 dark:bg-white/5 dark:text-main"
             >
               <Sparkles size={16} className="dark:text-primary" />
               تصفح المزيد
@@ -278,14 +280,14 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
           <div className="mb-8 flex items-center justify-center gap-4">
             <div className="text-end">
               <div className="flex items-center gap-1.5">
-                <span className="text-lg font-bold text-main dark:text-main">4.9</span>
-                <span className="text-sm font-bold text-muted dark:text-muted">/5</span>
+                <span className="text-lg font-normal text-main dark:text-main">4.9</span>
+                <span className="text-sm font-normal text-muted dark:text-muted">/5</span>
                 <Star
                   size={14}
                   className="fill-warning text-warning dark:fill-primary dark:text-primary"
                 />
               </div>
-              <div className="mt-0.5 text-xs font-medium text-muted dark:text-muted">
+              <div className="mt-0.5 text-xs font-light text-muted dark:text-muted">
                 من قبل آلاف الطلاب
               </div>
             </div>
@@ -303,7 +305,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   />
                 </div>
               ))}
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-card bg-success text-micro font-bold text-on-success shadow-elevation-1 dark:border-primary/40 dark:bg-primary dark:text-on-primary">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-card bg-success text-micro font-normal text-on-success shadow-elevation-1 dark:border-primary/40 dark:bg-primary dark:text-on-primary">
                 5K+
               </div>
             </div>
@@ -324,7 +326,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-warning-soft dark:bg-primary/15">
                 <ClipboardCheck size={22} className="text-warning dark:text-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-bold text-main dark:text-main">متابعة دقيقة</h3>
+              <h3 className="mb-1 text-sm font-normal text-main dark:text-main">متابعة دقيقة</h3>
               <p className="text-micro leading-relaxed text-muted dark:text-muted">
                 تقارير إنجاز أسبوعية
               </p>
@@ -337,7 +339,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/15">
                 <Clock size={22} className="text-primary dark:text-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-bold text-main dark:text-main">أوقات مرنة</h3>
+              <h3 className="mb-1 text-sm font-normal text-main dark:text-main">أوقات مرنة</h3>
               <p className="text-micro leading-relaxed text-muted dark:text-muted">
                 اختر مواعيدك المفضلة
               </p>
@@ -350,10 +352,10 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm dark:bg-black/20">
                 <Sparkles size={22} className="text-on-primary dark:text-on-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-bold text-on-primary dark:text-on-primary">
+              <h3 className="mb-1 text-sm font-normal text-on-primary dark:text-on-primary">
                 جرب مجانًا
               </h3>
-              <p className="text-micro font-bold leading-relaxed text-on-primary opacity-80 dark:text-on-primary">
+              <p className="text-micro font-normal leading-relaxed text-on-primary opacity-80 dark:text-on-primary">
                 حصة تجريبية للمشتركين
               </p>
             </motion.div>
@@ -365,7 +367,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-success-soft dark:bg-primary/15">
                 <Mic size={22} className="text-success dark:text-primary" />
               </div>
-              <h3 className="mb-1 text-sm font-bold text-main dark:text-main">معلمون مجازون</h3>
+              <h3 className="mb-1 text-sm font-normal text-main dark:text-main">معلمون مجازون</h3>
               <p className="text-micro leading-relaxed text-muted dark:text-muted">
                 نخبة الحفاظ المبدعون
               </p>

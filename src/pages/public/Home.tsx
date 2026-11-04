@@ -118,13 +118,13 @@ export const Home = () => {
             href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-semibold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-light text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
           >
             <Headphones className="h-2.5 w-2.5 shrink-0" /> طلب حصة مجانية
           </a>
           <Link
             to="/books"
-            className="flex flex-1 items-center justify-center gap-1 rounded-full border bg-primary px-1.5 py-2 text-xs font-bold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:border-primary/30 dark:bg-white/10 dark:text-main"
+            className="flex flex-1 items-center justify-center gap-1 rounded-full border bg-primary px-1.5 py-2 text-xs font-normal text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:border-primary/30 dark:bg-white/10 dark:text-main"
           >
             <Play className="h-2.5 w-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
           </Link>
@@ -134,7 +134,7 @@ export const Home = () => {
             <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
                 <div className="flex-1">
-                  <h1 className="mb-0.5 text-lg font-bold leading-tight text-main dark:text-main">
+                  <h1 className="mb-0.5 text-lg font-normal leading-tight text-main dark:text-main">
                     {slide.title}
                     {heroIndex === 0 && (
                       <span className="text-success-dark dark:text-primary">
@@ -144,7 +144,7 @@ export const Home = () => {
                       </span>
                     )}
                   </h1>
-                  <p className="mb-0.5 text-xs font-bold text-primary dark:text-primary">
+                  <p className="mb-0.5 text-xs font-normal text-primary dark:text-primary">
                     {slide.subtitle}
                   </p>
                   <p className="dark:text-soft mb-3 text-micro leading-relaxed text-muted">
@@ -153,14 +153,14 @@ export const Home = () => {
                   <div className="flex flex-col gap-1.5">
                     <Link
                       to="/courses"
-                      className="flex w-full items-center justify-center gap-1 rounded-full border bg-surface px-4 py-2 text-xs font-bold text-main shadow-card transition-all hover:bg-hover dark:border-primary/30 dark:bg-white/10 dark:text-main"
+                      className="flex w-full items-center justify-center gap-1 rounded-full border bg-surface px-4 py-2 text-xs font-normal text-main shadow-card transition-all hover:bg-hover dark:border-primary/30 dark:bg-white/10 dark:text-main"
                     >
                       <Play className="h-3 w-3 fill-main dark:fill-primary dark:text-primary" />{' '}
                       تصفح الدورات
                     </Link>
                     <Link
                       to={isAuthenticated ? '/dashboard' : '/login'}
-                      className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-semibold text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                      className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-light text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                     >
                       {isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}
                     </Link>
@@ -225,10 +225,10 @@ export const Home = () => {
                       <f.icon className={`${s.text} dark:text-primary`} size={20} />
                     </div>
                     <div className="min-w-0">
-                      <span className="mb-0 block text-micro font-bold leading-tight text-main dark:text-main">
+                      <span className="mb-0 block text-micro font-normal leading-tight text-main dark:text-main">
                         {f.label}
                       </span>
-                      <span className="dark:text-soft block text-micro font-medium leading-tight text-main">
+                      <span className="dark:text-soft block text-micro font-light leading-tight text-main">
                         {f.desc}
                       </span>
                     </div>
@@ -245,10 +245,10 @@ export const Home = () => {
         </AnimateOnScroll>
         <section className="px-1">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-main dark:text-main">أحدث الدورات</h2>
+            <h2 className="text-lg font-normal text-main dark:text-main">أحدث الدورات</h2>
             <Link
               to="/courses"
-              className="flex items-center gap-1 text-sm font-bold text-primary dark:text-primary"
+              className="flex items-center gap-1 text-sm font-normal text-primary dark:text-primary"
             >
               عرض الكل <ChevronLeft className="h-3.5 w-3.5" />
             </Link>
@@ -258,7 +258,7 @@ export const Home = () => {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
               >
                 <cat.icon
                   size={12}
@@ -289,26 +289,28 @@ export const Home = () => {
                   <div className="relative h-24 overflow-hidden bg-surface dark:bg-background">
                     <Image src={c.image} alt={c.title} className="h-24" />
                     <span
-                      className={`absolute start-2 top-2 rounded-full px-2 py-0.5 text-micro font-bold shadow-elevation-1 ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning dark:bg-primary dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary' : 'bg-error text-on-error'}`}
+                      className={`absolute start-2 top-2 rounded-full px-2 py-0.5 text-micro font-normal shadow-elevation-1 ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning dark:bg-primary dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary' : 'bg-error text-on-error'}`}
                     >
                       {stages.find((cat) => cat.value === c.category)?.label || c.category}
                     </span>
                   </div>
                   <div className="p-3">
-                    <h3 className="mb-0.5 text-xs font-bold text-main dark:text-main">{c.title}</h3>
-                    <p className="mb-2 line-clamp-1 text-xs font-medium text-muted dark:text-muted">
+                    <h3 className="mb-0.5 text-xs font-normal text-main dark:text-main">
+                      {c.title}
+                    </h3>
+                    <p className="mb-2 line-clamp-1 text-xs font-light text-muted dark:text-muted">
                       {c.desc}
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1">
                         <Users className="h-3 w-3 text-dim dark:text-muted" />
-                        <span className="dark:text-soft text-xs font-bold text-muted">
+                        <span className="dark:text-soft text-xs font-normal text-muted">
                           {c.students}
                         </span>
                       </div>
                       <div className="flex items-center gap-0.5">
                         <Star className="h-3 w-3 fill-warning text-warning dark:fill-primary dark:text-primary" />
-                        <span className="text-xs font-bold text-main dark:text-main">
+                        <span className="text-xs font-normal text-main dark:text-main">
                           {c.rating}
                         </span>
                       </div>

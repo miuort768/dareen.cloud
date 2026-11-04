@@ -55,16 +55,16 @@ export const PrivacyPolicy = () => {
         <div className="container relative z-10 mx-auto px-4 text-center">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/20 px-4 py-1.5 backdrop-blur-sm md:border-primary md:bg-primary-soft">
             <Sparkles size={12} className="text-on-primary md:text-primary" />
-            <span className="text-micro font-bold text-on-primary md:text-micro md:text-primary">
+            <span className="text-micro font-normal text-on-primary md:text-micro md:text-primary">
               سياسة الخصوصية
             </span>
           </div>
 
-          <h1 className="mb-1 font-heading text-lg font-bold leading-tight text-on-primary md:mb-3 md:text-5xl md:text-main">
+          <h1 className="mb-1 font-heading text-lg font-normal leading-tight text-on-primary md:mb-3 md:text-5xl md:text-main">
             حماية <span className="inline-block py-1 text-warning">بياناتك</span> أولويتنا
           </h1>
 
-          <p className="mx-auto max-w-2xl text-micro font-medium leading-relaxed text-white/80 md:text-lg md:text-muted">
+          <p className="mx-auto max-w-2xl text-micro font-light leading-relaxed text-white/80 md:text-lg md:text-muted">
             نلتزم في دارين السابعة بحماية خصوصيتك وأمان معلوماتك الشخصية
           </p>
         </div>
@@ -80,7 +80,7 @@ export const PrivacyPolicy = () => {
                 <FileText className="h-6 w-6 text-info" />
               </div>
               <div>
-                <h2 className="mb-2 text-xl font-bold text-main md:text-2xl">مقدمة</h2>
+                <h2 className="mb-2 text-xl font-normal text-main md:text-2xl">مقدمة</h2>
                 <p className="text-sm leading-relaxed text-muted md:text-base">
                   تصف سياسة الخصوصية هذه كيفية جمع دارين السابعة للتعليم والتدريب ("نحن" أو
                   "المعهد") واستخدامنا وحمايتنا ومشاركتنا للمعلومات الشخصية التي نجمعها من خلال
@@ -98,10 +98,10 @@ export const PrivacyPolicy = () => {
                 <Database className="h-6 w-6 text-success" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">المعلومات التي نجمعها</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">المعلومات التي نجمعها</h2>
                 <div className="space-y-2 text-micro text-muted md:text-sm">
                   <div>
-                    <h3 className="mb-2 font-bold text-main">1. المعلومات الشخصية:</h3>
+                    <h3 className="mb-2 font-normal text-main">1. المعلومات الشخصية:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>الاسم الكامل</li>
                       <li>عنوان البريد الإلكتروني</li>
@@ -111,7 +111,7 @@ export const PrivacyPolicy = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-2 font-bold text-main">2. معلومات الاستخدام:</h3>
+                    <h3 className="mb-2 font-normal text-main">2. معلومات الاستخدام:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>سجلات الحضور والغياب</li>
                       <li>نتائج الاختبارات والتقييمات</li>
@@ -120,7 +120,7 @@ export const PrivacyPolicy = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-2 font-bold text-main">3. المعلومات التقنية:</h3>
+                    <h3 className="mb-2 font-normal text-main">3. المعلومات التقنية:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>عنوان IP</li>
                       <li>نوع المتصفح والجهاز</li>
@@ -139,7 +139,7 @@ export const PrivacyPolicy = () => {
                 <Eye className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">كيف نستخدم معلوماتك</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">كيف نستخدم معلوماتك</h2>
                 <div className="space-y-2 text-micro text-muted md:text-sm">
                   <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
                   <ul className="ms-4 list-inside list-disc space-y-1">
@@ -163,7 +163,7 @@ export const PrivacyPolicy = () => {
                 <Lock className="h-6 w-6 text-error" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">حماية البيانات</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">حماية البيانات</h2>
                 <div className="space-y-2 text-micro text-muted md:text-sm">
                   <p>نتخذ إجراءات أمنية صارمة لحماية معلوماتك الشخصية، بما في ذلك:</p>
                   <ul className="ms-4 list-inside list-disc space-y-1">
@@ -185,7 +185,7 @@ export const PrivacyPolicy = () => {
                 <UserCheck className="h-6 w-6 text-warning" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">مشاركة المعلومات</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">مشاركة المعلومات</h2>
                 <div className="space-y-2 text-micro text-muted md:text-sm">
                   <p>
                     لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك فقط في الحالات
@@ -205,7 +205,7 @@ export const PrivacyPolicy = () => {
           {/* User Rights */}
           <div className="mb-4">
             <div className="rounded-card border border-border bg-background p-8 dark:bg-card">
-              <h2 className="mb-4 text-2xl font-bold text-main">حقوقك</h2>
+              <h2 className="mb-4 text-2xl font-normal text-main">حقوقك</h2>
               <div className="space-y-2 text-micro text-muted md:text-sm">
                 <p>لديك الحق في:</p>
                 <ul className="ms-4 list-inside list-disc space-y-1">
@@ -215,7 +215,7 @@ export const PrivacyPolicy = () => {
                   <li>الاعتراض على معالجة بياناتك في ظروف معينة</li>
                   <li>سحب موافقتك في أي وقت</li>
                 </ul>
-                <p className="mt-4 text-micro font-bold dark:text-main md:text-base">
+                <p className="mt-4 text-micro font-normal dark:text-main md:text-base">
                   للاستفسارات أو طلبات الخصوصية، يرجى التواصل معنا عبر البريد الإلكتروني أو الهاتف.
                 </p>
               </div>
@@ -224,12 +224,12 @@ export const PrivacyPolicy = () => {
 
           {/* Updates */}
           <div className="mb-4">
-            <h2 className="mb-4 text-2xl font-bold text-main">التحديثات على هذه السياسة</h2>
+            <h2 className="mb-4 text-2xl font-normal text-main">التحديثات على هذه السياسة</h2>
             <p className="text-micro leading-relaxed text-muted md:text-base">
               قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سنقوم بإخطارك بأي تغييرات جوهرية عن
               طريق نشر السياسة الجديدة على هذه الصفحة وتحديث تاريخ "آخر تحديث" أدناه.
             </p>
-            <p className="mt-4 text-sm font-bold text-muted">آخر تحديث: 21 يناير 2026</p>
+            <p className="mt-4 text-sm font-normal text-muted">آخر تحديث: 21 يناير 2026</p>
           </div>
 
           {/* Support Button Section */}
@@ -238,7 +238,7 @@ export const PrivacyPolicy = () => {
             <div className="absolute bottom-0 end-0 -mb-16 -me-16 h-32 w-32 rounded-full bg-white/10 blur-3xl"></div>
 
             <div className="relative z-10 text-center">
-              <h2 className="mb-2 text-2xl font-bold text-on-primary dark:text-primary">
+              <h2 className="mb-2 text-2xl font-normal text-on-primary dark:text-primary">
                 هل لديك استفسارات فنية؟
               </h2>
               <p className="mx-auto mb-8 max-w-md whitespace-nowrap text-xs text-white/80 md:text-sm">
@@ -249,7 +249,7 @@ export const PrivacyPolicy = () => {
                 href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex w-full items-center justify-center gap-4 overflow-hidden rounded-card border border-border bg-card px-6 py-3 font-bold text-primary shadow-elevation-3 transition-all hover:bg-card dark:border-border dark:text-main sm:w-auto"
+                className="group relative inline-flex w-full items-center justify-center gap-4 overflow-hidden rounded-card border border-border bg-card px-6 py-3 font-normal text-primary shadow-elevation-3 transition-all hover:bg-card dark:border-border dark:text-main sm:w-auto"
               >
                 <Headphones className="relative z-10 h-5 w-5" />
                 <span className="relative z-10 text-base md:text-lg">تواصل مع الدعم الفني</span>

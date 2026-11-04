@@ -21,9 +21,9 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
         <div className="mb-4 text-center">
           <div className="mx-auto mb-4 inline-flex scale-90 items-center gap-2 rounded-full border bg-primary px-3 py-1 text-on-primary dark:border-primary/40 dark:bg-primary/20 dark:text-primary">
             <Zap size={12} className="text-warning dark:text-primary" />
-            <span className="text-micro font-bold">حصتك المجانية بانتظارك</span>
+            <span className="text-micro font-normal">حصتك المجانية بانتظارك</span>
           </div>
-          <h2 className="font-heading text-xl font-bold text-main dark:text-main md:text-5xl">
+          <h2 className="font-heading text-xl font-normal text-main dark:text-main md:text-5xl">
             كيف تشترك في <span className="text-primary dark:text-primary">المعهد؟</span>
           </h2>
         </div>
@@ -113,16 +113,16 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                   )}
                 >
                   <div className="scale-75 md:scale-100">{step.icon}</div>
-                  <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-surface text-micro font-bold text-main shadow-elevation-3 dark:border-primary/50 dark:bg-background dark:text-primary md:-start-2 md:-top-2 md:h-6 md:w-6 md:text-micro">
+                  <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-surface text-micro font-normal text-main shadow-elevation-3 dark:border-primary/50 dark:bg-background dark:text-primary md:-start-2 md:-top-2 md:h-6 md:w-6 md:text-micro">
                     {step.id}
                   </span>
                 </div>
 
                 <div className="w-full px-1 text-center md:px-4">
-                  <div className="mb-1 text-xs font-bold text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-accent md:text-sm">
+                  <div className="mb-1 text-xs font-normal text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-accent md:text-sm">
                     {step.title}
                   </div>
-                  <p className="hidden text-micro font-bold leading-tight text-main dark:text-muted sm:block md:text-micro">
+                  <p className="hidden text-micro font-normal leading-tight text-main dark:text-muted sm:block md:text-micro">
                     {step.desc}
                   </p>
                 </div>
@@ -137,12 +137,12 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-xl bg-primary px-8 py-3.5 text-sm font-semibold text-on-primary shadow-elevation-4 transition-all hover:scale-105 active:scale-95 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group relative overflow-hidden rounded-xl bg-primary px-8 py-3.5 text-sm font-light text-on-primary shadow-elevation-4 transition-all hover:scale-105 active:scale-95 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-primary dark:to-warning"></div>
               <div className="relative flex items-center gap-2">
                 <Gift size={16} />
-                <span className="text-micro font-bold">حصتك المجانية بانتظارك</span>
+                <span className="text-micro font-normal">حصتك المجانية بانتظارك</span>
                 <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
               </div>
             </a>

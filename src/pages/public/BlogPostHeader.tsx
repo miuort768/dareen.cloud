@@ -78,10 +78,10 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
   <header className="container mx-auto mb-6 max-w-4xl px-4 md:mb-12">
     <div className="mb-3 flex flex-col gap-3 md:mb-6 md:flex-row md:items-center md:justify-between md:gap-0">
       <div className="order-2 flex flex-wrap items-center gap-4 md:order-1">
-        <span className="bg-error-light px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-error">
+        <span className="bg-error-light px-3 py-1.5 text-xs font-normal uppercase tracking-widest text-error">
           {post.category}
         </span>
-        <div className="flex items-center gap-4 text-xs font-medium text-muted">
+        <div className="flex items-center gap-4 text-xs font-light text-muted">
           <div className="hidden items-center gap-1.5 sm:flex">
             <Calendar size={14} /> <span>{post.date}</span>
           </div>
@@ -90,7 +90,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
               <Clock size={14} /> <span>{post.readingTime} دقيقة قراءة</span>
             </div>
           ) : null}
-          <div className="rounded-lg bg-error-light px-2.5 py-1 text-xs font-bold text-error sm:px-3 sm:py-1.5 sm:text-xs">
+          <div className="rounded-lg bg-error-light px-2.5 py-1 text-xs font-normal text-error sm:px-3 sm:py-1.5 sm:text-xs">
             <User size={12} className="inline" /> {post.author}
           </div>
           <div className="mt-2 flex items-center gap-2 md:hidden">
@@ -98,7 +98,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
               href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + window.location.href)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-lg bg-success px-3 py-1.5 text-xs font-bold text-on-success transition-all hover:opacity-80"
+              className="inline-flex items-center gap-1 rounded-lg bg-success px-3 py-1.5 text-xs font-normal text-on-success transition-all hover:opacity-80"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -119,7 +119,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
               href={`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(post.title)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-lg bg-info px-3 py-1.5 text-xs font-bold text-on-info transition-all hover:opacity-80"
+              className="inline-flex items-center gap-1 rounded-lg bg-info px-3 py-1.5 text-xs font-normal text-on-info transition-all hover:opacity-80"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -140,13 +140,13 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
       </div>
       <Link
         to="/books"
-        className="order-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:text-sm md:order-2 md:w-auto md:justify-start md:px-6 md:py-3"
+        className="order-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 text-xs font-normal text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:text-sm md:order-2 md:w-auto md:justify-start md:px-6 md:py-3"
       >
         <ArrowRight size={16} />
         <span>العودة لجميع المقالات</span>
       </Link>
     </div>
-    <h1 className="mb-2 font-heading text-2xl font-bold leading-tight text-main sm:text-3xl md:mb-4 md:text-4xl lg:text-5xl">
+    <h1 className="mb-2 font-heading text-2xl font-normal leading-tight text-main sm:text-3xl md:mb-4 md:text-4xl lg:text-5xl">
       {post.title}
     </h1>
     {post.contentType !== 'more' &&
@@ -154,31 +154,31 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
       (post.curriculum || post.level || post.grade || post.term || post.subject) && (
         <div className="mb-4 flex flex-wrap gap-2">
           {post.curriculum && (
-            <span className="inline-flex items-center gap-1 rounded-lg border border-info bg-info-light px-3 py-1.5 text-xs font-bold text-info">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-info bg-info-light px-3 py-1.5 text-xs font-normal text-info">
               <BookOpen size={12} />
               {curriculumNames[post.curriculum] || post.curriculum}
             </span>
           )}
           {post.level && (
-            <span className="inline-flex items-center gap-1 rounded-lg border border-success bg-success-light px-3 py-1.5 text-xs font-bold text-success">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-success bg-success-light px-3 py-1.5 text-xs font-normal text-success">
               <GraduationCap size={12} />
               {levelNames[post.level] || post.level}
             </span>
           )}
           {post.grade && (
-            <span className="inline-flex items-center gap-1 rounded-lg border border-primary/50 bg-primary-soft px-3 py-1.5 text-xs font-bold text-primary">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-primary/50 bg-primary-soft px-3 py-1.5 text-xs font-normal text-primary">
               <School size={12} />
               الصف {gradeNames[post.grade] || post.grade}
             </span>
           )}
           {post.term && (
-            <span className="inline-flex items-center gap-1 rounded-lg border border-warning bg-warning-light px-3 py-1.5 text-xs font-bold text-warning">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-warning bg-warning-light px-3 py-1.5 text-xs font-normal text-warning">
               <Tag size={12} />
               {termNames[post.term] || post.term}
             </span>
           )}
           {post.subject && (
-            <span className="inline-flex items-center gap-1 rounded-lg border border-error bg-error-light px-3 py-1.5 text-xs font-bold text-error">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-error bg-error-light px-3 py-1.5 text-xs font-normal text-error">
               <BookOpen size={12} />
               {subjectNames[post.subject] || post.subject}
             </span>
@@ -198,7 +198,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
             {tags.map((tag: string, i: number) => (
               <span
                 key={`tag-${i}`}
-                className="rounded-lg bg-surface px-2 py-1 text-micro font-bold text-muted"
+                className="rounded-lg bg-surface px-2 py-1 text-micro font-normal text-muted"
               >
                 #{tag}
               </span>

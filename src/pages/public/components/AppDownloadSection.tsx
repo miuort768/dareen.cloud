@@ -16,14 +16,14 @@ export const AppDownloadSection = () => {
             <div className="flex flex-col items-center justify-center p-6 text-center md:p-10">
               <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-4 py-1.5 dark:border-primary/40 dark:bg-primary/20">
                 <Smartphone size={14} className="text-primary dark:text-primary" />
-                <span className="text-xs font-bold text-primary dark:text-primary">
+                <span className="text-xs font-normal text-primary dark:text-primary">
                   تطبيق دارين السابعة
                 </span>
               </div>
-              <h2 className="mb-2 font-heading text-lg font-bold leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
+              <h2 className="mb-2 font-heading text-lg font-normal leading-tight text-main dark:text-main sm:text-2xl lg:text-3xl">
                 حمل التطبيق الآن
               </h2>
-              <p className="mx-auto mb-6 max-w-xl text-xs font-medium leading-relaxed text-muted dark:text-muted lg:text-xs">
+              <p className="mx-auto mb-6 max-w-xl text-xs font-light leading-relaxed text-muted dark:text-muted lg:text-xs">
                 أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية
                 متكاملة من أي مكان وفي أي وقت.
               </p>
@@ -48,17 +48,17 @@ export const AppDownloadSection = () => {
               <div className="mt-6 flex items-center justify-center gap-6">
                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                   <Download size={14} />
-                  <span className="text-micro font-medium">مجاني</span>
+                  <span className="text-micro font-light">مجاني</span>
                 </div>
                 <div className="h-4 w-px bg-border dark:bg-primary/30"></div>
                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                   <Shield size={14} />
-                  <span className="text-micro font-medium">آمن</span>
+                  <span className="text-micro font-light">آمن</span>
                 </div>
                 <div className="h-4 w-px bg-border dark:bg-primary/30"></div>
                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                   <MonitorDown size={14} />
-                  <span className="text-micro font-medium">متوافق مع جميع الأجهزة</span>
+                  <span className="text-micro font-light">متوافق مع جميع الأجهزة</span>
                 </div>
               </div>
             </div>
@@ -74,17 +74,17 @@ export const AppDownloadSection = () => {
           <div className="mb-5 mt-2 flex items-center justify-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-5 py-2.5 shadow-elevation-1 dark:border-primary/40 dark:bg-primary/20">
               <Smartphone size={14} className="text-primary dark:text-primary" />
-              <span className="text-xs font-bold tracking-wide text-primary dark:text-primary">
+              <span className="text-xs font-normal tracking-wide text-primary dark:text-primary">
                 تطبيق دارين السابعة
               </span>
             </div>
           </div>
           <div className="mb-2 text-center">
-            <h2 className="font-heading text-2xl font-bold leading-tight text-main dark:text-main">
+            <h2 className="font-heading text-2xl font-normal leading-tight text-main dark:text-main">
               حمل التطبيق الآن
             </h2>
           </div>
-          <p className="mx-auto mb-6 max-w-xs text-center text-micro font-medium leading-tight text-muted dark:text-muted">
+          <p className="mx-auto mb-6 max-w-xs text-center text-micro font-light leading-tight text-muted dark:text-muted">
             أفضل مدرسة افتراضية. حمل تطبيق دارين السابعة على هاتفك واستمتع بتجربة تعليمية متكاملة من
             أي مكان وفي أي وقت.
           </p>
@@ -109,17 +109,17 @@ export const AppDownloadSection = () => {
           <div className="mt-5 flex items-center justify-center gap-6">
             <div className="flex items-center gap-1.5 text-muted dark:text-muted">
               <Download size={14} />
-              <span className="text-micro font-medium">مجاني</span>
+              <span className="text-micro font-light">مجاني</span>
             </div>
             <div className="h-4 w-px bg-border dark:bg-primary/30"></div>
             <div className="flex items-center gap-1.5 text-muted dark:text-muted">
               <Shield size={14} />
-              <span className="text-micro font-medium">آمن</span>
+              <span className="text-micro font-light">آمن</span>
             </div>
             <div className="h-4 w-px bg-border dark:bg-primary/30"></div>
             <div className="flex items-center gap-1.5 text-muted dark:text-muted">
               <MonitorDown size={14} />
-              <span className="text-micro font-medium">متوافق مع جميع الأجهزة</span>
+              <span className="text-micro font-light">متوافق مع جميع الأجهزة</span>
             </div>
           </div>
         </div>

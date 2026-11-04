@@ -46,7 +46,7 @@ const StarRating = ({ rating }: { rating: number }) => (
         }
       />
     ))}
-    <span className="ms-1 text-micro font-bold text-muted dark:text-muted">{rating}</span>
+    <span className="ms-1 text-micro font-normal text-muted dark:text-muted">{rating}</span>
   </div>
 )
 
@@ -145,16 +145,16 @@ export const Courses = () => {
             <div className="mb-4 text-center md:mb-6">
               <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary bg-primary-soft px-4 py-1.5 backdrop-blur-sm dark:border-primary/30 dark:bg-primary/15 md:mb-6">
                 <Sparkles size={13} className="text-primary dark:text-primary" />
-                <span className="text-micro font-bold text-primary dark:text-primary">
+                <span className="text-micro font-normal text-primary dark:text-primary">
                   استكشف مسيرتك التعليمية
                 </span>
               </div>
 
-              <h1 className="mb-2 font-heading text-xl font-bold leading-tight text-main dark:text-main sm:text-4xl md:mb-4 lg:text-5xl">
+              <h1 className="mb-2 font-heading text-xl font-normal leading-tight text-main dark:text-main sm:text-4xl md:mb-4 lg:text-5xl">
                 <span className="text-primary dark:text-primary">دورات</span> {academyName}
               </h1>
 
-              <p className="mx-auto max-w-2xl text-sm font-medium leading-relaxed text-muted dark:text-muted sm:text-base">
+              <p className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-muted dark:text-muted sm:text-base">
                 برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل
                 التعلّم تجربة ممتعة
               </p>
@@ -169,7 +169,7 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-bold shadow-elevation-3 outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-elevation-3 dark:focus-visible:ring-primary/10"
+                className="w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-normal shadow-elevation-3 outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-elevation-3 dark:focus-visible:ring-primary/10"
               />
               <Search className="absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-dim transition-colors group-focus-within:text-primary dark:text-dim dark:group-focus-within:text-primary" />
             </div>
@@ -180,7 +180,7 @@ export const Courses = () => {
                   key={cat.value}
                   type="button"
                   onClick={() => setActiveCategory(cat.value)}
-                  className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-bold outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus ${
+                  className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-normal outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus ${
                     activeCategory === cat.value
                       ? 'bg-primary-active text-on-primary shadow-elevation-3 dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
                       : 'border border-border bg-surface text-muted hover:border-primary/30 hover:text-main hover:shadow-elevation-2 dark:border-primary/20 dark:bg-card dark:text-muted dark:hover:border-primary/40 dark:hover:text-main'
@@ -229,7 +229,7 @@ export const Courses = () => {
 
                     <div className="absolute start-3 top-3 z-10">
                       <div
-                        className={`rounded-lg bg-gradient-to-br px-2.5 py-1 text-micro font-bold text-on-primary shadow-elevation-3 ${course.color}`}
+                        className={`rounded-lg bg-gradient-to-br px-2.5 py-1 text-micro font-normal text-on-primary shadow-elevation-3 ${course.color}`}
                       >
                         {CATEGORIES.find((c) => c.value === course.category)?.label ||
                           course.category}
@@ -244,7 +244,7 @@ export const Courses = () => {
                   </div>
 
                   <div className="flex flex-1 flex-col p-3 pb-0">
-                    <h2 className="font-heading text-lg font-bold leading-snug text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-primary md:text-xl">
+                    <h2 className="font-heading text-lg font-normal leading-snug text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-primary md:text-xl">
                       {course.title}
                     </h2>
 
@@ -258,16 +258,16 @@ export const Courses = () => {
                           <Users size={12} className="text-primary dark:text-primary" />
                         </div>
                         <div>
-                          <span className="block text-xs font-bold leading-none text-main dark:text-main">
+                          <span className="block text-xs font-normal leading-none text-main dark:text-main">
                             {course.students}
                           </span>
-                          <span className="text-micro font-bold text-muted dark:text-dim">
+                          <span className="text-micro font-normal text-muted dark:text-dim">
                             طالب
                           </span>
                         </div>
                       </div>
 
-                      <span className="flex items-center gap-1.5 rounded-lg bg-success-light px-3 py-1.5 text-xs font-bold text-success dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_6px_rgb(var(--color-primary)/0.12)]">
+                      <span className="flex items-center gap-1.5 rounded-lg bg-success-light px-3 py-1.5 text-xs font-normal text-success dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_6px_rgb(var(--color-primary)/0.12)]">
                         <Sparkles size={10} />
                         تجربة مجانية
                       </span>
@@ -278,7 +278,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-bold text-on-success shadow-elevation-3 transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-elevation-3 dark:shadow-primary/20 dark:hover:bg-warning"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-normal text-on-success shadow-elevation-3 transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-elevation-3 dark:shadow-primary/20 dark:hover:bg-warning"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
@@ -308,8 +308,8 @@ export const Courses = () => {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-card border border-border bg-background dark:border-primary/30 dark:bg-card">
                 <Search size={28} className="text-dim dark:text-dim" />
               </div>
-              <h2 className="mb-1 text-xl font-bold text-main dark:text-main">لا توجد نتائج</h2>
-              <p className="text-sm font-medium text-muted dark:text-muted">
+              <h2 className="mb-1 text-xl font-normal text-main dark:text-main">لا توجد نتائج</h2>
+              <p className="text-sm font-light text-muted dark:text-muted">
                 جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر
               </p>
             </motion.div>

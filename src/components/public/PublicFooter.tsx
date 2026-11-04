@@ -29,9 +29,9 @@ export const PublicFooter = () => {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-none bg-gradient-to-br from-primary to-primary-hover shadow-elevation-3 dark:from-primary dark:to-primary">
-                <span className="text-2xl font-bold text-on-primary dark:text-card">د</span>
+                <span className="text-2xl font-normal text-on-primary dark:text-card">د</span>
               </div>
-              <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text font-heading text-lg font-bold text-transparent dark:from-primary dark:to-primary">
+              <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text font-heading text-lg font-normal text-transparent dark:from-primary dark:to-primary">
                 {academyName}
               </span>
             </div>
@@ -43,7 +43,7 @@ export const PublicFooter = () => {
 
           {/* Quick links */}
           <div>
-            <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-main dark:text-main">
+            <h3 className="mb-4 flex items-center gap-2 text-lg font-normal text-main dark:text-main">
               <span className="h-0.5 w-8 bg-accent dark:bg-primary"></span>
               روابط سريعة
             </h3>
@@ -67,7 +67,7 @@ export const PublicFooter = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-main dark:text-main">
+            <h3 className="mb-4 flex items-center gap-2 text-lg font-normal text-main dark:text-main">
               <span className="h-0.5 w-8 bg-accent dark:bg-primary"></span>
               تواصل معنا
             </h3>
@@ -104,7 +104,7 @@ export const PublicFooter = () => {
 
           {/* Join us */}
           <div>
-            <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-main dark:text-main">
+            <h3 className="mb-4 flex items-center gap-2 text-lg font-normal text-main dark:text-main">
               <span className="h-0.5 w-8 bg-accent dark:bg-primary"></span>
               انضم الينا الان
             </h3>
@@ -117,7 +117,7 @@ export const PublicFooter = () => {
               </Link>
               <Link
                 to="/terms-of-work"
-                className="block w-full transform bg-gradient-to-r from-accent to-accent-hover py-3 text-center text-sm font-bold text-on-accent transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
+                className="block w-full transform bg-gradient-to-r from-accent to-accent-hover py-3 text-center text-sm font-normal text-on-accent transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
               >
                 قوانين العمل
               </Link>
@@ -130,7 +130,7 @@ export const PublicFooter = () => {
           <div className="text-center md:text-start">
             <p className="text-[11px] text-muted dark:text-muted md:text-sm">
               &copy; {new Date().getFullYear()}{' '}
-              <span className="font-medium text-main dark:text-main">{academyName}</span>. جميع
+              <span className="font-light text-main dark:text-main">{academyName}</span>. جميع
               الحقوق محفوظة.
             </p>
           </div>
@@ -150,10 +150,10 @@ export const PublicFooter = () => {
             >
               <div className="pointer-events-none absolute inset-0 z-0 h-full w-full animate-shine-slow bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/10"></div>
               <span className="relative z-10 h-1.5 w-1.5 animate-pulse bg-accent dark:bg-card"></span>
-              <span className="relative z-10 font-heading text-micro font-bold tracking-wide text-white/80 dark:text-card">
+              <span className="relative z-10 font-heading text-micro font-normal tracking-wide text-white/80 dark:text-card">
                 تصميم وتطوير
               </span>
-              <span className="relative z-10 font-heading text-micro font-bold text-on-primary dark:text-card">
+              <span className="relative z-10 font-heading text-micro font-normal text-on-primary dark:text-card">
                 مستر احمد عبدالله
               </span>
               <span className="relative z-10 h-1.5 w-1.5 animate-pulse bg-accent dark:bg-card"></span>

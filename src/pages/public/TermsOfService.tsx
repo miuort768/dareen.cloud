@@ -52,10 +52,10 @@ export const TermsOfService = () => {
         <div className="container relative z-10 mx-auto px-4 text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-card border border-border bg-card px-4 py-2 text-main shadow-elevation-1">
             <Scale size={14} className="text-success" />
-            <span className="text-xs font-semibold uppercase tracking-label">الشروط والأحكام</span>
+            <span className="text-xs font-light uppercase tracking-label">الشروط والأحكام</span>
           </div>
 
-          <h1 className="mb-3 font-heading text-xl font-bold leading-tight text-main md:text-5xl">
+          <h1 className="mb-3 font-heading text-xl font-normal leading-tight text-main md:text-5xl">
             شروط{' '}
             <span className="inline-block bg-gradient-to-r from-success to-success bg-clip-text py-1 text-transparent">
               الاستخدام
@@ -63,7 +63,7 @@ export const TermsOfService = () => {
             والأحكام
           </h1>
 
-          <p className="mx-auto max-w-2xl text-sm font-medium leading-relaxed text-muted md:text-lg">
+          <p className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-muted md:text-lg">
             يرجى قراءة هذه الشروط والأحكام بعناية قبل استخدام خدماتنا
           </p>
         </div>
@@ -79,7 +79,7 @@ export const TermsOfService = () => {
                 <FileCheck className="h-6 w-6 text-success" />
               </div>
               <div>
-                <h2 className="mb-2 text-xl font-bold text-main md:text-2xl">قبول الشروط</h2>
+                <h2 className="mb-2 text-xl font-normal text-main md:text-2xl">قبول الشروط</h2>
                 <p className="text-sm leading-relaxed text-muted md:text-base">
                   بالوصول إلى منصة دارين السابعة للتعليم والتدريب واستخدامها، فإنك توافق على
                   الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها. إذا كنت لا
@@ -96,7 +96,7 @@ export const TermsOfService = () => {
                 <BookOpen className="h-6 w-6 text-info" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">الخدمات المقدمة</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">الخدمات المقدمة</h2>
                 <div className="space-y-2 text-muted">
                   <p>يوفر دارين السابعة خدمات تعليمية عبر الإنترنت تشمل:</p>
                   <ul className="ms-4 list-inside list-disc space-y-1">
@@ -106,7 +106,7 @@ export const TermsOfService = () => {
                     <li>دورات اللغات والمهارات</li>
                     <li>متابعة أكاديمية وتقييمات دورية</li>
                   </ul>
-                  <p className="font-bold">
+                  <p className="font-normal">
                     نحتفظ بالحق في تعديل أو إيقاف أي خدمة في أي وقت دون إشعار مسبق.
                   </p>
                 </div>
@@ -121,10 +121,10 @@ export const TermsOfService = () => {
                 <UserX className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">التسجيل والحساب</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">التسجيل والحساب</h2>
                 <div className="space-y-2 text-muted">
                   <div>
-                    <h3 className="mb-2 font-bold text-main">1. إنشاء الحساب:</h3>
+                    <h3 className="mb-2 font-normal text-main">1. إنشاء الحساب:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>يجب تقديم معلومات دقيقة وكاملة عند التسجيل</li>
                       <li>يجب أن يكون عمر المستخدم 13 عامًا على الأقل، أو بموافقة ولي الأمر</li>
@@ -133,7 +133,7 @@ export const TermsOfService = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-2 font-bold text-main">2. إنهاء الحساب:</h3>
+                    <h3 className="mb-2 font-normal text-main">2. إنهاء الحساب:</h3>
                     <p>نحتفظ بالحق في تعليق أو إنهاء حسابك إذا:</p>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>انتهكت أي من هذه الشروط والأحكام</li>
@@ -154,10 +154,10 @@ export const TermsOfService = () => {
                 <CreditCard className="h-6 w-6 text-warning" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">الرسوم والدفع</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">الرسوم والدفع</h2>
                 <div className="space-y-2 text-muted">
                   <div>
-                    <h3 className="mb-2 font-bold text-main">1. الأسعار:</h3>
+                    <h3 className="mb-2 font-normal text-main">1. الأسعار:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>جميع الأسعار معروضة بالريال السعودي (SAR) ما لم يُذكر خلاف ذلك</li>
                       <li>نحتفظ بالحق في تغيير الأسعار في أي وقت</li>
@@ -165,7 +165,7 @@ export const TermsOfService = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-2 font-bold text-main">2. طرق الدفع:</h3>
+                    <h3 className="mb-2 font-normal text-main">2. طرق الدفع:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>نقبل الدفع عبر البطاقات الائتمانية والتحويل البنكي</li>
                       <li>يجب سداد الرسوم قبل بدء الدورة أو الحصة</li>
@@ -173,7 +173,7 @@ export const TermsOfService = () => {
                     </ul>
                   </div>
                   <div>
-                    <h3 className="mb-2 font-bold text-main">3. سياسة الاسترداد:</h3>
+                    <h3 className="mb-2 font-normal text-main">3. سياسة الاسترداد:</h3>
                     <ul className="ms-4 list-inside list-disc space-y-1">
                       <li>يمكن طلب استرداد كامل خلال 7 أيام من التسجيل إذا لم تبدأ الدورة</li>
                       <li>بعد بدء الدورة، لا يمكن استرداد الرسوم إلا في حالات استثنائية</li>
@@ -195,7 +195,7 @@ export const TermsOfService = () => {
                 <AlertCircle className="h-6 w-6 text-error" />
               </div>
               <div>
-                <h2 className="mb-3 text-2xl font-bold text-main">قواعد السلوك</h2>
+                <h2 className="mb-3 text-2xl font-normal text-main">قواعد السلوك</h2>
                 <div className="space-y-2 text-muted">
                   <p>عند استخدام منصتنا، توافق على:</p>
                   <ul className="ms-4 list-inside list-disc space-y-1">
@@ -216,13 +216,13 @@ export const TermsOfService = () => {
           {/* Intellectual Property */}
           <div className="mb-4">
             <div className="rounded-card border border-border bg-background p-4 sm:p-8">
-              <h2 className="mb-4 text-2xl font-bold text-main">الملكية الفكرية</h2>
+              <h2 className="mb-4 text-2xl font-normal text-main">الملكية الفكرية</h2>
               <div className="space-y-2 text-muted">
                 <p>
                   جميع المحتويات والمواد التعليمية المتاحة على المنصة، بما في ذلك النصوص والصور
                   ومقاطع الفيديو والشعارات، هي ملك لدارين السابعة أو مرخصة لنا.
                 </p>
-                <p className="mt-4 font-bold">يُحظر عليك:</p>
+                <p className="mt-4 font-normal">يُحظر عليك:</p>
                 <ul className="ms-4 list-inside list-disc space-y-1">
                   <li>نسخ أو توزيع أو تعديل أي محتوى دون إذن كتابي</li>
                   <li>استخدام المحتوى لأغراض تجارية</li>
@@ -234,7 +234,7 @@ export const TermsOfService = () => {
 
           {/* Liability */}
           <div className="mb-4">
-            <h2 className="mb-4 text-2xl font-bold text-main">إخلاء المسؤولية</h2>
+            <h2 className="mb-4 text-2xl font-normal text-main">إخلاء المسؤولية</h2>
             <div className="space-y-2 text-muted">
               <p>يتم توفير الخدمات "كما هي" دون أي ضمانات من أي نوع. نحن لا نضمن:</p>
               <ul className="ms-4 list-inside list-disc space-y-1">
@@ -242,7 +242,7 @@ export const TermsOfService = () => {
                 <li>دقة أو اكتمال المحتوى التعليمي</li>
                 <li>نتائج أكاديمية محددة</li>
               </ul>
-              <p className="mt-4 font-bold">
+              <p className="mt-4 font-normal">
                 لن نكون مسؤولين عن أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام أو عدم القدرة على
                 استخدام خدماتنا.
               </p>
@@ -251,18 +251,18 @@ export const TermsOfService = () => {
 
           {/* Changes */}
           <div className="mb-4">
-            <h2 className="mb-4 text-2xl font-bold text-main">التعديلات على الشروط</h2>
+            <h2 className="mb-4 text-2xl font-normal text-main">التعديلات على الشروط</h2>
             <p className="leading-relaxed text-muted">
               نحتفظ بالحق في تعديل هذه الشروط والأحكام في أي وقت. سيتم نشر أي تغييرات على هذه الصفحة
               مع تحديث تاريخ "آخر تحديث". استمرارك في استخدام المنصة بعد نشر التغييرات يعني قبولك
               لهذه التغييرات.
             </p>
-            <p className="mt-4 text-sm font-bold text-muted">آخر تحديث: 21 يناير 2026</p>
+            <p className="mt-4 text-sm font-normal text-muted">آخر تحديث: 21 يناير 2026</p>
           </div>
 
           {/* Governing Law */}
           <div className="mb-4">
-            <h2 className="mb-4 text-2xl font-bold text-main">القانون الحاكم</h2>
+            <h2 className="mb-4 text-2xl font-normal text-main">القانون الحاكم</h2>
             <p className="leading-relaxed text-muted">
               تخضع هذه الشروط والأحكام وتُفسر وفقًا لقوانين دولة الكويت. أي نزاعات تنشأ عن هذه
               الشروط ستخضع للاختصاص القضائي الحصري لمحاكم الكويت.
@@ -275,7 +275,7 @@ export const TermsOfService = () => {
             <div className="absolute bottom-0 end-0 -mb-16 -me-16 h-32 w-32 rounded-full bg-warning-soft blur-3xl"></div>
 
             <div className="relative z-10 text-center">
-              <h2 className="mb-2 text-2xl font-bold text-main">هل لديك استفسارات فنية؟</h2>
+              <h2 className="mb-2 text-2xl font-normal text-main">هل لديك استفسارات فنية؟</h2>
               <p className="mx-auto mb-8 max-w-md text-muted">
                 فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب
               </p>
@@ -284,7 +284,7 @@ export const TermsOfService = () => {
                 href={`https://wa.me/${adminPhone.replace(/\D/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex w-full items-center justify-center gap-4 overflow-hidden rounded-card bg-card px-6 py-3 font-bold text-main transition-all hover:bg-success hover:text-on-success sm:w-auto"
+                className="group relative inline-flex w-full items-center justify-center gap-4 overflow-hidden rounded-card bg-card px-6 py-3 font-normal text-main transition-all hover:bg-success hover:text-on-success sm:w-auto"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-success to-success opacity-0 transition-opacity group-hover:opacity-100"></div>
                 <Headphones className="relative z-10 h-5 w-5" />

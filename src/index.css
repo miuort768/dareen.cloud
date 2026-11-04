@@ -155,11 +155,11 @@ color: var(--text-main);
   /* ── Typography Hierarchy ── */
   /* أوزان 800 كحد أقصى — الخطوط العربية المحملة (Tajawal/Noto Kufi) لا تملك 900
      والوزن المصطنع يشوه الحروف. line-height أرحب لتناسب الصاعد/النازل العربي. */
-  h1 { @apply font-extrabold font-heading; color: var(--text-main); line-height: 1.35; }  /* 800 */
-  h2 { @apply font-bold font-heading;      color: var(--text-main); line-height: 1.35; }  /* 700 */
-  h3 { @apply font-bold font-sans;         color: var(--text-main); line-height: 1.45; }
-  h4 { @apply font-medium font-sans;       color: var(--text-muted); line-height: 1.45; }
-  h5, h6 { @apply font-normal font-sans;   color: var(--text-muted); line-height: 1.5; }
+  h1 { @apply font-light font-heading; color: var(--text-main); line-height: 1.35; }  /* 300 Light */
+  h2 { @apply font-normal font-heading; color: var(--text-main); line-height: 1.35; }  /* 400 */
+  h3 { @apply font-normal font-sans;   color: var(--text-main); line-height: 1.45; }
+  h4 { @apply font-light font-sans;    color: var(--text-muted); line-height: 1.45; }
+  h5, h6 { @apply font-extralight font-sans; color: var(--text-muted); line-height: 1.5; }
 
   /* العربية حروفها متصلة — أي تباعد أحرف (خاصة السالب) يفكك الوصل ويشوه الكلام.
      يُصفَّر داخل سياق RTL فقط، فتبقى النصوص اللاتينية بلا تأثير. */

@@ -63,19 +63,19 @@ export const AboutCTA = () => {
                       }}
                     >
                       <Sparkles size={14} className="text-accent dark:text-primary" />
-                      <span className="text-xs font-bold tracking-wider text-accent dark:text-primary">
+                      <span className="text-xs font-normal tracking-wider text-accent dark:text-primary">
                         انضم إلى عائلتنا
                       </span>
                     </div>
 
-                    <h2 className="mb-4 text-xl font-bold leading-tight text-on-primary dark:text-main md:text-3xl lg:text-4xl">
+                    <h2 className="mb-4 text-xl font-normal leading-tight text-on-primary dark:text-main md:text-3xl lg:text-4xl">
                       هل أنت مستعد لتكون <br />
                       <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent dark:from-primary dark:to-primary">
                         جزءاً من حكايتنا؟
                       </span>
                     </h2>
 
-                    <p className="mx-auto mb-8 max-w-2xl text-sm font-medium leading-relaxed text-white/70 dark:text-muted md:text-base lg:mx-0">
+                    <p className="mx-auto mb-8 max-w-2xl text-sm font-light leading-relaxed text-white/70 dark:text-muted md:text-base lg:mx-0">
                       انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة.
                       مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                     </p>
@@ -84,7 +84,7 @@ export const AboutCTA = () => {
                       <Link
                         to="/courses"
                         onClick={() => window.scrollTo(0, 0)}
-                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-br from-warning to-warning-dark px-10 py-4 text-base font-bold text-on-primary shadow-elevation-4 transition-all duration-500 hover:-translate-y-1 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
+                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-br from-warning to-warning-dark px-10 py-4 text-base font-normal text-on-primary shadow-elevation-4 transition-all duration-500 hover:-translate-y-1 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
                       >
                         <span className="relative z-10">ابدأ رحلتك الآن</span>
                         <ArrowLeft
@@ -95,7 +95,7 @@ export const AboutCTA = () => {
                       <Link
                         to={isAuthenticated ? '/dashboard' : '/login'}
                         onClick={() => window.scrollTo(0, 0)}
-                        className="group flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-10 py-4 text-base font-bold text-white/85 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 dark:border-primary/25 dark:bg-white/5 dark:text-primary"
+                        className="group flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-10 py-4 text-base font-normal text-white/85 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 dark:border-primary/25 dark:bg-white/5 dark:text-primary"
                       >
                         <span>{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</span>
                       </Link>
@@ -121,10 +121,10 @@ export const AboutCTA = () => {
                           >
                             <Users size={22} className="text-accent dark:text-primary" />
                           </div>
-                          <span className="mb-1 block text-3xl font-bold tracking-tight text-on-primary dark:text-main md:text-4xl">
+                          <span className="mb-1 block text-3xl font-normal tracking-tight text-on-primary dark:text-main md:text-4xl">
                             5k+
                           </span>
-                          <span className="text-micro font-bold text-white/90 dark:text-muted">
+                          <span className="text-micro font-normal text-white/90 dark:text-muted">
                             طالب فعال
                           </span>
                         </div>
@@ -147,10 +147,10 @@ export const AboutCTA = () => {
                           >
                             <Target size={22} className="text-warning dark:text-primary" />
                           </div>
-                          <span className="mb-1 block text-3xl font-bold tracking-tight text-on-primary dark:text-main md:text-4xl">
+                          <span className="mb-1 block text-3xl font-normal tracking-tight text-on-primary dark:text-main md:text-4xl">
                             97.3%
                           </span>
-                          <span className="text-micro font-bold text-white/90 dark:text-muted">
+                          <span className="text-micro font-normal text-white/90 dark:text-muted">
                             نسبة نجاح
                           </span>
                         </div>

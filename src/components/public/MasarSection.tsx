@@ -60,40 +60,40 @@ export const MasarSection = () => {
                 <div className="mb-6 flex items-center justify-center gap-4 lg:justify-start">
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 backdrop-blur-md dark:border-primary/40 dark:bg-primary/20">
                     <Download className="h-3.5 w-3.5 animate-pulse text-warning dark:text-primary" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-on-primary dark:text-primary">
+                    <span className="text-xs font-normal uppercase tracking-widest text-on-primary dark:text-primary">
                       بوابة الكتب والملخصات
                     </span>
                   </div>
                 </div>
-                <h2 className="mb-3 font-heading text-lg font-bold leading-tight sm:text-xl md:text-2xl lg:text-3xl">
+                <h2 className="mb-3 font-heading text-lg font-normal leading-tight sm:text-xl md:text-2xl lg:text-3xl">
                   <span className="text-on-primary dark:text-main">مركز</span>
                   <span className="text-shadow-none inline-block -rotate-1 transform whitespace-nowrap bg-primary px-3 py-1 text-on-primary shadow-elevation-3 dark:bg-primary dark:text-on-primary md:px-5 md:py-1">
                     دارين السابعة
                   </span>
                   <span className="text-on-primary dark:text-main">للمذكرات التعليمية</span>
                 </h2>
-                <p className="mx-auto mb-4 max-w-2xl text-micro font-medium leading-relaxed text-on-primary dark:text-white/90 sm:text-xs md:text-sm lg:mx-0 lg:text-base">
+                <p className="mx-auto mb-4 max-w-2xl text-micro font-light leading-relaxed text-on-primary dark:text-white/90 sm:text-xs md:text-sm lg:mx-0 lg:text-base">
                   حصرياً في مركز دارين السابعة، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة
                   لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                 </p>
                 <div className="mb-5 flex flex-wrap justify-center gap-2 lg:justify-start">
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-bold text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-normal text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
                     الكويت
                   </span>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-bold text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-normal text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
                     السعودية
                   </span>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-bold text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-normal text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
                     الإمارات وقطر
                   </span>
-                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-bold text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
+                  <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-normal text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
                     عمان والأردن
                   </span>
                 </div>
                 <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
                   <Link
                     to="/books"
-                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-bold text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-warning"
+                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-normal text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-warning"
                   >
                     <FileText className="h-6 w-6 transition-transform group-hover:scale-110" />
                     <span>تحميل مذكرة</span>
@@ -103,7 +103,7 @@ export const MasarSection = () => {
                     href={`https://wa.me/${contactUsNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 rounded-xl border border-white/20 bg-white/5 px-10 py-4 text-lg font-bold text-on-primary backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 dark:border-primary/30 dark:bg-primary/10 dark:text-primary dark:hover:border-primary/50 dark:hover:bg-primary/20"
+                    className="flex items-center justify-center gap-3 rounded-xl border border-white/20 bg-white/5 px-10 py-4 text-lg font-normal text-on-primary backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 dark:border-primary/30 dark:bg-primary/10 dark:text-primary dark:hover:border-primary/50 dark:hover:bg-primary/20"
                   >
                     <MessageCircle className="h-6 w-6" />
                     <span>تواصل معنا</span>
@@ -139,8 +139,10 @@ export const MasarSection = () => {
 
           <div className="mb-5 flex items-center justify-between rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 dark:border-primary/30 dark:bg-card">
             <div>
-              <h2 className="text-lg font-bold text-main dark:text-main">بوابة الكتب والملخصات</h2>
-              <p className="mt-0.5 text-xs font-medium text-muted dark:text-muted">
+              <h2 className="text-lg font-normal text-main dark:text-main">
+                بوابة الكتب والملخصات
+              </h2>
+              <p className="mt-0.5 text-xs font-light text-muted dark:text-muted">
                 جميع المذكرات في مكان واحد
               </p>
             </div>
@@ -152,17 +154,17 @@ export const MasarSection = () => {
           <div className="mb-5 rounded-3xl bg-gradient-to-br from-primary via-primary-hover to-primary p-6 shadow-elevation-3 shadow-primary/20 dark:from-primary dark:via-warning dark:to-primary dark:shadow-primary/20">
             <div className="mb-4 flex items-center gap-4">
               <div className="relative">
-                <span className="text-sm font-bold text-on-primary dark:text-on-primary">
+                <span className="text-sm font-normal text-on-primary dark:text-on-primary">
                   مركز دارين السابعة
                 </span>
                 <div className="absolute -bottom-1 start-0 h-0.5 w-full rounded-full bg-white/80 shadow-elevation-1 dark:bg-black/30"></div>
               </div>
-              <span className="rounded border border-white/30 bg-white/20 px-3 py-1 text-micro font-bold text-on-primary backdrop-blur-sm dark:border-black/30 dark:bg-black/20 dark:text-on-primary">
+              <span className="rounded border border-white/30 bg-white/20 px-3 py-1 text-micro font-normal text-on-primary backdrop-blur-sm dark:border-black/30 dark:bg-black/20 dark:text-on-primary">
                 للمذكرات التعليمية
               </span>
             </div>
 
-            <p className="mb-6 text-micro font-medium leading-relaxed text-on-primary dark:text-white/90">
+            <p className="mb-6 text-micro font-light leading-relaxed text-on-primary dark:text-white/90">
               حصريًا في مركز دارين السابعة، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع
               المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
             </p>
@@ -170,7 +172,7 @@ export const MasarSection = () => {
             <div className="flex flex-col gap-3">
               <Link
                 to="/books"
-                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-white/20 to-white/30 py-4 text-base font-bold text-on-primary shadow-elevation-3 shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-primary/50 dark:from-black/20 dark:to-black/30 dark:text-on-primary dark:shadow-black/20"
+                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-white/20 to-white/30 py-4 text-base font-normal text-on-primary shadow-elevation-3 shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-primary/50 dark:from-black/20 dark:to-black/30 dark:text-on-primary dark:shadow-black/20"
               >
                 <FileText size={20} />
                 <span>تحميل مذكرة</span>
@@ -180,7 +182,7 @@ export const MasarSection = () => {
                 href={`https://wa.me/${contactUsNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-3 rounded-2xl border border-white/20 bg-white/5 py-3.5 text-sm font-bold text-on-primary backdrop-blur-sm transition-all hover:bg-white/10 dark:border-black/20 dark:bg-black/10 dark:text-on-primary dark:hover:bg-black/20"
+                className="flex w-full items-center justify-center gap-3 rounded-2xl border border-white/20 bg-white/5 py-3.5 text-sm font-normal text-on-primary backdrop-blur-sm transition-all hover:bg-white/10 dark:border-black/20 dark:bg-black/10 dark:text-on-primary dark:hover:bg-black/20"
               >
                 <MessageCircle size={18} />
                 <span>تواصل معنا</span>
@@ -193,7 +195,7 @@ export const MasarSection = () => {
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/15">
                 <Shield size={20} className="text-primary dark:text-primary" />
               </div>
-              <span className="block text-xs font-bold leading-tight text-main dark:text-main">
+              <span className="block text-xs font-normal leading-tight text-main dark:text-main">
                 جودة مضمونة
               </span>
             </div>
@@ -201,7 +203,7 @@ export const MasarSection = () => {
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-success-light dark:bg-primary/15">
                 <BadgeCheck size={20} className="text-success dark:text-primary" />
               </div>
-              <span className="block text-xs font-bold leading-tight text-main dark:text-main">
+              <span className="block text-xs font-normal leading-tight text-main dark:text-main">
                 محتوى موثوق
               </span>
             </div>
@@ -209,7 +211,7 @@ export const MasarSection = () => {
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-warning-light dark:bg-primary/15">
                 <Headphones size={20} className="text-warning dark:text-primary" />
               </div>
-              <span className="block text-xs font-bold leading-tight text-main dark:text-main">
+              <span className="block text-xs font-normal leading-tight text-main dark:text-main">
                 دعم مستمر طوال اليوم
               </span>
             </div>
