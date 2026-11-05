@@ -15,6 +15,7 @@ import {
   Star,
   UserCheck,
   FileText,
+  CheckCircle,
 } from 'lucide-react'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
@@ -26,7 +27,9 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  UniversalStatChipsRow,
   type OverviewCategoryItem,
+  type OverviewStatChip,
 } from '../../shared/components/mobile'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
 import { ModernAnnouncements } from '../../features/dashboard/components/ModernAnnouncements'
@@ -83,6 +86,59 @@ export const TeacherDashboardMobile = ({
     sessionsCompleted: number
     lastNotes: string[]
   } | null>(null)
+
+  const statChips: OverviewStatChip[] = useMemo(
+    () => [
+      {
+        label: 'حصص اليوم',
+        value: stats.todaySessions || 0,
+        icon: Calendar,
+        onClick: () => setActiveCategory('sessions'),
+        tone: 'text-info bg-info-soft',
+      },
+      {
+        label: 'نسبة الحضور',
+        value: `${stats.attendanceRate || 0}%`,
+        icon: CheckCircle,
+        onClick: () => setActiveCategory('sessions'),
+        tone:
+          (stats.attendanceRate || 0) >= 90
+            ? 'text-success bg-success-soft'
+            : 'text-warning bg-warning-soft',
+      },
+      {
+        label: 'الطلاب المسندين',
+        value: stats.totalStudents || 0,
+        icon: Users,
+        onClick: () => setActiveCategory('students'),
+        tone: 'text-primary bg-primary-soft',
+      },
+      {
+        label: 'الحصص المكتملة',
+        value: stats.completedSessions || 0,
+        icon: Clock,
+        onClick: () => setActiveCategory('sessions'),
+        tone: 'text-success bg-success-soft',
+      },
+      {
+        label: 'رصيد منخفض',
+        value: lowBalanceStudents.length,
+        icon: AlertCircle,
+        onClick: () => setActiveCategory('alerts'),
+        tone:
+          lowBalanceStudents.length > 0
+            ? 'text-error bg-error-soft'
+            : 'text-success bg-success-soft',
+      },
+    ],
+    [
+      stats.todaySessions,
+      stats.attendanceRate,
+      stats.totalStudents,
+      stats.completedSessions,
+      lowBalanceStudents.length,
+    ],
+  )
 
   const categories: OverviewCategoryItem[] = useMemo(
     () => [
@@ -194,6 +250,9 @@ export const TeacherDashboardMobile = ({
           activeId={activeCategory}
           onSelect={setActiveCategory}
         />
+
+        {/* Stat Chips Row - Admin Dashboard Style */}
+        <UniversalStatChipsRow chips={statChips} />
 
         {/* Announcements Banner */}
         <ModernAnnouncements />

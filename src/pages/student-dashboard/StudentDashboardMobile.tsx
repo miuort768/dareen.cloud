@@ -12,6 +12,8 @@ import {
   Trophy,
   Star,
   Rocket,
+  CheckCircle,
+  Clock,
 } from 'lucide-react'
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
@@ -23,7 +25,9 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  UniversalStatChipsRow,
   type OverviewCategoryItem,
+  type OverviewStatChip,
 } from '../../shared/components/mobile'
 import { fadeUp } from '../../shared/animations/fadeUp'
 import type {
@@ -89,6 +93,50 @@ export const StudentDashboardMobile = ({
       ? `اليوم ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
       : `${nextSession.day} ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
     : null
+
+  const statChips: OverviewStatChip[] = useMemo(
+    () => [
+      {
+        label: 'نسبة الحضور',
+        value: `${stats.attendanceRate}%`,
+        icon: CheckCircle,
+        onClick: () => setActiveCategory('classes'),
+        tone:
+          stats.attendanceRate >= 90
+            ? 'text-success bg-success-soft'
+            : 'text-warning bg-warning-soft',
+      },
+      {
+        label: 'حصص اليوم',
+        value: todayItems.length,
+        icon: Calendar,
+        onClick: () => setActiveCategory('classes'),
+        tone: 'text-info bg-info-soft',
+      },
+      {
+        label: 'المواد المسجلة',
+        value: subjects.length,
+        icon: BookOpen,
+        onClick: () => setActiveCategory('subjects'),
+        tone: 'text-primary bg-primary-soft',
+      },
+      {
+        label: 'نقاط التميز',
+        value: points,
+        icon: Award,
+        onClick: () => setActiveCategory('points'),
+        tone: 'text-accent bg-accent/20',
+      },
+      {
+        label: 'الحصص المنجزة',
+        value: stats.sessionsUsed,
+        icon: Clock,
+        onClick: () => setActiveCategory('classes'),
+        tone: 'text-success bg-success-soft',
+      },
+    ],
+    [stats.attendanceRate, stats.sessionsUsed, todayItems.length, subjects.length, points],
+  )
 
   const categories: OverviewCategoryItem[] = useMemo(
     () => [
@@ -197,6 +245,9 @@ export const StudentDashboardMobile = ({
           activeId={activeCategory}
           onSelect={setActiveCategory}
         />
+
+        {/* Stat Chips Row - Admin Dashboard Style */}
+        <UniversalStatChipsRow chips={statChips} />
 
         {/* Active Session & Session Call Alerts */}
         <LiveSessionBanner session={activeSession} />

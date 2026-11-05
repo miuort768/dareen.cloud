@@ -6,7 +6,6 @@ import { useDashboardData } from '../features/dashboard/hooks/useDashboardData'
 import { useDeviceWidth } from '../shared/hooks/useDeviceWidth'
 import { ErrorState, ErrorBanner } from '../shared/components/ui/ErrorState'
 import { TeacherDashboardDesktop } from './teacher-dashboard/TeacherDashboardDesktop'
-import { TeacherDashboardTablet } from './teacher-dashboard/TeacherDashboardTablet'
 import { TeacherDashboardMobile } from './teacher-dashboard/TeacherDashboardMobile'
 import type { TeacherDashboardShellProps } from './teacher-dashboard/types'
 
@@ -82,14 +81,6 @@ export const TeacherDashboard = () => {
       <>
         {nonCriticalBanner}
         <TeacherDashboardMobile {...sharedProps} onRefresh={fetchDashboardData} />
-      </>
-    )
-  }
-  if (device === 'tablet') {
-    return (
-      <>
-        {nonCriticalBanner}
-        <TeacherDashboardTablet {...sharedProps} />
       </>
     )
   }

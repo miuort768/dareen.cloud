@@ -12,6 +12,8 @@ import {
   User,
   MessageSquareText,
   HeartHandshake,
+  CheckCircle,
+  Clock,
 } from 'lucide-react'
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import {
@@ -22,7 +24,9 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  UniversalStatChipsRow,
   type OverviewCategoryItem,
+  type OverviewStatChip,
 } from '../../shared/components/mobile'
 import { fadeUp } from '../../shared/animations/fadeUp'
 import { LiveNowBanner } from './LiveNowBanner'
@@ -74,6 +78,50 @@ export const ParentDashboardMobile = ({
         label: c.name,
       })),
     [kids],
+  )
+
+  const statChips: OverviewStatChip[] = useMemo(
+    () => [
+      {
+        label: 'الأبناء',
+        value: kids.length,
+        icon: Users,
+        onClick: () => setActiveCategory('children'),
+        tone: 'text-primary bg-primary-soft',
+      },
+      {
+        label: 'نسبة الحضور',
+        value: `${weekly.attendanceRate}%`,
+        icon: CheckCircle,
+        onClick: () => setActiveCategory('attendance'),
+        tone:
+          weekly.attendanceRate >= 90
+            ? 'text-success bg-success-soft'
+            : 'text-warning bg-warning-soft',
+      },
+      {
+        label: 'حصص اليوم',
+        value: weekly.todayCount,
+        icon: Calendar,
+        onClick: () => setActiveCategory('sessions'),
+        tone: 'text-info bg-info-soft',
+      },
+      {
+        label: 'منجزة بالأسبوع',
+        value: weekly.weeklyCompleted,
+        icon: Clock,
+        onClick: () => setActiveCategory('attendance'),
+        tone: 'text-success bg-success-soft',
+      },
+      {
+        label: 'نقاط التميز',
+        value: points,
+        icon: Award,
+        onClick: () => setActiveCategory('points'),
+        tone: 'text-accent bg-accent/20',
+      },
+    ],
+    [kids.length, weekly.attendanceRate, weekly.todayCount, weekly.weeklyCompleted, points],
   )
 
   const categories: OverviewCategoryItem[] = useMemo(
@@ -185,6 +233,9 @@ export const ParentDashboardMobile = ({
           activeId={activeCategory}
           onSelect={setActiveCategory}
         />
+
+        {/* Stat Chips Row - Admin Dashboard Style */}
+        <UniversalStatChipsRow chips={statChips} />
 
         {/* Alerts and Live Now */}
         <SessionCallAlert />
