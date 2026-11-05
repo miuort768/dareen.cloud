@@ -16,7 +16,12 @@ import {
   UserCheck,
   FileText,
   CheckCircle,
+  Wallet,
+  MessageSquare,
+  Zap,
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { MobileSectionHeader } from '../../shared/components/mobile/MobileSectionHeader'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import {
@@ -166,6 +171,43 @@ export const TeacherDashboardMobile = ({
     return list
   }, [timeline, searchQuery])
 
+  const TEACHER_ACTIONS = useMemo(
+    () => [
+      { label: 'الجدول الأسبوعي', icon: Calendar, path: '/schedule', tone: 'bg-info text-on-info' },
+      {
+        label: 'تسجيل الحضور',
+        icon: UserCheck,
+        path: '/attendance',
+        tone: 'bg-success text-on-success',
+      },
+      {
+        label: 'الطلاب المسندين',
+        icon: Users,
+        path: '/students',
+        tone: 'bg-primary text-on-primary',
+      },
+      {
+        label: 'سجل الدفعات',
+        icon: Wallet,
+        path: '/teacher-payment-history',
+        tone: 'bg-warning text-on-warning',
+      },
+      {
+        label: 'المنتدى التعليمي',
+        icon: MessageSquare,
+        path: '/forum',
+        tone: 'bg-accent text-on-accent',
+      },
+      {
+        label: 'التقارير الشهرية',
+        icon: FileText,
+        path: '/teacher-reports',
+        tone: 'bg-main text-inverse',
+      },
+    ],
+    [],
+  )
+
   const scrollToQuickActions = () => {
     quickActionsRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -227,7 +269,7 @@ export const TeacherDashboardMobile = ({
             { label: 'الطلاب المسندين', value: stats.totalStudents },
             { label: 'الحصص المكتملة', value: stats.completedSessions },
           ]}
-          ctaText="إجراءات المعلمة"
+          ctaText="إجراءات سريعة"
           onCtaClick={scrollToQuickActions}
           illustration={
             <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
@@ -322,7 +364,32 @@ export const TeacherDashboardMobile = ({
           </section>
         )}
 
-        {/* 6. Petly Style Promo Banner */}
+        {/* 6. Quick Action App Launchers Grid - Admin Dashboard Style */}
+        <section ref={quickActionsRef}>
+          <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-2.5 px-0.5" />
+          <div className="grid grid-cols-3 gap-2">
+            {TEACHER_ACTIONS.map((action) => {
+              const Icon = action.icon
+              return (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={() => navigate(action.path)}
+                  aria-label={action.label}
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
+                    action.tone,
+                  )}
+                >
+                  <Icon size={19} strokeWidth={1.9} />
+                  <span className="text-[10px] font-normal leading-none">{action.label}</span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* 7. Petly Style Promo Banner */}
         <OverviewPromoBanner
           title="التقارير الشهرية للطلاب"
           subtitle="إنشاء ومشاركة تقارير تقييم الطلاب بضغطة زر واحدة"

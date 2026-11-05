@@ -14,7 +14,12 @@ import {
   Rocket,
   CheckCircle,
   Clock,
+  Zap,
+  MessageSquare,
+  Receipt,
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { MobileSectionHeader } from '../../shared/components/mobile/MobileSectionHeader'
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import {
@@ -78,6 +83,7 @@ export const StudentDashboardMobile = ({
   const navigate = useNavigate()
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
   const rankRef = useRef<HTMLDivElement>(null)
+  const quickActionsRef = useRef<HTMLDivElement>(null)
 
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
@@ -165,6 +171,37 @@ export const StudentDashboardMobile = ({
     rankRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const scrollToQuickActions = () => {
+    quickActionsRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const STUDENT_ACTIONS = useMemo(
+    () => [
+      { label: 'جدول الحصص', icon: Calendar, path: '/schedule', tone: 'bg-info text-on-info' },
+      {
+        label: 'سجل الحضور',
+        icon: CheckCircle,
+        path: '/attendance',
+        tone: 'bg-success text-on-success',
+      },
+      {
+        label: 'الإعلانات',
+        icon: BookOpen,
+        path: '/announcements',
+        tone: 'bg-primary text-on-primary',
+      },
+      { label: 'رحلة الرتب', icon: Trophy, action: scrollToRank, tone: 'bg-accent text-on-accent' },
+      { label: 'الدردشة', icon: MessageSquare, path: '/chat', tone: 'bg-main text-inverse' },
+      {
+        label: 'الفواتير والاشتراك',
+        icon: Receipt,
+        path: '/student-invoices',
+        tone: 'bg-warning text-on-warning',
+      },
+    ],
+    [],
+  )
+
   return (
     <div
       className="overview-mobile-scope min-h-screen overflow-x-hidden bg-background font-student text-main transition-colors duration-slow"
@@ -222,8 +259,8 @@ export const StudentDashboardMobile = ({
             { label: 'الرتبة', value: rank.name },
             { label: 'المستوى', value: studentData?.grade || 'طالب' },
           ]}
-          ctaText="رحلة الرتب"
-          onCtaClick={scrollToRank}
+          ctaText="إجراءات سريعة"
+          onCtaClick={scrollToQuickActions}
           illustration={
             <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
               <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
@@ -300,7 +337,38 @@ export const StudentDashboardMobile = ({
           </section>
         )}
 
-        {/* 6. Petly Style Promo Banner */}
+        {/* 6. Quick Action App Launchers Grid - Admin Dashboard Style */}
+        <section ref={quickActionsRef}>
+          <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-2.5 px-0.5" />
+          <div className="grid grid-cols-3 gap-2">
+            {STUDENT_ACTIONS.map((action) => {
+              const Icon = action.icon
+              return (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={() => {
+                    if (action.action) {
+                      action.action()
+                    } else if (action.path) {
+                      navigate(action.path)
+                    }
+                  }}
+                  aria-label={action.label}
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
+                    action.tone,
+                  )}
+                >
+                  <Icon size={19} strokeWidth={1.9} />
+                  <span className="text-[10px] font-normal leading-none">{action.label}</span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* 7. Petly Style Promo Banner */}
         <OverviewPromoBanner
           title="تحديات التفوق ورتب المجد"
           subtitle={`تحتاج ${nextRank.pointsNeeded || 0} نقطة إضافية للوصول إلى رتبة ${nextRank.next?.name || 'القمة'}`}

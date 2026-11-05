@@ -14,7 +14,12 @@ import {
   HeartHandshake,
   CheckCircle,
   Clock,
+  Zap,
+  Bell,
+  MessageSquare,
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { MobileSectionHeader } from '../../shared/components/mobile/MobileSectionHeader'
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import {
   usePullToRefresh,
@@ -64,6 +69,7 @@ export const ParentDashboardMobile = ({
   const navigate = useNavigate()
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
   const childPanelRef = useRef<HTMLDivElement>(null)
+  const quickActionsRef = useRef<HTMLDivElement>(null)
 
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
@@ -152,6 +158,52 @@ export const ParentDashboardMobile = ({
     childPanelRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const scrollToQuickActions = () => {
+    quickActionsRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const PARENT_ACTIONS = useMemo(
+    () => [
+      {
+        label: 'تفاصيل الأبناء',
+        icon: Users,
+        action: () => {
+          if (selectedChild) scrollToChild(selectedChild.id)
+        },
+        tone: 'bg-primary text-on-primary',
+      },
+      { label: 'جدول الحصص', icon: Calendar, path: '/schedule', tone: 'bg-info text-on-info' },
+      {
+        label: 'سجل الحضور',
+        icon: CheckCircle,
+        path: '/attendance',
+        tone: 'bg-success text-on-success',
+      },
+      {
+        label: 'نقاط التميز',
+        icon: Award,
+        action: () => {
+          setActiveCategory('points')
+          document.getElementById('parent-points-section')?.scrollIntoView({ behavior: 'smooth' })
+        },
+        tone: 'bg-accent text-on-accent',
+      },
+      {
+        label: 'المحادثة والدعم',
+        icon: MessageSquare,
+        path: '/chat',
+        tone: 'bg-main text-inverse',
+      },
+      {
+        label: 'الإعلانات العامة',
+        icon: Bell,
+        path: '/parent-announcements',
+        tone: 'bg-warning text-on-warning',
+      },
+    ],
+    [selectedChild],
+  )
+
   return (
     <div
       className="overview-mobile-scope min-h-screen overflow-x-hidden bg-background font-parent text-main transition-colors duration-slow"
@@ -208,10 +260,8 @@ export const ParentDashboardMobile = ({
             { label: 'عدد الأبناء', value: kids.length },
             { label: 'الحصص هذا الأسبوع', value: weekly.totalSessions },
           ]}
-          ctaText="تفاصيل الأبناء"
-          onCtaClick={() => {
-            if (selectedChild) scrollToChild(selectedChild.id)
-          }}
+          ctaText="إجراءات سريعة"
+          onCtaClick={scrollToQuickActions}
           illustration={
             <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
               <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
@@ -296,7 +346,38 @@ export const ParentDashboardMobile = ({
           </section>
         )}
 
-        {/* 6. Petly Style Promo Banner */}
+        {/* 6. Quick Action App Launchers Grid - Admin Dashboard Style */}
+        <section ref={quickActionsRef}>
+          <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-2.5 px-0.5" />
+          <div className="grid grid-cols-3 gap-2">
+            {PARENT_ACTIONS.map((action) => {
+              const Icon = action.icon
+              return (
+                <button
+                  key={action.label}
+                  type="button"
+                  onClick={() => {
+                    if (action.action) {
+                      action.action()
+                    } else if (action.path) {
+                      navigate(action.path)
+                    }
+                  }}
+                  aria-label={action.label}
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
+                    action.tone,
+                  )}
+                >
+                  <Icon size={19} strokeWidth={1.9} />
+                  <span className="text-[10px] font-normal leading-none">{action.label}</span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* 7. Petly Style Promo Banner */}
         <OverviewPromoBanner
           title="تواصل مباشر مع الإدارة والمعلمين"
           subtitle="استفسر عن أي تفاصيل دراسية أو مالية لأبنائك عبر المحادثة"
@@ -352,7 +433,7 @@ export const ParentDashboardMobile = ({
         )}
 
         {(activeCategory === 'all' || activeCategory === 'points') && (
-          <motion.div {...fadeUp(0.35)}>
+          <motion.div id="parent-points-section" {...fadeUp(0.35)} className="scroll-mt-20">
             <PointsActivityCard
               points={points}
               rankName={rank.name}
