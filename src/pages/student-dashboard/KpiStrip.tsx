@@ -9,30 +9,29 @@ interface KpiStripProps {
 
 type Tone = 'success' | 'primary' | 'info' | 'warning'
 
-/** Soft palette: card bg stays neutral, accent colour on the value & icon */
-const CARD_SOFT: Record<Tone, { card: string; icon: string; value: string; bar: string }> = {
+const CARD_SOFT: Record<Tone, { border: string; icon: string; value: string; bar: string }> = {
   success: {
-    card: 'bg-card border-border',
-    icon: 'bg-success-soft text-success-strong',
-    value: 'text-success-strong',
+    border: 'hover:border-success/30',
+    icon: 'bg-success-soft text-success border border-success/20',
+    value: 'text-main',
     bar: 'bg-success',
   },
   primary: {
-    card: 'bg-card border-border',
-    icon: 'bg-primary-soft text-primary',
-    value: 'text-primary',
+    border: 'hover:border-primary/30',
+    icon: 'bg-primary-soft text-primary border border-primary/20',
+    value: 'text-main',
     bar: 'bg-primary',
   },
   info: {
-    card: 'bg-card border-border',
-    icon: 'bg-info-soft text-info-strong',
-    value: 'text-info-strong',
+    border: 'hover:border-info/30',
+    icon: 'bg-info-soft text-info border border-info/20',
+    value: 'text-main',
     bar: 'bg-info',
   },
   warning: {
-    card: 'bg-card border-border',
-    icon: 'bg-warning-soft text-warning-strong',
-    value: 'text-warning-strong',
+    border: 'hover:border-warning/30',
+    icon: 'bg-warning-soft text-warning border border-warning/20',
+    value: 'text-main',
     bar: 'bg-warning',
   },
 }
@@ -48,7 +47,7 @@ interface CardSpec {
   bar?: number
 }
 
-/** شريط مؤشرات بريميوم — مربعات مشبعة بألوان لاحقة + أرقام كبرى مع شريط تقدم على الخلفية */
+/** شريط مؤشرات بريميوم للوحة تحكم الطالب */
 export const KpiStrip = ({ stats }: KpiStripProps) => {
   const cards: CardSpec[] = [
     {
@@ -93,7 +92,10 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
   ]
 
   return (
-    <section aria-label="مؤشرات سريعة" className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
+    <section
+      aria-label="مؤشرات سريعة"
+      className="grid grid-cols-2 gap-3 font-dash sm:grid-cols-4 md:gap-4"
+    >
       {cards.map((card) => {
         const Icon = card.icon
         const tone = CARD_SOFT[card.tone]
@@ -101,45 +103,47 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
           <article
             key={card.key}
             className={cn(
-              'rounded-3xl border p-4 shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1 sm:p-5',
-              tone.card,
+              'border-border/80 bg-surface/40 group relative flex flex-col justify-between rounded-[22px] border p-4 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:bg-card hover:shadow-elevation-1 sm:p-5',
+              tone.border,
             )}
           >
             {/* Icon + optional bar% chip */}
             <div className="flex items-start justify-between gap-2">
               <span
                 className={cn(
-                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl',
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-soft transition-transform duration-normal group-hover:scale-110',
                   tone.icon,
                 )}
               >
-                <Icon size={18} />
+                <Icon size={18} strokeWidth={2} />
               </span>
               {card.bar !== undefined && (
-                <span className="hidden rounded-full bg-hover px-2 py-0.5 text-[10px] font-normal tabular-nums text-muted sm:block">
+                <span className="border-border/60 hidden rounded-full border bg-surface px-2 py-0.5 text-[10px] font-semibold tabular-nums text-muted shadow-soft sm:block">
                   {card.bar}%
                 </span>
               )}
             </div>
 
             {/* Value */}
-            <p className="mt-4 flex items-baseline gap-1">
-              <span
-                className={cn(
-                  'font-dash text-3xl font-medium tabular-nums leading-none',
-                  tone.value,
+            <div className="mt-4">
+              <p className="flex items-baseline gap-1">
+                <span
+                  className={cn(
+                    'font-dash text-2xl font-bold tabular-nums leading-none tracking-tight sm:text-3xl',
+                    tone.value,
+                  )}
+                >
+                  {card.value}
+                </span>
+                {card.unit && (
+                  <span className="text-xs font-semibold tabular-nums text-muted">{card.unit}</span>
                 )}
-              >
-                {card.value}
-              </span>
-              {card.unit && (
-                <span className="text-xs font-normal tabular-nums text-muted">{card.unit}</span>
-              )}
-            </p>
+              </p>
 
-            {/* Title & caption */}
-            <p className="mt-1.5 truncate text-xs font-normal text-main">{card.title}</p>
-            <p className="mt-0.5 truncate text-[11px] font-medium text-muted">{card.caption}</p>
+              {/* Title & caption */}
+              <p className="mt-2 truncate text-xs font-semibold text-main">{card.title}</p>
+              <p className="mt-0.5 truncate text-[11px] font-normal text-muted">{card.caption}</p>
+            </div>
 
             {/* Progress bar */}
             {card.bar !== undefined && (
@@ -148,7 +152,7 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
                 aria-valuenow={card.bar}
                 aria-valuemin={0}
                 aria-valuemax={100}
-                className="mt-3 h-1 overflow-hidden rounded-full bg-border"
+                className="bg-border/60 mt-3.5 h-1.5 overflow-hidden rounded-full"
               >
                 <div
                   className={cn(
