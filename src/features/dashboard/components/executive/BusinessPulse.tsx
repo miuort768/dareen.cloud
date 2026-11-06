@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Activity, TrendingUp, AlertTriangle } from 'lucide-react'
+import { Activity, TrendingUp, AlertTriangle, Sparkles } from 'lucide-react'
 import type { ExecutivePulse } from '../../services/executiveService'
 import { cn } from '@/lib/utils'
 
@@ -12,10 +12,10 @@ const PULSE_TEXT: Record<string, string> = {
 }
 
 const PULSE_BADGE: Record<string, string> = {
-  excellent: 'bg-success-soft text-success border-border',
-  good: 'bg-info-soft text-info border-border',
-  fair: 'bg-warning-soft text-warning border-border',
-  critical: 'bg-error-soft text-error border-border',
+  excellent: 'bg-success-soft text-success border-success/30',
+  good: 'bg-info-soft text-info border-info/30',
+  fair: 'bg-warning-soft text-warning border-warning/30',
+  critical: 'bg-error-soft text-error border-error/30',
   unavailable: 'bg-surface text-muted border-border',
 }
 
@@ -56,20 +56,27 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
 
   return (
     <div
-      className="flex h-full flex-col rounded-2xl border border-border bg-card p-5 font-dash shadow-elevation-1"
+      className="relative flex h-full flex-col overflow-hidden rounded-[24px] border border-border bg-card p-5 font-dash shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2"
       dir="rtl"
     >
+      {/* Subtle ambient glow matching pulse tone */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-12 mx-auto h-28 w-28 rounded-full opacity-15 blur-2xl"
+        style={{ backgroundColor: arcColor }}
+        aria-hidden="true"
+      />
+
       {/* Header + status badge */}
-      <div className="flex items-center justify-between gap-2">
+      <div className="relative z-10 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
             <Activity size={13} className="text-primary" />
           </span>
-          <h3 className="text-xs font-normal text-main">مؤشر الأداء</h3>
+          <h3 className="text-xs font-semibold text-main">مؤشر الأداء العام</h3>
         </div>
         <span
           className={cn(
-            'inline-flex shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-[10px] font-normal',
+            'inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-medium shadow-soft',
             PULSE_BADGE[pulse.status] || 'border-border bg-surface text-muted',
           )}
         >
@@ -78,8 +85,8 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
         </span>
       </div>
 
-      {/* Semicircle gauge — fills right → left (RTL) */}
-      <div className="relative mx-auto mt-1 w-full max-w-[210px]">
+      {/* Semicircle gauge */}
+      <div className="relative z-10 mx-auto mt-2 w-full max-w-[210px]">
         <svg viewBox="0 0 128 76" className="block w-full" aria-hidden="true">
           <path
             d="M 110 68 A 46 46 0 0 0 18 68"
@@ -100,24 +107,30 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
           />
         </svg>
         <div className="absolute inset-x-0 bottom-0.5 flex flex-col items-center">
-          <span className={cn('text-[32px] font-medium tabular-nums leading-none', scoreColor)}>
+          <span
+            className={cn(
+              'text-3xl font-bold tabular-nums leading-none tracking-tight lg:text-4xl',
+              scoreColor,
+            )}
+          >
             {score}
           </span>
-          <span className="mt-1 text-[9px] font-normal text-muted">من 100</span>
+          <span className="mt-1 text-[10px] font-medium text-muted">من 100</span>
         </div>
       </div>
 
       {/* Scale */}
-      <div className="mx-auto flex w-full max-w-[210px] justify-between px-2 text-[9px] font-normal text-dim">
+      <div className="relative z-10 mx-auto flex w-full max-w-[210px] justify-between px-2 text-[10px] font-medium text-dim">
         <span>0</span>
         <span>100</span>
       </div>
 
       {/* Message */}
-      <div className="mt-auto pt-2">
-        <p className="rounded-2xl bg-surface p-3 text-center text-[10px] leading-relaxed text-muted">
-          {pulse.message}
-        </p>
+      <div className="relative z-10 mt-auto pt-3">
+        <div className="border-border/80 bg-surface/70 flex items-start gap-2.5 rounded-xl border p-3 shadow-soft">
+          <Sparkles size={14} className="mt-0.5 shrink-0 text-primary opacity-80" />
+          <p className="text-[11px] leading-relaxed text-muted">{pulse.message}</p>
+        </div>
       </div>
     </div>
   )

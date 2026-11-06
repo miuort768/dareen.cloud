@@ -1,35 +1,66 @@
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserPlus, UserCheck, Receipt, ListTodo, Megaphone, FileText } from 'lucide-react'
+import { UserPlus, UserCheck, Receipt, ListTodo, Megaphone, FileText, Zap } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const QUICK_ACTIONS = [
+interface ActionConfig {
+  label: string
+  sublabel: string
+  icon: typeof UserPlus
+  iconStyle: string
+  iconHover: string
+  path: string
+}
+
+const QUICK_ACTIONS: ActionConfig[] = [
   {
     label: 'طالب جديد',
+    sublabel: 'إضافة تسجيل',
     icon: UserPlus,
-    btn: 'bg-primary text-on-primary',
+    iconStyle: 'bg-primary-soft text-primary',
+    iconHover: 'group-hover:bg-primary group-hover:text-on-primary',
     path: '/students',
   },
   {
     label: 'تسجيل حضور',
+    sublabel: 'جلسات اليوم',
     icon: UserCheck,
-    btn: 'bg-success text-on-success',
+    iconStyle: 'bg-success-soft text-success',
+    iconHover: 'group-hover:bg-success group-hover:text-on-success',
     path: '/attendance',
   },
   {
     label: 'الفواتير',
+    sublabel: 'متابعة الدفعات',
     icon: Receipt,
-    btn: 'bg-warning text-on-warning',
+    iconStyle: 'bg-warning-soft text-warning',
+    iconHover: 'group-hover:bg-warning group-hover:text-on-warning',
     path: '/student-invoices',
   },
-  { label: 'المهام', icon: ListTodo, btn: 'bg-info text-on-info', path: '/tasks' },
+  {
+    label: 'المهام',
+    sublabel: 'قائمة الأعمال',
+    icon: ListTodo,
+    iconStyle: 'bg-info-soft text-info',
+    iconHover: 'group-hover:bg-info group-hover:text-on-info',
+    path: '/tasks',
+  },
   {
     label: 'إعلان جديد',
+    sublabel: 'نشر تعميم',
     icon: Megaphone,
-    btn: 'bg-accent text-on-accent',
+    iconStyle: 'bg-accent-soft text-accent',
+    iconHover: 'group-hover:bg-accent group-hover:text-on-accent',
     path: '/announcements',
   },
-  { label: 'التقارير', icon: FileText, btn: 'bg-main text-inverse', path: '/reports' },
+  {
+    label: 'التقارير',
+    sublabel: 'الإحصاءات والمالية',
+    icon: FileText,
+    iconStyle: 'bg-surface text-main border border-border',
+    iconHover: 'group-hover:bg-main group-hover:text-inverse group-hover:border-transparent',
+    path: '/reports',
+  },
 ]
 
 export const QuickActionsGrid = memo(function QuickActionsGrid() {
@@ -37,10 +68,20 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
 
   return (
     <div
-      className="rounded-2xl border border-border bg-card p-5 font-dash shadow-elevation-1"
+      className="rounded-[24px] border border-border bg-card p-4 font-dash shadow-elevation-1 sm:p-5"
       dir="rtl"
     >
-      <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-6">
+      <div className="mb-3.5 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft text-primary">
+            <Zap size={13} />
+          </span>
+          <h2 className="text-xs font-semibold text-main">الإجراءات السريعة</h2>
+        </div>
+        <span className="text-[10px] text-muted">وصول مباشر للعمليات المتكررة</span>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
         {QUICK_ACTIONS.map((action) => {
           const Icon = action.icon
           return (
@@ -48,17 +89,25 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
               key={action.label}
               onClick={() => navigate(action.path)}
               className={cn(
-                'group flex flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-4 outline-none transition-all duration-normal hover:opacity-90 hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97]',
-                action.btn,
+                'border-border/70 bg-surface/50 group relative flex flex-col items-center justify-center gap-2 rounded-2xl border p-3.5 text-center outline-none transition-all duration-normal hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               )}
               title={action.label}
             >
-              <Icon
-                size={20}
-                strokeWidth={1.9}
-                className="transition-transform duration-normal group-hover:scale-110"
-              />
-              <span className="text-[10px] font-normal leading-tight">{action.label}</span>
+              <span
+                className={cn(
+                  'flex h-11 w-11 items-center justify-center rounded-xl shadow-soft transition-all duration-normal group-hover:scale-110 group-hover:shadow-elevation-1',
+                  action.iconStyle,
+                  action.iconHover,
+                )}
+              >
+                <Icon size={19} strokeWidth={1.9} />
+              </span>
+              <div className="min-w-0">
+                <span className="block truncate text-xs font-semibold text-main transition-colors duration-normal group-hover:text-primary">
+                  {action.label}
+                </span>
+                <span className="block truncate text-[10px] text-muted">{action.sublabel}</span>
+              </div>
             </button>
           )
         })}

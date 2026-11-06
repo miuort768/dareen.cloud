@@ -70,7 +70,7 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       <motion.div {...fadeUp(0.04)}>
-        <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 lg:grid-cols-12">
+        <div className="grid grid-cols-1 overflow-hidden rounded-[24px] border border-border bg-card shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <WeekStrip counts={weekCounts} framed={false} />
           </div>
@@ -134,8 +134,6 @@ export const TeacherDashboardDesktop = ({
           isOpen={!!briefingStudent}
           onClose={() => setBriefingStudent(null)}
           onGenerateReport={(student) => {
-            // Canonical resolver — the raw `'completed'` equality missed the Arabic
-            // statuses ('مكتملة', 'تم الإنجاز') and silently reported 0% attendance.
             const studentSessions = rawSessions.filter(
               (s: Session & { studentID?: string }) =>
                 s.studentId === student.id || s.studentID === student.id,

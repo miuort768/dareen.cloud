@@ -46,8 +46,8 @@ const getGreeting = (nightMessage: string): string => {
 }
 
 /**
- * ترويسة ترحيب موحدة للوحات (معلم/طالب/ولي أمر) — هيرو اساسي متدرج
- * مع دوائر زخرفية زجاجية، تاريخ، شارة وقت، أداة علوية، وأرقام/شرائح سفلية.
+ * ترويسة ترحيب موحدة وعصرية للوحات التحكم على الحواسيب والأجهزة اللوحية
+ * تصميم Double-Bezel فائق الفخامة مع إضاءة محيطية ولمسات زجاجية دقيقة.
  */
 export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
   name,
@@ -67,91 +67,94 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
     <section
       aria-label="ترحيب"
       className={cn(
-        'group relative overflow-hidden rounded-[28px] border border-primary/20 bg-gradient-to-br from-primary via-primary-active to-primary-deep shadow-elevation-2 transition-all duration-normal hover:shadow-elevation-3',
+        'to-primary-deep/40 group relative rounded-[30px] bg-gradient-to-br from-white/20 via-primary/30 p-1 shadow-elevation-2 transition-all duration-normal hover:shadow-elevation-3 sm:p-1.5',
         className,
       )}
     >
-      {/* Background ambient lighting effects */}
-      <div
-        className="pointer-events-none absolute -start-16 -top-16 h-56 w-56 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80"
-        aria-hidden="true"
-      />
-      <div
-        className="bg-accent/25 pointer-events-none absolute -bottom-16 -end-16 h-56 w-56 rounded-full blur-3xl transition-opacity duration-slow group-hover:opacity-80"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/[0.08] via-transparent to-transparent opacity-60"
-        aria-hidden="true"
-      />
+      <div className="relative overflow-hidden rounded-[26px] border border-white/20 bg-gradient-to-br from-primary via-primary-active to-primary-deep shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]">
+        {/* Background ambient lighting effects */}
+        <div
+          className="pointer-events-none absolute -start-20 -top-20 h-64 w-64 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80"
+          aria-hidden="true"
+        />
+        <div
+          className="bg-accent/25 pointer-events-none absolute -bottom-20 -end-20 h-64 w-64 rounded-full blur-3xl transition-opacity duration-slow group-hover:opacity-80"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,255,255,0.18),rgba(255,255,255,0))] opacity-80"
+          aria-hidden="true"
+        />
 
-      <div className="relative z-10 p-6 sm:p-8">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
-            <p className="mb-1 flex items-center gap-1.5 text-xs font-normal text-white/90">
-              <CalendarDays size={12} />
-              {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
-            </p>
-            <h1 className="font-heading text-xl font-medium leading-tight text-on-primary md:text-2xl">
-              {getGreeting(nightMessage)}، {firstName}
-            </h1>
-            {subtitle && <div className="mt-1">{subtitle}</div>}
+        <div className="relative z-10 p-5 sm:p-7">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-normal text-white/95 shadow-soft backdrop-blur-md">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
+                <CalendarDays size={12} className="text-white/90" />
+                <span>{format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}</span>
+              </div>
+              <h1 className="font-heading text-xl font-bold tracking-tight text-on-primary md:text-2xl lg:text-3xl">
+                {getGreeting(nightMessage)}، {firstName}
+              </h1>
+              {subtitle && <div className="mt-1.5">{subtitle}</div>}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2.5">
+              {!hideTimeBadge && <TimeOfDayBadge variant="glass" />}
+              {end}
+            </div>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2.5">
-            {!hideTimeBadge && <TimeOfDayBadge variant="glass" />}
-            {end}
-          </div>
+          {hasFooter && (
+            <div className="mt-5 border-t border-white/15 pt-4">
+              {stats && stats.length > 0 && (
+                <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+                  {stats.map((stat) => {
+                    const StatIcon = stat.icon
+                    return (
+                      <div
+                        key={stat.label}
+                        className="group/stat rounded-2xl border border-white/20 bg-white/10 p-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] backdrop-blur-md transition-all duration-normal hover:bg-white/15 hover:shadow-elevation-1 sm:p-4"
+                      >
+                        {StatIcon && (
+                          <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-xl bg-white/20 text-on-primary transition-transform duration-normal group-hover/stat:scale-110 sm:h-8 sm:w-8">
+                            <StatIcon size={14} className="text-on-primary" />
+                          </span>
+                        )}
+                        <CountUp
+                          value={stat.value}
+                          format={stat.formatter}
+                          className="block font-dash text-xl font-bold tabular-nums leading-none tracking-tight text-on-primary sm:text-2xl lg:text-3xl"
+                        />
+                        <p className="mt-2 truncate text-[11px] font-medium text-white/90 sm:text-xs">
+                          {stat.label}
+                        </p>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+              {chips && chips.length > 0 && (
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  {chips.map((chip) => {
+                    const Icon = chip.icon
+                    return (
+                      <span
+                        key={chip.label}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-normal text-on-primary shadow-soft backdrop-blur-md"
+                      >
+                        <Icon size={12} />
+                        {chip.label}
+                      </span>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
-
-        {hasFooter && (
-          <div className="mt-5 border-t border-white/10 pt-4">
-            {stats && stats.length > 0 && (
-              <div className="grid grid-cols-3 gap-2">
-                {stats.map((stat) => {
-                  const StatIcon = stat.icon
-                  return (
-                    <div
-                      key={stat.label}
-                      className="group/stat rounded-2xl border border-white/20 bg-white/10 px-3 py-3 backdrop-blur-md transition-all duration-normal hover:bg-white/15 hover:shadow-elevation-1 sm:px-4 sm:py-3.5"
-                    >
-                      {StatIcon && (
-                        <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-xl bg-white/20 text-on-primary transition-transform duration-normal group-hover/stat:scale-110 sm:h-8 sm:w-8">
-                          <StatIcon size={14} className="text-on-primary" />
-                        </span>
-                      )}
-                      <CountUp
-                        value={stat.value}
-                        format={stat.formatter}
-                        className="block text-xl font-medium tabular-nums leading-none text-on-primary sm:text-2xl"
-                      />
-                      <p className="mt-1.5 truncate text-[10px] font-normal text-white/90 sm:text-[11px]">
-                        {stat.label}
-                      </p>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
-
-            {chips && chips.length > 0 && (
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                {chips.map((chip) => {
-                  const Icon = chip.icon
-                  return (
-                    <span
-                      key={chip.label}
-                      className="inline-flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-normal text-on-primary backdrop-blur-sm"
-                    >
-                      <Icon size={12} />
-                      {chip.label}
-                    </span>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </section>
   )

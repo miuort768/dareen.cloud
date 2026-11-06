@@ -50,19 +50,19 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
   if (isLoading) {
     return (
       <div className="space-y-5" dir="rtl">
-        <Skeleton className="h-12 rounded-2xl" />
+        <Skeleton className="h-16 rounded-[28px]" />
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Skeleton className="h-[220px] rounded-2xl" />
+            <Skeleton className="h-[240px] rounded-[24px]" />
           </div>
           <div className="lg:col-span-8">
-            <Skeleton className="h-[220px] rounded-2xl" />
+            <Skeleton className="h-[240px] rounded-[24px]" />
           </div>
         </div>
-        <Skeleton className="h-[76px] rounded-2xl" />
+        <Skeleton className="h-[90px] rounded-[24px]" />
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={`skel-${i}`} className="h-[300px] rounded-2xl" />
+            <Skeleton key={`skel-${i}`} className="h-[300px] rounded-[24px]" />
           ))}
         </div>
       </div>
@@ -132,13 +132,13 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           nightMessage="ليلة موفقة"
           subtitle={
             academicYear ? (
-              <span className="inline-flex items-center rounded-lg bg-white/10 px-2 py-0.5 text-[10px] font-normal text-on-primary">
+              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold text-on-primary shadow-soft">
                 {academicYear}
               </span>
             ) : undefined
           }
           chips={[
-            { icon: Activity, label: 'بيانات مباشرة' },
+            { icon: Activity, label: 'بيانات حية مباشرة' },
             ...(criticalCount > 0
               ? [{ icon: AlertTriangle, label: `${criticalCount} تنبيه حرج` }]
               : []),
@@ -149,9 +149,9 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
               disabled={isFetching}
               aria-label="تحديث البيانات"
               title="تحديث البيانات"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-on-primary outline-none transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-on-primary shadow-soft outline-none backdrop-blur-md transition-all duration-normal hover:scale-105 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
             >
-              <RefreshCw size={15} className={isFetching ? 'animate-spin' : ''} />
+              <RefreshCw size={16} className={isFetching ? 'animate-spin' : ''} />
             </button>
           }
         />
@@ -160,11 +160,11 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
       {/* Degraded services strip — server reported partial failures */}
       {degraded.length > 0 && (
         <div
-          className="flex items-center gap-2 rounded-xl border border-warning-soft bg-warning-soft px-3.5 py-2.5"
+          className="flex items-center gap-2 rounded-2xl border border-warning-soft bg-warning-soft px-4 py-3"
           role="status"
         >
-          <AlertTriangle size={14} className="shrink-0 text-warning" />
-          <p className="text-[11px] font-normal text-main">
+          <AlertTriangle size={15} className="shrink-0 text-warning" />
+          <p className="text-xs font-normal text-main">
             بعض الأقسام تعرض بيانات جزئية بسبب خطأ مؤقت في الخادم: {degradedNames}
           </p>
         </div>
@@ -172,46 +172,51 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
 
       {/* Pulse + money today */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
-        <div className="lg:col-span-3">
-          <Section>
+        <div className="lg:col-span-4 xl:col-span-3">
+          <Section className="h-full">
             <BusinessPulse pulse={pulse} />
           </Section>
         </div>
-        <div className="lg:col-span-9">
-          <Section>
+        <div className="lg:col-span-8 xl:col-span-9">
+          <Section className="flex h-full flex-col justify-between">
             <TodayMoney stats={stats} />
             <div className="mt-4">
-              <p className="mb-2.5 font-dash text-[11px] font-medium text-muted">تحتاج انتباهك</p>
+              <div className="mb-2.5 flex items-center justify-between">
+                <span className="text-xs font-semibold text-main">حالات تتطلب انتباهك</span>
+                <span className="text-[10px] text-muted">إجراءات سريعة فورية</span>
+              </div>
               <AttentionTiles stats={stats} />
             </div>
           </Section>
         </div>
       </div>
 
-      {/* Operations */}
+      {/* Operations metrics */}
       <Section>
         <OpsMetrics stats={stats} />
       </Section>
 
-      {/* Quick actions */}
+      {/* Quick actions command grid */}
       <Section>
         <QuickActionsGrid />
       </Section>
 
-      {/* System status strip */}
+      {/* System status telemetry strip */}
       <Section>
         <SystemStatusBar health={health} />
       </Section>
 
-      {/* Live context — alerts & upcoming side by side, presence full-width below */}
+      {/* Live context — alerts & upcoming side by side */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <Section>
+        <Section className="h-full">
           <ExecutiveAlerts alerts={alerts} />
         </Section>
-        <Section>
+        <Section className="h-full">
           <UpcomingTimeline sessions={upcoming} />
         </Section>
       </div>
+
+      {/* Presence grid */}
       <Section>
         <PresenceGrid
           users={presence}
@@ -219,15 +224,15 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
         />
       </Section>
 
-      {/* Context */}
+      {/* Context — Activity & Insights */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <Section>
+          <Section className="h-full">
             <ActivityFeed items={activity} />
           </Section>
         </div>
         <div className="lg:col-span-5">
-          <Section>
+          <Section className="h-full">
             <InsightsPanel stats={stats} />
           </Section>
         </div>

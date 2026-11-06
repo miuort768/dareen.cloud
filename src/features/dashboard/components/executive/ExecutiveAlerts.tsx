@@ -10,28 +10,28 @@ const SEVERITY_CONFIG: Record<
 > = {
   critical: {
     icon: XCircle,
-    rowBg: 'bg-error-soft border-border',
+    rowBg: 'bg-error-soft/40 border-error/25 hover:border-error/40',
     text: 'text-error',
     dot: 'bg-error',
     label: 'حرج',
   },
   warning: {
     icon: AlertTriangle,
-    rowBg: 'bg-warning-soft border-border',
+    rowBg: 'bg-warning-soft/40 border-warning/25 hover:border-warning/40',
     text: 'text-warning',
     dot: 'bg-warning',
     label: 'تحذير',
   },
   reminder: {
     icon: Clock,
-    rowBg: 'bg-info-soft border-border',
+    rowBg: 'bg-info-soft/40 border-info/25 hover:border-info/40',
     text: 'text-info',
     dot: 'bg-info',
     label: 'تذكير',
   },
   info: {
     icon: Info,
-    rowBg: 'bg-surface border-border',
+    rowBg: 'bg-surface/50 border-border/80 hover:border-border',
     text: 'text-muted',
     dot: 'bg-muted',
     label: 'معلومة',
@@ -71,27 +71,28 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
 
   return (
     <div
-      className="flex h-full flex-col rounded-3xl border border-warning-soft bg-card p-5 font-dash"
+      className="flex h-full flex-col rounded-[24px] border border-border bg-card p-5 font-dash shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft shadow-soft">
             <Bell size={16} className="text-warning" />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-main">التنبيهات</h3>
-            <p className="text-[10px] text-muted">مراقبة الأنظمة</p>
+            <h3 className="text-xs font-semibold text-main">تنبيهات النظام والمتابعة</h3>
+            <p className="text-[10px] text-muted">مراقبة فورية للأحداث العاجلة</p>
           </div>
         </div>
         {counts.critical > 0 && (
-          <span className="rounded-lg border border-border bg-error-soft px-2 py-0.5 text-[10px] font-normal text-error">
+          <span className="border-error/30 flex items-center gap-1.5 rounded-full border bg-error-soft px-2.5 py-0.5 text-[10px] font-semibold text-error shadow-soft">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-error" />
             {counts.critical} حرج
           </span>
         )}
       </div>
 
-      <div className="scrollbar-none mb-3 flex gap-1 overflow-x-auto pb-1">
+      <div className="scrollbar-none border-border/60 bg-surface/60 mb-3 flex gap-1 overflow-x-auto rounded-xl border p-1">
         {(['all', 'critical', 'warning', 'reminder', 'info'] as const).map((key) => {
           const isActive = filter === key
           return (
@@ -99,8 +100,10 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
               key={key}
               onClick={() => setFilter(key)}
               className={cn(
-                'whitespace-nowrap rounded-lg px-2.5 py-1 text-[10px] font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
-                isActive ? 'bg-primary text-on-primary' : 'bg-surface text-muted hover:text-main',
+                'whitespace-nowrap rounded-lg px-2.5 py-1 text-[11px] font-medium outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus',
+                isActive
+                  ? 'bg-primary text-on-primary shadow-soft'
+                  : 'text-muted hover:bg-surface hover:text-main',
               )}
             >
               {key === 'all' ? 'الكل' : SEVERITY_CONFIG[key]?.label} ({counts[key] ?? 0})
@@ -109,13 +112,14 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
         })}
       </div>
 
-      <div className="custom-scrollbar max-h-64 min-h-32 flex-1 space-y-1.5 overflow-y-auto">
+      <div className="custom-scrollbar max-h-72 min-h-36 flex-1 space-y-2 overflow-y-auto pe-1">
         {filtered.length === 0 && (
           <div className="py-8 text-center">
-            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft shadow-soft">
               <Info size={16} className="text-success" />
             </div>
-            <p className="text-xs font-normal text-muted">لا توجد تنبيهات</p>
+            <p className="text-xs font-medium text-main">لا توجد تنبيهات حالية</p>
+            <p className="mt-0.5 text-[10px] text-muted">كافة الأنظمة والمؤشرات مستقرة وطبيعية</p>
           </div>
         )}
         {filtered.map((alert, i) => {
@@ -126,31 +130,33 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
           const body = (
             <>
               <div className="relative mt-0.5 shrink-0">
-                <Icon size={14} className={cfg.text} />
+                <Icon size={15} className={cfg.text} />
                 <span
                   className={cn('absolute -end-0.5 -top-0.5 h-1.5 w-1.5 rounded-full', cfg.dot)}
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-normal leading-relaxed text-main">{alert.message}</p>
+                <p className="text-xs font-medium leading-relaxed text-main">{alert.message}</p>
                 {alert.time && <p className="mt-0.5 text-[10px] text-muted">{alert.time}</p>}
               </div>
               {actionTo ? (
-                <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-normal text-primary">
+                <span className="flex shrink-0 items-center gap-0.5 text-[11px] font-semibold text-primary transition-transform group-hover:-translate-x-0.5">
                   متابعة
-                  <ChevronLeft size={11} />
+                  <ChevronLeft size={13} />
                 </span>
               ) : (
                 alert.count && (
-                  <span className="shrink-0 text-[10px] font-normal text-muted">+{alert.count}</span>
+                  <span className="shrink-0 rounded-md bg-surface px-1.5 py-0.5 text-[10px] font-semibold text-muted">
+                    +{alert.count}
+                  </span>
                 )
               )}
             </>
           )
           const rowClass = cn(
-            'flex items-start gap-2.5 rounded-2xl border p-3 transition-colors',
+            'group flex items-start gap-2.5 rounded-xl border p-3 shadow-soft transition-all duration-normal',
             cfg.rowBg,
-            actionTo && 'hover:border-primary/30 hover:bg-card',
+            actionTo && 'hover:-translate-y-0.5 hover:shadow-elevation-1',
           )
 
           return actionTo ? (

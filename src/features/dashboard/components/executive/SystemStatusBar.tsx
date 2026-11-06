@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Zap, MemoryStick, Cpu, Clock3 } from 'lucide-react'
+import { Zap, MemoryStick, Cpu, Clock3, Activity } from 'lucide-react'
 import type { SystemHealth } from '../../services/executiveService'
 import { cn } from '@/lib/utils'
 
@@ -39,20 +39,24 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
     detail: string
     tone: string
   }) => (
-    <span className="flex items-center gap-1.5 whitespace-nowrap">
-      <Icon size={12} strokeWidth={1.8} className="text-dim" />
-      <span className="text-[10px] font-normal text-muted">{label}</span>
+    <div className="border-border/60 bg-surface/60 flex items-center gap-2 rounded-xl border px-3 py-1.5 shadow-soft">
+      <Icon size={13} strokeWidth={1.9} className="text-muted" />
+      <span className="text-[11px] font-medium text-main">{label}</span>
       <span className={cn('h-1.5 w-1.5 rounded-full', DOT[tone] || 'bg-muted')} />
-      <span className="text-[10px] font-normal tabular-nums text-dim">{detail}</span>
-    </span>
+      <span className="text-[11px] font-semibold tabular-nums text-dim">{detail}</span>
+    </div>
   )
 
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 rounded-2xl border border-border bg-card px-4 py-2.5 font-dash shadow-elevation-1"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-3 font-dash shadow-elevation-1 sm:px-4 sm:py-2.5"
       dir="rtl"
     >
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+      <div className="flex flex-wrap items-center gap-2.5">
+        <div className="me-1 flex items-center gap-1.5 text-xs font-semibold text-main">
+          <Activity size={14} className="text-primary" />
+          <span>حالة البنية التحتية:</span>
+        </div>
         <Item
           icon={Zap}
           label="Redis"
@@ -62,12 +66,10 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
         <Item icon={MemoryStick} label="الذاكرة" detail={`${memPercent}%`} tone={memTone} />
         <Item icon={Cpu} label="المعالج" detail={`${cpuLoad.toFixed(0)}%`} tone={cpuTone} />
       </div>
-      <span className="flex items-center gap-1.5 whitespace-nowrap">
-        <Clock3 size={12} strokeWidth={1.8} className="text-dim" />
-        <span className="text-[10px] font-normal tabular-nums text-dim">
-          تشغيل مستمر {uptimeHours} ساعة
-        </span>
-      </span>
+      <div className="border-border/60 bg-surface/40 flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs text-muted shadow-soft">
+        <Clock3 size={13} strokeWidth={1.9} className="text-muted" />
+        <span className="font-medium tabular-nums">تشغيل مستمر {uptimeHours} ساعة</span>
+      </div>
     </div>
   )
 })
