@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const SITE_BG = { light: '#dfe4ee', dark: '#050507' } as const
+const SITE_BG = { light: '#f1f5f9', dark: '#070a12' } as const
 
 function syncThemeColorMeta(theme: string) {
   const meta = document.getElementById('theme-color-meta')
