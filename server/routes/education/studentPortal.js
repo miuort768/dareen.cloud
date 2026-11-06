@@ -76,10 +76,23 @@ router.get('/me/points-log', authMiddleware, async (req, res) => {
         let studentId = req.user.id;
 
         if (req.user.role === 'parent' && req.query.studentId) {
-            const relation = await prisma.student.findFirst({
-                where: { id: req.query.studentId, parentPhone: req.user.phone }
+            const targetStudent = await prisma.student.findFirst({
+                where: { id: req.query.studentId }
             });
-            if (relation) {
+            const parent = await prisma.parent.findFirst({
+                where: { id: req.user.id }
+            });
+
+            // Match by parentId, direct parentPhone match, or normalized phone digits
+            const targetParentPhone = (targetStudent?.parentPhone || '').replace(/\D/g, '');
+            const userPhone = ((parent?.phone || req.user.phone || '')).replace(/\D/g, '');
+            const isOwned = targetStudent && (
+                targetStudent.parentId === req.user.id ||
+                targetStudent.parentPhone === req.user.phone ||
+                (targetParentPhone && userPhone && (targetParentPhone.endsWith(userPhone.slice(-8)) || userPhone.endsWith(targetParentPhone.slice(-8))))
+            );
+
+            if (isOwned) {
                 studentId = req.query.studentId;
             } else {
                 return res.status(403).json({ error: 'Access denied to this student data' });

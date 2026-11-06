@@ -19,6 +19,7 @@ import {
   Zap,
   Bell,
   MessageSquare,
+  Activity,
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'

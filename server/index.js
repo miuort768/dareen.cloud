@@ -83,7 +83,7 @@ app.use(helmet({
         directives: {
             ...helmet.contentSecurityPolicy.getDefaultDirectives(),
             "img-src": ["'self'", "data:", "https:", "http:"],
-            "script-src": ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", "https://www.google-analytics.com", "https://pagead2.googlesyndication.com", "https://googleads.g.doubleclick.net", "https://tpc.googlesyndication.com", "https://adservice.google.com"],
+            "script-src": ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", "https://www.google-analytics.com", "https://pagead2.googlesyndication.com", "https://googleads.g.doubleclick.net", "https://tpc.googlesyndication.com", "https://adservice.google.com", "https://ep2.adtrafficquality.google", "https://*.google.com", "https://*.doubleclick.net", "https://*.googlesyndication.com"],
             "frame-src": ["'self'", "https://googleads.g.doubleclick.net", "https://tpc.googlesyndication.com", "https://www.google.com"],
             "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
             "font-src": ["'self'", "https://fonts.gstatic.com"],
