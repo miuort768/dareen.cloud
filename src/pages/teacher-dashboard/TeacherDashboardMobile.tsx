@@ -32,6 +32,8 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  MobileMetricGrid,
+  MobileQuickActionsRow,
   UniversalStatChipsRow,
   type OverviewCategoryItem,
   type OverviewStatChip,
@@ -291,6 +293,59 @@ export const TeacherDashboardMobile = ({
           categories={categories}
           activeId={activeCategory}
           onSelect={setActiveCategory}
+        />
+
+        {/* Academy Finance Style Metric Grid (2x2) */}
+        <MobileMetricGrid
+          metrics={[
+            {
+              title: 'حصص اليوم',
+              value: stats.todaySessions,
+              icon: Calendar,
+              tone: 'primary',
+              trend: { value: 'اليوم', isUp: true },
+              onClick: () => navigate('/schedule'),
+            },
+            {
+              title: 'الطلاب المسندين',
+              value: stats.totalStudents,
+              icon: Users,
+              tone: 'success',
+              trend: { value: 'طالب نشط', isUp: true },
+              onClick: () => navigate('/students'),
+            },
+            {
+              title: 'المكتملة هذا الأسبوع',
+              value: stats.completedSessions,
+              icon: CheckCircle,
+              tone: 'info',
+              trend: { value: 'مكتملة', isUp: true },
+              onClick: () => navigate('/attendance'),
+            },
+            {
+              title: 'رصيد المحفظة',
+              value: (stats.walletBalance || 0) + ' د.ك',
+              icon: Wallet,
+              tone: 'accent',
+              trend: { value: 'متاح', isUp: true },
+              onClick: () => navigate('/teacher-payment-history'),
+            },
+          ]}
+        />
+
+        {/* Quick Actions 4-Col Row */}
+        <MobileQuickActionsRow
+          title="إجراءات سريعة"
+          actions={[
+            { label: 'الجدول الأسبوعي', icon: Calendar, onClick: () => navigate('/schedule') },
+            { label: 'تسجيل الحضور', icon: UserCheck, onClick: () => navigate('/attendance') },
+            { label: 'الطلاب المسندين', icon: Users, onClick: () => navigate('/students') },
+            {
+              label: 'التقارير الشهرية',
+              icon: FileText,
+              onClick: () => navigate('/teacher-reports'),
+            },
+          ]}
         />
 
         {/* Stat Chips Row - Admin Dashboard Style */}

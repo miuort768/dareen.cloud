@@ -15,3 +15,9 @@ export type { OverviewFeaturedCardProps } from './OverviewFeaturedCard'
 
 export { OverviewPromoBanner } from './OverviewPromoBanner'
 export type { OverviewPromoBannerProps } from './OverviewPromoBanner'
+
+export { MobileMetricGrid } from './MobileMetricGrid'
+export type { MobileMetricGridProps, MobileMetricItem } from './MobileMetricGrid'
+
+export { MobileQuickActionsRow } from './MobileQuickActionsRow'
+export type { MobileQuickActionsRowProps, MobileQuickActionItem } from './MobileQuickActionsRow'

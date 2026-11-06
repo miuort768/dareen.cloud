@@ -30,6 +30,8 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  MobileMetricGrid,
+  MobileQuickActionsRow,
   UniversalStatChipsRow,
   type OverviewCategoryItem,
   type OverviewStatChip,
@@ -281,6 +283,59 @@ export const StudentDashboardMobile = ({
           categories={categories}
           activeId={activeCategory}
           onSelect={setActiveCategory}
+        />
+
+        {/* Academy Finance Style Metric Grid (2x2) */}
+        <MobileMetricGrid
+          metrics={[
+            {
+              title: 'إجمالي النقاط',
+              value: points,
+              icon: Award,
+              tone: 'warning',
+              trend: { value: rank.name, isUp: true },
+              onClick: scrollToRank,
+            },
+            {
+              title: 'حصص اليوم',
+              value: todayItems.length,
+              icon: Calendar,
+              tone: 'primary',
+              trend: { value: 'اليوم', isUp: true },
+              onClick: () => navigate('/schedule'),
+            },
+            {
+              title: 'المواد المسجلة',
+              value: subjects.length,
+              icon: BookOpen,
+              tone: 'success',
+              trend: { value: 'مستمر', isUp: true },
+              onClick: () => setActiveCategory('subjects'),
+            },
+            {
+              title: 'الواجبات والمهام',
+              value: recentSessions.length,
+              icon: ListTodo,
+              tone: 'info',
+              trend: { value: 'نشط', isUp: true },
+              onClick: () => setActiveCategory('tasks'),
+            },
+          ]}
+        />
+
+        {/* Quick Actions 4-Col Row */}
+        <MobileQuickActionsRow
+          title="إجراءات سريعة"
+          actions={[
+            { label: 'جدولي اليوم', icon: Calendar, onClick: () => navigate('/schedule') },
+            {
+              label: 'موادي الدراسية',
+              icon: BookOpen,
+              onClick: () => setActiveCategory('subjects'),
+            },
+            { label: 'رتبتي ونقاطي', icon: Award, onClick: scrollToRank },
+            { label: 'التنبيهات', icon: Sparkle, onClick: () => navigate('/announcements') },
+          ]}
         />
 
         {/* Stat Chips Row - Admin Dashboard Style */}

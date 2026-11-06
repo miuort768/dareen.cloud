@@ -29,6 +29,8 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  MobileMetricGrid,
+  MobileQuickActionsRow,
   UniversalStatChipsRow,
   type OverviewCategoryItem,
   type OverviewStatChip,
@@ -282,6 +284,55 @@ export const ParentDashboardMobile = ({
           categories={categories}
           activeId={activeCategory}
           onSelect={setActiveCategory}
+        />
+
+        {/* Academy Finance Style Metric Grid (2x2) */}
+        <MobileMetricGrid
+          metrics={[
+            {
+              title: 'عدد الأبناء',
+              value: children.length,
+              icon: Users,
+              tone: 'primary',
+              trend: { value: 'مسجل', isUp: true },
+              onClick: () => setActiveCategory('children'),
+            },
+            {
+              title: 'حصص اليوم',
+              value: todaySessions.length,
+              icon: Calendar,
+              tone: 'success',
+              trend: { value: 'اليوم', isUp: true },
+              onClick: () => setActiveCategory('schedule'),
+            },
+            {
+              title: 'إجمالي الحصص',
+              value: totalSessions,
+              icon: Activity,
+              tone: 'info',
+              trend: { value: 'مستمر', isUp: true },
+              onClick: () => setActiveCategory('schedule'),
+            },
+            {
+              title: 'الرصيد المتاح',
+              value: (currentUser?.balance || 0) + ' د.ك',
+              icon: Wallet,
+              tone: 'accent',
+              trend: { value: 'رصيد', isUp: true },
+              onClick: () => setActiveCategory('payments'),
+            },
+          ]}
+        />
+
+        {/* Quick Actions 4-Col Row */}
+        <MobileQuickActionsRow
+          title="إجراءات سريعة"
+          actions={[
+            { label: 'بطاقات الأبناء', icon: Users, onClick: () => setActiveCategory('children') },
+            { label: 'جدول الحصص', icon: Calendar, onClick: () => setActiveCategory('schedule') },
+            { label: 'المدفوعات', icon: Wallet, onClick: () => setActiveCategory('payments') },
+            { label: 'الإعلانات', icon: Sparkle, onClick: () => navigate('/announcements') },
+          ]}
         />
 
         {/* Stat Chips Row - Admin Dashboard Style */}

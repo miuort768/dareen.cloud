@@ -36,6 +36,8 @@ import {
   OverviewCategoryPills,
   OverviewFeaturedCard,
   OverviewPromoBanner,
+  MobileMetricGrid,
+  MobileQuickActionsRow,
   type OverviewCategoryItem,
 } from '../../../shared/components/mobile'
 import { cn } from '@/lib/utils'
@@ -218,6 +220,55 @@ export const MobileDashboardView = ({
           categories={categories}
           activeId={activeCategory}
           onSelect={setActiveCategory}
+        />
+
+        {/* 4.1 Academy Finance Style Metric Grid (2x2) */}
+        <MobileMetricGrid
+          metrics={[
+            {
+              title: 'إجمالي الطلاب',
+              value: stats.studentsCount,
+              icon: Users,
+              tone: 'primary',
+              trend: { value: 'نشط', isUp: true },
+              onClick: () => navigate('/students'),
+            },
+            {
+              title: 'حصص اليوم',
+              value: todaySessions.length,
+              icon: CalendarCheck,
+              tone: 'success',
+              trend: { value: 'اليوم', isUp: true },
+              onClick: () => navigate('/attendance'),
+            },
+            {
+              title: 'نسبة الحضور',
+              value: `${stats.attendanceRate}%`,
+              icon: Activity,
+              tone: 'accent',
+              trend: { value: 'ممتاز', isUp: true },
+              onClick: () => navigate('/attendance'),
+            },
+            {
+              title: 'المهام المعلقة',
+              value: tasks.length,
+              icon: ListTodo,
+              tone: 'warning',
+              trend: { value: 'مهمة', isUp: false },
+              onClick: () => navigate('/tasks'),
+            },
+          ]}
+        />
+
+        {/* 4.2 Quick Actions 4-Col Row */}
+        <MobileQuickActionsRow
+          title="إجراءات سريعة"
+          actions={[
+            { label: 'طالب جديد', icon: UserPlus, onClick: () => navigate('/students') },
+            { label: 'تسجيل حضور', icon: UserCheck, onClick: () => navigate('/attendance') },
+            { label: 'الفواتير', icon: Receipt, onClick: () => navigate('/student-invoices') },
+            { label: 'التقارير', icon: FileText, onClick: () => navigate('/reports') },
+          ]}
         />
 
         {/* 5. Featured Cards ("العناصر المميزة" / حصص اليوم) */}
