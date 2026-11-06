@@ -1,5 +1,7 @@
 import { useState, useMemo, useRef } from 'react'
+
 import { motion } from 'framer-motion'
+
 import {
   Loader2,
   RefreshCw,
@@ -18,9 +20,13 @@ import {
   Bell,
   MessageSquare,
 } from 'lucide-react'
+
 import { cn } from '@/lib/utils'
+
 import { MobileSectionHeader } from '../../shared/components/mobile/MobileSectionHeader'
+
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
+
 import {
   usePullToRefresh,
   OverviewHeader,
@@ -35,18 +41,31 @@ import {
   type OverviewCategoryItem,
   type OverviewStatChip,
 } from '../../shared/components/mobile'
+
 import { fadeUp } from '../../shared/animations/fadeUp'
+
 import { LiveNowBanner } from './LiveNowBanner'
+
 import { ChildSwitcher } from './ChildSwitcher'
+
 import { ChildPanel } from './ChildPanel'
+
 import { TodayTimeline } from './TodayTimeline'
+
 import { WeeklyPulse } from './WeeklyPulse'
+
 import { PointsActivityCard } from './PointsActivityCard'
+
 import { SupportStrip } from './SupportStrip'
+
 import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
+
 import { SessionCallAlert } from '../../components/ui/SessionCallAlert'
+
 import type { ParentDashboardProps } from './types'
+
 import type { Student } from '../../types'
+
 import { useNavigate } from 'react-router-dom'
 
 interface ShellProps extends ParentDashboardProps {
@@ -55,36 +74,55 @@ interface ShellProps extends ParentDashboardProps {
 
 export const ParentDashboardMobile = ({
   adminPhone,
+
   children: kids,
+
   allPointLogs,
+
   activeTimers,
+
   childStats,
+
   timeline,
+
   weekly,
+
   points,
+
   selectedChildId,
+
   onSelectChild,
+
   formatTime,
+
   onRefresh,
+
   childNames,
 }: ShellProps) => {
   const navigate = useNavigate()
+
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
+
   const childPanelRef = useRef<HTMLDivElement>(null)
+
   const quickActionsRef = useRef<HTMLDivElement>(null)
 
   const [searchQuery, setSearchQuery] = useState('')
+
   const [activeCategory, setActiveCategory] = useState('all')
 
   const rank = getRankByPoints(points, STUDENT_RANKS)
+
   const selectedChild: Student | undefined = kids.find((c) => c.id === selectedChildId) ?? kids[0]
 
   const contextOptions = useMemo(
     () =>
       kids.map((c) => ({
         id: c.id,
+
         label: c.name,
       })),
+
     [kids],
   )
 
@@ -92,71 +130,106 @@ export const ParentDashboardMobile = ({
     () => [
       {
         label: 'الأبناء',
+
         value: kids.length,
+
         icon: Users,
+
         onClick: () => setActiveCategory('children'),
+
         tone: 'text-primary bg-primary-soft',
       },
+
       {
         label: 'نسبة الحضور',
+
         value: `${weekly.attendanceRate}%`,
+
         icon: CheckCircle,
+
         onClick: () => setActiveCategory('attendance'),
+
         tone:
           weekly.attendanceRate >= 90
             ? 'text-success bg-success-soft'
             : 'text-warning bg-warning-soft',
       },
+
       {
         label: 'حصص اليوم',
+
         value: weekly.todayCount,
+
         icon: Calendar,
+
         onClick: () => setActiveCategory('sessions'),
+
         tone: 'text-info bg-info-soft',
       },
+
       {
         label: 'منجزة بالأسبوع',
+
         value: weekly.weeklyCompleted,
+
         icon: Clock,
+
         onClick: () => setActiveCategory('attendance'),
+
         tone: 'text-success bg-success-soft',
       },
+
       {
         label: 'نقاط التميز',
+
         value: points,
+
         icon: Award,
+
         onClick: () => setActiveCategory('points'),
+
         tone: 'text-accent bg-accent/20',
       },
     ],
+
     [kids.length, weekly.attendanceRate, weekly.todayCount, weekly.weeklyCompleted, points],
   )
 
   const categories: OverviewCategoryItem[] = useMemo(
     () => [
       { id: 'all', label: 'الكل', icon: Sparkle },
+
       { id: 'children', label: 'الأبناء', icon: Users, count: kids.length },
+
       { id: 'sessions', label: 'الحصص', icon: Calendar, count: weekly.todayCount },
+
       { id: 'attendance', label: 'الالتزام', icon: CheckCircle2 },
+
       { id: 'points', label: 'النقاط', icon: Award, count: points },
     ],
+
     [kids.length, weekly.todayCount, points],
   )
 
   // Filter children for featured cards
+
   const filteredKids = useMemo(() => {
     let list = kids
+
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim()
+
       list = list.filter(
         (c) => c.name?.toLowerCase().includes(q) || c.grade?.toLowerCase().includes(q),
       )
     }
+
     return list
   }, [kids, searchQuery])
 
   const scrollToChild = (childId: string) => {
     onSelectChild(childId)
+
     childPanelRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -168,64 +241,92 @@ export const ParentDashboardMobile = ({
     () => [
       {
         label: 'تفاصيل الأبناء',
+
         icon: Users,
+
         action: () => {
           if (selectedChild) scrollToChild(selectedChild.id)
         },
+
         tone: 'bg-primary text-on-primary',
       },
+
       { label: 'جدول الحصص', icon: Calendar, path: '/schedule', tone: 'bg-info text-on-info' },
+
       {
         label: 'سجل الحضور',
+
         icon: CheckCircle,
+
         path: '/attendance',
+
         tone: 'bg-success text-on-success',
       },
+
       {
         label: 'نقاط التميز',
+
         icon: Award,
+
         action: () => {
           setActiveCategory('points')
+
           document.getElementById('parent-points-section')?.scrollIntoView({ behavior: 'smooth' })
         },
+
         tone: 'bg-accent text-on-accent',
       },
+
       {
         label: 'المحادثة والدعم',
+
         icon: MessageSquare,
+
         path: '/chat',
+
         tone: 'bg-main text-inverse',
       },
+
       {
         label: 'الإعلانات العامة',
+
         icon: Bell,
+
         path: '/parent-announcements',
+
         tone: 'bg-warning text-on-warning',
       },
     ],
+
     [selectedChild],
   )
 
   return (
     <div
       className="overview-mobile-scope min-h-screen overflow-x-hidden bg-background font-parent text-main transition-colors duration-slow"
+
       dir="rtl"
+
       {...handlers}
     >
       {/* Pull To Refresh Indicator */}
+
       <motion.div
         animate={{ height: isRefreshing ? 44 : pullDistance }}
+
         className="flex items-center justify-center overflow-hidden"
       >
         <div className="flex items-center gap-2 text-xs font-normal text-primary">
           {isRefreshing ? (
             <>
               <Loader2 size={16} className="animate-spin" />
+
               <span>جاري التحديث...</span>
             </>
           ) : pullDistance > 40 ? (
             <>
               <RefreshCw size={16} className="animate-pulse" />
+
               <span>أفلت للتحديث</span>
             </>
           ) : (
@@ -236,117 +337,179 @@ export const ParentDashboardMobile = ({
 
       <div className="mx-auto max-w-page space-y-4 px-2.5 pb-8 pt-2 sm:px-4">
         {/* 1. Petly Style Top Header */}
+
         <OverviewHeader
           appName="أكاديمية دارين"
+
           slogan="متابعة مسيرة الأبناء التعليمية"
+
           logoIcon={<Users size={22} className="text-on-accent" strokeWidth={2.2} />}
+
           notificationCount={activeTimers.length}
+
           onNotificationClick={() => navigate('/parent-announcements')}
+
           contextLabel={selectedChild ? `الابن: ${selectedChild.name}` : 'اختر الابن'}
+
           contextOptions={contextOptions}
+
           selectedContextId={selectedChildId}
+
           onSelectContext={onSelectChild}
         />
 
         {/* 2. Petly Style Hero Banner */}
+
         <OverviewHero
           badge="متابعة أداء الأبناء"
+
           badgeIcon={<HeartHandshake size={12} className="text-primary" />}
+
           title="أهلاً بك، ولي الأمر"
+
           subtitle={`لديك ${kids.length} أبناء مسجلين بالأكاديمية · متابعة أداء وحضور الأبناء وجداول الحصص اليوم.`}
+
           metric={{
             value: `${weekly.attendanceRate}%`,
+
             label: 'حضور الأبناء',
           }}
+
           chips={[
             { label: 'عدد الأبناء', value: kids.length },
+
             { label: 'الحصص هذا الأسبوع', value: weekly.totalSessions },
           ]}
+
           ctaText="إجراءات سريعة"
+
           onCtaClick={scrollToQuickActions}
+
           illustration={
             <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
               <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
+
               <HeartHandshake size={42} strokeWidth={2} className="drop-shadow-xs" />
             </div>
           }
         />
 
         {/* 3. Search & Filter Bar */}
+
         <OverviewSearchFilter
           value={searchQuery}
+
           onChange={setSearchQuery}
+
           placeholder="ابحث عن ابن، مادة، أو معلم..."
         />
 
         {/* 4. Category Pills Row */}
+
         <OverviewCategoryPills
           categories={categories}
+
           activeId={activeCategory}
+
           onSelect={setActiveCategory}
         />
 
         {/* Academy Finance Style Metric Grid (2x2) */}
+
         <MobileMetricGrid
           metrics={[
             {
               title: 'عدد الأبناء',
-              value: children.length,
+
+              value: kids.length,
+
               icon: Users,
+
               tone: 'primary',
+
               trend: { value: 'مسجل', isUp: true },
+
               onClick: () => setActiveCategory('children'),
             },
+
             {
               title: 'حصص اليوم',
-              value: todaySessions.length,
+
+              value: weekly.todayCount,
+
               icon: Calendar,
+
               tone: 'success',
+
               trend: { value: 'اليوم', isUp: true },
+
               onClick: () => setActiveCategory('schedule'),
             },
+
             {
               title: 'إجمالي الحصص',
-              value: totalSessions,
+
+              value: weekly.completed,
+
               icon: Activity,
+
               tone: 'info',
+
               trend: { value: 'مستمر', isUp: true },
+
               onClick: () => setActiveCategory('schedule'),
             },
+
             {
-              title: 'الرصيد المتاح',
-              value: (currentUser?.balance || 0) + ' د.ك',
+              title: 'مجموع النقاط',
+
+              value: `${points} نقطة`,
+
               icon: Wallet,
+
               tone: 'accent',
+
               trend: { value: 'رصيد', isUp: true },
+
               onClick: () => setActiveCategory('payments'),
             },
           ]}
         />
 
         {/* Quick Actions 4-Col Row */}
+
         <MobileQuickActionsRow
           title="إجراءات سريعة"
+
           actions={[
             { label: 'بطاقات الأبناء', icon: Users, onClick: () => setActiveCategory('children') },
+
             { label: 'جدول الحصص', icon: Calendar, onClick: () => setActiveCategory('schedule') },
+
             { label: 'المدفوعات', icon: Wallet, onClick: () => setActiveCategory('payments') },
+
             { label: 'الإعلانات', icon: Sparkle, onClick: () => navigate('/announcements') },
           ]}
         />
 
         {/* Stat Chips Row - Admin Dashboard Style */}
+
         <UniversalStatChipsRow chips={statChips} />
 
         {/* Alerts and Live Now */}
+
         <SessionCallAlert />
+
         <LiveNowBanner
           activeTimers={activeTimers}
+
           childNames={childNames}
+
           formatTime={formatTime}
         />
 
         {/* 5. Featured Cards ("العناصر المميزة" / بطاقات الأبناء) */}
+
         {(activeCategory === 'all' || activeCategory === 'children') && kids.length > 0 && (
           <section>
             <div className="mb-2.5 flex items-center justify-between px-0.5">
@@ -354,37 +517,53 @@ export const ParentDashboardMobile = ({
                 <span className="bg-accent/20 flex h-6 w-6 items-center justify-center rounded-lg text-accent">
                   <Star size={13} strokeWidth={2.5} className="fill-accent text-accent" />
                 </span>
+
                 <h3 className="text-sm font-medium text-main">الأبناء المميزون</h3>
               </div>
+
               <span className="text-xs font-normal text-accent">{kids.length} أبناء</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2.5">
               {filteredKids.map((child) => {
                 const isSelected = child.id === selectedChildId
+
                 const cStat = childStats[child.id]
+
                 const attendance = cStat ? cStat.attendanceRate : 0
+
                 return (
                   <OverviewFeaturedCard
                     key={child.id}
+
                     badge={{
                       label: isSelected ? 'المحدد حالياً' : `${attendance}% حضور`,
+
                       tone: isSelected ? 'accent' : attendance >= 85 ? 'success' : 'warning',
                     }}
+
                     title={child.name}
+
                     subtitle={child.grade || 'مرحلة دراسية'}
+
                     meta={
                       cStat?.nextSession
                         ? `حصة: ${cStat.nextSession.subject || 'مجدولة'}`
                         : 'لا توجد حصص اليوم'
                     }
+
                     highlight={`${attendance}%`}
+
                     highlightLabel="نسبة التزام الحضور"
+
                     actionLabel="الملف"
+
                     onClick={() => scrollToChild(child.id)}
+
                     visual={
                       <div className="flex flex-col items-center justify-center gap-1 text-primary">
                         <User size={26} strokeWidth={1.8} />
+
                         <span className="line-clamp-1 text-[9px] font-medium text-main">
                           {child.name}
                         </span>
@@ -398,15 +577,20 @@ export const ParentDashboardMobile = ({
         )}
 
         {/* 6. Quick Action App Launchers Grid - Admin Dashboard Style */}
+
         <section ref={quickActionsRef}>
           <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-2.5 px-0.5" />
+
           <div className="grid grid-cols-3 gap-2">
             {PARENT_ACTIONS.map((action) => {
               const Icon = action.icon
+
               return (
                 <button
                   key={action.label}
+
                   type="button"
+
                   onClick={() => {
                     if (action.action) {
                       action.action()
@@ -414,13 +598,17 @@ export const ParentDashboardMobile = ({
                       navigate(action.path)
                     }
                   }}
+
                   aria-label={action.label}
+
                   className={cn(
                     'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
+
                     action.tone,
                   )}
                 >
                   <Icon size={19} strokeWidth={1.9} />
+
                   <span className="text-[10px] font-normal leading-none">{action.label}</span>
                 </button>
               )
@@ -429,15 +617,21 @@ export const ParentDashboardMobile = ({
         </section>
 
         {/* 7. Petly Style Promo Banner */}
+
         <OverviewPromoBanner
           title="تواصل مباشر مع الإدارة والمعلمين"
+
           subtitle="استفسر عن أي تفاصيل دراسية أو مالية لأبنائك عبر المحادثة"
+
           icon={<MessageSquareText size={24} className="text-accent" strokeWidth={2} />}
+
           onClick={() => navigate('/chat')}
+
           ariaLabel="الانتقال إلى الدردشة"
         />
 
         {/* 7. Preserved Existing Panels */}
+
         {(activeCategory === 'all' || activeCategory === 'attendance') && (
           <motion.div {...fadeUp(0.15)}>
             <WeeklyPulse stats={weekly} />
@@ -449,7 +643,9 @@ export const ParentDashboardMobile = ({
             <motion.div {...fadeUp(0.2)}>
               <ChildSwitcher
                 children={kids}
+
                 selectedId={selectedChildId}
+
                 onSelect={onSelectChild}
               />
             </motion.div>
@@ -458,16 +654,25 @@ export const ParentDashboardMobile = ({
               <motion.div {...fadeUp(0.25)}>
                 <ChildPanel
                   key={selectedChild.id}
+
                   child={selectedChild}
+
                   stats={
                     childStats[selectedChild.id] || {
                       attendanceRate: 0,
+
                       completed: 0,
+
                       cancelled: 0,
+
                       sessionsUsed: 0,
+
                       sessionsTotal: 0,
+
                       progress: 0,
+
                       nextSession: null,
+
                       notes: [],
                     }
                   }
@@ -487,8 +692,11 @@ export const ParentDashboardMobile = ({
           <motion.div id="parent-points-section" {...fadeUp(0.35)} className="scroll-mt-20">
             <PointsActivityCard
               points={points}
+
               rankName={rank.name}
+
               rankIcon={rank.icon}
+
               logs={allPointLogs}
             />
           </motion.div>
@@ -499,8 +707,11 @@ export const ParentDashboardMobile = ({
             <motion.div {...fadeUp(0.05)}>
               <AnnouncementsBanner
                 href="/parent-announcements"
+
                 label="إعلانات الأكاديمية"
+
                 description="آخر الإعلانات والتنبيهات الموجهة لأولياء الأمور"
+
                 variant="classic"
               />
             </motion.div>
