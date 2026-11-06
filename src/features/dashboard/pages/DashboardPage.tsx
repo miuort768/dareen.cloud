@@ -40,7 +40,7 @@ export const Dashboard = () => {
     (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))
   ) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="flex min-h-[40vh] items-center justify-center">
         <div className="max-w-md text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-error-soft">
             <AlertCircle size={28} className="text-error" />

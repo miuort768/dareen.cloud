@@ -71,7 +71,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
 
   if (error || !data || !data.pulse || !data.stats) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center rounded-card" dir="rtl">
+      <div className="flex min-h-[30vh] items-center justify-center rounded-card" dir="rtl">
         <ErrorState
           icon={AlertCircle}
           title="تعذر تحميل البيانات"

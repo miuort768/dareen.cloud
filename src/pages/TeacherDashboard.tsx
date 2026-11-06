@@ -46,7 +46,7 @@ export const TeacherDashboard = () => {
   // banner so the rest of the dashboard stays usable.
   if (hasCriticalErrors)
     return (
-      <div className="flex min-h-[60vh] items-center justify-center px-4" dir="rtl">
+      <div className="flex min-h-[40vh] items-center justify-center px-4" dir="rtl">
         <ErrorState
           title="تعذّر تحميل لوحة التحكم"
           message="حدث خطأ أثناء جلب البيانات. تحقّق من الاتصال ثم أعد المحاولة."

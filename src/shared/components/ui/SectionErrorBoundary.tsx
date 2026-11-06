@@ -63,7 +63,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
       return (
         <div
           className={cn(
-            'flex min-h-[300px] items-center justify-center rounded-3xl',
+            'flex min-h-[200px] items-center justify-center rounded-3xl md:min-h-[300px]',
             'border border-error-soft bg-surface',
           )}
           dir="rtl"

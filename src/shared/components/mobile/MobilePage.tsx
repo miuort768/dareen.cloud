@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react';
-import { cn } from '../../../lib/utils';
+import type { ReactNode } from 'react'
+import { cn } from '../../../lib/utils'
 
 interface MobilePageProps {
-    children: ReactNode;
-    className?: string;
-    /** Bottom padding reserved for the global AppTabBar. Default true. */
-    withBottomNav?: boolean;
+  children: ReactNode
+  className?: string
+  /** Bottom padding reserved for the global AppTabBar. Default true. */
+  withBottomNav?: boolean
 }
 
 /**
@@ -13,14 +13,14 @@ interface MobilePageProps {
  * global tab bar, and a subtle slide-up entrance animation.
  */
 export const MobilePage = ({ children, className, withBottomNav = true }: MobilePageProps) => (
-    <div
-        dir="rtl"
-        className={cn(
-            'min-h-full bg-background overflow-x-hidden animate-page-enter',
-            withBottomNav ? 'pb-28' : 'pb-6',
-            className
-        )}
-    >
-        {children}
-    </div>
-);
+  <div
+    dir="rtl"
+    className={cn(
+      'animate-page-enter min-h-full overflow-x-hidden bg-background',
+      withBottomNav ? 'pb-6' : 'pb-2',
+      className,
+    )}
+  >
+    {children}
+  </div>
+)

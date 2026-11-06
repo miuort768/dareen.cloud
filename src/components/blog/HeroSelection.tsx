@@ -63,9 +63,7 @@ export const MobileHero = ({
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
                 </span>
-                <span className="text-[10px] font-light text-white/90">
-                  برعاية {academyName}
-                </span>
+                <span className="text-[10px] font-light text-white/90">برعاية {academyName}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 {hasLibraryWhatsapp && (
@@ -325,7 +323,7 @@ export const DesktopHero = ({
     return (
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-8 lg:px-10 lg:py-10">
         {/* Hero Section */}
-        <section className="relative min-h-[420px] overflow-hidden rounded-2xl border border-divider bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card lg:rounded-none">
+        <section className="relative min-h-[280px] overflow-hidden rounded-2xl border border-divider bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card lg:min-h-[420px] lg:rounded-none">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute start-[-15%] top-[-40%] h-[120%] w-[70%] animate-[pulse_8s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-white/[0.04] to-transparent blur-[100px]" />
             <div className="absolute bottom-[-30%] end-[-10%] h-[100%] w-[60%] animate-[pulse_6s_ease-in-out_infinite_1s] rounded-full bg-gradient-to-tl from-transparent to-transparent blur-[80px]" />
@@ -339,7 +337,7 @@ export const DesktopHero = ({
             />
           </div>
 
-          <div className="relative grid min-h-[420px] grid-cols-1 lg:grid-cols-[1fr_380px]">
+          <div className="relative grid min-h-[280px] grid-cols-1 lg:min-h-[420px] lg:grid-cols-[1fr_380px]">
             {/* Left content */}
             <div className="relative z-10 flex flex-col justify-center p-8 lg:p-14 lg:pe-10">
               <div className="mb-6 inline-flex w-fit items-center gap-2.5 rounded-full border border-white/10 bg-white/10 px-4 py-2 backdrop-blur-sm">

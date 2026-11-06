@@ -1,7 +1,7 @@
 import { Skeleton } from '../../../shared/components/ui/Skeleton'
 
 export const LeadsSkeleton = () => (
-  <div className="min-h-screen bg-background pb-24" dir="rtl">
+  <div className="min-h-full bg-background pb-6" dir="rtl">
     <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4">
       {/* Header skeleton */}
       <div className="pb-2 pt-4">

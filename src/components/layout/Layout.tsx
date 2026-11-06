@@ -63,7 +63,7 @@ export const Layout = () => {
             currentUser?.role === 'admin' && 'admin-scope',
             isChatOnly || location.pathname.includes('/chat')
               ? 'p-0'
-              : 'z-10 px-2 pb-24 pt-2 md:px-5 md:pb-24 md:pt-4 lg:px-8 lg:pb-8',
+              : 'z-10 px-2 pb-20 pt-2 md:px-5 md:pb-24 md:pt-4 lg:px-8 lg:pb-8',
           )}
         >
           <ErrorBoundary>

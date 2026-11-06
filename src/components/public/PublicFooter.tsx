@@ -14,7 +14,7 @@ export const PublicFooter = () => {
   const instagramHandle = (footerInstagram || 'daren_school').replace(/^@/, '')
 
   return (
-    <footer className="relative min-h-[300px] overflow-hidden border-t border-border bg-surface pb-6 pt-4 text-main transition-colors duration-500 dark:border-primary/20 dark:bg-card md:pb-6 md:pt-6">
+    <footer className="relative min-h-0 overflow-hidden border-t border-border bg-surface pb-6 pt-4 text-main transition-colors duration-500 dark:border-primary/20 dark:bg-card md:min-h-[300px] md:pb-6 md:pt-6">
       {/* Decorative blurs — dark: gold glow */}
       <div className="pointer-events-none absolute inset-0 opacity-10 dark:opacity-[0.04]">
         <div className="absolute -start-[20%] -top-[50%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>

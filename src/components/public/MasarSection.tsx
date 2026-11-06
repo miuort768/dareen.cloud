@@ -36,7 +36,7 @@ export const MasarSection = () => {
               <div className="absolute start-0 top-0 h-80 w-80 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary/20 blur-[120px] dark:bg-primary/10"></div>
               <div className="absolute bottom-0 end-0 h-80 w-80 -translate-x-1/2 translate-y-1/2 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/5"></div>
             </div>
-            <div className="flex min-h-[400px] flex-col items-stretch lg:flex-row">
+            <div className="flex min-h-0 flex-col items-stretch lg:min-h-[400px] lg:flex-row">
               <div className="group relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b border-white/10 bg-white/[0.08] p-8 backdrop-blur-md dark:border-primary/20 dark:bg-primary/[0.05] lg:w-[40%] lg:border-b-0 lg:border-e lg:p-4">
                 <div className="pointer-events-none absolute inset-0 z-30 h-full w-full animate-shine-slow bg-gradient-to-r from-transparent via-white/20 to-transparent dark:via-primary/10"></div>
                 <div className="relative z-10 flex h-full w-full items-center justify-center">

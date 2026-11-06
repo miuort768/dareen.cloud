@@ -174,7 +174,7 @@ export const MobileTasks = () => {
         </div>
 
         {/* المحتوى */}
-        <div className="space-y-2 px-2 pb-28 pt-4">
+        <div className="space-y-2 px-2 pb-4 pt-4">
           {isLoading ? (
             <div className="space-y-3">
               <SkeletonCard />
