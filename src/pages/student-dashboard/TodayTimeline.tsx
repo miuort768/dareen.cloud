@@ -1,4 +1,4 @@
-import { BookOpen, CalendarCheck, CircleDashed, FileText, Radio, Star, XCircle } from 'lucide-react'
+import { BookOpen, CalendarCheck, CircleDashed, Radio, Star, XCircle } from 'lucide-react'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type { TodayTimelineItem } from './types'
 import { cn } from '../../lib/utils'
@@ -56,16 +56,19 @@ const Detail = ({
   labelClass: string
   value: string
 }) => (
-  <div className={cn('flex items-start gap-2 rounded-xl border p-2', wrap)}>
+  <div className={cn('flex items-start gap-2.5 rounded-2xl border p-2.5', wrap)}>
     <span
-      className={cn('flex h-6 w-6 shrink-0 items-center justify-center rounded-lg', tile)}
+      className={cn(
+        'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg shadow-soft',
+        tile,
+      )}
       aria-hidden="true"
     >
       <Icon size={12} />
     </span>
     <div className="min-w-0">
-      <p className={cn('text-[10px] font-medium', labelClass)}>{label}</p>
-      <p className="text-[11px] font-normal leading-relaxed text-main">{value}</p>
+      <p className={cn('text-[10px] font-bold', labelClass)}>{label}</p>
+      <p className="text-xs font-semibold leading-relaxed text-main">{value}</p>
     </div>
   </div>
 )
@@ -74,118 +77,89 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
   return (
     <section
       aria-label="حصص اليوم"
-      className="rounded-[24px] border border-border bg-card p-4 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 md:p-5"
+      className="border-border/80 p-5.5 rounded-[26px] border bg-card shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 md:p-6"
     >
-      <div className="mb-4 flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
-          <CalendarCheck size={18} />
-        </span>
-        <div className="min-w-0 flex-1">
-          <h3 className="text-sm font-medium text-main">حصص اليوم</h3>
-          <p className="text-[11px] font-normal text-muted">جدول جلساتك لهذا اليوم</p>
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-primary shadow-soft">
+            <BookOpen size={20} />
+          </span>
+          <div>
+            <h3 className="text-sm font-black text-main">حصص اليوم</h3>
+            <p className="text-xs text-muted">الجدول الزمني لحصصك الدراسية لهذا اليوم</p>
+          </div>
         </div>
-        <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-medium tabular-nums text-primary">
+        <span className="rounded-full bg-primary-soft px-3 py-1 text-xs font-bold tabular-nums text-primary">
           {items.length} {items.length === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border py-10 text-center">
-          <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
-            <CalendarCheck size={22} />
-          </span>
-          <p className="text-xs font-normal text-muted">يوم مريح — لا توجد حصص مجدولة</p>
+        <div className="border-border/80 flex flex-col items-center justify-center rounded-2xl border border-dashed py-10 text-center">
+          <CalendarCheck size={32} className="text-muted/60" />
+          <p className="mt-2 text-xs font-bold text-main">لا توجد حصص مجدولة لليوم</p>
+          <p className="text-[11px] text-muted">استمتع بوقتك أو راجع دروسك السابقة</p>
         </div>
       ) : (
-        <ol className="grid grid-cols-1 gap-3 lg:grid-cols-2" role="list">
-          {items.map((item) => {
-            const meta = STATUS_META[item.status] ?? STATUS_META.upcoming
-            const Icon = meta.icon
+        <div className="space-y-3.5">
+          {items.map((item, idx) => {
+            const meta = STATUS_META[item.status]
+            const StatusIcon = meta.icon
             return (
-              <li key={item.id}>
-                <div
-                  className={cn(
-                    'h-full rounded-2xl border border-s-4 border-border bg-card p-4 shadow-soft transition-all duration-slow hover:shadow-elevation-1',
-                    meta.bar,
-                    item.status === 'cancelled' && 'opacity-70',
-                    item.status === 'live' && 'bg-error-soft',
-                  )}
-                >
-                  <div className="flex items-start gap-4">
-                    <span
-                      className={cn(
-                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
-                        meta.tile,
-                      )}
-                      aria-hidden="true"
-                    >
-                      <Icon size={18} />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-medium text-main">{item.subject}</p>
-                      <p className="truncate text-[11px] font-normal text-muted">
-                        {item.teacher || 'غير محددة'}
-                      </p>
-                    </div>
-                    <div className="inline-flex shrink-0 flex-col items-center justify-center rounded-lg border border-border bg-surface px-2.5 py-1.5 text-center">
-                      <span className="font-dash text-base font-medium tabular-nums leading-none text-main">
-                        {item.hour}
-                      </span>
-                      <span className="mt-0.5 text-[9px] font-normal text-muted">
-                        {periodLabel(item.period)}
-                      </span>
-                    </div>
+              <div
+                key={item.id || idx}
+                className={cn(
+                  'border-border/70 bg-surface/40 hover:bg-surface/80 relative rounded-2xl border p-4 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-1',
+                  'border-s-4',
+                  meta.bar,
+                )}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-base font-black text-main">{item.subject}</p>
+                    <p className="mt-0.5 text-xs text-muted">
+                      مع {item.teacher} · {item.hour} {periodLabel(item.period, true)}
+                    </p>
                   </div>
-
                   <span
                     className={cn(
-                      'mt-2.5 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium',
+                      'inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold shadow-soft',
                       meta.chip,
                     )}
                   >
-                    <Icon size={10} />
-                    {meta.label}
+                    <StatusIcon size={12} />
+                    <span>{meta.label}</span>
                   </span>
-
-                  {(item.topics || item.homework || item.notes) && (
-                    <div className="mt-2.5 space-y-1.5">
-                      {item.topics && (
-                        <Detail
-                          icon={BookOpen}
-                          wrap="border-success-soft bg-success-soft"
-                          tile="bg-success text-on-success"
-                          label="ما تم إنجازه"
-                          labelClass="text-success-strong"
-                          value={item.topics}
-                        />
-                      )}
-                      {item.homework && (
-                        <Detail
-                          icon={Star}
-                          wrap="border-warning-soft bg-warning-soft dark:border-primary-soft dark:bg-primary-soft"
-                          tile="bg-warning text-on-warning dark:bg-primary dark:text-on-primary"
-                          label="الواجب"
-                          labelClass="text-warning-strong dark:text-primary"
-                          value={item.homework}
-                        />
-                      )}
-                      {item.notes && (
-                        <Detail
-                          icon={FileText}
-                          wrap="border-primary-soft bg-primary-soft"
-                          tile="bg-primary text-on-primary"
-                          label="ملاحظة للجلسة القادمة"
-                          labelClass="text-primary"
-                          value={item.notes}
-                        />
-                      )}
-                    </div>
-                  )}
                 </div>
-              </li>
+
+                {(item.topics || item.homework) && (
+                  <div className="mt-3.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    {item.topics && (
+                      <Detail
+                        icon={BookOpen}
+                        wrap="border-primary/20 bg-primary-soft/40"
+                        tile="bg-primary text-on-primary"
+                        label="المواضيع"
+                        labelClass="text-primary"
+                        value={item.topics}
+                      />
+                    )}
+                    {item.homework && (
+                      <Detail
+                        icon={Star}
+                        wrap="border-warning/20 bg-warning-soft/40"
+                        tile="bg-warning text-on-warning"
+                        label="الواجب"
+                        labelClass="text-warning-strong"
+                        value={item.homework}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
             )
           })}
-        </ol>
+        </div>
       )}
     </section>
   )

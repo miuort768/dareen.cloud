@@ -22,7 +22,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
     <div
       role="tablist"
       aria-label="اختيار الابن"
-      className="no-scrollbar flex gap-2 overflow-x-auto py-0.5"
+      className="no-scrollbar flex gap-2.5 overflow-x-auto py-1"
     >
       {kids.map((child, idx) => {
         const active = child.id === selectedId
@@ -34,25 +34,25 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
             aria-selected={active}
             onClick={() => onSelect(child.id)}
             className={cn(
-              'inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+              'group inline-flex shrink-0 items-center gap-3 rounded-[20px] border px-4 py-2.5 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               active
-                ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
-                : 'border-border bg-card text-main hover:border-primary/30 hover:bg-primary-soft',
+                ? 'border-primary bg-primary text-on-primary shadow-elevation-2'
+                : 'border-border/80 bg-card text-main shadow-elevation-1 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-surface',
             )}
           >
             <span
               className={cn(
-                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium',
+                'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-black shadow-soft transition-transform duration-normal group-hover:scale-105',
                 active ? 'bg-white/25 text-on-primary' : tone,
               )}
               aria-hidden="true"
             >
               {(child.name || 'ط').charAt(0)}
             </span>
-            <span className="min-w-0">
+            <span className="min-w-0 text-start">
               <span
                 className={cn(
-                  'block max-w-28 truncate text-xs font-normal',
+                  'block max-w-32 truncate text-xs font-black',
                   active ? 'text-on-primary' : 'text-main',
                 )}
               >
@@ -61,8 +61,8 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
               {child.grade && (
                 <span
                   className={cn(
-                    'block max-w-28 truncate text-[9px] font-normal',
-                    active ? 'text-on-primary opacity-70' : 'text-muted',
+                    'block max-w-32 truncate text-[10px] font-semibold',
+                    active ? 'text-on-primary/80' : 'text-muted',
                   )}
                 >
                   {child.grade}

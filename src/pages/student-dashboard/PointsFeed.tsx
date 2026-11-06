@@ -1,4 +1,4 @@
-import { Star, Clock, CheckCircle2, XCircle, Activity } from 'lucide-react'
+import { Star, CheckCircle2, XCircle, Activity } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { cn } from '../../lib/utils'
@@ -63,71 +63,69 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
   return (
     <section
       aria-label="آخر النشاطات"
-      className="rounded-3xl border border-border bg-card p-4 shadow-soft transition-colors duration-slow sm:p-5"
+      className="border-border/80 rounded-[26px] border bg-card p-5 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 sm:p-6"
     >
       <div className="mb-4 flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
-            <Activity size={14} />
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary shadow-soft">
+            <Activity size={16} />
           </div>
-          <h3 className="text-sm font-medium text-main">آخر النشاطات</h3>
+          <h3 className="text-sm font-black text-main">آخر النشاطات والحصص</h3>
         </div>
-        <span className="shrink-0 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-medium tabular-nums text-primary">
+        <span className="shrink-0 rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-bold tabular-nums text-primary">
           {items.length}
         </span>
       </div>
 
-      <ol className="relative space-y-0.5" role="list">
-        <div className="absolute bottom-1 end-[15px] top-1 w-px bg-divider" aria-hidden="true" />
+      <div className="space-y-2">
         {items.map((item) => {
           const { tile, Icon } = toneStyle(item.tone)
           return (
-            <li
+            <div
               key={item.id}
-              className="relative flex items-start gap-3 rounded-xl px-1 py-2.5 transition-colors hover:bg-hover"
+              className="border-border/50 bg-surface/30 hover:bg-surface/70 flex items-center justify-between gap-3 rounded-2xl border p-3 transition-colors"
             >
-              <span
-                className={cn(
-                  'z-10 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-xl ring-2 ring-card',
-                  tile,
-                )}
-                aria-hidden="true"
-              >
-                <Icon size={13} />
-              </span>
-
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-xs font-medium text-main">{item.title}</p>
-                {item.meta && (
-                  <p className="flex items-center gap-1 text-[10px] font-normal text-muted">
-                    <Clock size={8} />
-                    {item.meta}
-                  </p>
-                )}
-                {item.detail && (
-                  <p className="mt-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-normal leading-relaxed text-main">
-                    {item.detail}
-                  </p>
-                )}
-              </div>
-
-              {item.amount !== undefined && (
+              <div className="flex min-w-0 items-center gap-3">
                 <span
                   className={cn(
-                    'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-medium tabular-nums',
-                    item.amount >= 0
-                      ? 'bg-success-soft text-success-dark'
-                      : 'bg-error-soft text-error-dark',
+                    'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-soft',
+                    tile,
                   )}
                 >
-                  {item.amount >= 0 ? '+' : ''}
-                  {item.amount}
+                  <Icon size={16} />
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-bold text-main">{item.title}</p>
+                  <div className="flex items-center gap-1.5 text-[10px] text-muted">
+                    {item.meta && <span>{item.meta}</span>}
+                    {item.detail && (
+                      <>
+                        <span>·</span>
+                        <span className="truncate">{item.detail}</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {typeof item.amount === 'number' && (
+                <span
+                  className={cn(
+                    'shrink-0 font-dash text-xs font-black tabular-nums',
+                    item.amount > 0
+                      ? 'text-success-strong'
+                      : item.amount < 0
+                        ? 'text-error'
+                        : 'text-main',
+                  )}
+                >
+                  {item.amount > 0 ? `+${item.amount}` : item.amount}
                 </span>
               )}
-            </li>
+            </div>
           )
         })}
-      </ol>
+      </div>
     </section>
   )
 }
