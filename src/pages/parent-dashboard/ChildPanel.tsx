@@ -1,19 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import {
-  BookMarked,
-  CalendarClock,
-  Clock,
-  ArrowLeft,
-  FileText,
-  Snowflake,
-  GraduationCap,
-  User,
-  CalendarDays,
-} from 'lucide-react'
+import { BookMarked, CalendarClock, ArrowLeft, GraduationCap, User } from 'lucide-react'
 import type { Student } from '../../types'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
-import { CountUp } from '../../shared/components/CountUp'
-import { ProgressBar } from '../../shared/components/ui'
 import { cn } from '../../lib/utils'
 import type { ChildStats } from './types'
 
@@ -22,7 +10,7 @@ interface ChildPanelProps {
   stats: ChildStats
 }
 
-const Ring = ({ value, size = 64 }: { value: number; size?: number }) => {
+const Ring = ({ value, size = 68 }: { value: number; size?: number }) => {
   const r = (size - 8) / 2
   const c = 2 * Math.PI * r
   const tone =
@@ -53,23 +41,11 @@ const Ring = ({ value, size = 64 }: { value: number; size?: number }) => {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={cn('font-dash text-sm font-medium tabular-nums', tone)}>{value}%</span>
+        <span className={cn('font-dash text-sm font-bold tabular-nums', tone)}>{value}%</span>
       </div>
     </div>
   )
 }
-
-const ACCENT_TONES: {
-  tile: string
-  text: string
-  bar: 'primary' | 'success' | 'info' | 'warning' | 'error'
-}[] = [
-  { tile: 'bg-primary-soft', text: 'text-primary', bar: 'primary' },
-  { tile: 'bg-success-soft', text: 'text-success-strong', bar: 'success' },
-  { tile: 'bg-info-soft', text: 'text-info-strong', bar: 'info' },
-  { tile: 'bg-warning-soft', text: 'text-warning-strong', bar: 'warning' },
-  { tile: 'bg-error-soft', text: 'text-error-strong', bar: 'error' },
-]
 
 export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   const navigate = useNavigate()
@@ -84,206 +60,93 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   return (
     <section
       aria-label={`لوحة متابعة ${child.name}`}
-      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-soft transition-colors duration-slow"
+      className="border-border/80 overflow-hidden rounded-[26px] border bg-card shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2"
     >
       {/* Header — هوية الابن + حلقة الحضور + أرقام */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
-            <span className="text-base font-medium" aria-hidden="true">
+      <div className="border-border/60 bg-surface/40 p-5.5 flex flex-wrap items-center justify-between gap-4 border-b sm:p-6">
+        <div className="flex min-w-0 items-center gap-3.5">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
+            <span className="text-xl font-bold" aria-hidden="true">
               {(child.name || 'ط').charAt(0)}
             </span>
           </div>
           <div className="min-w-0">
-            <h2 className="truncate text-base font-medium text-main">{child.name}</h2>
-            <p className="flex items-center gap-1.5 text-[11px] font-normal text-muted">
-              <GraduationCap size={11} className="text-primary" />
-              {child.grade}
+            <h2 className="truncate text-lg font-black text-main">{child.name}</h2>
+            <p className="flex items-center gap-1.5 text-xs text-muted">
+              <GraduationCap size={13} className="text-primary" />
+              <span>{child.stage || 'المرحلة الدراسية'}</span>
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="text-center">
-            <p className="text-sm font-medium tabular-nums text-main">
-              <CountUp value={stats.completed} />
-              <span className="text-[10px] font-normal text-muted"> منجزة</span>
-            </p>
-            {stats.cancelled > 0 && (
-              <p className="text-[10px] font-normal text-error">{stats.cancelled} ملغاة</p>
-            )}
+          <div className="text-end">
+            <p className="text-xs font-bold text-main">نسبة الحضور</p>
+            <p className="text-[11px] text-muted">خلال الشهر الحالي</p>
           </div>
           <Ring value={stats.attendanceRate} />
         </div>
       </div>
 
-      {/* شريط الحصة القادمة */}
-      <div className="border-b border-border bg-primary-soft px-5 py-3.5">
-        {nextSession && when ? (
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="min-w-0">
-              <p className="flex items-center gap-2 text-xs font-medium text-main">
-                <CalendarClock size={13} className="text-primary" />
-                الحصة القادمة:
-                <span className="truncate text-primary">{nextSession.subject}</span>
-              </p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-normal text-muted">
-                <User size={10} className="text-primary" />
-                مع {nextSession.teacher}
-              </p>
+      <div className="p-5.5 grid grid-cols-1 gap-5 sm:p-6 lg:grid-cols-2">
+        {/* الحصة القادمة */}
+        <div className="border-border/80 bg-surface/50 p-4.5 flex flex-col justify-between rounded-2xl border shadow-soft">
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="flex items-center gap-2 text-xs font-bold text-main">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft text-primary">
+                  <CalendarClock size={14} />
+                </span>
+                الحصة القادمة
+              </span>
+              {when && (
+                <span className="rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-bold tabular-nums text-primary">
+                  {when}
+                </span>
+              )}
             </div>
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-medium tabular-nums text-on-primary">
-              <Clock size={11} />
-              {when}
-            </span>
+
+            {nextSession ? (
+              <div className="mt-3">
+                <p className="text-base font-black text-main">{nextSession.subject}</p>
+                <p className="mt-1 flex items-center gap-1.5 text-xs text-muted">
+                  <User size={12} className="text-primary" />
+                  <span>مع {nextSession.teacher}</span>
+                </p>
+              </div>
+            ) : (
+              <p className="mt-3 text-xs text-muted">لا توجد حصص قادمة مجدولة حالياً</p>
+            )}
           </div>
-        ) : (
-          <p className="flex items-center gap-2 text-xs font-normal text-muted">
-            <CalendarClock size={13} className="text-primary" />
-            لا توجد حصص مجدولة
-          </p>
-        )}
-        <button
-          onClick={() => navigate('/schedule')}
-          className="mt-3 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full border border-primary/25 bg-primary-soft text-[11px] font-medium text-primary transition-colors duration-normal hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-          aria-label="فتح الجدول الأسبوعي"
-        >
-          <CalendarDays size={12} />
-          عرض الجدول الأسبوعي
-          <ArrowLeft size={12} />
-        </button>
-      </div>
 
-      {/* تقدم المواد */}
-      <div className="p-5">
-        <div className="mb-3 flex items-center gap-2">
-          <h3 className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-on-primary shadow-elevation-1">
-            تقدم المواد
-          </h3>
-          <span
-            className="min-w-0 flex-1 border-t-2 border-dashed border-divider"
-            aria-hidden="true"
-          />
-        </div>
-        {enrollments.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-border py-6 text-center text-xs font-normal text-muted">
-            لا توجد مواد مسجلة
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-            {enrollments.map((en, idx) => {
-              const total = Number(en.sessionsTotal || 0)
-              const used = Number(en.sessionsUsed || 0)
-              const pct = total > 0 ? Math.min(Math.round((used / total) * 100), 100) : 0
-              const frozen = en.isFrozen
-              const accent = ACCENT_TONES[idx % ACCENT_TONES.length]!
-              const teacherName =
-                typeof en.teacher === 'string' ? en.teacher : en.teacher?.name || en.teacherName
-              return (
-                <div
-                  key={en.id || `en-${idx}`}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors duration-slow"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <span
-                        className={cn(
-                          'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ring-1 ring-inset ring-border',
-                          accent.tile,
-                          accent.text,
-                        )}
-                      >
-                        <BookMarked size={18} />
-                      </span>
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-medium text-main">{en.subject}</p>
-                        {teacherName && (
-                          <p className="mt-0.5 flex items-center gap-1 text-[11px] font-normal text-muted">
-                            <User size={11} className={cn('shrink-0', accent.text)} />
-                            <span className="truncate">{teacherName}</span>
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {frozen ? (
-                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2.5 py-1 text-[10px] font-normal text-muted">
-                        <Snowflake size={10} /> مجمّدة
-                      </span>
-                    ) : (
-                      <span
-                        className={cn(
-                          'shrink-0 font-dash text-2xl font-medium tabular-nums leading-none',
-                          accent.text,
-                        )}
-                      >
-                        {pct}%
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="mt-4">
-                    <div className="mb-1.5 flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-medium text-muted">المنهج</span>
-                      <span className="text-xs font-medium tabular-nums text-main">
-                        {used}
-                        <span className="text-[10px] font-normal text-muted"> / {total} حصة</span>
-                      </span>
-                    </div>
-                    {frozen ? (
-                      <div className="h-1.5 rounded-full bg-divider" />
-                    ) : (
-                      <ProgressBar value={pct} variant={accent.bar} size="sm" animate />
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        )}
-
-        {/* ملاحظات المعلمات */}
-        {notes.length > 0 && (
-          <div className="mt-5">
-            <h3 className="mb-3 flex items-center gap-1.5 text-xs font-medium text-muted">
-              <FileText size={14} className="text-primary" />
-              ملاحظات المعلمات
-            </h3>
-            <div className="space-y-3">
-              {notes.map((note, i) => (
-                <div
-                  key={`note-${i}`}
-                  className="rounded-2xl border border-border bg-primary-soft p-4 shadow-soft"
-                >
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="text-primary-strong text-[11px] font-medium">
-                      {note.subject}
-                    </span>
-                    <span className="text-[10px] font-normal text-primary">{note.teacher}</span>
-                  </div>
-                  <p className="text-[12px] leading-relaxed text-main opacity-90">{note.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <button
-          onClick={() => navigate('/parent-students')}
-          className="group mt-5 flex min-h-14 w-full items-center gap-3 rounded-full bg-primary pe-2.5 ps-4 text-start text-on-primary shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
-        >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
-            <FileText size={18} />
-          </span>
-          <span className="min-w-0 flex-1 text-xs font-medium text-on-primary">
-            عرض السجل الكامل في صفحة الأبناء
-          </span>
-          <span
-            aria-hidden
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-primary transition-transform duration-normal group-hover:-translate-x-1"
+          <button
+            onClick={() => navigate('/schedule')}
+            className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-primary transition-colors hover:text-primary-hover"
           >
-            <ArrowLeft size={16} />
-          </span>
-        </button>
+            <span>عرض جدول الابن</span>
+            <ArrowLeft size={13} />
+          </button>
+        </div>
+
+        {/* ملخص الإنجاز الدراسي */}
+        <div className="border-border/80 bg-surface/50 p-4.5 flex flex-col justify-between rounded-2xl border shadow-soft">
+          <div>
+            <span className="flex items-center gap-2 text-xs font-bold text-main">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-success-soft text-success-strong">
+                <BookMarked size={14} />
+              </span>
+              المواد النشطة
+            </span>
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="font-dash text-2xl font-black text-main">{enrollments.length}</span>
+              <span className="text-xs text-muted">مواد مسجل بها</span>
+            </div>
+          </div>
+
+          {notes && (
+            <p className="mt-3 truncate rounded-xl bg-card p-2.5 text-xs text-muted">{notes}</p>
+          )}
+        </div>
       </div>
     </section>
   )

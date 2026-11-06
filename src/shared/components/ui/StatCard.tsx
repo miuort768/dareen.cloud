@@ -42,47 +42,47 @@ const styles: Record<
     skeleton: 'bg-border',
   },
   primary: {
-    card: 'bg-primary text-on-primary',
+    card: 'bg-gradient-to-br from-primary via-primary-active to-primary-deep text-on-primary border border-white/20',
     icon: 'bg-white/20 text-on-primary',
     value: 'text-on-primary',
-    title: 'text-on-primary opacity-70',
-    trend: 'text-on-primary opacity-80',
+    title: 'text-on-primary opacity-80',
+    trend: 'text-on-primary opacity-90',
     skeleton: 'bg-white/20',
   },
   success: {
-    card: 'bg-success text-on-success',
+    card: 'bg-success text-on-success border border-white/20',
     icon: 'bg-white/20 text-on-success',
     value: 'text-on-success',
-    title: 'text-on-success opacity-70',
-    trend: 'text-on-success opacity-80',
+    title: 'text-on-success opacity-80',
+    trend: 'text-on-success opacity-90',
     skeleton: 'bg-white/20',
   },
   warning: {
-    card: 'bg-warning text-on-warning',
+    card: 'bg-warning text-on-warning border border-white/20',
     icon: 'bg-white/20 text-on-warning',
     value: 'text-on-warning',
-    title: 'text-on-warning opacity-70',
-    trend: 'text-on-warning opacity-80',
+    title: 'text-on-warning opacity-80',
+    trend: 'text-on-warning opacity-90',
     skeleton: 'bg-white/20',
   },
   error: {
-    card: 'bg-error text-on-error',
+    card: 'bg-error text-on-error border border-white/20',
     icon: 'bg-white/20 text-on-error',
     value: 'text-on-error',
-    title: 'text-on-error opacity-70',
-    trend: 'text-on-error opacity-80',
+    title: 'text-on-error opacity-80',
+    trend: 'text-on-error opacity-90',
     skeleton: 'bg-white/20',
   },
   info: {
-    card: 'bg-info text-on-info',
+    card: 'bg-info text-on-info border border-white/20',
     icon: 'bg-white/20 text-on-info',
     value: 'text-on-info',
-    title: 'text-on-info opacity-70',
-    trend: 'text-on-info opacity-80',
+    title: 'text-on-info opacity-80',
+    trend: 'text-on-info opacity-90',
     skeleton: 'bg-white/20',
   },
   'soft-primary': {
-    card: 'bg-primary-soft text-main',
+    card: 'bg-primary-soft/60 border border-primary/20 text-main',
     icon: 'bg-card text-primary shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
@@ -90,7 +90,7 @@ const styles: Record<
     skeleton: 'bg-card',
   },
   'soft-success': {
-    card: 'bg-success-soft text-main',
+    card: 'bg-success-soft/60 border border-success/20 text-main',
     icon: 'bg-card text-success-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
@@ -98,7 +98,7 @@ const styles: Record<
     skeleton: 'bg-card',
   },
   'soft-warning': {
-    card: 'bg-warning-soft text-main',
+    card: 'bg-warning-soft/60 border border-warning/20 text-main',
     icon: 'bg-card text-warning-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
@@ -106,7 +106,7 @@ const styles: Record<
     skeleton: 'bg-card',
   },
   'soft-error': {
-    card: 'bg-error-soft text-main',
+    card: 'bg-error-soft/60 border border-error/20 text-main',
     icon: 'bg-card text-error-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
@@ -114,7 +114,7 @@ const styles: Record<
     skeleton: 'bg-card',
   },
   'soft-info': {
-    card: 'bg-info-soft text-main',
+    card: 'bg-info-soft/60 border border-info/20 text-main',
     icon: 'bg-card text-info-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
@@ -155,7 +155,7 @@ export const StatCard = ({
   return (
     <div
       className={cn(
-        'border-border/80 group relative overflow-hidden rounded-2xl border p-5 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-elevation-2',
+        'p-5.5 group relative overflow-hidden rounded-[24px] shadow-elevation-1 transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-2',
         s.card,
         className,
       )}
@@ -178,33 +178,33 @@ export const StatCard = ({
           <div className={cn('h-4 w-20 rounded', s.skeleton)} />
         </div>
       ) : (
-        <div className="relative z-10 flex flex-col">
-          <div className="mb-3 flex items-start justify-between">
+        <div className="relative z-10 flex flex-col justify-between">
+          <div className="mb-3.5 flex items-start justify-between gap-3">
             <p
               className={cn(
-                'text-3xl font-medium tabular-nums leading-none tracking-tight',
+                'font-dash text-3xl font-black tabular-nums leading-none tracking-tight sm:text-4xl',
                 s.value,
               )}
             >
               {value ?? '—'}
-              {unit && <span className={cn('ms-1 text-sm font-normal', s.title)}>{unit}</span>}
+              {unit && <span className={cn('ms-1.5 text-xs font-semibold', s.title)}>{unit}</span>}
             </p>
             {Icon && !watermark && (
               <div
                 className={cn(
-                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-full',
+                  'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl shadow-elevation-1 transition-transform duration-normal group-hover:scale-105',
                   s.icon,
                 )}
               >
-                <Icon size={18} />
+                <Icon size={20} />
               </div>
             )}
             {badge && (
               <span
                 className={cn(
-                  'shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-normal uppercase tracking-wider',
+                  'shrink-0 rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider',
                   s.title,
-                  'border border-current',
+                  'border-current/30 border',
                 )}
               >
                 {badge}
@@ -213,14 +213,16 @@ export const StatCard = ({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <p className={cn('truncate text-sm font-normal tracking-wide', s.title)}>{title}</p>
+            <p className={cn('truncate text-xs font-bold tracking-wide sm:text-sm', s.title)}>
+              {title}
+            </p>
 
             {(subtitle || trend) && (
               <div className="mt-1 flex items-center gap-2">
                 {trend && (
                   <div
                     className={cn(
-                      'flex items-center gap-1 rounded-md bg-white/10 px-1.5 py-0.5 text-xs font-light',
+                      'flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-semibold',
                       soft
                         ? trend.isUp
                           ? 'bg-success-soft text-success-strong'
@@ -232,11 +234,11 @@ export const StatCard = ({
                       {trend.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
                     </span>
                     <span>{trend.value}%</span>
-                    {trend.label && <span className="font-medium opacity-70">{trend.label}</span>}
+                    {trend.label && <span className="font-normal opacity-80">{trend.label}</span>}
                   </div>
                 )}
                 {subtitle && (
-                  <p className={cn('truncate text-xs font-medium opacity-70', s.title)}>
+                  <p className={cn('truncate text-xs font-normal opacity-80', s.title)}>
                     {subtitle}
                   </p>
                 )}

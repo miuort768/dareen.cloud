@@ -11,7 +11,7 @@ const DAY_LABELS = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خ�
 
 /**
  * Week-at-a-glance — حمل الأسبوع القادم وتوزيع الحصص.
- * تصميم ناعم ومتناسق مع الوضعين الفاتح والداكن.
+ * تصميم عصري بنمط Double-Bezel وشاشات Desktop فخمة.
  */
 export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
   const todayIdx = new Date().getDay()
@@ -24,7 +24,7 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
   const ordered = Array.from({ length: 7 }, (_, i) => {
     const idx = (todayIdx + i) % 7
     const count = counts[i] ?? 0
-    const barPct = count > 0 ? Math.max(20, Math.round((count / maxCount) * 100)) : 8
+    const barPct = count > 0 ? Math.max(22, Math.round((count / maxCount) * 100)) : 10
     return {
       label: DAY_LABELS[idx],
       count,
@@ -37,29 +37,28 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
     <section
       aria-label="حمل الأسبوع القادم"
       className={cn(
-        'flex h-full flex-col justify-between bg-card p-4 transition-colors duration-slow sm:p-5',
-        framed && 'rounded-2xl border border-border shadow-elevation-1',
+        'flex h-full flex-col justify-between bg-card p-5 transition-all duration-slow sm:p-6',
+        framed &&
+          'border-border/80 rounded-[26px] border shadow-elevation-1 hover:shadow-elevation-2',
       )}
     >
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary shadow-elevation-1">
-            <CalendarClock size={18} />
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-soft text-primary shadow-soft">
+            <CalendarClock size={20} />
           </div>
-          <div className="flex flex-col">
-            <h3 className="text-sm font-medium text-main">أسبوعك القادم</h3>
-            <p className="mt-0.5 text-[10px] font-normal text-muted">
-              توزيع الحصص على الأيام القادمة
-            </p>
+          <div>
+            <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
+            <p className="text-xs text-muted">توزيع الحصص والأنصبة على مدار الأيام</p>
           </div>
         </div>
-        <span className="flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[11px] font-medium tabular-nums text-on-primary shadow-elevation-1">
-          <UsersRound size={12} />
+        <span className="flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-1.5 text-xs font-bold tabular-nums text-on-primary shadow-elevation-1">
+          <UsersRound size={13} />
           <span>{weekTotal} حصة</span>
         </span>
       </div>
 
-      <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+      <div className="grid grid-cols-7 gap-2 sm:gap-2.5">
         {ordered.map((day) => (
           <div
             key={day.label}
@@ -69,10 +68,10 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
                 : `${day.label}: لا حصص`
             }
             className={cn(
-              'group flex flex-col items-center justify-between rounded-xl border p-2 transition-all duration-normal hover:-translate-y-0.5',
+              'group flex flex-col items-center justify-between rounded-2xl border p-2.5 transition-all duration-normal hover:-translate-y-1',
               day.isToday
-                ? 'bg-primary-soft/60 border-primary/50 shadow-elevation-1'
-                : 'border-border/70 bg-surface/50 hover:border-border hover:bg-surface',
+                ? 'bg-primary-soft/70 border-primary/50 shadow-elevation-1'
+                : 'border-border/70 bg-surface/60 hover:border-border hover:bg-surface',
             )}
           >
             <div className="flex items-center gap-1">
@@ -80,33 +79,30 @@ export const WeekStrip = ({ counts, framed = true }: WeekStripProps) => {
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
               )}
               <span
-                className={cn(
-                  'text-[10px] font-medium',
-                  day.isToday ? 'text-primary' : 'text-muted',
-                )}
+                className={cn('text-xs font-bold', day.isToday ? 'text-primary' : 'text-muted')}
               >
                 {day.label}
               </span>
             </div>
 
-            <div className="bg-card/60 my-2 flex h-12 w-full items-end justify-center rounded-lg p-1">
+            <div className="bg-card/70 my-2.5 flex h-16 w-full items-end justify-center rounded-xl p-1">
               <div
                 style={{ height: `${day.barPct}%` }}
                 className={cn(
-                  'w-full max-w-[14px] rounded-t-md transition-all duration-500',
+                  'w-full max-w-[16px] rounded-t-lg transition-all duration-500',
                   day.count > 0
                     ? day.isToday
                       ? 'bg-gradient-to-t from-primary to-primary-hover shadow-elevation-1'
-                      : 'bg-primary/40 group-hover:bg-primary/70'
-                    : 'bg-border/60',
+                      : 'bg-primary/40 group-hover:bg-primary/80'
+                    : 'bg-divider/50',
                 )}
               />
             </div>
 
             <span
               className={cn(
-                'font-dash text-xs font-medium tabular-nums leading-none',
-                day.isToday ? 'text-primary' : day.count > 0 ? 'text-main' : 'text-muted',
+                'font-dash text-xs font-bold tabular-nums',
+                day.count > 0 ? (day.isToday ? 'text-primary' : 'text-main') : 'text-muted/60',
               )}
             >
               {day.count}

@@ -36,60 +36,63 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
   return (
     <section
       aria-label="رحلة الرتب"
-      className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow sm:p-6"
+      className="border-border/80 p-5.5 rounded-[26px] border bg-card shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 sm:p-6"
     >
       <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
-            <Trophy size={14} />
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary shadow-soft">
+            <Trophy size={16} />
           </div>
-          <h3 className="text-sm font-medium text-main">رحلة الرتب</h3>
+          <div>
+            <h3 className="text-sm font-bold text-main">رحلة الرتب</h3>
+            <p className="text-[11px] text-muted">تقدمك الإجمالي ونقاطك</p>
+          </div>
         </div>
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
-            <RankIcon size={19} />
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
+            <RankIcon size={20} />
           </div>
           <div className="min-w-0 text-end">
-            <p className="truncate text-sm font-medium text-main">{rank.name}</p>
+            <p className="truncate text-sm font-bold text-main">{rank.name}</p>
             <p className="text-[11px] font-normal text-muted">رتبتك الحالية</p>
           </div>
         </div>
       </div>
 
-      <div className="mb-4 rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover px-4 py-3 text-center shadow-elevation-1">
+      <div className="mb-4 rounded-2xl bg-gradient-to-br from-primary via-primary-active to-primary-deep p-4 text-center text-on-primary shadow-elevation-1">
         <CountUp
           value={points}
-          className="block font-dash text-2xl font-medium tabular-nums leading-none text-on-primary"
+          className="block font-dash text-3xl font-black tabular-nums leading-none text-on-primary"
         />
-        <p className="mt-1 text-[10px] font-normal text-white/80">نقطة</p>
+        <p className="mt-1.5 text-xs font-semibold text-white/90">إجمالي النقاط المكتسبة</p>
       </div>
 
       {nextRankName ? (
-        <>
-          <div className="relative h-2.5 overflow-hidden rounded-full bg-divider">
+        <div className="space-y-2">
+          <div className="relative h-3 overflow-hidden rounded-full bg-divider">
             <motion.div
-              className="absolute inset-y-0 start-0 rounded-full bg-primary"
+              className="absolute inset-y-0 start-0 rounded-full bg-gradient-to-r from-primary to-primary-hover"
               initial={{ width: 0 }}
               animate={{ width: `${pct}%` }}
               transition={{ duration: 0.9, ease: 'easeOut' }}
             />
           </div>
-          <p className="mt-2 flex items-center justify-between gap-2 text-[11px] font-normal">
+          <div className="flex items-center justify-between gap-2 text-xs">
             <span className="truncate text-muted">
-              التالي: <span className="font-medium text-main">{nextRankName}</span>
+              الرتبة القادمة: <span className="font-bold text-main">{nextRankName}</span>
             </span>
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-medium text-primary">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary-soft px-2.5 py-0.5 text-[11px] font-bold text-primary">
               {pointsNeeded} نقطة متبقية
             </span>
-          </p>
-        </>
+          </div>
+        </div>
       ) : (
-        <p className="rounded-2xl bg-success py-3 text-center text-[11px] font-medium text-on-success">
-          أعلى رتبة — أنت الأسطورة!
+        <p className="rounded-2xl bg-success py-3 text-center text-xs font-bold text-on-success">
+          أعلى رتبة — أنت الأسطورة! 🌟
         </p>
       )}
 
-      <div className="mt-4 grid grid-cols-4 gap-2">
+      <div className="mt-5 grid grid-cols-4 gap-2">
         {BADGES.map((badge) => {
           const Icon = badge.icon
           const unlocked = points >= badge.at
@@ -97,18 +100,24 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
             <div
               key={badge.label}
               className={cn(
-                'rounded-2xl p-2 text-center transition-all duration-slow',
+                'rounded-2xl p-2.5 text-center transition-all duration-slow',
                 unlocked
-                  ? cn('hover:-translate-y-0.5 hover:shadow-elevation-1', badge.tile)
-                  : 'bg-divider',
+                  ? `${badge.tile} border border-primary/20 shadow-elevation-1`
+                  : 'bg-surface/50 opacity-50',
               )}
-              title={badge.label}
             >
-              <Icon size={15} className={cn('mx-auto', unlocked ? badge.text : 'text-muted')} />
+              <div
+                className={cn(
+                  'mx-auto mb-1 flex h-8 w-8 items-center justify-center rounded-xl',
+                  unlocked ? badge.text : 'text-muted',
+                )}
+              >
+                <Icon size={16} />
+              </div>
               <p
                 className={cn(
-                  'mt-1 text-[9px] font-medium leading-tight',
-                  unlocked ? badge.text : 'text-muted',
+                  'truncate text-[10px] font-bold',
+                  unlocked ? 'text-main' : 'text-muted',
                 )}
               >
                 {badge.label}
