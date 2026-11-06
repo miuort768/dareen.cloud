@@ -66,7 +66,7 @@ export const MobileMetricGrid: React.FC<MobileMetricGridProps> = ({ metrics, cla
             <div className="mb-3 flex items-center justify-between">
               <div
                 className={cn(
-                  'flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-normal group-hover:scale-105',
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-normal group-hover:scale-105',
                   toneStyle.iconBg,
                 )}
               >
@@ -92,7 +92,7 @@ export const MobileMetricGrid: React.FC<MobileMetricGridProps> = ({ metrics, cla
 
             {/* Middle: Big Value */}
             <div>
-              <p className="font-dash text-2xl font-medium tracking-tight text-main">
+              <p className="truncate font-dash text-xl font-medium tracking-tight text-main sm:text-2xl">
                 {item.value}
               </p>
 

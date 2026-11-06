@@ -55,12 +55,12 @@ export const MobileQuickActionsRow: React.FC<MobileQuickActionsRowProps> = ({
               type="button"
               onClick={act.onClick}
               aria-label={act.label}
-              className="border-border/80 group flex flex-col items-center justify-center gap-2 rounded-2xl border bg-card p-2.5 shadow-elevation-1 outline-none transition-all duration-normal hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]"
+              className="border-border/80 group flex min-h-[76px] flex-col items-center justify-center gap-2 rounded-2xl border bg-card p-2 shadow-elevation-1 outline-none transition-all duration-normal hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft text-primary transition-transform duration-normal group-hover:scale-110 dark:bg-primary/20">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary transition-transform duration-normal group-hover:scale-110 dark:bg-primary/20">
                 <Icon size={20} strokeWidth={1.9} />
               </div>
-              <span className="line-clamp-2 text-center text-[10px] font-normal leading-tight text-main">
+              <span className="line-clamp-2 flex min-h-[24px] items-center justify-center text-center text-[10px] font-normal leading-tight text-main">
                 {act.label}
               </span>
             </button>

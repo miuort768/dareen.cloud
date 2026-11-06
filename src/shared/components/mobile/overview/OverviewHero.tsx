@@ -99,7 +99,7 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
 
           {/* Metric + CTA row */}
           {(ctaText || metric) && (
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="scrollbar-none flex items-center gap-2.5 overflow-x-auto pt-2">
               {metric && (
                 <div className="backdrop-blur-xs flex items-baseline gap-1.5 rounded-xl border border-primary/20 bg-primary/5 px-3 py-1.5">
                   <span className="font-dash text-lg font-medium leading-none text-primary">
@@ -131,9 +131,9 @@ export const OverviewHero: React.FC<OverviewHeroProps> = ({
         </div>
 
         {/* Mascot / Vector Hero Visual Container */}
-        <div className="flex shrink-0 items-center justify-center">
+        <div className="xs:flex hidden shrink-0 items-center justify-center">
           {illustration || (
-            <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/20 bg-gradient-to-br from-primary/15 via-primary/5 to-surface shadow-elevation-2">
+            <div className="backdrop-blur-xs h-18 w-18 sm:h-22 sm:w-22 relative flex items-center justify-center rounded-[24px] border border-primary/20 bg-gradient-to-br from-primary/15 via-primary/5 to-surface shadow-elevation-2">
               <Sparkles size={40} className="text-primary" strokeWidth={1.8} />
             </div>
           )}
