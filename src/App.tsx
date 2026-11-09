@@ -39,6 +39,9 @@ const StudentDashboard = lazy(() =>
 const TeacherDashboard = lazy(() =>
   import('./pages/TeacherDashboard').then((m) => ({ default: m.TeacherDashboard })),
 )
+const TeacherWhiteboardPage = lazy(() =>
+  import('./pages/TeacherWhiteboardPage').then((m) => ({ default: m.TeacherWhiteboardPage })),
+)
 const TeacherReports = lazy(() =>
   import('./pages/TeacherReports').then((m) => ({ default: m.TeacherReports })),
 )
@@ -405,6 +408,14 @@ function App() {
                   element={
                     <ProtectedRoute permission="dashboard">
                       <TeacherDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="teacher-whiteboard"
+                  element={
+                    <ProtectedRoute permission="dashboard">
+                      <TeacherWhiteboardPage />
                     </ProtectedRoute>
                   }
                 />

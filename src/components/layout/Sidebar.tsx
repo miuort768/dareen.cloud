@@ -24,6 +24,7 @@ import {
   Briefcase,
   Mail,
   BookUser,
+  PenTool,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
@@ -108,6 +109,12 @@ export const Sidebar = memo(
       { name: 'تقفيل الشهر', href: '/monthly-closing', id: 'monthly_closing', icon: CalendarCheck },
       { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
       { name: 'الجداول الدراسية', href: '/schedule', id: 'schedule', icon: CalendarDays },
+      {
+        name: 'السبورة التفاعلية',
+        href: '/teacher-whiteboard',
+        id: 'teacher_whiteboard',
+        icon: PenTool,
+      },
       { name: 'المواعيد', href: '/appointments', id: 'appointments', icon: CalendarCheck },
       { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
       {
@@ -218,6 +225,7 @@ export const Sidebar = memo(
           [
             'evaluations',
             'schedule',
+            'teacher_whiteboard',
             'announcements',
             'appointments',
             'forum',
@@ -250,7 +258,14 @@ export const Sidebar = memo(
         },
         {
           label: 'التعلّم',
-          items: pick('evaluations', 'attendance', 'schedule', 'appointments', 'tasks'),
+          items: pick(
+            'teacher_whiteboard',
+            'evaluations',
+            'attendance',
+            'schedule',
+            'appointments',
+            'tasks',
+          ),
         },
         {
           label: 'المالية',

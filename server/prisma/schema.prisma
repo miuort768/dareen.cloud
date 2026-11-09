@@ -47,6 +47,7 @@ model Teacher {
   activeSessions ActiveSession[]
   liveSessions   LiveSession[]
   paymentSetting TeacherPaymentSetting?
+  whiteboards    TeacherWhiteboard[]
 
   @@index([email])
   @@index([phone1])
@@ -834,4 +835,19 @@ model PermissionAudit {
   @@index([userId])
   @@index([timestamp])
   @@map("permission_audit")
+}
+
+model TeacherWhiteboard {
+  id         String   @id @default(cuid())
+  teacherId  String   @map("teacher_id")
+  teacher    Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  title      String   @default("سبورة جديدة")
+  pagesData  String   @default("[]") @map("pages_data")
+  thumbnail  String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([teacherId])
+  @@index([updatedAt])
+  @@map("teacher_whiteboards")
 }

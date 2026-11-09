@@ -13,6 +13,10 @@ const routeMeta: Record<string, { title: string; subtitle: string }> = {
   '/dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
   '/admin-dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
   '/teacher-dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
+  '/teacher-whiteboard': {
+    title: 'السبورة التفاعلية',
+    subtitle: 'سبورة تعليمية ذكية للشرح والرسم والرياضيات',
+  },
   '/student-dashboard': { title: 'نظرة عامة', subtitle: 'ملخص حصصك الدراسية ومسيرتك التعليمية' },
   '/parent-dashboard': { title: 'لوحة التحكم', subtitle: 'نظرة عامة على أداء أبنائك' },
   '/students': { title: 'الطلاب', subtitle: 'قائمة بجميع الطلاب المسجلين وحالاتهم' },

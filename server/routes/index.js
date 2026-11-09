@@ -84,6 +84,9 @@ router.use('/students', studentRouter);
 const { teacherRouter } = require('./education/teachers');
 router.use('/teachers', teacherRouter);
 
+const { whiteboardRouter } = require('./education/whiteboards');
+router.use('/whiteboards', whiteboardRouter);
+
 const { parentRouter } = require('./education/parents');
 router.use('/parents', parentRouter);
 
