@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   MousePointer,
   Pen,
@@ -20,6 +20,11 @@ import {
   Download,
   FileText,
   Compass,
+  ChevronDown,
+  Shapes,
+  Box,
+  Layers,
+  Sparkles,
 } from 'lucide-react'
 import type { WhiteboardTool, BackgroundPattern, SaveStatus } from '../../types/whiteboard'
 
@@ -51,6 +56,8 @@ interface WhiteboardToolbarProps {
   setRulerVisible: (v: boolean | ((v: boolean) => boolean)) => void
   protractorVisible: boolean
   setProtractorVisible: (v: boolean | ((v: boolean) => boolean)) => void
+  setSquareVisible?: boolean
+  setSetSquareVisible?: (v: boolean | ((v: boolean) => boolean)) => void
 }
 
 const COLOR_PRESETS = [
@@ -89,7 +96,20 @@ export const WhiteboardToolbar: React.FC<WhiteboardToolbarProps> = ({
   setRulerVisible,
   protractorVisible,
   setProtractorVisible,
+  setSquareVisible = false,
+  setSetSquareVisible,
 }) => {
+  const [shapesMenuOpen, setShapesMenuOpen] = useState(false)
+
+  const isAdvancedShape = [
+    'diamond',
+    'rightTriangle',
+    'hexagon',
+    'cylinder',
+    'cube',
+    'coordinatePlane',
+  ].includes(tool)
+
   return (
     <header className="bg-surface/95 sticky top-0 z-30 flex flex-wrap items-center justify-between gap-2 border-b border-border px-3 py-2 backdrop-blur-md">
       {/* Group 1: Core Action Tools */}
@@ -253,6 +273,128 @@ export const WhiteboardToolbar: React.FC<WhiteboardToolbarProps> = ({
           <Star size={18} />
         </button>
 
+        {/* Extended Shapes Dropdown */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setShapesMenuOpen((v) => !v)}
+            title="أشكال هندسية متقدمة"
+            className={`flex h-9 items-center gap-1 rounded-xl px-2 text-xs font-bold transition-all ${
+              isAdvancedShape || shapesMenuOpen
+                ? 'bg-primary text-on-primary shadow-elevation-1'
+                : 'bg-surface text-muted hover:bg-hover hover:text-main'
+            }`}
+          >
+            <Shapes size={16} />
+            <span className="hidden sm:inline">أشكال هندسية</span>
+            <ChevronDown
+              size={14}
+              className={shapesMenuOpen ? 'rotate-180 transition-transform' : ''}
+            />
+          </button>
+
+          {shapesMenuOpen && (
+            <div className="bg-surface/95 absolute start-0 top-full z-50 mt-1.5 flex w-48 flex-col gap-1 rounded-2xl border border-border p-2 shadow-elevation-4 backdrop-blur-xl animate-in fade-in zoom-in-95">
+              <span className="px-2 py-1 text-[10px] font-black text-muted">
+                أشكال هندسية ومحاور
+              </span>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTool('rightTriangle')
+                  setShapesMenuOpen(false)
+                }}
+                className={`flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                  tool === 'rightTriangle'
+                    ? 'bg-primary text-on-primary'
+                    : 'text-main hover:bg-hover'
+                }`}
+              >
+                <Triangle size={15} className="rotate-90" />
+                <span>مثلث قائم الزاوية</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTool('diamond')
+                  setShapesMenuOpen(false)
+                }}
+                className={`flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                  tool === 'diamond' ? 'bg-primary text-on-primary' : 'text-main hover:bg-hover'
+                }`}
+              >
+                <div className="h-3 w-3 rotate-45 border-2 border-current" />
+                <span>معيّن هندسي</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTool('hexagon')
+                  setShapesMenuOpen(false)
+                }}
+                className={`flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                  tool === 'hexagon' ? 'bg-primary text-on-primary' : 'text-main hover:bg-hover'
+                }`}
+              >
+                <Layers size={15} />
+                <span>شكل سداسي</span>
+              </button>
+
+              <div className="bg-border/60 my-1 h-px" />
+              <span className="px-2 py-1 text-[10px] font-black text-muted">
+                مجسمات 3D ومحاور بيانية
+              </span>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTool('cube')
+                  setShapesMenuOpen(false)
+                }}
+                className={`flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                  tool === 'cube' ? 'bg-primary text-on-primary' : 'text-main hover:bg-hover'
+                }`}
+              >
+                <Box size={15} />
+                <span>مكعب / متوازي مستطيلات</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTool('cylinder')
+                  setShapesMenuOpen(false)
+                }}
+                className={`flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                  tool === 'cylinder' ? 'bg-primary text-on-primary' : 'text-main hover:bg-hover'
+                }`}
+              >
+                <div className="h-4 w-3 rounded-full border-2 border-current" />
+                <span>أسطوانة هندسية</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTool('coordinatePlane')
+                  setShapesMenuOpen(false)
+                }}
+                className={`flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-xs font-bold transition-colors ${
+                  tool === 'coordinatePlane'
+                    ? 'bg-primary text-on-primary'
+                    : 'text-main hover:bg-hover'
+                }`}
+              >
+                <Sparkles size={15} />
+                <span>محور إحداثيات (X - Y)</span>
+              </button>
+            </div>
+          )}
+        </div>
+
         <div className="mx-1 h-6 w-px bg-border" />
 
         {/* Math & Ruler tools */}
@@ -290,6 +432,21 @@ export const WhiteboardToolbar: React.FC<WhiteboardToolbarProps> = ({
         >
           <Circle size={16} />
         </button>
+
+        {setSetSquareVisible && (
+          <button
+            type="button"
+            onClick={() => setSetSquareVisible((v) => !v)}
+            title="مثلث هندسي تفاعلي (Set Square)"
+            className={`flex h-9 w-9 items-center justify-center rounded-xl transition-all ${
+              setSquareVisible
+                ? 'bg-primary text-on-primary shadow-elevation-1'
+                : 'text-muted hover:bg-hover hover:text-main'
+            }`}
+          >
+            <Triangle size={16} />
+          </button>
+        )}
       </div>
 
       {/* Group 2: Color, Stroke & Background properties */}

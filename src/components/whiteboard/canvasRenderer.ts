@@ -170,6 +170,192 @@ export function drawElement(
       break
     }
 
+    case 'diamond': {
+      const s = element as ShapeElement
+      ctx.beginPath()
+      ctx.moveTo(s.x + s.width / 2, s.y)
+      ctx.lineTo(s.x + s.width, s.y + s.height / 2)
+      ctx.lineTo(s.x + s.width / 2, s.y + s.height)
+      ctx.lineTo(s.x, s.y + s.height / 2)
+      ctx.closePath()
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+      break
+    }
+
+    case 'rightTriangle': {
+      const s = element as ShapeElement
+      ctx.beginPath()
+      ctx.moveTo(s.x, s.y)
+      ctx.lineTo(s.x, s.y + s.height)
+      ctx.lineTo(s.x + s.width, s.y + s.height)
+      ctx.closePath()
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+
+      // رسم زاوية قائمة 90 درجة صغيرة
+      const markSize = Math.min(16, Math.abs(s.width) * 0.2, Math.abs(s.height) * 0.2)
+      if (markSize > 4) {
+        ctx.beginPath()
+        ctx.moveTo(s.x, s.y + s.height - markSize)
+        ctx.lineTo(s.x + markSize, s.y + s.height - markSize)
+        ctx.lineTo(s.x + markSize, s.y + s.height)
+        ctx.stroke()
+      }
+      break
+    }
+
+    case 'hexagon': {
+      const s = element as ShapeElement
+      const cx = s.x + s.width / 2
+      const cy = s.y + s.height / 2
+      const rx = s.width / 2
+      const ry = s.height / 2
+      ctx.beginPath()
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i - Math.PI / 6
+        const x = cx + rx * Math.cos(angle)
+        const y = cy + ry * Math.sin(angle)
+        if (i === 0) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      }
+      ctx.closePath()
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+      break
+    }
+
+    case 'cube': {
+      const s = element as ShapeElement
+      const w = s.width * 0.75
+      const h = s.height * 0.75
+      const d = Math.min(s.width * 0.25, s.height * 0.25)
+
+      // Front Face
+      ctx.beginPath()
+      ctx.rect(s.x, s.y + d, w, h)
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+
+      // Top Face
+      ctx.beginPath()
+      ctx.moveTo(s.x, s.y + d)
+      ctx.lineTo(s.x + d, s.y)
+      ctx.lineTo(s.x + d + w, s.y)
+      ctx.lineTo(s.x + w, s.y + d)
+      ctx.closePath()
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+
+      // Right Face
+      ctx.beginPath()
+      ctx.moveTo(s.x + w, s.y + d)
+      ctx.lineTo(s.x + d + w, s.y)
+      ctx.lineTo(s.x + d + w, s.y + h)
+      ctx.lineTo(s.x + w, s.y + d + h)
+      ctx.closePath()
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+      break
+    }
+
+    case 'cylinder': {
+      const s = element as ShapeElement
+      const ry = Math.min(18, s.height * 0.15)
+      const cx = s.x + s.width / 2
+      const rx = s.width / 2
+
+      // Top Oval
+      ctx.beginPath()
+      ctx.ellipse(cx, s.y + ry, rx, ry, 0, 0, Math.PI * 2)
+      if (s.fillColor && s.fillColor !== 'transparent') {
+        ctx.fill()
+      }
+      ctx.stroke()
+
+      // Body (sides)
+      ctx.beginPath()
+      ctx.moveTo(s.x, s.y + ry)
+      ctx.lineTo(s.x, s.y + s.height - ry)
+      ctx.moveTo(s.x + s.width, s.y + ry)
+      ctx.lineTo(s.x + s.width, s.y + s.height - ry)
+      ctx.stroke()
+
+      // Bottom Oval (solid front arc)
+      ctx.beginPath()
+      ctx.ellipse(cx, s.y + s.height - ry, rx, ry, 0, 0, Math.PI)
+      ctx.stroke()
+
+      // Bottom Oval (dashed back arc)
+      ctx.save()
+      ctx.setLineDash([4, 4])
+      ctx.beginPath()
+      ctx.ellipse(cx, s.y + s.height - ry, rx, ry, 0, Math.PI, Math.PI * 2)
+      ctx.stroke()
+      ctx.restore()
+      break
+    }
+
+    case 'coordinatePlane': {
+      const s = element as ShapeElement
+      const cx = s.x + s.width / 2
+      const cy = s.y + s.height / 2
+
+      // Axis lines
+      ctx.beginPath()
+      // X-Axis
+      ctx.moveTo(s.x, cy)
+      ctx.lineTo(s.x + s.width, cy)
+      // Y-Axis
+      ctx.moveTo(cx, s.y + s.height)
+      ctx.lineTo(cx, s.y)
+      ctx.stroke()
+
+      // Arrow heads
+      drawArrowhead(ctx, s.x, cy, s.x + s.width, cy, 8)
+      drawArrowhead(ctx, cx, s.y + s.height, cx, s.y, 8)
+
+      // Axis Labels (X & Y)
+      ctx.save()
+      ctx.font = 'bold 12px sans-serif'
+      ctx.fillStyle = element.strokeColor
+      ctx.fillText('X', s.x + s.width - 14, cy - 6)
+      ctx.fillText('Y', cx + 6, s.y + 14)
+
+      // Grid tick marks
+      const ticks = 4
+      const stepX = s.width / 2 / (ticks + 1)
+      const stepY = s.height / 2 / (ticks + 1)
+      for (let i = 1; i <= ticks; i++) {
+        // X ticks
+        ctx.beginPath()
+        ctx.moveTo(cx + i * stepX, cy - 3)
+        ctx.lineTo(cx + i * stepX, cy + 3)
+        ctx.moveTo(cx - i * stepX, cy - 3)
+        ctx.lineTo(cx - i * stepX, cy + 3)
+        // Y ticks
+        ctx.moveTo(cx - 3, cy - i * stepY)
+        ctx.lineTo(cx + 3, cy - i * stepY)
+        ctx.moveTo(cx - 3, cy + i * stepY)
+        ctx.lineTo(cx + 3, cy + i * stepY)
+        ctx.stroke()
+      }
+      ctx.restore()
+      break
+    }
+
     case 'text':
     case 'math': {
       const t = element as TextElement
@@ -262,7 +448,13 @@ export function getElementBounds(element: WhiteboardElement): {
     case 'rect':
     case 'ellipse':
     case 'triangle':
-    case 'star': {
+    case 'star':
+    case 'diamond':
+    case 'rightTriangle':
+    case 'hexagon':
+    case 'cylinder':
+    case 'cube':
+    case 'coordinatePlane': {
       const s = element as ShapeElement
       const x = s.width < 0 ? s.x + s.width : s.x
       const y = s.height < 0 ? s.y + s.height : s.y

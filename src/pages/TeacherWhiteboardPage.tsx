@@ -14,7 +14,11 @@ import { WhiteboardCanvas } from '../components/whiteboard/WhiteboardCanvas'
 import { PageThumbnails } from '../components/whiteboard/PageThumbnails'
 import { MathSymbolsModal } from '../components/whiteboard/MathSymbolsModal'
 import { WhiteboardManagerDrawer } from '../components/whiteboard/WhiteboardManagerDrawer'
-import { InteractiveRuler, InteractiveProtractor } from '../components/whiteboard/MathToolsOverlay'
+import {
+  InteractiveRuler,
+  InteractiveProtractor,
+  InteractiveSetSquare,
+} from '../components/whiteboard/MathToolsOverlay'
 import {
   exportCurrentPageAsPng,
   exportAllPagesAsPdf,
@@ -56,6 +60,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
   const [isMathModalOpen, setIsMathModalOpen] = useState(false)
   const [rulerVisible, setRulerVisible] = useState(false)
   const [protractorVisible, setProtractorVisible] = useState(false)
+  const [setSquareVisible, setSetSquareVisible] = useState(false)
 
   // Save state
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
@@ -537,6 +542,8 @@ export const TeacherWhiteboardPage: React.FC = () => {
         setRulerVisible={setRulerVisible}
         protractorVisible={protractorVisible}
         setProtractorVisible={setProtractorVisible}
+        setSquareVisible={setSquareVisible}
+        setSetSquareVisible={setSetSquareVisible}
       />
 
       {/* Canvas Workspace Area */}
@@ -552,11 +559,15 @@ export const TeacherWhiteboardPage: React.FC = () => {
           setSelectedElementId={setSelectedElementId}
         />
 
-        {/* Floating Ruler and Protractor overlays */}
+        {/* Floating Ruler, Protractor and Set Square overlays */}
         <InteractiveRuler visible={rulerVisible} onClose={() => setRulerVisible(false)} />
         <InteractiveProtractor
           visible={protractorVisible}
           onClose={() => setProtractorVisible(false)}
+        />
+        <InteractiveSetSquare
+          visible={setSquareVisible}
+          onClose={() => setSetSquareVisible(false)}
         />
 
         {/* Desktop Sidebar: Page Thumbnails */}

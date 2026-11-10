@@ -11,6 +11,12 @@ export type WhiteboardTool =
   | 'ellipse'
   | 'triangle'
   | 'star'
+  | 'diamond'
+  | 'rightTriangle'
+  | 'hexagon'
+  | 'cylinder'
+  | 'cube'
+  | 'coordinatePlane'
   | 'mathSymbol'
   | 'ruler'
   | 'protractor'
@@ -31,6 +37,12 @@ export type ElementType =
   | 'ellipse'
   | 'triangle'
   | 'star'
+  | 'diamond'
+  | 'rightTriangle'
+  | 'hexagon'
+  | 'cylinder'
+  | 'cube'
+  | 'coordinatePlane'
   | 'text'
   | 'math'
 
@@ -59,7 +71,17 @@ export interface LineElement extends BaseElement {
 }
 
 export interface ShapeElement extends BaseElement {
-  type: 'rect' | 'ellipse' | 'triangle' | 'star'
+  type:
+    | 'rect'
+    | 'ellipse'
+    | 'triangle'
+    | 'star'
+    | 'diamond'
+    | 'rightTriangle'
+    | 'hexagon'
+    | 'cylinder'
+    | 'cube'
+    | 'coordinatePlane'
   width: number
   height: number
 }

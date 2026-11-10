@@ -317,14 +317,27 @@ export const WhiteboardCanvas: React.FC<WhiteboardCanvasProps> = ({
       return
     }
 
-    // Rect / Ellipse / Triangle / Star
-    if (tool === 'rect' || tool === 'ellipse' || tool === 'triangle' || tool === 'star') {
+    // All shape tools
+    const shapeTools: WhiteboardTool[] = [
+      'rect',
+      'ellipse',
+      'triangle',
+      'star',
+      'diamond',
+      'rightTriangle',
+      'hexagon',
+      'cylinder',
+      'cube',
+      'coordinatePlane',
+    ]
+
+    if (shapeTools.includes(tool)) {
       const width = pt.x - start.x
       const height = pt.y - start.y
       if (Math.abs(width) > 4 && Math.abs(height) > 4) {
         const newShape: ShapeElement = {
           id: `shape_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-          type: tool,
+          type: tool as ShapeElement['type'],
           x: width < 0 ? pt.x : start.x,
           y: height < 0 ? pt.y : start.y,
           width: Math.abs(width),

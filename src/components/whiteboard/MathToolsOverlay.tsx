@@ -220,3 +220,128 @@ export const InteractiveProtractor: React.FC<InteractiveProtractorProps> = ({
     </div>
   )
 }
+
+interface InteractiveSetSquareProps {
+  visible: boolean
+  onClose: () => void
+}
+
+export const InteractiveSetSquare: React.FC<InteractiveSetSquareProps> = ({ visible, onClose }) => {
+  const [pos, setPos] = useState({ x: 260, y: 220 })
+  const [angle, setAngle] = useState(0)
+  const isDragging = useRef(false)
+  const startDrag = useRef({ x: 0, y: 0 })
+
+  if (!visible) return null
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    isDragging.current = true
+    startDrag.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }
+    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+  }
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (isDragging.current) {
+      setPos({
+        x: e.clientX - startDrag.current.x,
+        y: e.clientY - startDrag.current.y,
+      })
+    }
+  }
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    isDragging.current = false
+    try {
+      ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
+    } catch {
+      // ignore
+    }
+  }
+
+  return (
+    <div
+      style={{
+        transform: `translate(${pos.x}px, ${pos.y}px) rotate(${angle}deg)`,
+        transformOrigin: '0% 100%',
+      }}
+      className="bg-surface/85 absolute z-20 h-56 w-56 cursor-move select-none shadow-elevation-3 backdrop-blur-md"
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+    >
+      <svg className="h-full w-full" viewBox="0 0 200 200">
+        {/* Outer Triangle */}
+        <polygon
+          points="10,190 190,190 10,10"
+          className="fill-primary/5 stroke-primary"
+          strokeWidth="2"
+        />
+        {/* Inner Cutout */}
+        <polygon
+          points="35,170 145,170 35,60"
+          className="fill-surface stroke-primary/30"
+          strokeWidth="1.5"
+        />
+        {/* Right angle marker */}
+        <polyline
+          points="10,175 25,175 25,190"
+          fill="none"
+          stroke="currentColor"
+          className="text-primary"
+          strokeWidth="1.5"
+        />
+        {/* Bottom scale ticks */}
+        {Array.from({ length: 18 }).map((_, i) => (
+          <line
+            key={i}
+            x1={15 + i * 10}
+            y1={190}
+            x2={15 + i * 10}
+            y2={i % 5 === 0 ? 178 : 184}
+            stroke="currentColor"
+            className="text-muted"
+            strokeWidth="1"
+          />
+        ))}
+        {/* Vertical scale ticks */}
+        {Array.from({ length: 18 }).map((_, i) => (
+          <line
+            key={i}
+            x1={10}
+            y1={185 - i * 10}
+            x2={i % 5 === 0 ? 22 : 16}
+            y2={185 - i * 10}
+            stroke="currentColor"
+            className="text-muted"
+            strokeWidth="1"
+          />
+        ))}
+      </svg>
+
+      <div className="absolute bottom-6 start-10 flex items-center gap-1.5">
+        <button
+          type="button"
+          title="تدوير المثلث 15 درجة"
+          onClick={(e) => {
+            e.stopPropagation()
+            setAngle((a) => (a + 15) % 360)
+          }}
+          className="flex h-7 w-7 items-center justify-center rounded-lg bg-surface text-main shadow-elevation-1 transition-colors hover:bg-hover"
+        >
+          <RotateCcw size={12} />
+        </button>
+        <button
+          type="button"
+          title="إغلاق مثلث الرسم"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+          className="bg-error/10 hover:bg-error/20 flex h-7 w-7 items-center justify-center rounded-lg text-error transition-colors"
+        >
+          <X size={12} />
+        </button>
+      </div>
+    </div>
+  )
+}
