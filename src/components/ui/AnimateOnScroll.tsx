@@ -49,7 +49,7 @@ export const AnimateOnScroll = ({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, margin: '0px 0px -40px 0px' }}
+      viewport={{ once, margin: '0px 0px -10px 0px' }}
       variants={anim}
       transition={{ duration, delay, ease: 'easeOut' }}
       className={className}

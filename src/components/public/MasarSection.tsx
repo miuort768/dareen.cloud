@@ -93,7 +93,7 @@ export const MasarSection = () => {
                 <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
                   <Link
                     to="/books"
-                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-normal text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-warning"
+                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-normal text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-sky-400"
                   >
                     <FileText className="h-6 w-6 transition-transform group-hover:scale-110" />
                     <span>تحميل مذكرة</span>
@@ -151,7 +151,7 @@ export const MasarSection = () => {
             </div>
           </div>
 
-          <div className="mb-5 rounded-3xl bg-gradient-to-br from-primary via-primary-hover to-primary p-6 shadow-elevation-3 shadow-primary/20 dark:from-primary dark:via-warning dark:to-primary dark:shadow-primary/20">
+          <div className="mb-5 rounded-3xl bg-gradient-to-br from-primary via-primary-hover to-primary p-6 shadow-elevation-3 shadow-primary/20 dark:from-primary dark:via-sky-400 dark:to-primary dark:shadow-primary/20">
             <div className="mb-4 flex items-center gap-4">
               <div className="relative">
                 <span className="text-sm font-normal text-on-primary dark:text-on-primary">

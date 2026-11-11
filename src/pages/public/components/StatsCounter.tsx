@@ -1,46 +1,132 @@
 import { Users, GraduationCap, BookOpen, Award, Globe, type LucideIcon } from 'lucide-react'
 import { useAnimatedNumber } from '../../../shared/hooks/useAnimatedNumber'
-import { StatCard } from '../../../shared/components/ui'
-import type { StatCardProps } from '../../../shared/components/ui'
+import { cn } from '../../../lib/utils'
 
 interface StatData {
   icon: LucideIcon
   target: number
   suffix: string
   label: string
-  variant: StatCardProps['variant']
+  iconBg: string
+  iconColor: string
+  numColor: string
+  accentBar: string
   duration?: number
 }
 
-const AnimatedStatCard = ({ icon, target, suffix, label, variant, duration }: StatData) => {
+const stats: StatData[] = [
+  {
+    icon: Users,
+    target: 5000,
+    suffix: '+',
+    label: 'طالب مسجل',
+    iconBg: 'bg-primary-soft',
+    iconColor: 'text-primary',
+    numColor: 'text-primary',
+    accentBar: 'bg-primary',
+  },
+  {
+    icon: GraduationCap,
+    target: 200,
+    suffix: '+',
+    label: 'معلم معتمد',
+    iconBg: 'bg-success-soft',
+    iconColor: 'text-success',
+    numColor: 'text-success',
+    accentBar: 'bg-success',
+  },
+  {
+    icon: BookOpen,
+    target: 10000,
+    suffix: '+',
+    label: 'حصة تعليمية',
+    iconBg: 'bg-info-soft',
+    iconColor: 'text-info',
+    numColor: 'text-info',
+    accentBar: 'bg-info',
+  },
+  {
+    icon: Award,
+    target: 5,
+    suffix: '+',
+    label: 'سنوات من التميز',
+    iconBg: 'bg-warning-soft',
+    iconColor: 'text-warning',
+    numColor: 'text-warning',
+    accentBar: 'bg-warning',
+  },
+  {
+    icon: Globe,
+    target: 7,
+    suffix: '',
+    label: 'نخدم في 7 دول',
+    iconBg: 'bg-primary-soft',
+    iconColor: 'text-primary',
+    numColor: 'text-primary',
+    accentBar: 'bg-primary',
+    duration: 8000,
+  },
+]
+
+const AnimatedStatCard = ({
+  icon: Icon,
+  target,
+  suffix,
+  label,
+  iconBg,
+  iconColor,
+  numColor,
+  accentBar,
+  duration,
+}: StatData) => {
   const { value, ref } = useAnimatedNumber(target, duration)
+
   return (
     <div
       ref={(el) => {
         ref.current = el
       }}
+      className={cn(
+        'group relative flex flex-col items-center gap-3 overflow-hidden rounded-2xl border border-border',
+        'bg-card px-3 py-5 text-center shadow-elevation-1',
+        'transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-2',
+      )}
     >
-      <StatCard icon={icon} title={label} value={`${value}${suffix}`} variant={variant} />
+      {/* Top accent bar */}
+      <span className={cn('absolute start-0 top-0 h-0.5 w-full', accentBar)} aria-hidden="true" />
+
+      {/* Icon badge */}
+      <div
+        className={cn(
+          'flex h-12 w-12 shrink-0 items-center justify-center rounded-xl shadow-elevation-1',
+          'transition-transform duration-normal group-hover:scale-110',
+          iconBg,
+          iconColor,
+        )}
+      >
+        <Icon size={22} strokeWidth={1.75} aria-hidden="true" />
+      </div>
+
+      {/* Number */}
+      <div className="flex flex-col items-center gap-0.5">
+        <p
+          className={cn(
+            'font-dash text-3xl font-black tabular-nums leading-none tracking-tight sm:text-4xl',
+            numColor,
+          )}
+        >
+          {value.toLocaleString('en')}
+          <span className="ms-0.5 text-2xl">{suffix}</span>
+        </p>
+
+        {/* Label */}
+        <p className="mt-1 text-xs font-bold text-muted">{label}</p>
+      </div>
     </div>
   )
 }
 
 export const StatsCounter = () => {
-  const stats: StatData[] = [
-    { icon: Users, target: 5000, suffix: '+', label: 'طالب مسجل', variant: 'default' },
-    { icon: GraduationCap, target: 200, suffix: '+', label: 'معلم معتمد', variant: 'default' },
-    { icon: BookOpen, target: 10000, suffix: '+', label: 'حصة تعليمية', variant: 'default' },
-    { icon: Award, target: 5, suffix: '+', label: 'سنوات من التميز', variant: 'default' },
-    {
-      icon: Globe,
-      target: 7,
-      suffix: '',
-      label: 'نخدم في 7 دول',
-      variant: 'default',
-      duration: 8000,
-    },
-  ]
-
   return (
     <section className="relative overflow-hidden bg-surface pb-4 pt-0 transition-colors duration-500 dark:bg-background md:pb-3 md:pt-0">
       <div className="container relative z-10 mx-auto px-4">

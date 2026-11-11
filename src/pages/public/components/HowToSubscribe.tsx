@@ -41,7 +41,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
       icon: Users,
       title: 'اختر المنهج',
       desc: 'حدد منهجك والمادة',
-      boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning',
+      boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-sky-400',
     },
     {
       num: '02',
@@ -55,7 +55,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
       icon: Sparkles,
       title: 'اشترك الآن',
       desc: 'تواصل لحجز مقعدك',
-      boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning',
+      boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-sky-400',
     },
   ]
 
@@ -82,7 +82,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
           </div>
         </div>
 
-        <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-4 py-1.5 shadow-elevation-1 dark:from-primary dark:to-warning">
+        <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-4 py-1.5 shadow-elevation-1 dark:from-primary dark:to-sky-400">
           <Zap
             size={10}
             className="fill-warning text-warning dark:fill-on-primary dark:text-on-primary"
@@ -94,7 +94,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
 
         <h2 className="mb-1 text-xl font-normal leading-tight text-main dark:text-main">
           كيف تشترك في{' '}
-          <span className="bg-gradient-to-l from-primary to-primary-hover bg-clip-text text-transparent dark:from-primary dark:to-warning">
+          <span className="bg-gradient-to-l from-primary to-primary-hover bg-clip-text text-transparent dark:from-primary dark:to-sky-400">
             المعهد؟
           </span>
         </h2>
@@ -133,7 +133,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
           ].map((item, i) => (
             <div key={`perk-${i}`} className="flex items-center gap-3">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary-hover shadow-elevation-1 dark:from-primary dark:to-warning">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary-hover shadow-elevation-1 dark:from-primary dark:to-sky-400">
                 {item.icon === 'CreditCard' && (
                   <CreditCard size={12} className="text-on-primary dark:text-on-primary" />
                 )}
@@ -156,7 +156,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
           href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-primary to-primary-hover px-6 py-4 shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-110 dark:from-primary dark:to-warning dark:shadow-primary/20"
+          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-primary to-primary-hover px-6 py-4 shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-110 dark:from-primary dark:to-sky-400 dark:shadow-primary/20"
         >
           <Gift size={16} className="text-on-primary opacity-90 dark:text-on-primary" />
           <span className="text-sm font-normal text-on-primary dark:text-on-primary">

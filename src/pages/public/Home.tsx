@@ -118,7 +118,7 @@ export const Home = () => {
             href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-light text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-light text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
           >
             <Headphones className="h-2.5 w-2.5 shrink-0" /> طلب حصة مجانية
           </a>
@@ -160,7 +160,7 @@ export const Home = () => {
                     </Link>
                     <Link
                       to={isAuthenticated ? '/dashboard' : '/login'}
-                      className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-light text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                      className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-light text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
                     >
                       {isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}
                     </Link>
@@ -258,7 +258,7 @@ export const Home = () => {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
               >
                 <cat.icon
                   size={12}

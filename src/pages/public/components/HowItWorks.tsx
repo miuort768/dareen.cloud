@@ -83,21 +83,21 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                 title: 'اختر المنهج',
                 desc: 'حدد منهجك والمادة',
                 icon: <Users className="h-5 w-5 md:h-6 md:w-6" />,
-                color: 'from-primary-active to-primary-active dark:from-primary dark:to-warning',
+                color: 'from-primary-active to-primary-active dark:from-primary dark:to-sky-400',
               },
               {
                 id: '02',
                 title: 'حصة مجانية',
                 desc: 'حصة تجريبية مجانية لك',
                 icon: <Star className="h-5 w-5 md:h-6 md:w-6" />,
-                color: 'from-success to-success dark:from-primary dark:to-warning',
+                color: 'from-success to-success dark:from-primary dark:to-sky-400',
               },
               {
                 id: '03',
                 title: 'اشترك الآن',
                 desc: 'تواصل لحجز مقعدك',
                 icon: <Zap className="h-5 w-5 md:h-6 md:w-6" />,
-                color: 'from-primary to-primary dark:from-primary dark:to-warning',
+                color: 'from-primary to-primary dark:from-primary dark:to-sky-400',
               },
             ].map((step) => (
               <motion.div
@@ -137,9 +137,9 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-xl bg-primary px-8 py-3.5 text-sm font-light text-on-primary shadow-elevation-4 transition-all hover:scale-105 active:scale-95 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group relative overflow-hidden rounded-xl bg-primary px-8 py-3.5 text-sm font-light text-on-primary shadow-elevation-4 transition-all hover:scale-105 active:scale-95 dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-primary dark:to-warning"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-primary dark:to-sky-400"></div>
               <div className="relative flex items-center gap-2">
                 <Gift size={16} />
                 <span className="text-micro font-normal">حصتك المجانية بانتظارك</span>

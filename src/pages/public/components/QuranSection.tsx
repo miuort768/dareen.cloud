@@ -84,7 +84,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-light text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-light text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
                   >
                     <span>ابدأ الحفظ الآن</span>
                     <ArrowLeft
@@ -190,7 +190,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   >
                     <Link
                       to="/contact"
-                      className="flex cursor-pointer flex-col items-center rounded-2xl bg-primary p-4 text-center text-on-primary shadow-elevation-3 transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                      className="flex cursor-pointer flex-col items-center rounded-2xl bg-primary p-4 text-center text-on-primary shadow-elevation-3 transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
                     >
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 text-on-primary backdrop-blur-sm dark:bg-black/20 dark:text-on-primary">
                         <Sparkles className="h-5 w-5" />
@@ -262,7 +262,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-light text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-light text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
             >
               <span>ابدأ الحفظ الآن</span>
               <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
@@ -347,7 +347,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col items-center rounded-2xl border-0 bg-primary p-4 text-center shadow-elevation-3 dark:bg-gradient-to-r dark:from-primary dark:to-warning"
+              className="flex flex-col items-center rounded-2xl border-0 bg-primary p-4 text-center shadow-elevation-3 dark:bg-gradient-to-r dark:from-primary dark:to-sky-400"
             >
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm dark:bg-black/20">
                 <Sparkles size={22} className="text-on-primary dark:text-on-primary" />

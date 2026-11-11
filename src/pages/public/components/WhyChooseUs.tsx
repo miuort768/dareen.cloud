@@ -150,15 +150,15 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-center dark:border-primary/10 dark:bg-white/5">
-                <Star size={16} className="mx-auto mb-1 text-warning dark:text-warning" />
-                <div className="text-lg font-normal text-on-primary dark:text-warning">10+</div>
+                <Star size={16} className="mx-auto mb-1 text-warning dark:text-sky-400" />
+                <div className="text-lg font-normal text-on-primary dark:text-sky-400">10+</div>
                 <div className="text-micro font-normal text-on-primary dark:text-white/60">
                   سنوات خبرة
                 </div>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/5 p-3 text-center dark:border-primary/10 dark:bg-white/5">
-                <Users size={16} className="mx-auto mb-1 text-info dark:text-warning" />
-                <div className="text-lg font-normal text-on-primary dark:text-warning">70+</div>
+                <Users size={16} className="mx-auto mb-1 text-info dark:text-sky-400" />
+                <div className="text-lg font-normal text-on-primary dark:text-sky-400">70+</div>
                 <div className="text-micro font-normal text-on-primary dark:text-white/60">
                   معلم خبير
                 </div>
@@ -234,15 +234,15 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               </div>
               <div className="grid w-full shrink-0 grid-cols-2 gap-4 sm:gap-6 lg:w-auto">
                 <div className="rounded-2xl border border-white/10 bg-white/10 p-6 text-center transition-all duration-300 group-hover:bg-white/15 dark:border-primary/10 dark:bg-white/5 dark:group-hover:bg-primary/[0.06]">
-                  <Users className="mx-auto mb-3 h-8 w-8 text-info dark:text-warning" />
-                  <div className="text-3xl font-normal text-on-primary dark:text-warning">+70</div>
+                  <Users className="mx-auto mb-3 h-8 w-8 text-info dark:text-sky-400" />
+                  <div className="text-3xl font-normal text-on-primary dark:text-sky-400">+70</div>
                   <div className="text-xs font-normal text-on-primary dark:text-white/60">
                     معلم خبير
                   </div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/10 p-6 text-center transition-all duration-300 group-hover:bg-white/15 dark:border-primary/10 dark:bg-white/5 dark:group-hover:bg-primary/[0.06]">
-                  <Star className="mx-auto mb-3 h-8 w-8 text-warning dark:text-warning" />
-                  <div className="text-3xl font-normal text-on-primary dark:text-warning">+10</div>
+                  <Star className="mx-auto mb-3 h-8 w-8 text-warning dark:text-sky-400" />
+                  <div className="text-3xl font-normal text-on-primary dark:text-sky-400">+10</div>
                   <div className="text-xs font-normal text-on-primary dark:text-white/60">
                     سنوات خبرة
                   </div>
