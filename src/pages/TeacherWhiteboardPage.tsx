@@ -1,5 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { FolderOpen, ChevronLeft, ChevronRight, Plus, FileEdit } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import {
+  FolderOpen,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  FileEdit,
+  Monitor,
+  Tablet,
+  Laptop,
+  ArrowRight,
+  Sparkles,
+} from 'lucide-react'
 import type {
   WhiteboardTool,
   BackgroundPattern,
@@ -25,11 +37,26 @@ import {
   printWhiteboard,
   generateThumbnail,
 } from '../components/whiteboard/exportUtils'
-import { whiteboardApiService } from '../services/whiteboardService'
 import { whiteboardStorage } from '../services/whiteboardStorage'
 import { confirm } from '../lib/confirmDialog'
 
 export const TeacherWhiteboardPage: React.FC = () => {
+  const navigate = useNavigate()
+
+  // Screen responsiveness: Phones (< 768px) vs Tablets, Laptops & Desktops (>= 768px)
+  const [isMobileScreen, setIsMobileScreen] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  })
+  const [overrideMobileNotice, setOverrideMobileNotice] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileScreen(window.innerWidth < 768)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   // Active board state
   const [boardId, setBoardId] = useState<string | null>(null)
   const [boardTitle, setBoardTitle] = useState('سبورة تفاعلية جديدة')
@@ -62,28 +89,26 @@ export const TeacherWhiteboardPage: React.FC = () => {
   const [protractorVisible, setProtractorVisible] = useState(false)
   const [setSquareVisible, setSetSquareVisible] = useState(false)
 
-  // Save state
+  // Save state (100% browser-based via IndexedDB & localStorage)
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const autosaveTimerRef = useRef<NodeJS.Timeout | null>(null)
   const lastSavedJsonRef = useRef<string>('')
 
-  // Board list & drawer
+  // Board list & centered modal
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [savedBoards, setSavedBoards] = useState<Array<Omit<WhiteboardItem, 'pagesData'>>>([])
   const [boardsLoading, setBoardsLoading] = useState(false)
 
   const activePage = pages[activePageIndex] || pages[0]
 
-  // Fetch boards list on mount
+  // Fetch boards list directly from browser storage
   const refreshBoardsList = useCallback(async () => {
     try {
       setBoardsLoading(true)
-      const list = await whiteboardApiService.list()
+      const list = await whiteboardStorage.listBoards()
       setSavedBoards(list)
     } catch (e) {
-      console.warn('Failed to load boards from server, loading local cache', e)
-      const local = await whiteboardStorage.listLocalBoards()
-      setSavedBoards(local.map((b) => ({ id: b.id, title: b.title, updatedAt: b.updatedAt })))
+      console.warn('Failed to load boards from browser storage', e)
     } finally {
       setBoardsLoading(false)
     }
@@ -246,7 +271,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
     handleElementsChange([...activePage.elements, newText])
   }
 
-  // Save logic (Local + Remote API)
+  // 100% Client-Side Browser Save Logic
   const saveBoard = useCallback(
     async (isManual = false) => {
       const currentJson = JSON.stringify({ boardTitle, pages })
@@ -257,39 +282,30 @@ export const TeacherWhiteboardPage: React.FC = () => {
       setSaveStatus('saving')
       const thumb = generateThumbnail(pages[0] || activePage)
 
-      const payload: WhiteboardItem = {
-        id: boardId || '',
+      const payload: Partial<WhiteboardItem> = {
+        id: boardId || undefined,
         title: boardTitle,
         pagesData: pages,
         thumbnail: thumb,
         updatedAt: new Date().toISOString(),
       }
 
-      // 1. Always save to local IndexedDB for zero data loss
-      await whiteboardStorage.saveLocalDraft(payload)
-
-      // 2. Sync to Server
       try {
-        if (boardId) {
-          await whiteboardApiService.update(boardId, payload)
-        } else {
-          const created = await whiteboardApiService.create(payload)
-          setBoardId(created.id)
-          payload.id = created.id
-          await whiteboardStorage.saveLocalDraft(payload)
-        }
+        // Save in browser IndexedDB & localStorage
+        const saved = await whiteboardStorage.saveBoard(payload)
+        setBoardId(saved.id)
         setSaveStatus('saved')
         lastSavedJsonRef.current = currentJson
         refreshBoardsList()
-      } catch (e) {
-        console.warn('Network sync failed, saved in local IndexedDB only', e)
-        setSaveStatus('offline')
+      } catch (err) {
+        console.error('Failed to save to browser storage', err)
+        setSaveStatus('error')
       }
     },
     [boardId, boardTitle, pages, activePage, refreshBoardsList],
   )
 
-  // Debounced autosave
+  // Debounced autosave in browser
   useEffect(() => {
     if (autosaveTimerRef.current) {
       clearTimeout(autosaveTimerRef.current)
@@ -297,18 +313,21 @@ export const TeacherWhiteboardPage: React.FC = () => {
 
     autosaveTimerRef.current = setTimeout(() => {
       saveBoard(false)
-    }, 3000)
+    }, 2500)
 
     return () => {
       if (autosaveTimerRef.current) clearTimeout(autosaveTimerRef.current)
     }
   }, [pages, boardTitle, saveBoard])
 
-  // Open existing board
+  // Open existing board from browser storage
   const handleSelectBoard = async (id: string) => {
     try {
       setSaveStatus('saving')
-      const board = await whiteboardApiService.getById(id)
+      const board = await whiteboardStorage.getBoardById(id)
+      if (!board) {
+        throw new Error('السبورة غير موجودة')
+      }
       setBoardId(board.id)
       setBoardTitle(board.title)
       setPages(
@@ -333,7 +352,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
     }
   }
 
-  // Create new blank board
+  // Create new blank board in browser
   const handleCreateNewBoard = async () => {
     setBoardId(null)
     setBoardTitle('سبورة تفاعلية جديدة')
@@ -353,21 +372,21 @@ export const TeacherWhiteboardPage: React.FC = () => {
     setSaveStatus('idle')
   }
 
-  // Duplicate board from drawer
+  // Duplicate board from modal
   const handleDuplicateBoard = async (id: string) => {
     try {
-      await whiteboardApiService.duplicate(id)
+      await whiteboardStorage.duplicateBoard(id)
       refreshBoardsList()
     } catch (e) {
       console.error('Failed to duplicate board', e)
     }
   }
 
-  // Delete board
+  // Delete board from browser
   const handleDeleteBoard = async (id: string) => {
     const ok = await confirm({
       title: 'حذف السبورة بالكامل',
-      message: 'هل أنتِ متأكدة من حذف هذه السبورة نهائياً؟',
+      message: 'هل أنتِ متأكدة من حذف هذه السبورة نهائياً من المتصفح؟',
       confirmText: 'حذف نهائي',
       cancelText: 'إلغاء',
       variant: 'danger',
@@ -375,8 +394,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
     if (!ok) return
 
     try {
-      await whiteboardApiService.delete(id)
-      await whiteboardStorage.deleteLocalBoard(id)
+      await whiteboardStorage.deleteBoard(id)
       if (boardId === id) {
         handleCreateNewBoard()
       }
@@ -415,18 +433,103 @@ export const TeacherWhiteboardPage: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   })
 
+  // --------------------------------------------------------------------------
+  // Mobile Phone Guard View (< 768px): Friendly notice
+  // --------------------------------------------------------------------------
+  if (isMobileScreen && !overrideMobileNotice) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-background p-4 text-main">
+        <div className="w-full max-w-md rounded-3xl border border-border bg-surface p-6 text-center shadow-elevation-4 duration-300 animate-in fade-in">
+          {/* Visual Device Badges */}
+          <div className="relative mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary/10 text-primary">
+            <Tablet size={34} className="stroke-[1.7]" />
+            <span className="absolute -bottom-1 -end-1 flex h-7 w-7 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-2">
+              <Laptop size={14} />
+            </span>
+          </div>
+
+          {/* Heading */}
+          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-black text-primary">
+            <Sparkles size={13} />
+            <span>عزيزي شريك النجاح</span>
+          </div>
+
+          <h1 className="text-lg font-black text-main">
+            السبورة التفاعلية متاحة على الشاشات الكبيرة
+          </h1>
+
+          <p className="mt-2 text-xs leading-relaxed text-muted">
+            السبورة متاح علي الشاشات الكبيرة لسهولة الاستخدام والتفاعل الأمثل. للحصول على أفضل تجربة
+            شرح ورسم دقيق، يُرجى فتح السبورة من:
+          </p>
+
+          {/* Supported Devices Cards */}
+          <div className="mt-4 grid grid-cols-3 gap-2 text-start">
+            <div className="border-border/80 bg-surface-active/20 flex flex-col items-center justify-center rounded-2xl border p-3 text-center">
+              <Tablet size={20} className="mb-1.5 text-primary" />
+              <span className="text-[11px] font-bold text-main">التابلت والآيباد</span>
+              <span className="text-[9px] text-muted">لمس ودعم القلم</span>
+            </div>
+
+            <div className="border-border/80 bg-surface-active/20 flex flex-col items-center justify-center rounded-2xl border p-3 text-center">
+              <Laptop size={20} className="mb-1.5 text-primary" />
+              <span className="text-[11px] font-bold text-main">اللابتوب</span>
+              <span className="text-[9px] text-muted">تحكم سهل بالماوس</span>
+            </div>
+
+            <div className="border-border/80 bg-surface-active/20 flex flex-col items-center justify-center rounded-2xl border p-3 text-center">
+              <Monitor size={20} className="mb-1.5 text-primary" />
+              <span className="text-[11px] font-bold text-main">الكمبيوتر</span>
+              <span className="text-[9px] text-muted">مساحة عمل واسعة</span>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="mt-6 flex flex-col gap-2.5">
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-black text-on-primary shadow-elevation-2 outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+            >
+              <ArrowRight size={16} />
+              <span>العودة إلى لوحة المعلم</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setOverrideMobileNotice(true)}
+              className="py-1 text-[11px] font-bold text-muted transition-colors hover:text-main"
+            >
+              متابعة وعرض السبورة على الهاتف على أي حال
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // --------------------------------------------------------------------------
+  // Main Whiteboard Workspace (Tablets, Laptops & Desktops)
+  // --------------------------------------------------------------------------
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden bg-background text-main">
-      {/* Top Banner: Board Title & Navigation Hub */}
+      {/* Top Banner: Board Title, Centered Modal Trigger & Page Switcher */}
       <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-2">
         <div className="flex items-center gap-3">
+          {/* Centered Modal Trigger */}
           <button
             type="button"
             onClick={() => setIsDrawerOpen(true)}
-            className="flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-bold text-main shadow-elevation-1 transition-colors hover:bg-hover"
+            title="فتح نافذة السبورات المحفوظة بالمتصفح"
+            className="flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-black text-main shadow-elevation-1 outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
-            <FolderOpen size={15} className="text-primary" />
+            <FolderOpen size={16} className="text-primary" />
             <span>السبورات المحفوظة</span>
+            {savedBoards.length > 0 && (
+              <span className="py-0.2 rounded-full bg-primary/10 px-1.5 text-[10px] font-bold text-primary">
+                {savedBoards.length}
+              </span>
+            )}
           </button>
 
           {/* Editable Board Title */}
@@ -445,7 +548,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
               <div
                 onClick={() => setIsEditingTitle(true)}
                 className="group flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1 hover:bg-hover"
-                title="انقري لتعديل الاسم"
+                title="انقري لتعديل اسم السبورة"
               >
                 <h1 className="text-sm font-black text-main">{boardTitle}</h1>
                 <FileEdit
@@ -457,7 +560,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Page Switcher for Mobile / Compact */}
+        {/* Page Switcher */}
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1 rounded-xl border border-border bg-surface px-2 py-1">
             <button
@@ -559,7 +662,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
           setSelectedElementId={setSelectedElementId}
         />
 
-        {/* Floating Ruler, Protractor and Set Square overlays */}
+        {/* Floating Centered Ruler, Protractor and Set Square overlays */}
         <InteractiveRuler visible={rulerVisible} onClose={() => setRulerVisible(false)} />
         <InteractiveProtractor
           visible={protractorVisible}
@@ -593,7 +696,7 @@ export const TeacherWhiteboardPage: React.FC = () => {
         onInsertSymbol={handleInsertMathSymbol}
       />
 
-      {/* Saved Whiteboards Manager Drawer */}
+      {/* Centered Modal: Saved Whiteboards Manager */}
       <WhiteboardManagerDrawer
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
@@ -608,4 +711,5 @@ export const TeacherWhiteboardPage: React.FC = () => {
     </div>
   )
 }
+
 export default TeacherWhiteboardPage
