@@ -36,32 +36,34 @@ export const GradientHeroCard = ({
       className,
     )}
   >
-    <div className="relative overflow-hidden rounded-[24px] border border-white/20 bg-gradient-to-br from-primary via-primary-active to-primary-deep p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)] md:p-7">
-      <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80" />
-      <div className="bg-accent/20 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl transition-opacity duration-slow group-hover:opacity-80" />
+    <div className="relative overflow-hidden rounded-[24px] border border-white/20 bg-gradient-to-br from-primary via-primary-active to-primary-deep p-5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)] sm:p-7 lg:p-8 xl:p-9">
+      <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80 lg:h-72 lg:w-72" />
+      <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-accent opacity-20 blur-3xl transition-opacity duration-slow group-hover:opacity-80 lg:h-64 lg:w-64" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,255,255,0.18),rgba(255,255,255,0))] opacity-80" />
       {decor}
 
-      <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-        <div className="flex items-center gap-4">
+      <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
+        <div className="gap-4.5 flex items-center">
           {Icon && (
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 shadow-elevation-2 backdrop-blur-md">
-              <Icon size={22} className={cn('text-on-primary', iconClassName)} />
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 shadow-elevation-2 backdrop-blur-md transition-transform duration-normal group-hover:scale-105 sm:h-14 sm:w-14">
+              <Icon size={24} className={cn('text-on-primary', iconClassName)} />
             </div>
           )}
           <div>
-            <h1 className="font-heading text-xl font-bold leading-tight tracking-tight text-on-primary md:text-2xl">
+            <h1 className="font-heading text-xl font-bold leading-tight tracking-tight text-on-primary md:text-2xl lg:text-3xl xl:text-4xl">
               {title}
             </h1>
             {subtitle && (
-              <p className="mt-1 text-xs font-normal text-white/90 md:text-sm">{subtitle}</p>
+              <p className="mt-1.5 text-xs font-normal text-white/90 md:text-sm lg:text-base">
+                {subtitle}
+              </p>
             )}
           </div>
         </div>
 
         {end && (
           <>
-            <div className="hidden h-12 w-px bg-white/20 lg:block" />
+            <div className="hidden h-14 w-px bg-white/20 lg:block" />
             <div className="w-full lg:w-auto">{end}</div>
           </>
         )}

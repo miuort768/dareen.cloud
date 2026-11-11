@@ -46,9 +46,17 @@ export const GreetingStrip = ({
       className="via-border/50 to-primary-soft/30 relative rounded-[30px] bg-gradient-to-br from-primary/20 p-1 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 sm:p-1.5"
     >
       <div className="border-border/80 relative overflow-hidden rounded-[26px] border bg-card">
-        {/* خلفية بلون الدور الناعم + حلقات زخرفية */}
+        {/* خلفية بلون الدور الناعم + حلقات وإضاءة زخرفية */}
         <div
-          className="via-primary-soft/50 pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light to-transparent"
+          className="via-primary-soft/50 pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light to-transparent opacity-80"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -start-16 -top-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl transition-opacity duration-slow lg:h-80 lg:w-80"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -end-16 h-64 w-64 rounded-full bg-accent opacity-15 blur-3xl transition-opacity duration-slow lg:h-80 lg:w-80"
           aria-hidden="true"
         />
         <div
@@ -60,58 +68,62 @@ export const GreetingStrip = ({
           aria-hidden="true"
         />
 
-        <div className="relative z-10 p-5 sm:p-6 lg:flex lg:items-center lg:justify-between lg:gap-8">
+        <div className="relative z-10 p-5 sm:p-6 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:p-8 xl:p-9">
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="border-border/70 bg-surface/80 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-normal text-muted shadow-soft">
-                <CalendarDays size={12} className="text-primary" />
+              <div className="bg-surface/80 inline-flex items-center gap-2 rounded-full border border-primary/20 px-3.5 py-1 text-xs font-normal text-muted shadow-soft backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+                </span>
+                <CalendarDays size={13} className="text-primary" />
                 <span className="font-dash">{today}</span>
               </div>
-              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary-soft px-3 py-1 text-xs font-semibold text-primary shadow-soft">
+              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary-soft px-3.5 py-1 text-xs font-semibold text-primary shadow-soft">
                 <GraduationCap size={13} />
                 {grade || 'طالب'}
               </span>
             </div>
 
-            <h1 className="mt-3 font-student-heading text-xl font-bold leading-tight text-main md:text-2xl xl:text-3xl">
+            <h1 className="mt-3 font-student-heading text-xl font-black leading-tight tracking-tight text-main md:text-2xl lg:text-3xl xl:text-4xl">
               {getGreeting()}، {firstName}
             </h1>
-            <p className="mt-1 text-xs font-normal leading-relaxed text-muted sm:text-sm">
-              مستقبلك يبدأ بخطوة .. وأنتِ على الطريق الصحيح
+            <p className="mt-1.5 text-xs font-normal leading-relaxed text-muted sm:text-sm lg:text-base">
+              مستقبلك يبدأ بخطوة .. وأنتِ على الطريق الصحيح نحو القمة
             </p>
           </div>
 
           {/* لقطة أرقام سطح المكتب — تملأ الفراغ في نهاية الهيرو */}
           {hasSnapshot && (
-            <div className="hidden shrink-0 gap-3 lg:flex" aria-label="ملخص مسيرتك الدراسية">
-              <div className="border-border/80 bg-surface/60 group flex min-w-28 flex-col items-center gap-2 rounded-2xl border p-4 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:bg-card hover:shadow-elevation-1">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft text-success shadow-soft transition-transform duration-normal group-hover:scale-110">
-                  <CheckCircle2 size={16} />
+            <div className="hidden shrink-0 gap-3.5 lg:flex" aria-label="ملخص مسيرتك الدراسية">
+              <div className="border-border/80 bg-surface/80 p-4.5 group flex min-w-[130px] flex-col items-center gap-2.5 rounded-2xl border shadow-elevation-1 backdrop-blur-sm transition-all duration-normal hover:-translate-y-1 hover:bg-card hover:shadow-elevation-2">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft text-success shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <CheckCircle2 size={18} />
                 </span>
-                <span className="font-dash text-xl font-bold tabular-nums leading-none text-main">
+                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
                   {attendanceRate}%
                 </span>
                 <span className="text-xs font-medium text-muted">نسبة الحضور</span>
               </div>
 
-              <div className="border-border/80 bg-surface/60 group flex min-w-28 flex-col items-center gap-2 rounded-2xl border p-4 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:bg-card hover:shadow-elevation-1">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary shadow-soft transition-transform duration-normal group-hover:scale-110">
-                  <CalendarCheck size={16} />
+              <div className="border-border/80 bg-surface/80 p-4.5 group flex min-w-[130px] flex-col items-center gap-2.5 rounded-2xl border shadow-elevation-1 backdrop-blur-sm transition-all duration-normal hover:-translate-y-1 hover:bg-card hover:shadow-elevation-2">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <CalendarCheck size={18} />
                 </span>
-                <span className="font-dash text-xl font-bold tabular-nums leading-none text-main">
+                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
                   {sessionsUsed}
                   <span className="text-xs font-normal text-muted"> / {sessionsTotal}</span>
                 </span>
                 <span className="text-xs font-medium text-muted">حصص منفذة</span>
               </div>
 
-              <div className="border-border/80 bg-surface/60 group flex min-w-28 flex-col items-center gap-2 rounded-2xl border p-4 shadow-soft transition-all duration-normal hover:-translate-y-0.5 hover:bg-card hover:shadow-elevation-1">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft text-info shadow-soft transition-transform duration-normal group-hover:scale-110">
-                  <CalendarClock size={16} />
+              <div className="border-border/80 bg-surface/80 p-4.5 group flex min-w-[130px] flex-col items-center gap-2.5 rounded-2xl border shadow-elevation-1 backdrop-blur-sm transition-all duration-normal hover:-translate-y-1 hover:bg-card hover:shadow-elevation-2">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-soft text-info shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <CalendarClock size={18} />
                 </span>
                 <span
                   className={cn(
-                    'max-w-28 truncate text-xs font-bold leading-none text-main',
+                    'max-w-32 truncate text-sm font-bold leading-none text-main',
                     !nextSessionLabel && 'text-dim',
                   )}
                 >

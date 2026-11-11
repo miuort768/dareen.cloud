@@ -38,13 +38,21 @@ export const GreetingStrip = ({
       className="via-border/50 to-primary-soft/30 relative rounded-[30px] bg-gradient-to-br from-primary/20 p-1 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 sm:p-1.5"
     >
       <div className="border-border/80 relative overflow-hidden rounded-[26px] border bg-card">
-        {/* خلفية ناعمة + هالات زخرفية */}
+        {/* خلفية ناعمة + هالات وإضاءة زخرفية */}
         <div
-          className="via-primary-soft/50 pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light to-transparent"
+          className="via-primary-soft/50 pointer-events-none absolute inset-0 bg-gradient-to-br from-primary-light to-transparent opacity-80"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-accent opacity-30 lg:-end-20 lg:h-80 lg:w-80"
+          className="pointer-events-none absolute -start-16 -top-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl transition-opacity duration-slow lg:h-80 lg:w-80"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -end-16 h-64 w-64 rounded-full bg-accent opacity-15 blur-3xl transition-opacity duration-slow lg:h-80 lg:w-80"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-primary/10 lg:-end-20 lg:h-80 lg:w-80"
           aria-hidden="true"
         />
         <div
@@ -52,26 +60,46 @@ export const GreetingStrip = ({
           aria-hidden="true"
         />
 
-        <div className="relative z-10 p-5 sm:p-6 lg:p-7">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0">
-              <div className="border-border/70 bg-surface/80 mb-2 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-normal text-muted shadow-soft">
-                <UserRound size={12} className="text-primary" />
+        <div className="relative z-10 p-5 sm:p-6 lg:p-8 xl:p-9">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+            <div className="min-w-0 flex-1">
+              <div className="bg-surface/80 mb-2.5 inline-flex items-center gap-2 rounded-full border border-primary/20 px-3.5 py-1 text-xs font-normal text-muted shadow-soft backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+                </span>
+                <UserRound size={13} className="text-primary" />
                 <span className="font-dash">{today}</span>
               </div>
 
-              <h1 className="font-parent-heading text-xl font-bold leading-tight text-main md:text-2xl xl:text-3xl">
+              <h1 className="font-parent-heading text-xl font-black leading-tight tracking-tight text-main md:text-2xl lg:text-3xl xl:text-4xl">
                 {getGreeting()}، شريك النجاح
               </h1>
 
-              <p className="mt-1 text-xs font-normal text-muted">
-                نبض يومي ومتابعة دقيقة وشاملة لمسيرة أبنائك
+              <p className="mt-1.5 max-w-xl text-xs font-normal leading-relaxed text-muted sm:text-sm lg:text-base">
+                نبض يومي ومتابعة دقيقة وشاملة لمسيرة أبنائك .. مع نخبة المعلمات المتميزات
               </p>
+
+              {/* رقائق البيانات */}
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                <span className="inline-flex items-center gap-2 rounded-full bg-primary px-3.5 py-1.5 text-xs font-semibold text-on-primary shadow-soft transition-transform hover:scale-105">
+                  <Users size={13} />
+                  {childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-1.5 text-xs font-semibold text-on-accent shadow-soft transition-transform hover:scale-105">
+                  <BookOpen size={13} />
+                  {subjectCount} {subjectCount === 1 ? 'مادة' : 'مواد'}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-soft px-3.5 py-1.5 text-xs font-semibold text-primary shadow-soft transition-transform hover:scale-105">
+                  <ClipboardList size={13} />
+                  {todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم'}
+                </span>
+              </div>
             </div>
 
             {/* حلقة الحضور الإجمالية */}
             <div
-              className="border-border/60 bg-surface/50 flex shrink-0 flex-col items-center gap-1 rounded-2xl border p-2.5 shadow-soft"
+              className="border-border/80 bg-surface/80 flex shrink-0 flex-col items-center gap-2 rounded-2xl border p-4 shadow-elevation-1 backdrop-blur-sm transition-all duration-normal hover:shadow-elevation-2 sm:p-5 lg:min-w-[150px]"
               aria-label={`نسبة الحضور الإجمالية ${attendanceRate} بالمئة`}
             >
               <div className="relative flex items-center justify-center">
@@ -79,7 +107,7 @@ export const GreetingStrip = ({
                   width={RING_SIZE}
                   height={RING_SIZE}
                   viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
-                  className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
+                  className="lg:h-18 lg:w-18 h-14 w-14 sm:h-16 sm:w-16"
                 >
                   <circle
                     cx={RING_SIZE / 2}
@@ -110,35 +138,15 @@ export const GreetingStrip = ({
                   <CountUp
                     value={attendanceRate}
                     format={(n) => `${Math.round(n)}`}
-                    className="font-dash text-sm font-bold tabular-nums leading-none text-primary sm:text-base lg:text-lg"
+                    className="font-dash text-base font-black tabular-nums leading-none text-primary sm:text-lg lg:text-xl"
                   />
-                  <span className="text-[10px] font-bold leading-none text-primary">%</span>
+                  <span className="text-[11px] font-bold leading-none text-primary">%</span>
                 </span>
               </div>
-              <span className="whitespace-nowrap text-[10px] font-medium text-muted">
+              <span className="whitespace-nowrap text-xs font-semibold text-muted">
                 الحضور الإجمالي
               </span>
             </div>
-          </div>
-
-          <p className="mt-2.5 max-w-xl text-xs font-normal leading-relaxed text-muted sm:text-sm">
-            متابعتك اليومية تصنع الفرق .. وأبناؤك في أيدٍ أمينة مع نخبة المعلمات
-          </p>
-
-          {/* رقائق البيانات */}
-          <div className="mt-4 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-on-primary shadow-soft">
-              <Users size={12} />
-              {childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`}
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-xs font-semibold text-on-accent shadow-soft">
-              <BookOpen size={12} />
-              {subjectCount} {subjectCount === 1 ? 'مادة' : 'مواد'}
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary-soft px-3 py-1.5 text-xs font-semibold text-primary shadow-soft">
-              <ClipboardList size={12} />
-              {todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم'}
-            </span>
           </div>
         </div>
       </div>

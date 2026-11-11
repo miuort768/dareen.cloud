@@ -87,7 +87,7 @@ const AnimatedStatCard = ({
         ref.current = el
       }}
       className={cn(
-        'group relative flex flex-col items-center gap-3 overflow-hidden rounded-2xl border border-border',
+        'group relative flex flex-col items-center gap-3 overflow-hidden rounded-b-2xl rounded-t-none border border-border',
         'bg-card px-3 py-5 text-center shadow-elevation-1',
         'transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-2',
       )}

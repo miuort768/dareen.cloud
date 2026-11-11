@@ -74,11 +74,15 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
       <div className="relative overflow-hidden rounded-[26px] border border-white/20 bg-gradient-to-br from-primary via-primary-active to-primary-deep shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]">
         {/* Background ambient lighting effects */}
         <div
-          className="pointer-events-none absolute -start-20 -top-20 h-64 w-64 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80"
+          className="pointer-events-none absolute -start-20 -top-20 h-64 w-64 rounded-full bg-white/15 blur-3xl transition-opacity duration-slow group-hover:opacity-80 lg:h-80 lg:w-80"
           aria-hidden="true"
         />
         <div
-          className="bg-accent/25 pointer-events-none absolute -bottom-20 -end-20 h-64 w-64 rounded-full blur-3xl transition-opacity duration-slow group-hover:opacity-80"
+          className="pointer-events-none absolute -bottom-20 -end-20 h-64 w-64 rounded-full bg-accent opacity-25 blur-3xl transition-opacity duration-slow group-hover:opacity-80 lg:h-80 lg:w-80"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-x-1/3 top-0 h-40 w-80 rounded-full bg-white/10 blur-3xl transition-opacity duration-slow"
           aria-hidden="true"
         />
         <div
@@ -86,18 +90,21 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
           aria-hidden="true"
         />
 
-        <div className="relative z-10 p-5 sm:p-7">
+        <div className="relative z-10 p-5 sm:p-7 lg:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className="mb-2.5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-normal text-white/95 shadow-soft backdrop-blur-md">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
-                <CalendarDays size={12} className="text-white/90" />
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 text-xs font-normal text-white/95 shadow-soft backdrop-blur-md">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+                </span>
+                <CalendarDays size={13} className="text-white/90" />
                 <span>{format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}</span>
               </div>
-              <h1 className="font-heading text-xl font-bold tracking-tight text-on-primary md:text-2xl lg:text-3xl">
+              <h1 className="font-heading text-xl font-bold tracking-tight text-on-primary md:text-2xl lg:text-3xl xl:text-4xl">
                 {getGreeting(nightMessage)}، {firstName}
               </h1>
-              {subtitle && <div className="mt-1.5">{subtitle}</div>}
+              {subtitle && <div className="mt-2 text-sm text-white/90">{subtitle}</div>}
             </div>
 
             <div className="flex shrink-0 items-center gap-2.5">
@@ -107,27 +114,27 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
           </div>
 
           {hasFooter && (
-            <div className="mt-5 border-t border-white/15 pt-4">
+            <div className="mt-6 border-t border-white/15 pt-5 lg:mt-7 lg:pt-6">
               {stats && stats.length > 0 && (
-                <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:gap-4">
                   {stats.map((stat) => {
                     const StatIcon = stat.icon
                     return (
                       <div
                         key={stat.label}
-                        className="group/stat rounded-2xl border border-white/20 bg-white/10 p-3 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] backdrop-blur-md transition-all duration-normal hover:bg-white/15 hover:shadow-elevation-1 sm:p-4"
+                        className="group/stat sm:p-4.5 rounded-2xl border border-white/20 bg-white/10 p-3.5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] backdrop-blur-md transition-all duration-normal hover:-translate-y-1 hover:bg-white/15 hover:shadow-elevation-2 lg:p-5"
                       >
                         {StatIcon && (
-                          <span className="mb-2 flex h-7 w-7 items-center justify-center rounded-xl bg-white/20 text-on-primary transition-transform duration-normal group-hover/stat:scale-110 sm:h-8 sm:w-8">
-                            <StatIcon size={14} className="text-on-primary" />
+                          <span className="mb-2.5 flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 text-on-primary transition-transform duration-normal group-hover/stat:scale-110 sm:h-9 sm:w-9 lg:h-10 lg:w-10">
+                            <StatIcon size={16} className="text-on-primary" />
                           </span>
                         )}
                         <CountUp
                           value={stat.value}
                           format={stat.formatter}
-                          className="block font-dash text-xl font-bold tabular-nums leading-none tracking-tight text-on-primary sm:text-2xl lg:text-3xl"
+                          className="block font-dash text-2xl font-bold tabular-nums leading-none tracking-tight text-on-primary sm:text-3xl lg:text-4xl"
                         />
-                        <p className="mt-2 truncate text-[11px] font-medium text-white/90 sm:text-xs">
+                        <p className="mt-2.5 truncate text-[11px] font-medium text-white/90 sm:text-xs lg:text-sm">
                           {stat.label}
                         </p>
                       </div>
@@ -137,15 +144,15 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
               )}
 
               {chips && chips.length > 0 && (
-                <div className="mt-3 flex flex-wrap items-center gap-2">
+                <div className="mt-4 flex flex-wrap items-center gap-2.5">
                   {chips.map((chip) => {
                     const Icon = chip.icon
                     return (
                       <span
                         key={chip.label}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-normal text-on-primary shadow-soft backdrop-blur-md"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-normal text-on-primary shadow-soft backdrop-blur-md transition-colors hover:bg-white/20"
                       >
-                        <Icon size={12} />
+                        <Icon size={13} />
                         {chip.label}
                       </span>
                     )
