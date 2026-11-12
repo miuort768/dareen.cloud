@@ -37,13 +37,13 @@ const WALLET_LABELS: Record<string, string> = {
 }
 
 const PRIMARY_BUTTON =
-  'flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-2 transition-all hover:shadow-elevation-3 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
+  'flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-br from-primary via-primary-active to-primary-deep text-on-primary shadow-elevation-2 transition-all hover:shadow-elevation-3 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
 
 const EDIT_BUTTON =
-  'flex h-9 w-9 items-center justify-center rounded-full border border-jade-light bg-jade-soft text-jade-deep shadow-soft transition-all hover:border-jade hover:bg-jade-deep hover:text-jade-on focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus'
+  'flex h-9 w-9 items-center justify-center rounded-full border border-primary/20 bg-primary-soft text-primary shadow-soft transition-all hover:border-primary hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus'
 
 const DELETE_BUTTON =
-  'flex h-9 w-9 items-center justify-center rounded-full border border-error-light bg-error-soft text-error-strong shadow-soft transition-all hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50'
+  'flex h-9 w-9 items-center justify-center rounded-full border border-error/20 bg-error-soft text-error shadow-soft transition-all hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50'
 
 interface PaymentSetting {
   id?: string
@@ -215,37 +215,37 @@ export const PaymentMethodsSection = () => {
 
   return (
     <SectionCard
-      title="طرق الدفع"
+      title="طرق استلام المستحقات المالية"
       icon={CreditCard}
-      description="إدارة طرق استلام مستحقاتك المالية."
-      descClassName="text-micro"
-      delay={0.2}
+      description="إدارة الحسابات البنكية والمحافظ الإلكترونية لتحويل مستحقاتك الشهرية"
+      tone="success"
+      delay={0.15}
       action={
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className={cn('min-h-11 px-3.5 py-2 text-micro font-normal', PRIMARY_BUTTON)}
+            className={cn('min-h-10 px-4 py-2 text-xs font-bold', PRIMARY_BUTTON)}
           >
-            <Plus size={13} /> إضافة طريقة دفع
+            <Plus size={14} /> إضافة طريقة دفع
           </button>
         ) : undefined
       }
     >
       {/* التحميل */}
       {loading && (
-        <div className="space-y-2" aria-busy="true">
-          <div className="h-16 animate-pulse rounded-xl bg-surface" />
-          <div className="h-10 w-1/2 animate-pulse rounded-lg bg-surface" />
+        <div className="space-y-3" aria-busy="true">
+          <div className="h-24 animate-pulse rounded-2xl bg-surface" />
+          <div className="h-12 w-1/2 animate-pulse rounded-xl bg-surface" />
         </div>
       )}
 
       {/* خطأ الجلب */}
       {!loading && fetchError && (
-        <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-8 text-center">
-          <p className="text-xs font-normal text-main">تعذر تحميل طرق الدفع</p>
+        <div className="bg-error-soft/60 rounded-2xl border border-dashed border-error-soft py-8 text-center">
+          <p className="text-xs font-bold text-main">تعذر تحميل طرق الدفع</p>
           <button
             onClick={() => window.location.reload()}
-            className={cn('mx-auto mt-3 min-h-11 px-4 py-2 text-micro font-normal', PRIMARY_BUTTON)}
+            className={cn('mx-auto mt-3 min-h-10 px-4 py-2 text-xs font-bold', PRIMARY_BUTTON)}
           >
             إعادة المحاولة
           </button>
@@ -254,22 +254,20 @@ export const PaymentMethodsSection = () => {
 
       {/* لا توجد طرق دفع */}
       {!loading && !fetchError && !setting && (
-        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-surface py-12 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-jade-soft ring-1 ring-jade-soft">
-            <CreditCard size={22} className="text-jade" />
+        <div className="bg-surface/50 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border py-12 text-center">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary-soft text-primary ring-1 ring-primary-soft">
+            <CreditCard size={24} />
           </div>
-          <p className="text-sm font-medium text-main">لا توجد طرق دفع</p>
-          <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
-            أضف طريقة دفع حتى تتمكن من استلام مستحقاتك.
+          <p className="text-sm font-bold text-main">لم تقومي بإضافة طريقة دفع حتى الآن</p>
+          <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted">
+            أضيفي حساب بنكي أو محفظة إلكترونية أو InstaPay لتتمكني من استلام مستحقاتك الشهرية في
+            موعدها.
           </p>
           <button
             onClick={openAdd}
-            className={cn(
-              'mt-5 min-h-11 px-5 py-2.5 text-micro font-normal sm:text-xs',
-              PRIMARY_BUTTON,
-            )}
+            className={cn('mt-5 min-h-11 px-6 py-2.5 text-xs font-bold', PRIMARY_BUTTON)}
           >
-            <Plus size={14} /> إضافة طريقة دفع
+            <Plus size={15} /> إضافة طريقة استلام
           </button>
         </div>
       )}
@@ -279,11 +277,11 @@ export const PaymentMethodsSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="space-y-3"
+          className="space-y-4"
         >
-          {/* بطاقة الاستلام — لمسة بصرية شبيهة ببطاقة الدفع */}
+          {/* بطاقة الاستلام — لمسة بصرية راقية كبطاقة ائتمانية */}
           <div
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-active to-primary-deep p-5 shadow-elevation-2"
             dir="rtl"
           >
             <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden="true">
@@ -303,21 +301,23 @@ export const PaymentMethodsSection = () => {
                 <rect width="100%" height="100%" fill="url(#pm-card-dots)" />
               </svg>
             </div>
+            <div className="pointer-events-none absolute -end-8 -top-8 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+
             <div className="relative flex items-center justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-micro font-normal uppercase tracking-widest text-white/70">
-                  طريقة استلام المستحقات
+                <p className="text-micro font-bold uppercase tracking-widest text-white/80">
+                  طريقة استلام المستحقات الرئيسية
                 </p>
-                <p className="mt-1 truncate text-sm font-medium text-on-primary">
+                <p className="mt-1.5 truncate text-base font-black text-on-primary sm:text-lg">
                   {methodMeta?.label}
                   {setting.method === 'wallet' && setting.walletProvider && (
-                    <span className="font-normal text-white/80">
+                    <span className="font-medium text-white/90">
                       {' '}
                       — {WALLET_LABELS[setting.walletProvider] || setting.walletProvider}
                     </span>
                   )}
                 </p>
-                <p className="mt-1 font-mono text-xs font-normal tabular-nums text-white/90">
+                <p className="mt-1.5 font-mono text-xs font-semibold tabular-nums text-white/95 sm:text-sm">
                   {setting.method === 'wallet'
                     ? setting.walletPhone
                     : setting.method === 'instapay'
@@ -325,31 +325,37 @@ export const PaymentMethodsSection = () => {
                       : setting.iban}
                 </p>
               </div>
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30">
-                {methodMeta && <methodMeta.icon size={20} className="text-on-primary" />}
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/30 backdrop-blur-md">
+                {methodMeta && <methodMeta.icon size={22} className="text-on-primary" />}
               </div>
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 dark:border-white/[0.06] dark:bg-surface">
-            <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-3 dark:bg-card">
-              <div className="flex min-w-0 items-center gap-2.5">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-jade-soft">
-                  {methodMeta && <methodMeta.icon size={15} className="text-jade" />}
+          <div className="border-border/80 overflow-hidden rounded-2xl border bg-card shadow-elevation-1 dark:border-white/[0.06] dark:bg-card">
+            <div className="border-border/70 bg-surface/70 flex items-center justify-between gap-2 border-b px-4 py-3 sm:px-5">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary ring-1 ring-primary-soft">
+                  {methodMeta && <methodMeta.icon size={16} />}
                 </div>
                 <div className="min-w-0">
-                  <p className="truncate text-xs font-normal text-main">{methodMeta?.label}</p>
-                  <span className="mt-0.5 flex w-fit items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-micro font-normal text-success-strong">
+                  <p className="truncate text-xs font-bold text-main">{methodMeta?.label}</p>
+                  <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-micro font-bold text-success ring-1 ring-success-soft">
                     <BadgeCheck size={10} />
-                    طريقة الاستلام الرئيسية
+                    معتمدة ونشطة
                   </span>
                 </div>
               </div>
-              <div className="flex shrink-0 items-center gap-1.5">
-                <button onClick={openEdit} aria-label="تعديل طريقة الدفع" className={EDIT_BUTTON}>
+              <div className="flex shrink-0 items-center gap-2">
+                <button
+                  type="button"
+                  onClick={openEdit}
+                  aria-label="تعديل طريقة الدفع"
+                  className={EDIT_BUTTON}
+                >
                   <PencilLine size={14} />
                 </button>
                 <button
+                  type="button"
                   onClick={handleDelete}
                   disabled={deleting}
                   aria-label="حذف طريقة الدفع"
@@ -360,38 +366,44 @@ export const PaymentMethodsSection = () => {
               </div>
             </div>
 
-            <div className="space-y-2 px-4 py-3">
+            <div className="space-y-2 p-4 sm:p-5">
               {setting.method === 'wallet' && (
                 <>
                   <InfoRow
                     label="شركة المحفظة"
                     value={WALLET_LABELS[setting.walletProvider || ''] || setting.walletProvider}
                   />
-                  <InfoRow label="رقم المحفظة" value={setting.walletPhone} mono />
+                  <InfoRow label="رقم المحفظة" value={setting.walletPhone} mono copyable />
                 </>
               )}
               {setting.method === 'instapay' && (
                 <>
-                  <InfoRow label="معرّف InstaPay" value={setting.instapayId} mono />
+                  <InfoRow label="معرّف InstaPay" value={setting.instapayId} mono copyable />
                   <InfoRow label="اسم صاحب الحساب" value={setting.accountHolder} />
-                  <InfoRow label="الرقم المرتبط" value={setting.instapayPhone} mono />
+                  <InfoRow
+                    label="الرقم المرتبط بـ InstaPay"
+                    value={setting.instapayPhone}
+                    mono
+                    copyable
+                  />
                 </>
               )}
               {setting.method === 'bank_transfer' && (
                 <>
                   <InfoRow label="اسم البنك" value={setting.bankName} />
                   <InfoRow label="اسم صاحب الحساب" value={setting.accountHolder} />
-                  <InfoRow label="رقم الآيبان IBAN" value={setting.iban} mono />
+                  <InfoRow label="رقم الآيبان IBAN" value={setting.iban} mono copyable />
                 </>
               )}
             </div>
 
-            <div className="border-t border-border px-4 py-2.5">
+            <div className="border-border/70 bg-surface/40 border-t px-4 py-3 sm:px-5">
               <button
+                type="button"
                 onClick={openEdit}
-                className={cn('min-h-11 w-full py-2 text-micro font-normal', PRIMARY_BUTTON)}
+                className={cn('min-h-10 w-full py-2 text-xs font-bold', PRIMARY_BUTTON)}
               >
-                <PencilLine size={12} /> تعديل البيانات
+                <PencilLine size={13} /> تعديل بيانات الاستلام
               </button>
             </div>
           </div>
@@ -413,7 +425,7 @@ export const PaymentMethodsSection = () => {
   )
 }
 
-/* ---------- نموذج الإضافة/التعديل — Sheet على الهاتف ---------- */
+/* ---------- نموذج الإضافة/التعديل ---------- */
 
 interface PaymentMethodFormProps {
   form: EmptyForm
@@ -433,234 +445,231 @@ const PaymentMethodForm = ({
   onSubmit,
 }: PaymentMethodFormProps) => {
   const { containerRef, handleKeyDown } = useDialogFocus(true, onClose)
-  return (
-    /* Portal: يُرسم فوق body مباشرة خارج سياق التكديس الرئيسي —
-     بدونه تظهر النافذة خلف شريط التنقل السفلي على الهاتف */
-    createPortal(
+  return createPortal(
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15 }}
+      className="fixed inset-0 z-[200] flex items-end justify-center sm:items-center sm:p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
+    >
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.15 }}
-        className="fixed inset-0 z-[200] flex items-end justify-center sm:items-center sm:p-4"
-        onClick={(e) => {
-          if (e.target === e.currentTarget) onClose()
-        }}
-        role="dialog"
-        aria-modal="true"
-        aria-label={isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
-        ref={containerRef}
-        onKeyDown={handleKeyDown}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+        className="relative flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-card shadow-elevation-3 sm:rounded-2xl"
+        dir="rtl"
       >
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
-          transition={{ type: 'spring', damping: 30, stiffness: 320 }}
-          className="relative flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-card shadow-elevation-3 sm:rounded-2xl"
-          dir="rtl"
-        >
-          <div className="relative overflow-hidden bg-gradient-to-br from-jade via-jade-deep to-jade-hover">
-            <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
-              <svg width="100%" height="100%">
-                <defs>
-                  <pattern
-                    id="pm-modal-dots"
-                    x="0"
-                    y="0"
-                    width="20"
-                    height="20"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <circle cx="2" cy="2" r="1" fill="white" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#pm-modal-dots)" />
-              </svg>
-            </div>
-            <div className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
-            <div className="relative flex justify-center pt-3 sm:hidden">
-              <div className="h-1.5 w-10 rounded-full bg-white/50" />
-            </div>
-            <div className="relative flex items-start justify-between gap-3 px-5 pb-4 pt-3">
-              <div className="flex min-w-0 items-center gap-2.5">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 text-jade-on ring-1 ring-white/25">
-                  {isEdit ? <PencilLine size={17} /> : <Plus size={18} />}
-                </span>
-                <div className="min-w-0">
-                  <h3 className="truncate text-sm font-medium text-jade-on md:text-base">
-                    {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
-                  </h3>
-                  <p className="mt-0.5 text-micro text-jade-on opacity-80">
-                    اختر النوع ثم أكمل البيانات
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={onClose}
-                aria-label="إغلاق"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-error bg-error text-lg leading-none text-on-error shadow-elevation-1 outline-none ring-1 ring-white/30 transition-all duration-normal hover:border-error-hover hover:bg-error-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
-              >
-                ✕<span className="sr-only">إغلاق</span>
-              </button>
-            </div>
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary via-primary-active to-primary-deep">
+          <div className="pointer-events-none absolute inset-0 opacity-10" aria-hidden="true">
+            <svg width="100%" height="100%">
+              <defs>
+                <pattern
+                  id="pm-modal-dots"
+                  x="0"
+                  y="0"
+                  width="20"
+                  height="20"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1" fill="white" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#pm-modal-dots)" />
+            </svg>
           </div>
-
-          <form
-            onSubmit={onSubmit}
-            className="no-scrollbar flex-1 space-y-5 overflow-y-auto px-5 pb-4"
-          >
-            {/* اختيار النوع */}
-            <div>
-              <label className="mb-2 block text-xs font-normal text-muted">نوع طريقة الدفع</label>
-              <div className="grid grid-cols-3 gap-2">
-                {METHODS.map((m) => {
-                  const active = form.method === m.id
-                  return (
-                    <button
-                      key={m.id}
-                      type="button"
-                      onClick={() => setForm({ method: m.id })}
-                      aria-pressed={active}
-                      className={cn(
-                        'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                        active
-                          ? 'border-jade bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1'
-                          : 'border-border bg-surface text-muted hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep',
-                      )}
-                    >
-                      <m.icon size={17} strokeWidth={active ? 2.3 : 1.8} />
-                      <span className="text-center text-micro font-normal leading-tight">
-                        {m.label}
-                      </span>
-                    </button>
-                  )
-                })}
+          <div className="pointer-events-none absolute -end-8 -top-10 h-28 w-28 rounded-full bg-white/10 blur-2xl" />
+          <div className="relative flex justify-center pt-3 sm:hidden">
+            <div className="h-1.5 w-10 rounded-full bg-white/50" />
+          </div>
+          <div className="relative flex items-start justify-between gap-3 px-5 pb-4 pt-3">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary ring-1 ring-white/25">
+                {isEdit ? <PencilLine size={17} /> : <Plus size={18} />}
+              </span>
+              <div className="min-w-0">
+                <h3 className="truncate text-sm font-bold text-on-primary md:text-base">
+                  {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
+                </h3>
+                <p className="mt-0.5 text-micro text-white/80">
+                  اختر النوع ثم أكمل البيانات المطلوبة
+                </p>
               </div>
             </div>
-
-            {/* حقول المحفظة */}
-            {form.method === 'wallet' && (
-              <>
-                <div>
-                  <label htmlFor="pm-provider" className="mb-2 block text-xs font-normal text-muted">
-                    شركة المحفظة
-                  </label>
-                  <div className="grid grid-cols-3 gap-1.5">
-                    {WALLETS.map((w) => (
-                      <button
-                        key={w}
-                        type="button"
-                        onClick={() => setForm({ walletProvider: w })}
-                        aria-pressed={form.walletProvider === w}
-                        className={cn(
-                          'rounded-lg border py-2 text-micro font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                          form.walletProvider === w
-                            ? 'border-jade bg-gradient-to-br from-jade to-jade-deep text-jade-on shadow-elevation-1'
-                            : 'border-border bg-surface text-muted hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep',
-                        )}
-                      >
-                        {WALLET_LABELS[w]}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <Field
-                  id="pm-wallet-phone"
-                  label="رقم المحفظة"
-                  value={form.walletPhone}
-                  onChange={(v) => setForm({ walletPhone: v.replace(/\D/g, '').slice(0, 11) })}
-                  placeholder="01XXXXXXXXX"
-                  inputMode="numeric"
-                />
-              </>
-            )}
-
-            {/* حقول InstaPay */}
-            {form.method === 'instapay' && (
-              <>
-                <Field
-                  id="pm-instapay-id"
-                  label="معرّف InstaPay"
-                  value={form.instapayId}
-                  onChange={(v) => setForm({ instapayId: v })}
-                  placeholder="example@instapay"
-                />
-                <Field
-                  id="pm-holder"
-                  label="اسم صاحب الحساب"
-                  value={form.accountHolder}
-                  onChange={(v) => setForm({ accountHolder: v })}
-                  placeholder="الاسم كما في البنك"
-                />
-                <Field
-                  id="pm-instapay-phone"
-                  label="الرقم المرتبط"
-                  value={form.instapayPhone}
-                  onChange={(v) => setForm({ instapayPhone: v.replace(/\D/g, '').slice(0, 11) })}
-                  placeholder="01XXXXXXXXX"
-                  inputMode="numeric"
-                />
-              </>
-            )}
-
-            {/* حقول البنك */}
-            {form.method === 'bank_transfer' && (
-              <>
-                <Field
-                  id="pm-bank"
-                  label="اسم البنك"
-                  value={form.bankName}
-                  onChange={(v) => setForm({ bankName: v })}
-                  placeholder="مثال: البنك الأهلي"
-                />
-                <Field
-                  id="pm-bank-holder"
-                  label="اسم صاحب الحساب"
-                  value={form.accountHolder}
-                  onChange={(v) => setForm({ accountHolder: v })}
-                  placeholder="الاسم كما في البنك"
-                />
-                <Field
-                  id="pm-iban"
-                  label="رقم الآيبان IBAN"
-                  value={form.iban}
-                  onChange={(v) => setForm({ iban: v })}
-                  placeholder="EG00 0000 0000 0000 0000 0000"
-                  mono
-                />
-              </>
-            )}
-          </form>
-
-          {/* أزرار ثابتة */}
-          <div className="grid grid-cols-2 gap-2.5 border-t border-border bg-card p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
             <button
               type="button"
               onClick={onClose}
-              disabled={submitting}
-              className="rounded-full border border-border bg-surface py-3 text-xs font-normal text-main transition-all hover:border-jade-light hover:bg-jade-soft hover:text-jade-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+              aria-label="إغلاق"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary ring-1 ring-white/30 transition-all hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
-              إلغاء
-            </button>
-            <button
-              type="submit"
-              onClick={(e) => onSubmit(e)}
-              disabled={submitting}
-              className={cn(
-                'gap-2 py-3 text-xs font-normal disabled:cursor-not-allowed',
-                PRIMARY_BUTTON,
-              )}
-            >
-              {submitting && <Loader2 size={13} className="animate-spin" />}
-              {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}
+              ✕
             </button>
           </div>
-        </motion.div>
-      </motion.div>,
-      document.body,
-    )
+        </div>
+
+        <form
+          onSubmit={onSubmit}
+          className="no-scrollbar flex-1 space-y-5 overflow-y-auto px-5 py-4"
+        >
+          {/* اختيار النوع */}
+          <div>
+            <label className="mb-2 block text-xs font-bold text-muted">نوع طريقة الدفع</label>
+            <div className="grid grid-cols-3 gap-2">
+              {METHODS.map((m) => {
+                const active = form.method === m.id
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setForm({ method: m.id })}
+                    aria-pressed={active}
+                    className={cn(
+                      'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      active
+                        ? 'border-primary bg-primary-soft font-bold text-primary shadow-elevation-1'
+                        : 'border-border bg-surface text-muted hover:border-primary/40 hover:bg-card hover:text-main',
+                    )}
+                  >
+                    <m.icon size={18} strokeWidth={active ? 2.3 : 1.8} />
+                    <span className="text-center text-micro font-medium leading-tight">
+                      {m.label}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* حقول المحفظة */}
+          {form.method === 'wallet' && (
+            <>
+              <div>
+                <label htmlFor="pm-provider" className="mb-2 block text-xs font-bold text-muted">
+                  شركة المحفظة
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {WALLETS.map((w) => (
+                    <button
+                      key={w}
+                      type="button"
+                      onClick={() => setForm({ walletProvider: w })}
+                      aria-pressed={form.walletProvider === w}
+                      className={cn(
+                        'rounded-xl border py-2.5 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                        form.walletProvider === w
+                          ? 'border-primary bg-primary font-bold text-on-primary shadow-elevation-1'
+                          : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-main',
+                      )}
+                    >
+                      {WALLET_LABELS[w]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <Field
+                id="pm-wallet-phone"
+                label="رقم المحفظة (11 رقم)"
+                value={form.walletPhone}
+                onChange={(v) => setForm({ walletPhone: v.replace(/\D/g, '').slice(0, 11) })}
+                placeholder="01XXXXXXXXX"
+                inputMode="numeric"
+              />
+            </>
+          )}
+
+          {/* حقول InstaPay */}
+          {form.method === 'instapay' && (
+            <>
+              <Field
+                id="pm-instapay-id"
+                label="معرّف InstaPay"
+                value={form.instapayId}
+                onChange={(v) => setForm({ instapayId: v })}
+                placeholder="example@instapay"
+              />
+              <Field
+                id="pm-holder"
+                label="اسم صاحب الحساب"
+                value={form.accountHolder}
+                onChange={(v) => setForm({ accountHolder: v })}
+                placeholder="الاسم كما في البنك"
+              />
+              <Field
+                id="pm-instapay-phone"
+                label="الرقم المرتبط بـ InstaPay (11 رقم)"
+                value={form.instapayPhone}
+                onChange={(v) => setForm({ instapayPhone: v.replace(/\D/g, '').slice(0, 11) })}
+                placeholder="01XXXXXXXXX"
+                inputMode="numeric"
+              />
+            </>
+          )}
+
+          {/* حقول البنك */}
+          {form.method === 'bank_transfer' && (
+            <>
+              <Field
+                id="pm-bank"
+                label="اسم البنك"
+                value={form.bankName}
+                onChange={(v) => setForm({ bankName: v })}
+                placeholder="مثال: البنك الأهلي المصري"
+              />
+              <Field
+                id="pm-bank-holder"
+                label="اسم صاحب الحساب"
+                value={form.accountHolder}
+                onChange={(v) => setForm({ accountHolder: v })}
+                placeholder="الاسم الثلاثي أو الرباعي"
+              />
+              <Field
+                id="pm-iban"
+                label="رقم الآيبان IBAN"
+                value={form.iban}
+                onChange={(v) => setForm({ iban: v })}
+                placeholder="EG00 0000 0000 0000 0000 0000"
+                mono
+              />
+            </>
+          )}
+        </form>
+
+        {/* أزرار ثابتة */}
+        <div className="grid grid-cols-2 gap-3 border-t border-border bg-card p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={submitting}
+            className="rounded-full border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+          >
+            إلغاء
+          </button>
+          <button
+            type="submit"
+            onClick={(e) => onSubmit(e)}
+            disabled={submitting}
+            className={cn(
+              'gap-2 py-3 text-xs font-bold disabled:cursor-not-allowed',
+              PRIMARY_BUTTON,
+            )}
+          >
+            {submitting && <Loader2 size={14} className="animate-spin" />}
+            {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التعديلات' : 'إضافة طريقة الدفع'}
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body,
   )
 }
 
@@ -676,7 +685,7 @@ interface FieldProps {
 
 const Field = ({ id, label, value, onChange, placeholder, inputMode, mono }: FieldProps) => (
   <div className="space-y-1.5">
-    <label htmlFor={id} className="text-xs font-normal text-muted">
+    <label htmlFor={id} className="text-xs font-bold text-muted">
       {label}
     </label>
     <input
@@ -688,7 +697,7 @@ const Field = ({ id, label, value, onChange, placeholder, inputMode, mono }: Fie
       placeholder={placeholder}
       autoComplete="off"
       className={cn(
-        'w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-normal text-main outline-none transition-all placeholder:font-medium placeholder:text-muted focus-visible:border-jade focus-visible:ring-2 focus-visible:ring-focus',
+        'w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-medium text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus',
         mono && 'font-mono tabular-nums',
       )}
     />

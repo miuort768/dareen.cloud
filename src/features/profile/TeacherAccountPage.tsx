@@ -11,6 +11,9 @@ import {
   Award,
   TrendingUp,
   CalendarCheck,
+  FileSpreadsheet,
+  Calendar,
+  Sparkles,
 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../../lib/api'
@@ -26,6 +29,8 @@ import {
   AccountActions,
   StatusBadge,
   formatJoinDate,
+  useSupportWhatsappNumber,
+  QuickNavCard,
 } from './shared'
 import { PaymentMethodsSection } from './PaymentMethodsSection'
 import { useTeacherStats } from './useTeacherStats'
@@ -54,9 +59,10 @@ interface TeacherData {
 export const TeacherAccountPage = () => {
   const currentUser = useCurrentUser()
   const logout = useLogout()
+  const supportPhone = useSupportWhatsappNumber()
 
   useEffect(() => {
-    document.title = 'حسابي | دارين السابعة للتعليم والتدريب'
+    document.title = 'الملف الشخصي للمعلمة | دارين للتعليم والتدريب'
   }, [])
 
   const {
@@ -103,31 +109,34 @@ export const TeacherAccountPage = () => {
     )
 
   return (
-    <PageShell>
+    <PageShell className="font-teacher">
       {isError ? (
         <ErrorBlock onRetry={() => refetch()} />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6 lg:space-y-8">
+          {/* ترويسة الحساب الفاخرة للكمبيوتر */}
           <AccountHero
             name={displayName}
-            roleLabel="معلمة"
+            roleLabel="معلمة معتمدة"
+            subtitle="لوحة تحكم المعلمة · الحساب والبيانات المهنية والمالية"
             chipsBold
             chipsInline
-            chipTones={['info', 'success']}
+            chipTones={['info', 'success', 'primary']}
             metaChips={[
-              teacher?.subject || 'مادة غير محددة',
+              teacher?.subject ? `التخصص: ${teacher.subject}` : 'تخصص غير محدد',
               teacher?.price != null
                 ? `سعر الحصة ${teacher.price} ${symbol}`
                 : 'سعر الحصة غير محدد',
+              `العملة: ${currency}`,
             ]}
             quickStats={[
               {
-                label: 'النقاط',
+                label: 'نقاط التميز',
                 value: <span className="font-dash tabular-nums">{points}</span>,
                 tone: 'warning',
                 icon: Award,
               },
-              { label: 'الرتبة', value: rank.name, tone: 'info', icon: RankIcon },
+              { label: 'الرتبة التعليمية', value: rank.name, tone: 'info', icon: RankIcon },
               {
                 label: 'الحصص المنفذة',
                 value: statsLoading ? '—' : completedCount,
@@ -135,7 +144,7 @@ export const TeacherAccountPage = () => {
                 icon: CalendarCheck,
               },
               {
-                label: 'الربح الحالي',
+                label: 'الأرباح الحالية',
                 value: (
                   <span className="font-dash tabular-nums">
                     {statsLoading ? '—' : `${profit} ${symbol}`}
@@ -147,38 +156,21 @@ export const TeacherAccountPage = () => {
             ]}
           />
 
-          <div className="grid gap-4 lg:grid-cols-3">
-            {/* المعلومات الأساسية */}
-            <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="flex flex-col gap-2.5">
-                <InfoRow label="الاسم" value={displayName} icon={User} />
-                <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
-                {teacher?.phone2 && (
-                  <InfoRow label="رقم إضافي" value={teacher.phone2} icon={Phone} mono />
-                )}
-                <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
-                <InfoRow label="نوع الحساب" value="معلمة" icon={ShieldCheck} />
-                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
-                <InfoRow
-                  label="تاريخ الانضمام"
-                  value={formatJoinDate(teacher?.createdAt) || undefined}
-                  icon={CalendarDays}
-                />
-              </div>
-            </SectionCard>
-
-            {/* بيانات التدريس */}
-            <div className="space-y-4 lg:col-span-2">
+          {/* تخطيط الصفحة الرئيسي للكمبيوتر: 8 أعمدة للمحتوى التدريسي والمالي + 4 أعمدة للمعلومات والروابط */}
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+            {/* العمود الرئيسي الأيمن (8 أعمدة) */}
+            <div className="space-y-6 lg:col-span-8">
+              {/* بطاقة التخصص ومسار الرتبة */}
               <SectionCard
-                title="بيانات التدريس"
+                title="بيانات التدريس ومسار الرتبة"
                 icon={BookOpen}
-                description="معلوماتك التعليمية في المنصة"
-                delay={0.15}
-                tone="info"
+                description="بياناتك التعليمية ومستوى تقدمك ونقاط التميز الأكاديمي"
+                tone="primary"
+                delay={0.1}
               >
-                <div className="grid grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <InfoTile
-                    label="المادة"
+                    label="المادة الدراسية"
                     value={teacher?.subject || '—'}
                     icon={BookOpen}
                     tone="primary"
@@ -211,51 +203,149 @@ export const TeacherAccountPage = () => {
                   />
                 </div>
 
-                {/* الرتبة والتقدم — من نظام الرتب الموحد */}
-                <div className="relative mt-4 overflow-hidden rounded-2xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2">
-                  <div className="pointer-events-none absolute -end-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
-                  <div className="relative mb-3 flex flex-wrap items-center justify-between gap-2">
-                    <span className="flex items-center gap-2.5">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/30">
-                        <RankIcon size={16} className="text-jade-on" />
+                {/* لوحة مسار الرتبة التفاعلية */}
+                <div className="relative mt-5 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-active to-primary-deep p-5 shadow-elevation-2 sm:p-6">
+                  <div className="pointer-events-none absolute -end-10 -top-10 h-36 w-36 rounded-full bg-white/10 blur-2xl" />
+                  <div className="relative mb-3.5 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/30">
+                        <RankIcon size={20} className="text-on-primary" />
                       </span>
-                      <span className="min-w-0">
-                        <span className="block text-micro text-jade-on opacity-80">
-                          الرتبة الحالية
+                      <div className="min-w-0">
+                        <span className="block text-micro font-medium text-white/80">
+                          الرتبة الأكاديمية الحالية
                         </span>
-                        <span className="block truncate text-sm font-medium leading-tight text-jade-on">
+                        <span className="block truncate text-base font-black text-on-primary sm:text-lg">
                           {rank.name}
                         </span>
-                      </span>
-                    </span>
+                      </div>
+                    </div>
                     {nextRank && (
-                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-1.5 text-micro font-normal text-jade-on ring-1 ring-white/25">
-                        <TrendingUp size={11} />
-                        التالية: {nextRank.name}
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/20 px-3 py-1.5 text-xs font-semibold text-on-primary ring-1 ring-white/25 backdrop-blur-md">
+                        <TrendingUp size={13} />
+                        الرتبة القادمة: {nextRank.name}
                       </span>
                     )}
                   </div>
-                  <ProgressBar value={rankProgress} variant="jade" size="lg" />
-                  <p className="relative mt-2 text-micro text-jade-on opacity-80">
-                    {nextRank ? (
-                      <>
-                        تحتاج{' '}
-                        <span className="font-dash font-medium tabular-nums">{pointsNeeded}</span>{' '}
-                        نقطة للوصول إلى «{nextRank.name}»
-                      </>
-                    ) : (
-                      'وصلتِ لأعلى رتبة — أحسنت!'
-                    )}
-                  </p>
+
+                  <ProgressBar value={rankProgress} variant="primary" size="lg" />
+
+                  <div className="relative mt-3 flex items-center justify-between text-xs text-white/90">
+                    <p className="font-medium">
+                      {nextRank ? (
+                        <>
+                          متبقي{' '}
+                          <span className="font-dash font-black tabular-nums text-on-primary">
+                            {pointsNeeded}
+                          </span>{' '}
+                          نقطة للانتقال إلى «{nextRank.name}»
+                        </>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 font-bold text-on-primary">
+                          <Sparkles size={14} /> لقد وصلتِ إلى أعلى رتبة أكاديمية — مبروك!
+                        </span>
+                      )}
+                    </p>
+                    <span className="font-dash font-black tabular-nums text-on-primary">
+                      {rankProgress}%
+                    </span>
+                  </div>
                 </div>
               </SectionCard>
 
-              {/* طرق الدفع — قسم رئيسي */}
+              {/* قسم طرق استلام المستحقات المالية */}
               <PaymentMethodsSection />
             </div>
-          </div>
 
-          <AccountActions onLogoutStore={logout} />
+            {/* العمود الجانبي الأيسر (4 أعمدة) */}
+            <div className="space-y-6 lg:col-span-4">
+              {/* المعلومات الأساسية وبيانات الحساب */}
+              <SectionCard
+                title="المعلومات الشخصية والحساب"
+                icon={User}
+                description="بيانات الهوية والاتصال المعتمدة"
+                delay={0.12}
+              >
+                <div className="flex flex-col gap-2.5">
+                  <InfoRow label="الاسم الكامل" value={displayName} icon={User} />
+                  <InfoRow
+                    label="رقم الجوال الأساسي"
+                    value={teacher?.phone1}
+                    icon={Phone}
+                    mono
+                    copyable
+                  />
+                  {teacher?.phone2 && (
+                    <InfoRow
+                      label="رقم إضافي / واتساب"
+                      value={teacher.phone2}
+                      icon={Phone}
+                      mono
+                      copyable
+                    />
+                  )}
+                  <InfoRow
+                    label="اسم المستخدم"
+                    value={teacher?.username}
+                    icon={KeyRound}
+                    mono
+                    copyable
+                  />
+                  <InfoRow label="نوع الحساب" value="معلمة" icon={ShieldCheck} />
+                  <InfoRow label="حالة التفعيل" value={<StatusBadge />} icon={BadgeCheck} />
+                  <InfoRow
+                    label="تاريخ الانضمام"
+                    value={formatJoinDate(teacher?.createdAt) || undefined}
+                    icon={CalendarDays}
+                  />
+                </div>
+              </SectionCard>
+
+              {/* الروابط السريعة للكمبيوتر */}
+              <SectionCard
+                title="روابط سريعة للمعلمة"
+                icon={CalendarCheck}
+                description="انتقال فوري للخدمات الأكثر استخدامًا"
+                delay={0.15}
+                tone="info"
+              >
+                <div className="space-y-2.5">
+                  <QuickNavCard
+                    title="سجل الفواتير والمستحقات"
+                    subtitle="عرض وتتبع الفواتير والمدفوعات السابقة"
+                    icon={Wallet}
+                    to="/teacher-invoices"
+                    tone="primary"
+                  />
+                  <QuickNavCard
+                    title="التقارير الشهرية للطلاب"
+                    subtitle="مراجعة واعتماد التقييمات الشهرية"
+                    icon={FileSpreadsheet}
+                    to="/teacher-reports"
+                    tone="success"
+                  />
+                  <QuickNavCard
+                    title="جدول الحصص الأسبوعي"
+                    subtitle="استعراض المواعيد والجلسات المجدولة"
+                    icon={Calendar}
+                    to="/schedule"
+                    tone="info"
+                  />
+                </div>
+              </SectionCard>
+
+              {/* مركز الدعم وتسجيل الخروج */}
+              <SectionCard
+                title="مركز المساعدة والأمان"
+                icon={ShieldCheck}
+                description="إجراءات الحساب والتواصل المباشر"
+                delay={0.18}
+                tone="warning"
+              >
+                <AccountActions onLogoutStore={logout} supportPhone={supportPhone} />
+              </SectionCard>
+            </div>
+          </div>
         </div>
       )}
     </PageShell>
