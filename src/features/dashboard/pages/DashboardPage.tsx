@@ -124,9 +124,22 @@ export const Dashboard = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="min-h-full bg-background font-admin"
+          className="relative min-h-full bg-background font-admin"
           dir="rtl"
         >
+          {/* Subtle ambient lighting for luxury admin depth */}
+          <div
+            className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(109,40,217,0.06),transparent_70%)]"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none fixed -start-48 top-1/3 -z-10 h-96 w-96 rounded-full bg-primary/5 blur-3xl"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none fixed -end-48 top-2/3 -z-10 h-96 w-96 rounded-full bg-accent/5 blur-3xl"
+            aria-hidden="true"
+          />
           {device === 'mobile' ? (
             /* Mobile */
             <div className="block md:hidden">

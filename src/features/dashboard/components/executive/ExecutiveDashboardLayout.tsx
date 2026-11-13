@@ -1,7 +1,8 @@
 import { memo } from 'react'
 import { motion, type Variants } from 'framer-motion'
-import { Activity, RefreshCw, AlertCircle, AlertTriangle } from 'lucide-react'
+import { AlertCircle, AlertTriangle } from 'lucide-react'
 import { useExecutiveDashboard } from '../../hooks/useExecutiveDashboard'
+import { ExecutiveHero } from './ExecutiveHero'
 import { BusinessPulse } from './BusinessPulse'
 import { TodayMoney } from './TodayMoney'
 import { AttentionTiles } from './AttentionTiles'
@@ -14,7 +15,6 @@ import { ActivityFeed } from './ActivityFeed'
 import { InsightsPanel } from './InsightsPanel'
 import { QuickActionsGrid } from './QuickActionsGrid'
 import { SectionErrorBoundary, Skeleton, ErrorState } from '../../../../shared/components/ui'
-import { DashboardGreeting } from '../../../../shared/components/DashboardGreeting'
 import { cn } from '@/lib/utils'
 
 const containerVariants = {
@@ -124,36 +124,15 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
       className="space-y-5"
       dir="rtl"
     >
-      {/* Header strip */}
+      {/* Executive Command Hero */}
       <Section>
-        <DashboardGreeting
-          name={firstName}
-          fallbackName="المدير"
-          nightMessage="ليلة موفقة"
-          subtitle={
-            academicYear ? (
-              <span className="inline-flex items-center rounded-full border border-white/20 bg-white/15 px-2.5 py-0.5 text-[10px] font-semibold text-on-primary shadow-soft">
-                {academicYear}
-              </span>
-            ) : undefined
-          }
-          chips={[
-            { icon: Activity, label: 'بيانات حية مباشرة' },
-            ...(criticalCount > 0
-              ? [{ icon: AlertTriangle, label: `${criticalCount} تنبيه حرج` }]
-              : []),
-          ]}
-          end={
-            <button
-              onClick={() => refetch()}
-              disabled={isFetching}
-              aria-label="تحديث البيانات"
-              title="تحديث البيانات"
-              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-on-primary shadow-soft outline-none backdrop-blur-md transition-all duration-normal hover:scale-105 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
-            >
-              <RefreshCw size={16} className={isFetching ? 'animate-spin' : ''} />
-            </button>
-          }
+        <ExecutiveHero
+          userName={firstName}
+          academicYear={academicYear}
+          stats={stats}
+          criticalCount={criticalCount}
+          isFetching={isFetching}
+          onRefresh={() => refetch()}
         />
       </Section>
 
