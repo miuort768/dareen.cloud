@@ -32,7 +32,7 @@ export function SelectionHeroBanner({
   return (
     <section
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-1 lg:rounded-none lg:border-b lg:border-divider lg:bg-none lg:shadow-none',
+        'relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-1 lg:border-b lg:border-divider lg:bg-none lg:shadow-none',
         className,
       )}
     >
@@ -86,7 +86,7 @@ export function SelectionHeroBanner({
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-light text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] sm:min-h-11 sm:w-auto sm:px-6 sm:text-xs lg:rounded-2xl"
+              className="shadow-accent/30 inline-flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-light text-on-accent shadow-elevation-3 transition-all hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] sm:min-h-11 sm:w-auto sm:px-6 sm:text-xs lg:rounded-2xl"
             >
               <MessageCircle size={14} />
               طلب حصة مجانية

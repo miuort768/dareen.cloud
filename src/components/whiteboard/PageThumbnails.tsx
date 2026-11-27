@@ -49,7 +49,7 @@ export const PageThumbnails: React.FC<PageThumbnailsProps> = ({
               {/* Mini canvas preview representation */}
               <div
                 className={`relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-border text-[10px] text-muted ${
-                  p.background === 'black' ? 'bg-slate-900 text-slate-400' : 'bg-surface'
+                  p.background === 'black' ? 'bg-inverse text-muted' : 'bg-surface'
                 }`}
               >
                 <span>صفحة {idx + 1}</span>

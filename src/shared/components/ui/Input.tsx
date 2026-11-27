@@ -34,7 +34,7 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
           id={id}
           type={type}
           className={cn(
-            'w-full rounded-xl border border-border-strong bg-surface font-medium outline-none transition-all duration-normal',
+            'w-full rounded-xl border border-border-strong bg-surface font-medium text-main outline-none transition-all duration-normal',
             'focus:border-primary focus:shadow-elevation-1 focus:ring-2 focus:ring-primary/20',
             'hover:border-primary/50 hover:bg-card',
             'placeholder:text-dim',

@@ -111,7 +111,7 @@ export const MobileQuickAccess = ({
           />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium text-main">{academyName}</p>
-            <span className="mt-1 inline-flex w-fit items-center rounded-none bg-primary-soft px-2 py-0.5 text-micro font-normal text-primary">
+            <span className="mt-1 inline-flex w-fit items-center rounded-2xl bg-primary-soft px-2 py-0.5 text-micro font-normal text-primary">
               الوصول السريع
             </span>
           </div>

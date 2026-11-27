@@ -57,12 +57,12 @@ export const TermsOfWork = () => {
       <MobileHeader />
 
       {/* Hero Section */}
-      <section className="relative mx-4 mb-4 overflow-hidden rounded-card border border-primary/50 bg-card pb-4 pt-4 shadow-elevation-1 dark:border-primary/50 dark:bg-background md:mx-0 md:mb-0 md:rounded-none md:border-0 md:pb-10 md:pt-36 md:shadow-none">
+      <section className="relative mx-4 mb-4 overflow-hidden rounded-card border border-primary/50 bg-card pb-4 pt-4 shadow-elevation-1 dark:border-primary/50 dark:bg-background md:mx-0 md:mb-0 md:rounded-2xl md:border-0 md:pb-10 md:pt-36 md:shadow-none">
         <div className="absolute start-0 top-0 hidden h-96 w-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary/5 blur-[100px] md:block"></div>
         <div className="absolute bottom-0 end-0 hidden h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-primary/5 blur-[80px] md:block"></div>
 
         <div className="container relative z-10 mx-auto px-4 text-center">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary-soft px-3 py-1 text-primary shadow-elevation-1 dark:border-primary/50 dark:bg-primary/20 dark:text-main md:mb-4 md:rounded-none md:px-4 md:py-2">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary-soft px-3 py-1 text-primary shadow-elevation-1 dark:border-primary/50 dark:bg-primary/20 dark:text-main md:mb-4 md:rounded-2xl md:px-4 md:py-2">
             <Briefcase size={12} className="text-primary" />
             <span className="text-xs font-light tracking-label md:text-xs">قوانين العمل</span>
           </div>
@@ -87,7 +87,7 @@ export const TermsOfWork = () => {
           {/* Introduction */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-primary-soft dark:bg-primary/20">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/20">
                 <FileCheck className="h-6 w-6 text-primary" />
               </div>
               <div>
@@ -104,7 +104,7 @@ export const TermsOfWork = () => {
           {/* Teacher Qualifications */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-success-light dark:bg-success-soft">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success-light dark:bg-success-soft">
                 <Award className="h-6 w-6 text-success" />
               </div>
               <div>
@@ -125,7 +125,7 @@ export const TermsOfWork = () => {
           {/* Code of Conduct */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-primary-soft dark:bg-primary/20">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/20">
                 <Shield className="h-6 w-6 text-primary" />
               </div>
               <div>
@@ -151,7 +151,7 @@ export const TermsOfWork = () => {
           {/* Attendance & Punctuality */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-warning-light dark:bg-warning-soft">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-warning-light dark:bg-warning-soft">
                 <Clock className="h-6 w-6 text-warning" />
               </div>
               <div>
@@ -173,7 +173,7 @@ export const TermsOfWork = () => {
           {/* Payment Terms */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-info-light dark:bg-info-soft">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-info-light dark:bg-info-soft">
                 <Award className="h-6 w-6 text-info" />
               </div>
               <div>
@@ -208,7 +208,7 @@ export const TermsOfWork = () => {
           {/* Termination */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-error-light dark:bg-error-soft">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-error-light dark:bg-error-soft">
                 <AlertCircle className="h-6 w-6 text-error" />
               </div>
               <div>
@@ -233,7 +233,7 @@ export const TermsOfWork = () => {
           {/* Professional Development */}
           <div className="mb-4">
             <div className="mb-6 flex items-start gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-info-light dark:bg-info-soft">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-info-light dark:bg-info-soft">
                 <UserCheck className="h-6 w-6 text-info" />
               </div>
               <div>
@@ -252,7 +252,7 @@ export const TermsOfWork = () => {
           </div>
 
           {/* Commitment */}
-          <div className="mb-4 rounded-none border border-border bg-background p-8">
+          <div className="mb-4 rounded-2xl border border-border bg-background p-8">
             <h2 className="mb-4 text-xl font-normal text-main md:text-2xl">التعهد والالتزام</h2>
             <div className="space-y-1 text-xs text-muted md:text-sm">
               <p>بتوقيعك على هذه القوانين، فإنك تتعهد بـ:</p>

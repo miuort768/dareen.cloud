@@ -40,7 +40,7 @@ export const MasarSection = () => {
               <div className="group relative flex w-full shrink-0 items-center justify-center overflow-hidden border-b border-white/10 bg-white/[0.08] p-8 backdrop-blur-md dark:border-primary/20 dark:bg-primary/[0.05] lg:w-[40%] lg:border-b-0 lg:border-e lg:p-4">
                 <div className="pointer-events-none absolute inset-0 z-30 h-full w-full animate-shine-slow bg-gradient-to-r from-transparent via-white/20 to-transparent dark:via-primary/10"></div>
                 <div className="relative z-10 flex h-full w-full items-center justify-center">
-                  <div className="absolute h-64 w-64 rounded-none bg-primary/20 opacity-0 blur-[80px] transition-opacity duration-700 group-hover:opacity-100 dark:bg-primary/10"></div>
+                  <div className="absolute h-64 w-64 rounded-2xl bg-primary/20 opacity-0 blur-[80px] transition-opacity duration-700 group-hover:opacity-100 dark:bg-primary/10"></div>
                   <picture>
                     <source srcSet="/dareen_books_portal_v3.v2.webp" type="image/webp" />
                     <source srcSet="/dareen_books_portal_v3.v2.avif" type="image/avif" />
@@ -93,7 +93,7 @@ export const MasarSection = () => {
                 <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
                   <Link
                     to="/books"
-                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-normal text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-sky-400"
+                    className="group flex items-center justify-center gap-3 rounded-xl bg-primary px-10 py-4 text-lg font-normal text-on-primary shadow-2xl shadow-primary/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:shadow-primary/20 dark:hover:bg-primary-hover"
                   >
                     <FileText className="h-6 w-6 transition-transform group-hover:scale-110" />
                     <span>تحميل مذكرة</span>

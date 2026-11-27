@@ -85,7 +85,9 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
           <CalendarCheck size={compact ? 16 : 18} />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className={cn('font-medium text-main', compact ? 'text-xs' : 'text-sm')}>حصص اليوم</h3>
+          <h3 className={cn('font-medium text-main', compact ? 'text-xs' : 'text-sm')}>
+            حصص اليوم
+          </h3>
           <p className={cn('font-normal text-muted', compact ? 'text-[10px]' : 'text-[11px]')}>
             متابعة جلسات أبنائك لهذا اليوم
           </p>
@@ -123,7 +125,7 @@ export const TodayTimeline = ({ items, compact = false }: TodayTimelineProps) =>
                 <div
                   className={cn(
                     'h-full border border-s-4 border-border bg-card shadow-soft transition-all duration-slow hover:-translate-y-0.5 hover:shadow-elevation-1',
-                    compact ? 'rounded-none p-3.5' : 'rounded-none p-5',
+                    compact ? 'rounded-2xl p-3.5' : 'rounded-2xl p-5',
                     meta.bar,
                     item.status === 'cancelled' && 'opacity-70',
                     item.status === 'live' && 'border-s-error bg-error-soft',

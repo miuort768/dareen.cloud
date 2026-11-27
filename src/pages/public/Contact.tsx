@@ -120,8 +120,8 @@ export const Contact = () => {
 
       <main className="relative flex-grow overflow-hidden pb-2 md:pt-28">
         {/* Subtle background glows */}
-        <div className="pointer-events-none absolute start-0 top-0 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/3 rounded-none bg-primary/5 blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 end-0 h-[400px] w-[400px] -translate-x-1/3 translate-y-1/3 rounded-none bg-success-soft blur-[100px]" />
+        <div className="pointer-events-none absolute start-0 top-0 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/3 rounded-2xl bg-primary/5 blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 end-0 h-[400px] w-[400px] -translate-x-1/3 translate-y-1/3 rounded-2xl bg-success-soft blur-[100px]" />
 
         <div className="container relative z-10 mx-auto max-w-5xl px-4">
           {/* ── Hero Header ── */}
@@ -164,13 +164,13 @@ export const Contact = () => {
 
           {/* ── Contact Form Card ── */}
           <AnimateOnScroll animation="fadeUp">
-            <div className="overflow-hidden rounded-none border border-border bg-card shadow-elevation-4 dark:shadow-black/40">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-4 dark:shadow-black/40">
               {/* Top accent bar */}
               <div className="h-1.5 bg-gradient-to-r from-primary via-primary to-warning" />
 
               {formState === 'success' ? (
                 <div className="px-6 py-20 text-center" role="status" aria-live="polite">
-                  <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-none bg-success-light text-success">
+                  <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-2xl bg-success-light text-success">
                     <CheckCircle2 size={44} />
                   </div>
                   <h2 className="mb-2 text-2xl font-normal text-main">تم الإرسال بنجاح!</h2>
@@ -180,7 +180,7 @@ export const Contact = () => {
                   </p>
                   <button
                     onClick={() => setFormState('idle')}
-                    className="rounded-none bg-primary px-8 py-3 text-sm font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+                    className="rounded-2xl bg-primary px-8 py-3 text-sm font-normal text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     إرسال رسالة أخرى
                   </button>
@@ -225,7 +225,7 @@ export const Contact = () => {
                           required
                           value={formData.name}
                           onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-                          className="w-full rounded-none border border-border bg-background px-4 py-3 text-sm font-normal text-main outline-none transition-all placeholder:text-dim focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:placeholder:text-muted"
+                          className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm font-normal text-main outline-none transition-all placeholder:text-dim focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:placeholder:text-muted"
                           placeholder="أدخل اسمك الكريم..."
                         />
                       </div>
@@ -249,7 +249,7 @@ export const Contact = () => {
                               phone: e.target.value.replace(/[^0-9+\s]/g, ''),
                             }))
                           }
-                          className="w-full rounded-none border border-border bg-background px-4 py-3 text-end text-sm font-normal text-main outline-none transition-all placeholder:text-dim focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:placeholder:text-muted"
+                          className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-end text-sm font-normal text-main outline-none transition-all placeholder:text-dim focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:placeholder:text-muted"
                           placeholder="+965 XXXX XXXX"
                           dir="ltr"
                         />
@@ -268,7 +268,7 @@ export const Contact = () => {
                         id="contact-subject"
                         value={formData.subject}
                         onChange={(e) => setFormData((p) => ({ ...p, subject: e.target.value }))}
-                        className="w-full appearance-none rounded-none border border-border bg-background bg-[length:14px] bg-no-repeat px-4 py-3 ps-10 text-sm font-normal text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card"
+                        className="w-full appearance-none rounded-2xl border border-border bg-background bg-[length:14px] bg-no-repeat px-4 py-3 ps-10 text-sm font-normal text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card"
                         style={{
                           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
                           backgroundPosition: 'left 14px center',
@@ -294,7 +294,7 @@ export const Contact = () => {
                         id="contact-curriculum"
                         value={formData.curriculum}
                         onChange={(e) => setFormData((p) => ({ ...p, curriculum: e.target.value }))}
-                        className="w-full appearance-none rounded-none border border-border bg-background bg-[length:14px] bg-no-repeat px-4 py-3 ps-10 text-sm font-normal text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card"
+                        className="w-full appearance-none rounded-2xl border border-border bg-background bg-[length:14px] bg-no-repeat px-4 py-3 ps-10 text-sm font-normal text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card"
                         style={{
                           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
                           backgroundPosition: 'left 14px center',
@@ -323,7 +323,7 @@ export const Contact = () => {
                         required
                         value={formData.message}
                         onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
-                        className="w-full resize-none rounded-none border border-border bg-background px-4 py-3 text-sm font-normal text-main outline-none transition-all placeholder:text-dim focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card"
+                        className="w-full resize-none rounded-2xl border border-border bg-background px-4 py-3 text-sm font-normal text-main outline-none transition-all placeholder:text-dim focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card"
                         placeholder="اكتب استفسارك بالتفصيل هنا..."
                       />
                     </div>
@@ -335,7 +335,7 @@ export const Contact = () => {
                         type="submit"
                         disabled={formState === 'submitting'}
                         className={cn(
-                          'flex items-center justify-center gap-2 rounded-none py-3.5 text-sm font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                          'flex items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-normal outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           formState === 'submitting'
                             ? 'cursor-not-allowed bg-card text-muted'
                             : 'bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 hover:bg-primary-hover',
@@ -352,7 +352,7 @@ export const Contact = () => {
                         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-normal text-on-success shadow-elevation-3 transition-all hover:bg-success-dark"
+                        className="flex items-center justify-center gap-2 rounded-2xl bg-success py-3.5 text-sm font-normal text-on-success shadow-elevation-3 transition-all hover:bg-success-dark"
                       >
                         <MessageCircle size={16} />
                         <span>تواصل واتساب</span>
@@ -372,12 +372,12 @@ export const Contact = () => {
                   href={card.href}
                   target={card.href !== '#' ? '_blank' : undefined}
                   rel="noopener noreferrer"
-                  className="group block rounded-none border border-border bg-card p-5 shadow-elevation-1"
+                  className="group block rounded-2xl border border-border bg-card p-5 shadow-elevation-1"
                 >
                   <div className="flex items-center gap-4">
                     <div
                       className={cn(
-                        'flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-gradient-to-br text-on-primary shadow-elevation-3',
+                        'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-on-primary shadow-elevation-3',
                         card.gradient,
                       )}
                     >

@@ -39,7 +39,7 @@ export const PlatformOffer = ({ className }: { className?: string }) => {
       rel="sponsored noopener noreferrer"
       aria-label="عرض المنصة"
       className={cn(
-        'block overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-shadow duration-300 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none',
+        'block overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-shadow duration-300 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
         className,
       )}
     >

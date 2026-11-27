@@ -464,7 +464,7 @@ export const MobileSchedule = () => {
                     transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={openInAppointments}
-                    className={`cursor-pointer overflow-hidden rounded-none border border-e-[3px] border-border bg-card shadow-elevation-1 transition-all duration-fast hover:border-border hover:shadow-elevation-2 ${ts.bar}`}
+                    className={`cursor-pointer overflow-hidden rounded-2xl border border-e-[3px] border-border bg-card shadow-elevation-1 transition-all duration-fast hover:border-border hover:shadow-elevation-2 ${ts.bar}`}
                   >
                     <div className="flex items-center gap-3 p-3">
                       {/* Time gutter */}

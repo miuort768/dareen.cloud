@@ -299,7 +299,7 @@ export const DesktopLibraryLanding = ({
                 type="button"
                 onClick={() => goToType(t.id)}
                 className={cn(
-                  'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300 lg:rounded-none',
+                  'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300',
                   'cursor-pointer hover:-translate-y-1 hover:shadow-elevation-3',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   s.cardBorder,
@@ -364,7 +364,7 @@ export const DesktopLibraryLanding = ({
 
       {/* ===== SEARCH BAR ===== */}
       <section className="mb-6">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-1 lg:rounded-none">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-1">
           <div
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
             style={{
@@ -420,7 +420,7 @@ export const DesktopLibraryLanding = ({
       <section className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[320px_1fr]">
         <aside className="space-y-5">
           {/* Popular Categories */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 lg:rounded-none">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
             <h3 className="mb-4 flex items-center gap-2.5 text-sm font-light text-main">
               <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <BookMarked size={15} />
@@ -558,7 +558,7 @@ export const DesktopLibraryLanding = ({
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-light text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep disabled:opacity-50"
+                    className="hover:shadow-accent/30 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-light text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep disabled:opacity-50"
                   >
                     {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
                     {!submitting && <Send size={13} />}
@@ -596,7 +596,7 @@ export const DesktopLibraryLanding = ({
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="space-y-3 overflow-hidden rounded-2xl border border-border bg-card p-5 lg:rounded-none"
+                  className="space-y-3 overflow-hidden rounded-2xl border border-border bg-card p-5"
                 >
                   <div className="h-4 w-20 animate-pulse rounded-lg bg-surface" />
                   <div className="h-4 w-3/4 animate-pulse rounded-lg bg-surface" />
@@ -623,7 +623,7 @@ export const DesktopLibraryLanding = ({
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
-                    className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
+                    className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                   >
                     <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-l from-transparent via-primary/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     <div className="flex items-center justify-between gap-2">
@@ -701,7 +701,7 @@ export const DesktopLibraryLanding = ({
                   })
                 }}
                 className={cn(
-                  'group relative cursor-pointer overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none',
+                  'group relative cursor-pointer overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   SOLID_TONE[tone],
                 )}
               >
@@ -765,7 +765,7 @@ export const DesktopLibraryLanding = ({
                   })
                 }}
                 className={cn(
-                  'group relative cursor-pointer overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none',
+                  'group relative cursor-pointer overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   SOLID_TONE[tone],
                 )}
               >

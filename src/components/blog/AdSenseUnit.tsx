@@ -68,8 +68,7 @@ export const AdSenseUnit = ({ slot, className }: { slot: AdSenseSlotId; classNam
 
   if (!desktopCode && !mobileCode) return null
 
-  const frame =
-    'overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 lg:rounded-none'
+  const frame = 'overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1'
 
   return (
     <div className={className}>

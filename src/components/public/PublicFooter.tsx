@@ -28,14 +28,14 @@ export const PublicFooter = () => {
           {/* Brand + description */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-none bg-gradient-to-br from-primary to-primary-hover shadow-elevation-3 dark:from-primary dark:to-primary">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-hover shadow-elevation-3 dark:from-primary dark:to-primary">
                 <span className="text-2xl font-normal text-on-primary dark:text-card">د</span>
               </div>
               <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text font-heading text-lg font-normal text-transparent dark:from-primary dark:to-primary">
                 {academyName}
               </span>
             </div>
-            <p className="border-s-2 border-border ps-4 text-xs leading-relaxed text-muted dark:border-primary/30 dark:text-sky-400">
+            <p className="border-s-2 border-border ps-4 text-xs leading-relaxed text-muted dark:border-primary/30">
               {footerDescription ||
                 'نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.'}
             </p>

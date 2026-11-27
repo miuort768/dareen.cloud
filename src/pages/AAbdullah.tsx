@@ -180,15 +180,13 @@ export const AAbdullah = () => {
         {/* ═══════════════ رسالة إلى أولياء الأمور والمعلمين ═══════════════ */}
         <motion.div
           {...sectionDelay(4)}
-          className="space-y-4 rounded-none border-s-4 border-accent bg-card p-6 shadow-elevation-1 md:p-8"
+          className="space-y-4 rounded-2xl border-s-4 border-accent bg-card p-6 shadow-elevation-1 md:p-8"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
               <VHeart size={20} className="text-accent" />
             </div>
-            <h2 className="text-lg font-light text-primary">
-              رسالة إلى أولياء الأمور والمعلمين
-            </h2>
+            <h2 className="text-lg font-light text-primary">رسالة إلى أولياء الأمور والمعلمين</h2>
           </div>
           <div className="space-y-3 ps-4">
             <p className="text-sm leading-relaxed text-muted">"الإتقان أساس النجاح والتطوير.</p>

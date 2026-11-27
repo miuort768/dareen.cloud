@@ -122,7 +122,7 @@ export const Login = () => {
               تسجيل الدخول
             </h1>
             {/* Mobile: sharp-cornered rectangle with lock — clear over the photo in both modes */}
-            <p className="inline-flex items-center gap-2 rounded-none border border-white/40 bg-white/10 px-4 py-2.5 text-sm font-normal text-white backdrop-blur-sm lg:hidden">
+            <p className="inline-flex items-center gap-2 rounded-2xl border border-white/40 bg-white/10 px-4 py-2.5 text-sm font-normal text-white backdrop-blur-sm lg:hidden">
               <Lock size={14} />
               أدخل بياناتك للوصول إلى حسابك
             </p>

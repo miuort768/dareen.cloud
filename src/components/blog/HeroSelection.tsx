@@ -105,7 +105,7 @@ export const MobileHero = ({
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-light text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+                  className="shadow-accent/30 inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-light text-on-accent shadow-elevation-3 transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
                   حصة مجانية فردية
                 </a>
@@ -323,7 +323,7 @@ export const DesktopHero = ({
     return (
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-8 lg:px-10 lg:py-10">
         {/* Hero Section */}
-        <section className="relative min-h-[280px] overflow-hidden rounded-2xl border border-divider bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card lg:min-h-[420px] lg:rounded-none">
+        <section className="relative min-h-[280px] overflow-hidden rounded-2xl border border-divider bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card lg:min-h-[420px]">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute start-[-15%] top-[-40%] h-[120%] w-[70%] animate-[pulse_8s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-white/[0.04] to-transparent blur-[100px]" />
             <div className="absolute bottom-[-30%] end-[-10%] h-[100%] w-[60%] animate-[pulse_6s_ease-in-out_infinite_1s] rounded-full bg-gradient-to-tl from-transparent to-transparent blur-[80px]" />
@@ -369,7 +369,7 @@ export const DesktopHero = ({
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-light text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+                  className="shadow-accent/30 inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-light text-on-accent shadow-elevation-3 transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
                   طلب حصة مجانية
                 </a>
@@ -416,14 +416,14 @@ export const DesktopHero = ({
                     src="/bbook.webp"
                     alt={`بوابة ${academyName} التعليمية`}
                     className="absolute inset-0"
-                    imgClassName="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
+                    imgClassName="object-contain drop-shadow-2xl"
                     withSkeleton
                   />
                 </div>
               </div>
 
               {/* Floating cards */}
-              <div className="pointer-events-none absolute start-[5%] top-[10%] animate-[float_6s_ease-in-out_infinite] rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-md">
+              <div className="pointer-events-none absolute start-[5%] top-[10%] animate-[float_6s_ease-in-out_infinite] rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-elevation-3 backdrop-blur-md">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-success-soft">
                     <CheckCircle size={14} className="text-success" />
@@ -434,7 +434,7 @@ export const DesktopHero = ({
                   </div>
                 </div>
               </div>
-              <div className="pointer-events-none absolute bottom-[15%] end-[3%] animate-[float_7s_ease-in-out_infinite_1s] rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-md">
+              <div className="pointer-events-none absolute bottom-[15%] end-[3%] animate-[float_7s_ease-in-out_infinite_1s] rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-elevation-3 backdrop-blur-md">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-info-soft">
                     <Languages size={14} className="text-info" />
@@ -501,7 +501,7 @@ export const DesktopHero = ({
                     return next
                   })
                 }}
-                className={`group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:opacity-95 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none ${
+                className={`group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:opacity-95 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 ${
                   GRID_TONES[i % GRID_TONES.length]
                 }`}
               >

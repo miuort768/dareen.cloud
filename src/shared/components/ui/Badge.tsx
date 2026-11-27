@@ -12,6 +12,11 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     | 'glow'
     | 'outline'
     | 'destructive'
+    | 'soft-primary'
+    | 'soft-success'
+    | 'soft-warning'
+    | 'soft-error'
+    | 'soft-info'
   size?: 'sm' | 'md'
 }
 
@@ -25,6 +30,11 @@ const variants = {
   glow: 'bg-primary text-on-primary border-primary shadow-soft',
   outline: 'bg-transparent text-main border-border',
   destructive: 'bg-error text-on-error border-error shadow-soft',
+  'soft-primary': 'bg-primary-soft text-primary border-primary/20',
+  'soft-success': 'bg-success-soft text-success-strong border-success/20',
+  'soft-warning': 'bg-warning-soft text-warning-strong border-warning/20',
+  'soft-error': 'bg-error-soft text-error-strong border-error/20',
+  'soft-info': 'bg-info-soft text-info-strong border-info/20',
 }
 
 const sizes = {
