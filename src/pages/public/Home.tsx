@@ -171,7 +171,11 @@ export const Home = ({ country }: HomeProps) => {
         )}
         <div className="mb-3 mt-2 flex gap-1.5">
           <a
-            href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
+            href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(
+              countryConfig
+                ? `السلام عليكم، أرغب في حجز حصة مجانية (${countryConfig.heroSubtitle}) في ${academyName}`
+                : `السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`,
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-light text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary"
@@ -460,6 +464,7 @@ export const Home = ({ country }: HomeProps) => {
             requestFreeNumber={requestFreeNumber}
             academyName={academyName}
             bannersArray={bannersArray}
+            countryConfig={countryConfig}
           />
         </AnimateOnScroll>
         <AnimateOnScroll>

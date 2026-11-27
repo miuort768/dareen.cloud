@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Star, MessageCircle, Users } from 'lucide-react'
+import type { CountryConfig } from '../home-page/countries'
 
 interface HeroSectionProps {
   typewriterText: string
@@ -7,6 +8,7 @@ interface HeroSectionProps {
   requestFreeNumber: string
   academyName: string
   bannersArray: string[]
+  countryConfig?: CountryConfig
 }
 
 export const HeroSection = ({
@@ -15,6 +17,7 @@ export const HeroSection = ({
   requestFreeNumber,
   academyName,
   bannersArray,
+  countryConfig,
 }: HeroSectionProps) => {
   return (
     <section className="relative overflow-hidden bg-surface pb-4 pt-20 transition-colors duration-500 dark:bg-background md:pb-4 md:pt-28">
@@ -27,27 +30,42 @@ export const HeroSection = ({
               <div className="mx-auto mb-4 mt-4 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-3 py-1.5 dark:border-primary/40 dark:bg-primary/10 lg:mt-0">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-primary dark:bg-primary"></span>
                 <span className="text-micro font-normal text-primary dark:text-primary sm:text-xs">
-                  منصة تعليم عن بعد رائدة في الكويت والخليج
+                  {countryConfig
+                    ? `${countryConfig.flag} منصة تعليم عن بعد رائدة في ${countryConfig.nameAr}`
+                    : 'منصة تعليم عن بعد رائدة في الكويت والخليج'}
                 </span>
               </div>
               <h1 className="relative mb-0 font-heading text-3xl font-normal leading-none text-main dark:text-main lg:text-5xl">
                 <span className="sr-only">
-                  دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم 1 للدروس الخصوصية وتحفيظ القرآن
-                  في الكويت، الكويت، الإمارات، قطر وسلطنة عمان ومملكة البحرين - دروس خصوصية في
-                  الدوحة والرياض ومسقط وصلالة ومنامة ومملكة البحرين
+                  {countryConfig
+                    ? `${academyName} - ${countryConfig.seoTitle}`
+                    : 'دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم 1 للدروس الخصوصية وتحفيظ القرآن في الكويت، السعودية، الإمارات، قطر وسلطنة عمان ومملكة البحرين'}
                 </span>
                 <span className="aria-hidden mb-0 block min-h-[1.1em]">
                   {typewriterText || '\u00A0'}
                   <span className="me-1 inline-block h-[0.9em] animate-pulse border-s-4 border-primary align-middle dark:border-primary"></span>
                 </span>
                 <span className="aria-hidden -mt-1 block bg-gradient-to-r from-primary to-accent bg-clip-text py-1 text-base text-transparent dark:from-sky-400 dark:to-primary sm:text-lg lg:text-2xl">
-                  للتعليم والتدريب عن بعد
+                  {countryConfig
+                    ? `للتعليم والتدريب عن بعد في ${countryConfig.nameAr}`
+                    : 'للتعليم والتدريب عن بعد'}
                 </span>
               </h1>
               <p className="dark:text-soft mx-auto mb-5 max-w-[320px] px-0 text-xs font-light leading-normal text-muted sm:max-w-full sm:text-xs">
-                أفضل منصة تعليم عن بعد في الكويت، الكويت، الإمارات، قطر وعمان والبحرين.
-                <br />
-                دروس خصوصية، قدرات وتحصيلي، تحفيظ القرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
+                {countryConfig ? (
+                  <>
+                    أفضل منصة تعليم عن بعد في {countryConfig.nameAr}.
+                    <br />
+                    {countryConfig.curriculumNote}، مع نخبة المعلمين.
+                  </>
+                ) : (
+                  <>
+                    أفضل منصة تعليم عن بعد في الكويت، السعودية، الإمارات، قطر وعمان والبحرين.
+                    <br />
+                    دروس خصوصية، قدرات وتحصيلي، تحفيظ القرآن، وتأسيس للمناهج الخليجية مع نخبة
+                    المعلمين.
+                  </>
+                )}
               </p>
               <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
                 <Link
@@ -60,7 +78,11 @@ export const HeroSection = ({
                   <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
                 </Link>
                 <a
-                  href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + academyName)}`}
+                  href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(
+                    countryConfig
+                      ? `السلام عليكم، أرغب في حجز حصة مجانية (${countryConfig.heroSubtitle}) في ${academyName}`
+                      : `السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`,
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center justify-center gap-3 rounded-xl bg-success px-6 py-3 text-base font-light text-on-success shadow-elevation-3 transition-all hover:bg-success-dark hover:shadow-elevation-4 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-sky-400 dark:text-on-primary sm:px-10 sm:py-4 sm:text-lg"
