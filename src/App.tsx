@@ -368,6 +368,20 @@ function App() {
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/kw" element={<Home country="kw" />} />
+              <Route path="/kuwait" element={<Home country="kw" />} />
+              <Route path="/qa" element={<Home country="qa" />} />
+              <Route path="/qatar" element={<Home country="qa" />} />
+              <Route path="/om" element={<Home country="om" />} />
+              <Route path="/oman" element={<Home country="om" />} />
+              <Route path="/sa" element={<Home country="sa" />} />
+              <Route path="/saudi" element={<Home country="sa" />} />
+              <Route path="/ae" element={<Home country="ae" />} />
+              <Route path="/uae" element={<Home country="ae" />} />
+              <Route path="/jo" element={<Home country="jo" />} />
+              <Route path="/jordan" element={<Home country="jo" />} />
+              <Route path="/bh" element={<Home country="bh" />} />
+              <Route path="/bahrain" element={<Home country="bh" />} />
               <Route path="/courses" element={<Courses />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />

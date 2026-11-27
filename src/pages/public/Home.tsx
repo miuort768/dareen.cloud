@@ -31,8 +31,14 @@ import {
   reviewSchema,
 } from './home-page'
 import { useIsAuthenticated } from '../../context/useApp'
+import { HOME_COUNTRIES, getCountryConfig, type CountryCode } from './home-page/countries'
 
-export const Home = () => {
+interface HomeProps {
+  country?: CountryCode
+}
+
+export const Home = ({ country }: HomeProps) => {
+  const countryConfig = getCountryConfig(country)
   const academyName = useAcademyName()
   const adminPhone = useSettingsStore((s) => s.adminPhone)
   const heroBanners = useSettingsStore((s) => s.heroBanners)
@@ -101,11 +107,22 @@ export const Home = () => {
   return (
     <div className="relative min-h-full overflow-x-hidden bg-surface text-main transition-colors duration-500 dark:bg-background dark:text-main">
       <SEO
-        title="منصة تعليم عن بعد في الكويت والخليج"
-        description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
-        url="https://dareen.cloud/"
+        title={countryConfig ? countryConfig.seoTitle : 'منصة تعليم عن بعد في الكويت والخليج'}
+        description={
+          countryConfig
+            ? countryConfig.seoDescription
+            : 'تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن.'
+        }
+        url={countryConfig ? `https://dareen.cloud/${countryConfig.slug}` : 'https://dareen.cloud/'}
         image="/hero-child.v2.png"
-        breadcrumbs={[{ name: 'الرئيسية', item: '/' }]}
+        breadcrumbs={
+          countryConfig
+            ? [
+                { name: 'الرئيسية', item: '/' },
+                { name: countryConfig.nameAr, item: `/${countryConfig.slug}` },
+              ]
+            : [{ name: 'الرئيسية', item: '/' }]
+        }
       />
       <script
         type="application/ld+json"
@@ -113,6 +130,45 @@ export const Home = () => {
       />
       <MobileHeader />
       <main className="relative mx-auto max-w-lg px-2 pb-4 md:hidden">
+        <nav
+          aria-label="اختيار الدولة"
+          className="no-scrollbar mb-2 mt-2 flex items-center gap-1.5 overflow-x-auto pb-1"
+        >
+          <Link
+            to="/"
+            className={`whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus ${
+              !countryConfig
+                ? 'border-primary bg-primary text-on-primary'
+                : 'border-border bg-card text-muted hover:text-main'
+            }`}
+          >
+            🌍 جميع الدول
+          </Link>
+          {HOME_COUNTRIES.map((c) => {
+            const isActive = countryConfig?.code === c.code
+            return (
+              <Link
+                key={c.code}
+                to={`/${c.slug}`}
+                className={`whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus ${
+                  isActive
+                    ? 'border-primary bg-primary text-on-primary'
+                    : 'border-border bg-card text-muted hover:text-main'
+                }`}
+              >
+                {c.flag} {c.nameAr}
+              </Link>
+            )
+          })}
+        </nav>
+        {countryConfig && (
+          <div className="mb-2 rounded-card border border-primary/20 bg-primary-soft px-3 py-2 text-xs text-main">
+            <span className="font-bold text-primary">
+              {countryConfig.flag} {countryConfig.heroSubtitle}
+            </span>{' '}
+            — {countryConfig.curriculumNote}
+          </div>
+        )}
         <div className="mb-3 mt-2 flex gap-1.5">
           <a
             href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
@@ -359,6 +415,44 @@ export const Home = () => {
         </div>
       </main>
       <div className="hidden md:block">
+        <div className="mx-auto flex max-w-page flex-wrap items-center justify-between gap-3 px-6 pt-4">
+          <nav aria-label="اختيار الدولة" className="flex flex-wrap items-center gap-2">
+            <Link
+              to="/"
+              className={`rounded-full border px-3 py-1 text-xs font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus ${
+                !countryConfig
+                  ? 'border-primary bg-primary text-on-primary'
+                  : 'border-border bg-card text-muted hover:text-main'
+              }`}
+            >
+              🌍 جميع الدول
+            </Link>
+            {HOME_COUNTRIES.map((c) => {
+              const isActive = countryConfig?.code === c.code
+              return (
+                <Link
+                  key={c.code}
+                  to={`/${c.slug}`}
+                  className={`rounded-full border px-3 py-1 text-xs font-normal outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus ${
+                    isActive
+                      ? 'border-primary bg-primary text-on-primary'
+                      : 'border-border bg-card text-muted hover:text-main'
+                  }`}
+                >
+                  {c.flag} {c.nameAr}
+                </Link>
+              )
+            })}
+          </nav>
+          {countryConfig && (
+            <div className="rounded-full border border-primary/20 bg-primary-soft px-4 py-1 text-xs text-main">
+              <span className="font-bold text-primary">
+                {countryConfig.flag} {countryConfig.heroSubtitle}
+              </span>{' '}
+              — {countryConfig.curriculumNote}
+            </div>
+          )}
+        </div>
         <AnimateOnScroll animation="scaleIn" duration={0.7}>
           <HeroSection
             typewriterText={typewriterText}
