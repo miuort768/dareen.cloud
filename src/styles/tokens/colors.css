@@ -1,6 +1,36 @@
 :root {
   /* ── shadcn/ui CSS Variables (Solid/Clear Redesign) ── */
   --radius: 1rem;
+
+  /* ── Dashboard Stat Colors — Dareen 4-Color Palette ── */
+  /* Blue  #2563EB · Teal #14B8A6 · Amber #F59E0B · Violet #8B5CF6  */
+  --stat-blue:        #2563eb;
+  --stat-blue-hover:  #1d4ed8;
+  --stat-blue-soft:   #eff6ff;
+  --stat-blue-light:  #dbeafe;
+  --stat-blue-text:   #1e40af;
+  --stat-blue-on:     #ffffff;
+
+  --stat-teal:        #14b8a6;
+  --stat-teal-hover:  #0d9488;
+  --stat-teal-soft:   #f0fdfa;
+  --stat-teal-light:  #ccfbf1;
+  --stat-teal-text:   #0f766e;
+  --stat-teal-on:     #ffffff;
+
+  --stat-amber:       #f59e0b;
+  --stat-amber-hover: #d97706;
+  --stat-amber-soft:  #fffbeb;
+  --stat-amber-light: #fef3c7;
+  --stat-amber-text:  #b45309;
+  --stat-amber-on:    #ffffff;
+
+  --stat-violet:      #8b5cf6;
+  --stat-violet-hover:#7c3aed;
+  --stat-violet-soft: #f5f3ff;
+  --stat-violet-light:#ede9fe;
+  --stat-violet-text: #6d28d9;
+  --stat-violet-on:   #ffffff;
   
   --sidebar-background: #f8fafc;
   --sidebar-foreground: #0f172a;
@@ -92,6 +122,35 @@
 
 .dark {
   /* ── Deep Luxury Slate/Onyx Dark Mode ── */
+
+  /* ── Dashboard Stat Colors — Dark Mode (brighter, vivid) ── */
+  --stat-blue:        #3b82f6;
+  --stat-blue-hover:  #60a5fa;
+  --stat-blue-soft:   #172554;
+  --stat-blue-light:  #1e3a8a;
+  --stat-blue-text:   #93c5fd;
+  --stat-blue-on:     #ffffff;
+
+  --stat-teal:        #2dd4bf;
+  --stat-teal-hover:  #5eead4;
+  --stat-teal-soft:   #042f2e;
+  --stat-teal-light:  #134e4a;
+  --stat-teal-text:   #5eead4;
+  --stat-teal-on:     #042f2e;
+
+  --stat-amber:       #fbbf24;
+  --stat-amber-hover: #fcd34d;
+  --stat-amber-soft:  #451a03;
+  --stat-amber-light: #78350f;
+  --stat-amber-text:  #fcd34d;
+  --stat-amber-on:    #1c0a00;
+
+  --stat-violet:      #a78bfa;
+  --stat-violet-hover:#c4b5fd;
+  --stat-violet-soft: #2e1065;
+  --stat-violet-light:#4c1d95;
+  --stat-violet-text: #c4b5fd;
+  --stat-violet-on:   #ffffff;
   --sidebar-background: #090d16;
   --sidebar-foreground: #f8fafc;
   --sidebar-primary: #3b82f6;

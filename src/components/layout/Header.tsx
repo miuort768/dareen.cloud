@@ -243,7 +243,7 @@ export const Header = memo(() => {
           {/* User chip */}
           <Link
             to={userLink}
-            aria-label="الملف الشخصي"
+            aria-label={currentUser?.role === 'admin' ? 'إعدادات النظام' : 'الملف الشخصي'}
             className="flex h-10 items-center gap-2 rounded-full border border-border bg-card py-1 pe-1 ps-1 shadow-elevation-1 transition-all hover:bg-hover hover:shadow-elevation-2 active:scale-[0.97] dark:border-white/5 lg:pe-2.5"
           >
             <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-on-primary shadow-elevation-1 ring-2 ring-border">
@@ -262,7 +262,9 @@ export const Header = memo(() => {
               <span className="block max-w-[90px] truncate text-xs font-medium leading-tight text-main">
                 {firstName}
               </span>
-              <span className="block text-[9px] font-normal leading-tight text-muted">حسابي</span>
+              <span className="block text-[9px] font-normal leading-tight text-muted">
+                {currentUser?.role === 'admin' ? 'الإعدادات' : 'حسابي'}
+              </span>
             </span>
             <ChevronDown size={13} className="hidden shrink-0 text-muted lg:block" />
           </Link>

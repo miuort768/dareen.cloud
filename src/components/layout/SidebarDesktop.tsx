@@ -7,9 +7,11 @@ import { cn } from '../../lib/utils'
 import type { NavSection, NavItem } from './Sidebar'
 
 const getProfileLink = (role: string) => {
+  if (role === 'admin') return '/settings'
   if (role === 'student') return '/student-profile'
   if (role === 'parent') return '/parent-profile'
-  return '/teacher-profile'
+  if (role === 'teacher') return '/teacher-profile'
+  return '/settings'
 }
 
 interface UserData {
@@ -185,6 +187,8 @@ export const SidebarDesktop = ({
       {user && (
         <NavLink
           to={getProfileLink(user.role)}
+          title={user.role === 'admin' ? 'الإعدادات' : 'الملف الشخصي'}
+          aria-label={user.role === 'admin' ? 'الإعدادات' : 'الملف الشخصي'}
           className={({ isActive }) =>
             cn(
               'group flex items-center rounded-xl transition-all duration-slow',

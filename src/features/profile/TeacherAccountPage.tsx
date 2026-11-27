@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react'
+import { Navigate } from 'react-router-dom'
 import {
   User,
   Phone,
@@ -100,6 +101,10 @@ export const TeacherAccountPage = () => {
       Math.round(((points - rank.minPoints) / (nextRank.minPoints - rank.minPoints)) * 100),
     )
   }, [points, rank, nextRank])
+
+  if (currentUser?.role === 'admin') {
+    return <Navigate to="/settings" replace />
+  }
 
   if (isLoading)
     return (

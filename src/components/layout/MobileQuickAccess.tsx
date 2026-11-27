@@ -244,7 +244,7 @@ export const MobileQuickAccess = ({
             <Link
               to={getProfileLink(currentUser.role ?? '')}
               onClick={onCloseMenu}
-              aria-label="الملف الشخصي"
+              aria-label={currentUser.role === 'admin' ? 'إعدادات النظام' : 'الملف الشخصي'}
               className="mb-1.5 flex w-full items-center gap-2.5 rounded-2xl border border-border bg-surface px-3 py-2 text-start outline-none transition-all duration-fast hover:bg-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus dark:bg-card"
             >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-medium text-on-primary">
@@ -266,7 +266,9 @@ export const MobileQuickAccess = ({
                   {currentUser.name}
                 </span>
                 <span className="block text-[10px] font-normal leading-tight text-muted">
-                  {roleLabels[currentUser.role ?? ''] ?? 'حسابي'} • الملف الشخصي
+                  {currentUser.role === 'admin'
+                    ? 'إعدادات النظام'
+                    : `${roleLabels[currentUser.role ?? ''] ?? 'حسابي'} • الملف الشخصي`}
                 </span>
               </span>
               <ChevronLeft size={14} className="shrink-0 opacity-40 rtl:rotate-180" />
