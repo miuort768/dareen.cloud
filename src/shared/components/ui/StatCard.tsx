@@ -17,6 +17,11 @@ export interface StatCardProps {
     | 'soft-warning'
     | 'soft-error'
     | 'soft-info'
+    // ── Dareen 4-Color Dashboard Palette ──
+    | 'stat-blue'
+    | 'stat-teal'
+    | 'stat-amber'
+    | 'stat-violet'
   trend?: { value: number; isUp: boolean; label?: string }
   unit?: string
   badge?: string
@@ -121,6 +126,39 @@ const styles: Record<
     trend: '',
     skeleton: 'bg-card',
   },
+  // ── Dareen 4-Color Dashboard Palette — Solid ──
+  'stat-blue': {
+    card: 'bg-stat-blue text-stat-blue-on border border-white/20',
+    icon: 'bg-white/20 text-stat-blue-on',
+    value: 'text-stat-blue-on',
+    title: 'text-stat-blue-on opacity-80',
+    trend: 'text-stat-blue-on opacity-90',
+    skeleton: 'bg-white/20',
+  },
+  'stat-teal': {
+    card: 'bg-stat-teal text-stat-teal-on border border-white/20',
+    icon: 'bg-white/20 text-stat-teal-on',
+    value: 'text-stat-teal-on',
+    title: 'text-stat-teal-on opacity-80',
+    trend: 'text-stat-teal-on opacity-90',
+    skeleton: 'bg-white/20',
+  },
+  'stat-amber': {
+    card: 'bg-stat-amber text-stat-amber-on border border-white/20',
+    icon: 'bg-white/20 text-stat-amber-on',
+    value: 'text-stat-amber-on',
+    title: 'text-stat-amber-on opacity-80',
+    trend: 'text-stat-amber-on opacity-90',
+    skeleton: 'bg-white/20',
+  },
+  'stat-violet': {
+    card: 'bg-stat-violet text-stat-violet-on border border-white/20',
+    icon: 'bg-white/20 text-stat-violet-on',
+    value: 'text-stat-violet-on',
+    title: 'text-stat-violet-on opacity-80',
+    trend: 'text-stat-violet-on opacity-90',
+    skeleton: 'bg-white/20',
+  },
 }
 
 const isSoftVariant = (v: StatVariant) => v.startsWith('soft-') || v === 'default'
@@ -138,7 +176,8 @@ export const StatCard = ({
   loading = false,
   className,
 }: StatCardProps) => {
-  const s = styles[variant]
+  // Defensive fallback: unknown variant → 'default' to prevent crash
+  const s = styles[variant] ?? styles['default']
   const soft = isSoftVariant(variant)
   const wmColor = !soft
     ? 'text-on-primary opacity-10'
