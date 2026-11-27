@@ -54,7 +54,7 @@ export const TeacherDashboardDesktop = ({
 
   return (
     <div
-      className="mx-auto max-w-page space-y-5 px-2.5 pb-8 pt-5 font-teacher sm:px-4 md:px-6"
+      className="mx-auto max-w-page space-y-6 px-2.5 pb-10 pt-5 font-teacher sm:px-4 md:px-6"
       dir="rtl"
     >
       <motion.div {...fadeUp(0)}>
@@ -65,12 +65,14 @@ export const TeacherDashboardDesktop = ({
         />
       </motion.div>
 
-      <motion.div {...fadeUp(0.02)} id="announcements-section" className="scroll-mt-32">
-        <ModernAnnouncements />
+      {/* ── Stats (KPIs directly under hero) ── */}
+      <motion.div {...fadeUp(0.03)}>
+        <DashboardStats stats={stats} isTeacher={true} />
       </motion.div>
 
-      <motion.div {...fadeUp(0.04)}>
-        <div className="grid grid-cols-1 overflow-hidden rounded-[24px] border border-border bg-card shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-2 lg:grid-cols-12">
+      {/* ── Week Strip + Next Session ── */}
+      <motion.div {...fadeUp(0.06)}>
+        <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-shadow duration-normal hover:shadow-elevation-2 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <WeekStrip counts={weekCounts} framed={false} />
           </div>
@@ -91,15 +93,10 @@ export const TeacherDashboardDesktop = ({
         </div>
       </motion.div>
 
-      {/* ── Stats ── */}
-      <motion.div {...fadeUp(0.08)}>
-        <DashboardStats stats={stats} isTeacher={true} />
-      </motion.div>
-
       {/* ── Main 2-col grid ── */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        {/* Left: Live Sessions + Timeline + Top Attendance */}
-        <div className="space-y-5 lg:col-span-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+        {/* Primary: Live Sessions + Timeline + Top Attendance */}
+        <div className="space-y-6 lg:col-span-8">
           <SectionCard delay={0.1}>
             <LiveSessions />
           </SectionCard>
@@ -115,11 +112,15 @@ export const TeacherDashboardDesktop = ({
           </SectionCard>
         </div>
 
-        {/* Right: Quick Actions + Notifications + Tasks */}
-        <div className="space-y-5 lg:col-span-4">
+        {/* Sidebar: Quick Actions + Announcements + Notifications + Tasks */}
+        <div className="space-y-6 lg:col-span-4">
           <SectionCard delay={0.12}>
             <QuickActions showQuickLinks={true} />
           </SectionCard>
+
+          <div id="announcements-section" className="scroll-mt-32">
+            <ModernAnnouncements />
+          </div>
 
           <SectionCard delay={0.16}>
             <SmartNotifications
