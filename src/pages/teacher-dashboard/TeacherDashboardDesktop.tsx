@@ -91,12 +91,15 @@ export const TeacherDashboardDesktop = ({
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
-        <div className="space-y-5 lg:col-span-8">
-          <motion.div {...fadeUp(0.08)}>
-            <DashboardStats stats={stats} isTeacher={true} />
-          </motion.div>
+      {/* ── Stats ── */}
+      <motion.div {...fadeUp(0.08)}>
+        <DashboardStats stats={stats} isTeacher={true} />
+      </motion.div>
 
+      {/* ── Main 2-col grid ── */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        {/* Left: Live Sessions + Timeline + Top Attendance */}
+        <div className="space-y-5 lg:col-span-8">
           <SectionCard delay={0.1}>
             <LiveSessions />
           </SectionCard>
@@ -112,6 +115,7 @@ export const TeacherDashboardDesktop = ({
           </SectionCard>
         </div>
 
+        {/* Right: Quick Actions + Notifications + Tasks */}
         <div className="space-y-5 lg:col-span-4">
           <SectionCard delay={0.12}>
             <QuickActions showQuickLinks={true} />
@@ -123,6 +127,7 @@ export const TeacherDashboardDesktop = ({
               focusStudents={focusStudents || []}
             />
           </SectionCard>
+
           <SectionCard delay={0.22}>
             <TasksAndRequests tasks={tasks} limit={3} />
           </SectionCard>

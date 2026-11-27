@@ -88,8 +88,8 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
           aria-hidden="true"
         />
 
-        <div className="relative z-10 flex flex-col gap-5 p-5 sm:gap-6 sm:p-6 lg:p-8 xl:p-9">
-          <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+        <div className="relative z-10 flex flex-col gap-4 p-5 sm:gap-5 sm:p-6 lg:p-6 xl:p-7">
+          <div className="grid gap-5 lg:grid-cols-12 lg:gap-6">
             <div className="flex flex-col justify-between gap-4 lg:col-span-7">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -102,7 +102,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                     <span className="font-dash">{today}</span>
                   </div>
 
-                  <h1 className="font-teacher-heading text-xl font-black leading-tight tracking-tight text-main md:text-2xl lg:text-3xl xl:text-4xl">
+                  <h1 className="font-teacher-heading text-xl font-black leading-tight tracking-tight text-main md:text-2xl lg:text-2xl xl:text-3xl">
                     {getGreeting()}، {firstName}
                   </h1>
 
@@ -120,7 +120,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
                       width={RING_SIZE}
                       height={RING_SIZE}
                       viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
-                      className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
+                      className="h-12 w-12 sm:h-14 sm:w-14 lg:h-14 lg:w-14"
                     >
                       <circle
                         cx={RING_SIZE / 2}
@@ -182,7 +182,7 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
               </div>
             </div>
 
-            <div className="lg:border-border/80 flex flex-col justify-between gap-3.5 lg:col-span-5 lg:gap-4 lg:border-s lg:ps-8">
+            <div className="lg:border-border/80 flex flex-col justify-between gap-3 lg:col-span-5 lg:gap-3.5 lg:border-s lg:ps-6">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2.5">
                   <div
@@ -239,88 +239,92 @@ export const TeacherHero = ({ name, stats, lowBalanceStudents }: TeacherHeroProp
             </div>
           </div>
 
-          <div className="lg:gap-4.5 grid grid-cols-2 gap-3.5 lg:grid-cols-4">
-            <div className="group rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-elevation-2 shadow-primary/20 transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-3 lg:p-5">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-medium text-white/90 lg:text-sm">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-3.5">
+            {/* صافي أرباح الشهر */}
+            <div className="group rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-3.5 shadow-elevation-2 shadow-primary/20 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-3 lg:p-4">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/20 shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <TrendingUp size={14} className="text-white" />
+                </div>
+                <span className="truncate text-[11px] font-semibold leading-tight text-white/90 lg:text-xs">
                   صافي أرباح الشهر
                 </span>
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/20 shadow-soft transition-transform duration-normal group-hover:scale-110 sm:h-9 sm:w-9">
-                  <TrendingUp size={16} className="text-white" />
-                </div>
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-dash text-2xl font-black tabular-nums leading-none text-white lg:text-3xl xl:text-4xl">
+              <div className="flex items-baseline gap-1">
+                <span className="font-dash text-2xl font-black tabular-nums leading-none text-white lg:text-3xl">
                   <CountUp
                     value={stats.monthNetProfit || 0}
                     format={(n) => Math.round(n).toLocaleString('ar-EG')}
                   />
                 </span>
-                <span className="text-xs font-semibold text-white/80">{CURRENCY_SYMBOL}</span>
+                <span className="text-[10px] font-semibold text-white/80">{CURRENCY_SYMBOL}</span>
               </div>
-              <p className="mt-2 text-[10px] font-medium text-white/80 sm:text-xs">
+              <p className="mt-1.5 text-[10px] font-medium leading-tight text-white/70">
                 تقديري يُحسب بنهاية الشهر
               </p>
             </div>
 
-            <div className="border-success/25 bg-success-soft/50 group rounded-2xl border p-4 shadow-elevation-1 transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-2 lg:p-5">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-semibold text-success-strong lg:text-sm">
+            {/* الحصص المنفذة */}
+            <div className="border-success/25 bg-success-soft/50 group rounded-2xl border p-3.5 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 lg:p-4">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-success text-on-success shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <CheckCircle2 size={14} />
+                </div>
+                <span className="truncate text-[11px] font-semibold leading-tight text-success-strong lg:text-xs">
                   الحصص المنفذة
                 </span>
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-success text-on-success shadow-soft transition-transform duration-normal group-hover:scale-110 sm:h-9 sm:w-9">
-                  <CheckCircle2 size={16} />
-                </div>
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl xl:text-4xl">
+              <div className="flex items-baseline gap-1">
+                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
                   <CountUp value={stats.monthCompletedSessions || 0} />
                 </span>
-                <span className="text-xs font-semibold text-muted">
-                  من {stats.monthTotalSessions || 0}
+                <span className="text-[10px] font-semibold text-muted">
+                  / {stats.monthTotalSessions || 0}
                 </span>
               </div>
-              <p className="mt-2 text-[10px] font-semibold text-success-strong sm:text-xs">
+              <p className="mt-1.5 text-[10px] font-semibold leading-tight text-success-strong">
                 نسبة الإنجاز {percent}%
               </p>
             </div>
 
-            <div className="border-error/25 bg-error-soft/50 group rounded-2xl border p-4 shadow-elevation-1 transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-2 lg:p-5">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-semibold text-error-strong lg:text-sm">
+            {/* اشتراكات منتهية */}
+            <div className="border-error/25 bg-error-soft/50 group rounded-2xl border p-3.5 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 lg:p-4">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-error text-on-error shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <AlertCircle size={14} />
+                </div>
+                <span className="truncate text-[11px] font-semibold leading-tight text-error-strong lg:text-xs">
                   اشتراكات منتهية
                 </span>
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-error text-on-error shadow-soft transition-transform duration-normal group-hover:scale-110 sm:h-9 sm:w-9">
-                  <AlertCircle size={16} />
-                </div>
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl xl:text-4xl">
+              <div className="flex items-baseline gap-1">
+                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
                   {expiredCount}
                 </span>
-                <span className="text-xs font-semibold text-muted">طلاب</span>
+                <span className="text-[10px] font-semibold text-muted">طلاب</span>
               </div>
-              <p className="mt-2 text-[10px] font-semibold text-error-strong sm:text-xs">
+              <p className="mt-1.5 text-[10px] font-semibold leading-tight text-error-strong">
                 تحتاج لتجديد فوري
               </p>
             </div>
 
-            <div className="border-warning/25 bg-warning-soft/50 group rounded-2xl border p-4 shadow-elevation-1 transition-all duration-normal hover:-translate-y-1 hover:shadow-elevation-2 lg:p-5">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-semibold text-warning-strong lg:text-sm">
+            {/* قاربت على الانتهاء */}
+            <div className="border-warning/25 bg-warning-soft/50 group rounded-2xl border p-3.5 shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 lg:p-4">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-warning text-on-warning shadow-soft transition-transform duration-normal group-hover:scale-110">
+                  <Clock size={14} />
+                </div>
+                <span className="truncate text-[11px] font-semibold leading-tight text-warning-strong lg:text-xs">
                   قاربت على الانتهاء
                 </span>
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-warning text-on-warning shadow-soft transition-transform duration-normal group-hover:scale-110 sm:h-9 sm:w-9">
-                  <Clock size={16} />
-                </div>
               </div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl xl:text-4xl">
+              <div className="flex items-baseline gap-1">
+                <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
                   {lowCount}
                 </span>
-                <span className="text-xs font-semibold text-muted">طلاب</span>
+                <span className="text-[10px] font-semibold text-muted">طلاب</span>
               </div>
-              <p className="mt-2 text-[10px] font-semibold text-warning-strong sm:text-xs">
+              <p className="mt-1.5 text-[10px] font-semibold leading-tight text-warning-strong">
                 متبقي حصتان أو أقل
               </p>
             </div>

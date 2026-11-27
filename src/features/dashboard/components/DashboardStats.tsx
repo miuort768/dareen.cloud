@@ -29,7 +29,17 @@ interface StatCardData {
   title: string
   value: string | number
   icon: LucideIcon
-  variant: 'soft-primary' | 'soft-success' | 'soft-warning' | 'soft-error' | 'soft-info' | 'primary'
+  variant:
+    | 'soft-primary'
+    | 'soft-success'
+    | 'soft-warning'
+    | 'soft-error'
+    | 'soft-info'
+    | 'primary'
+    | 'stat-blue'
+    | 'stat-teal'
+    | 'stat-amber'
+    | 'stat-violet'
   prefix?: string
   formatter?: (val: number) => string
 }
@@ -59,7 +69,6 @@ const StatsCarousel = ({ cards }: { cards: StatCardData[] }) => {
 
   const card = cards[index]
   if (!card) return null
-  const isLast = index === count - 1
 
   return (
     <div
@@ -86,7 +95,7 @@ const StatsCarousel = ({ cards }: { cards: StatCardData[] }) => {
                   : card.value
               }
               icon={card.icon}
-              variant={isLast ? 'primary' : card.variant}
+              variant={card.variant}
               watermark
               unit={card.prefix}
             />
@@ -154,25 +163,25 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
       title: 'إجمالي الطلاب',
       value: stats.studentsCount,
       icon: Users,
-      variant: 'soft-primary',
+      variant: 'stat-blue',
     },
     {
       title: 'الاشتراكات النشطة',
       value: stats.totalEnrollments,
       icon: BookOpen,
-      variant: 'soft-success',
+      variant: 'stat-teal',
     },
     {
       title: 'حصص اليوم',
       value: stats.todaySessions,
       icon: CalendarCheck,
-      variant: 'soft-info',
+      variant: 'stat-amber',
     },
     {
       title: 'الحصص المنفذة',
       value: stats.completedSessions,
       icon: CheckCircle2,
-      variant: 'soft-success',
+      variant: 'stat-violet',
     },
   ]
 
@@ -181,13 +190,13 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
       title: 'إجمالي المعلمين',
       value: stats.teachersCount,
       icon: GraduationCap,
-      variant: 'soft-warning',
+      variant: 'stat-violet',
     },
     {
       title: 'إجمالي الإيرادات',
       value: stats.totalRevenue || 0,
       icon: TrendingUp,
-      variant: 'soft-success',
+      variant: 'stat-teal',
       prefix: CURRENCY_SYMBOL,
       formatter: (val: number) => val.toLocaleString(),
     },
@@ -195,7 +204,7 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
       title: 'إجمالي المصروفات',
       value: stats.totalExpenses || 0,
       icon: TrendingDown,
-      variant: 'soft-error',
+      variant: 'stat-amber',
       prefix: CURRENCY_SYMBOL,
       formatter: (val: number) => val.toLocaleString(),
     },
@@ -203,7 +212,7 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
       title: 'صافي الربح',
       value: stats.totalNetProfit || 0,
       icon: DollarSign,
-      variant: 'soft-info',
+      variant: 'stat-blue',
       prefix: CURRENCY_SYMBOL,
       formatter: (val: number) => val.toLocaleString(),
     },
@@ -216,32 +225,29 @@ export const DashboardStats = ({ stats, isTeacher, carousel = false }: Dashboard
   }
 
   return (
-    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4">
-      {allCards.map((card, i) => {
-        const isLast = isTeacher && i === allCards.length - 1
-        return (
-          <motion.div
-            key={`stat-${i}`}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <StatCard
-              title={card.title}
-              value={
-                card.formatter && typeof card.value === 'number'
-                  ? card.formatter(card.value)
-                  : card.value
-              }
-              icon={card.icon}
-              variant={isLast ? 'primary' : card.variant}
-              watermark
-              unit={card.prefix}
-              className={cn('h-full', isLast && 'shadow-elevation-2 shadow-primary/15')}
-            />
-          </motion.div>
-        )
-      })}
+    <div className="grid w-full grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+      {allCards.map((card, i) => (
+        <motion.div
+          key={`stat-${i}`}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: i * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          <StatCard
+            title={card.title}
+            value={
+              card.formatter && typeof card.value === 'number'
+                ? card.formatter(card.value)
+                : card.value
+            }
+            icon={card.icon}
+            variant={card.variant}
+            watermark
+            unit={card.prefix}
+            className="h-full"
+          />
+        </motion.div>
+      ))}
     </div>
   )
 }
