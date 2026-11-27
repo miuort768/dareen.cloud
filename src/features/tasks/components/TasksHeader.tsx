@@ -3,7 +3,13 @@ import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { StatCard } from '../../../shared/components/ui'
 import type { StatCardProps } from '../../../shared/components/ui'
-import { MobilePageHeader } from '../../../shared/components/mobile/MobilePageHeader'
+import {
+  OverviewHero,
+  OverviewSearchFilter,
+  OverviewCategoryPills,
+  MobileMetricGrid,
+  type OverviewCategoryItem,
+} from '../../../shared/components/mobile'
 import { GradientHeroCard } from '../../../shared/components/GradientHeroCard'
 import type { TaskStatus } from '../types'
 
@@ -55,46 +61,16 @@ export const TasksHeader = ({
     { title: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, variant: 'success' },
   ]
 
-  const mobileStats: {
-    title: string
-    value: number
-    icon: typeof ListTodo
-    fill: string
-    on: string
-  }[] = [
-    {
-      title: 'إجمالي المهام',
-      value: stats.total,
-      icon: ListTodo,
-      fill: 'bg-primary',
-      on: 'text-on-primary',
-    },
-    {
-      title: 'معلقة',
-      value: stats.pending,
-      icon: Clock,
-      fill: 'bg-warning',
-      on: 'text-on-warning',
-    },
-    {
-      title: 'قيد التنفيذ',
-      value: stats.inProgress,
-      icon: RefreshCcw,
-      fill: 'bg-info',
-      on: 'text-on-info',
-    },
-    {
-      title: 'تم الإنجاز',
-      value: stats.completed,
-      icon: CheckCircle2,
-      fill: 'bg-success',
-      on: 'text-on-success',
-    },
-  ]
-
   const heroTiles = [
     { title: 'إجمالي المهام', value: stats.total, icon: ListTodo },
     { title: 'نسبة الإنجاز', value: `${stats.score}%`, icon: CheckCircle2 },
+  ]
+
+  const mobileCategories: OverviewCategoryItem[] = [
+    { id: 'all', label: 'الكل', count: stats.total },
+    { id: 'pending', label: 'معلقة', count: stats.pending },
+    { id: 'in-progress', label: 'جارية', count: stats.inProgress },
+    { id: 'completed', label: 'مكتملة', count: stats.completed },
   ]
 
   return (
@@ -104,70 +80,75 @@ export const TasksHeader = ({
       transition={{ duration: 0.35 }}
       className="space-y-4 md:space-y-5"
     >
-      {/* ================= الهاتف ================= */}
-      <div className="md:hidden">
-        <MobilePageHeader
+      {/* ================= الهاتف (بنفس أسلوب TeacherDashboardMobile) ================= */}
+      <div className="space-y-4 md:hidden">
+        <OverviewHero
+          badge="إدارة المهام"
+          badgeIcon={<ListTodo size={12} className="text-primary" />}
           title="المهام والطلبات"
-          subtitle="إدارة وتكليف المهام للمعلمات"
-          icon={<ListTodo size={20} />}
-          action={
-            <button type="button" onClick={onAdd} className={cn('h-11', ADD_BUTTON)}>
-              <Plus size={14} />
-              إضافة
-            </button>
+          subtitle="إدارة وتكليف ومتابعة المهام اليومية بكل وضوح"
+          metric={{
+            value: `${stats.score}%`,
+            label: 'نسبة الإنجاز',
+          }}
+          chips={[
+            { label: 'معلقة', value: stats.pending },
+            { label: 'مكتملة', value: stats.completed },
+          ]}
+          ctaText="إضافة مهمة"
+          onCtaClick={onAdd}
+          illustration={
+            <div className="backdrop-blur-xs relative flex h-24 w-24 items-center justify-center rounded-[24px] border border-primary/25 bg-gradient-to-br from-primary/20 via-primary/10 to-surface p-3 text-primary shadow-elevation-2">
+              <div className="absolute inset-1 rounded-[20px] border border-dashed border-primary/30" />
+              <ListTodo size={42} strokeWidth={2} className="drop-shadow-xs" />
+            </div>
           }
         />
-        <div className="mt-1 flex flex-col gap-2">
-          <div className="relative w-full">
-            <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-            <input
-              type="text"
-              aria-label="بحث عن مهمة"
-              placeholder="ابحث في المهام..."
-              value={searchTerm}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-normal text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
-            />
-          </div>
-          <select
-            value={filterStatus}
-            onChange={(e) => onFilterStatusChange(e.target.value as StatusFilter)}
-            aria-label="تصفية المهام حسب الحالة"
-            className="h-11 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-normal text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
-          >
-            {statusFilters.map((f) => (
-              <option key={f.value} value={f.value}>
-                {f.label}
-              </option>
-            ))}
-          </select>
-        </div>
 
-        {/* مستطيل إحصائي واحد مدمج (هاتف فقط) — أربعة ألوان متمايزة */}
-        <div className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border shadow-elevation-2">
-          {mobileStats.map((item) => (
-            <div key={item.title} className={cn('flex items-center gap-2.5 p-3', item.fill)}>
-              <span
-                className={cn(
-                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 ring-1 ring-inset ring-white/15',
-                  item.on,
-                )}
-              >
-                <item.icon size={16} />
-              </span>
-              <div className="min-w-0">
-                <p
-                  className={cn('font-dash text-lg font-medium tabular-nums leading-none', item.on)}
-                >
-                  {item.value}
-                </p>
-                <p className={cn('mt-0.5 truncate text-micro font-normal opacity-80', item.on)}>
-                  {item.title}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <OverviewSearchFilter
+          value={searchTerm}
+          onChange={onSearchChange}
+          placeholder="ابحث في المهام..."
+        />
+
+        <OverviewCategoryPills
+          categories={mobileCategories}
+          activeId={filterStatus}
+          onSelect={(id) => onFilterStatusChange(id as StatusFilter)}
+        />
+
+        <MobileMetricGrid
+          metrics={[
+            {
+              title: 'إجمالي المهام',
+              value: stats.total,
+              icon: ListTodo,
+              tone: 'primary',
+              onClick: () => onFilterStatusChange('all'),
+            },
+            {
+              title: 'معلقة',
+              value: stats.pending,
+              icon: Clock,
+              tone: 'warning',
+              onClick: () => onFilterStatusChange('pending'),
+            },
+            {
+              title: 'قيد التنفيذ',
+              value: stats.inProgress,
+              icon: RefreshCcw,
+              tone: 'info',
+              onClick: () => onFilterStatusChange('in-progress'),
+            },
+            {
+              title: 'تم الإنجاز',
+              value: stats.completed,
+              icon: CheckCircle2,
+              tone: 'success',
+              onClick: () => onFilterStatusChange('completed'),
+            },
+          ]}
+        />
       </div>
 
       {/* ================= الكمبيوتر ================= */}
